@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Iklan;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -33,6 +35,29 @@ class AdminController extends Controller
 
     public function iklan()
     {
+        $iklan = Iklan::all();
+
+        return view('admin.iklan', compact('iklan'));
+    }
+
+    public function bukaiklan(Request $req)
+    {
+        $bil = Iklan::where('tahun', now()->year)
+        ->count();
+        // return dd(\Carbon\Carbon::now());
+
+        Iklan::insertGetId([
+            'tahun' => now()->year,
+            'bil' => $bil+1,
+            'tarikh_mula' => $req->tarikhmula,
+            'tarikh_tamat' => $req->tarikhtamat,
+            'jenis' => $req->jenisiklan,
+            'pautan' => $req->pautan,
+            'id_pencipta' => Auth::user()->id,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
+
         return view('admin.iklan');
     }
 }

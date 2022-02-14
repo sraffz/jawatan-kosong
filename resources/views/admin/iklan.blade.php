@@ -66,66 +66,66 @@
     </div>
     <div class="row mt-4">
         {{-- <div class="col-lg-4 col-md-6 mt-4 mb-4">
-                <div class="card z-index-2 ">
-                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                            <div class="chart">
-                                <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
-                            </div>
+            <div class="card z-index-2 ">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                    <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                        <div class="chart">
+                            <canvas id="chart-bars" class="chart-canvas" height="170"></canvas>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h6 class="mb-0 ">Website Views</h6>
-                        <p class="text-sm ">Last Campaign Performance</p>
-                        <hr class="dark horizontal">
-                        <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
-                        </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="mb-0 ">Website Views</h6>
+                    <p class="text-sm ">Last Campaign Performance</p>
+                    <hr class="dark horizontal">
+                    <div class="d-flex ">
+                        <i class="material-icons text-sm my-auto me-1">schedule</i>
+                        <p class="mb-0 text-sm"> campaign sent 2 days ago </p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 mt-4 mb-4">
-                <div class="card z-index-2  ">
-                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                        <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
-                            <div class="chart">
-                                <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
-                            </div>
+        </div>
+        <div class="col-lg-4 col-md-6 mt-4 mb-4">
+            <div class="card z-index-2  ">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                    <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
+                        <div class="chart">
+                            <canvas id="chart-line" class="chart-canvas" height="170"></canvas>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <h6 class="mb-0 "> Daily Sales </h6>
-                        <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales.
-                        </p>
-                        <hr class="dark horizontal">
-                        <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm"> updated 4 min ago </p>
-                        </div>
+                </div>
+                <div class="card-body">
+                    <h6 class="mb-0 "> Daily Sales </h6>
+                    <p class="text-sm "> (<span class="font-weight-bolder">+15%</span>) increase in today sales.
+                    </p>
+                    <hr class="dark horizontal">
+                    <div class="d-flex ">
+                        <i class="material-icons text-sm my-auto me-1">schedule</i>
+                        <p class="mb-0 text-sm"> updated 4 min ago </p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 mt-4 mb-3">
-                <div class="card z-index-2 ">
-                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
-                        <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
-                            <div class="chart">
-                                <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="mb-0 ">Completed Tasks</h6>
-                        <p class="text-sm ">Last Campaign Performance</p>
-                        <hr class="dark horizontal">
-                        <div class="d-flex ">
-                            <i class="material-icons text-sm my-auto me-1">schedule</i>
-                            <p class="mb-0 text-sm">just updated</p>
+        </div>
+        <div class="col-lg-4 mt-4 mb-3">
+            <div class="card z-index-2 ">
+                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
+                    <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+                        <div class="chart">
+                            <canvas id="chart-line-tasks" class="chart-canvas" height="170"></canvas>
                         </div>
                     </div>
                 </div>
-            </div> --}}
+                <div class="card-body">
+                    <h6 class="mb-0 ">Completed Tasks</h6>
+                    <p class="text-sm ">Last Campaign Performance</p>
+                    <hr class="dark horizontal">
+                    <div class="d-flex ">
+                        <i class="material-icons text-sm my-auto me-1">schedule</i>
+                        <p class="mb-0 text-sm">just updated</p>
+                    </div>
+                </div>
+            </div>
+        </div> --}}
     </div>
     <div class="row mb-4">
         <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -172,25 +172,29 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @foreach ($iklan as $ikl)
                                 <tr class="text-center">
                                     <td class="align-middle text-center text-uppercase">
                                         <span class="font-weight-bold">
-                                            1
+                                            {{ $i++ }}
                                         </span>
                                     </td>
                                     <td>
                                         <span class="font-weight-bold text-uppercase">
-                                            Bil 1 2022
+                                            Bil {{ $ikl->bil }} {{ $ikl->tahun }}
                                         </span>
                                     </td>
                                     <td class="align-middle text-center text-uppercase">
                                         <span class="font-weight-bold">
-                                            14/2/2022 - 1/3/2022
+                                            {{ $ikl->tarikh_mula }} - {{ $ikl->tarikh_tamat }}
                                         </span>
                                     </td>
                                     <td class="align-middle text-uppercase">
                                         <span class="font-weight-bold">
-                                            Terbuka
+                                            {{ $ikl->jenis }} 
                                         </span>
                                     </td>
                                     <td class="align-middle">
@@ -201,128 +205,10 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr class="text-center">
-                                    <td class="align-middle text-center text-uppercase">
-                                        <span class="font-weight-bold">
-                                            1
-                                        </span>
-                                    </td>
-                                    <td>
-                                        <span class="font-weight-bold text-uppercase">
-                                            Bil 1 2022
-                                        </span>
-                                    </td>
-                                    <td class="align-middle text-center text-uppercase">
-                                        <span class="font-weight-bold">
-                                            14/2/2022 - 1/3/2022
-                                        </span>
-                                    </td>
-                                    <td class="align-middle text-uppercase">
-                                        <span class="font-weight-bold">
-                                            Terbuka
-                                        </span>
-                                    </td>
-                                    <td class="align-middle">
-                                        <button type="button" class="btn btn-info btn-sm">Butiran</button>
-                                        <div class="btn-group " role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-primary btn-sm">Kemaskini</button>
-                                            <button type="button" class="btn btn-danger btn-sm">Padam</button>
-                                        </div>
-                                    </td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
 
-                    </div>
-                </div>
-
-            </div>
-            <div class="card mt-4" id="basic-info">
-                <div class="card-header">
-                    <h5>Basic Info</h5>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" placeholder="Alec">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" placeholder="Thompson">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <label class="form-label mt-4 ms-0">I'm</label>
-                            <select class="form-control" name="choices-gender" id="choices-gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-5 col-5">
-                                    <label class="form-label mt-4 ms-0">Birth Date</label>
-                                    <select class="form-control" name="choices-month" id="choices-month"></select>
-                                </div>
-                                <div class="col-sm-4 col-3">
-                                    <label class="form-label mt-4 ms-0">&nbsp;</label>
-                                    <select class="form-control" name="choices-day" id="choices-day"></select>
-                                </div>
-                                <div class="col-sm-3 col-4">
-                                    <label class="form-label mt-4">&nbsp;</label>
-                                    <select class="form-control" name="choices-year" id="choices-year"></select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Confirm Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Your location</label>
-                                <input type="text" class="form-control" placeholder="Sydney, A">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Phone Number</label>
-                                <input type="number" class="form-control" placeholder="+40 735 631 620">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 align-self-center">
-                            <label class="form-label mt-4 ms-0">Language</label>
-                            <select class="form-control" name="choices-language" id="choices-language">
-                                <option value="English">English</option>
-                                <option value="French">French</option>
-                                <option value="Spanish">Spanish</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label mt-4">Skills</label>
-                            <input class="form-control" id="choices-skills" type="text" value="vuejs, angular, react"
-                                placeholder="Enter something" />
-                        </div>
                     </div>
                 </div>
             </div>
@@ -336,25 +222,47 @@
         <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title font-weight-normal" id="modal-title-default">Type your modal title</h6>
+                    <h6 class="modal-title font-weight-normal" id="modal-title-default">Buka Iklan Jawatan Kosong</h6>
                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <form action="{{ url('buka-iklan') }}" method="POST">
+                    {{ csrf_field() }}
                     <div class="modal-body">
-                        {{ csrf_field() }}
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="input-group input-group-static">
-                                    <label>Tarikh Mula</label>
-                                    <input type="date" class="form-control" name="tarikhmula" placeholder="Alec">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
+                                        <label>Tarikh Mula</label>
+                                        <input type="date" class="form-control" name="tarikhmula" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
+                                        <label>Tarikh Tamat</label>
+                                        <input type="date" class="form-control" name="tarikhtamat" required>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="input-group input-group-static">
-                                    <label>Tarikh Tamat</label>
-                                    <input type="date" class="form-control" name="tarikhtamat" placeholder="Thompson">
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="input-group input-group-static">
+                                        <label>Jenis Iklan</label>
+                                        <select class="form-control" name="jenisiklan" id="jenis" required>
+                                            <option value="">Sila Pilih</option>
+                                            <option value="TERBUKA">TERBUKA</option>
+                                            <option value="TERTUTUP">TERTUTUP</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <div class="input-group input-group-static">
+                                        <label>Pautan</label>
+                                        <input class="form-control" type="text" name="pautan" required placeholder="">
+                                    </div>
                                 </div>
                             </div>
                         </div>

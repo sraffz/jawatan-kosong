@@ -30,6 +30,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/iklan', 'AdminController@iklan')->name('admin.iklan');
 });
 
+Route::post('/buka-iklan', 'AdminController@bukaiklan')->name('buka-iklan');
 
 
 Route::get('/Halaman-utama', 'HomeController@index')->name('Halaman-utama');

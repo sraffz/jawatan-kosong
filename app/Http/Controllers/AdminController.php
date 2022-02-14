@@ -40,6 +40,11 @@ class AdminController extends Controller
         return view('admin.iklan', compact('iklan'));
     }
 
+    public function tetapan()
+    {
+        return view('admin.tetapan');
+    }
+
     public function bukaiklan(Request $req)
     {
         $bil = Iklan::where('tahun', now()->year)
@@ -59,5 +64,12 @@ class AdminController extends Controller
         ]);
 
         return view('admin.iklan');
+    }
+
+    public function kemaskiniiklan($id)
+    {
+        $iklan = Iklan::where('id', $id)->first();
+
+        return view('admin.kemaskini-iklan', compact('iklan'));
     }
 }

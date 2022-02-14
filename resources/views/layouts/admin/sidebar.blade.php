@@ -18,7 +18,7 @@
                     <img src="{{ asset('material/img/team-3.jpg') }}" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">{{ Auth::user()->nama }}</span>
                 </a>
-                <div class="collapse {{ $page == 'Profil' ? ' show' : '' }}" id="ProfileNav" style="">
+                <div class="collapse {{ $page == 'Profil' || $page == 'Tetapan' ? ' show' : '' }}" id="ProfileNav" style="">
                     <ul class="nav ">
                         <li class="nav-item">
                             <a class="nav-link text-white {{ $page == 'Profil' ? ' active bg-gradient-success' : '' }}" href="{{ url('admin/profil') }}">
@@ -27,7 +27,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white " href="{{ url('admin/tetapan') }}">
+                            <a class="nav-link text-white  {{ $page == 'Tetapan' ? ' active bg-gradient-success' : '' }}" href="{{ url('admin/tetapan') }}">
                                 <span class="sidenav-mini-icon"> S </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> Tetapan </span>
                             </a>

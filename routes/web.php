@@ -28,6 +28,8 @@ Route::prefix('admin')->group(function() {
     Route::get('/', 'AdminController@index')->name('admin');
     Route::get('/profil', 'AdminController@profil')->name('admin.profil');
     Route::get('/iklan', 'AdminController@iklan')->name('admin.iklan');
+    Route::get('/tetapan', 'AdminController@tetapan')->name('admin.tetapan');
+    Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
 });
 
 Route::post('/buka-iklan', 'AdminController@bukaiklan')->name('buka-iklan');

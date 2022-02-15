@@ -1,11 +1,9 @@
-@extends('layouts.admin.app', ['page' => 'Iklan Jawatan Kosong', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan Perubatan'])
+@extends('layouts.admin.app', ['page' => 'Iklan Jawatan Kosong', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan
+Negeri Kelantan Perubatan'])
 
 @section('link')
-<style>
-    .wrap {
-        word-wrap: normal;
-    }
-</style>
+    <style>
+    </style>
 @endsection
 
 @section('content')
@@ -70,103 +68,207 @@
     </div>
     <br>
     <div class="row mb-4">
-        <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
-            <div class="card">
-                <div class="card-header pb-0">
-                    <div class="row">
-                        <div class="col-lg-6 col-7">
-                            <h6>Senarai Iklan Jawatan Kosong</h6>
-                            {{-- <p class="text-sm mb-0">
-                                    <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                    <span class="font-weight-bold ms-1">30 done</span> this month
-                                </p> --}}
-                        </div>
-                        <div class="col-lg-6 col-5 my-auto text-end">
-                            <div class="dropdown float-lg-end pe-4">
-                                {{-- <a class="btn btn-primary" href="{{ url('buka-iklan') }}" role="button">Buka Iklan Baru</a> --}}
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal"
-                                    data-bs-target="#bukaiklan">
-                                    Iklan Baru
-                                </button>
+        <div class="container-fluid">
+            <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+                <div class="card">
+                    <div class="card-header pb-0">
+                        <div class="row">
+                            <div class="col-lg-6 col-7">
+                                <h6>Senarai Iklan Jawatan Kosong</h6>
+                                {{-- <p class="text-sm mb-0">
+                                        <i class="fa fa-check text-info" aria-hidden="true"></i>
+                                        <span class="font-weight-bold ms-1">30 done</span> this month
+                                    </p> --}}
+                            </div>
+                            <div class="col-lg-6 col-5 my-auto text-end">
+                                <div class="float-lg-end pe-4">
+                                    <button type="button" class="btn bg-gradient-dark mb-0" data-bs-toggle="modal"
+                                        data-bs-target="#bukaiklan">
+                                        <i class="material-icons text-sm">add</i>&nbsp;Iklan Baru
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-body px-0">
-                    <div class="table-responsive">
-                        <table class="table align-items-center mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                        Bil
-                                    </th>
-                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
-                                        rujukan iklan
-                                    </th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                        Tarikh mula dan tamat
-                                    </th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                        Jenis Iklan
-                                    </th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                        Pautan Iklan
-                                    </th>
-                                    <th
-                                        class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                        Butiran & Tindakan
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $i = 1;
-                                @endphp
-                                @foreach ($iklan as $ikl)
+                    <div class="card-body px-0">
+                        <div class="table-responsive">
+                            <table class="table table-sm align-items-center mb-0">
+                                <thead>
                                     <tr>
-                                        <td class="text-center text-uppercase">
-                                            <span class="font-weight-bold">
-                                                {{ $i++ }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <span class="font-weight-bold text-uppercase">
-                                                Bil {{ $ikl->bil }} {{ $ikl->tahun }}
-                                            </span>
-                                        </td>
-                                        <td class="text-center text-uppercase">
-                                            <span class="font-weight-bold">
-                                                {{ $ikl->tarikh_mula }} - {{ $ikl->tarikh_tamat }}
-                                            </span>
-                                        </td>
-                                        <td class="text-center text-uppercase">
-                                            <span class="font-weight-bold">
-                                                {{ $ikl->jenis }}
-                                            </span>
-                                        </td>
-                                        <td class="text-center wrap">
-                                            <span class="font-weight-bold">
-                                                <a href="{{ $ikl->pautan }}" target="blank">{{ $ikl->pautan }}</a>
-                                            </span>
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-info btn-sm">Butiran</button>
-                                            <div class="btn-group " role="group" aria-label="Basic example">
-                                                <a class="btn btn-primary btn-sm" href="{{ url('admin/kemaskini-iklan', [$ikl->id]) }}">
-                                                    Kemaskini
-                                                </a>
-                                                <button type="button" class="btn btn-danger btn-sm">Padam</button>
-                                            </div>
-                                        </td>
+                                        <th
+                                            class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
+                                            Bil
+                                        </th>
+                                        <th
+                                            class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                                            rujukan iklan
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                            Tarikh mula dan tamat
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                            Jenis Iklan
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-wrap  text-secondary text-sm font-weight-bolder opacity-7 w-10">
+                                            Pautan Iklan
+                                        </th>
+                                        <th
+                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                            Butiran & Tindakan
+                                        </th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @foreach ($iklan as $ikl)
+                                        <tr>
+                                            <td class="text-center text-uppercase">
+                                                <span class="font-weight-bold">
+                                                    {{ $i++ }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="font-weight-bold text-uppercase">
+                                                    Bil {{ $ikl->bil }} {{ $ikl->tahun }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center text-uppercase">
+                                                <span class="font-weight-bold">
+                                                    {{ $ikl->tarikh_mula }} - {{ $ikl->tarikh_tamat }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center text-uppercase">
+                                                <span class="font-weight-bold">
+                                                    {{ $ikl->jenis }}
+                                                </span>
+                                            </td>
+                                            <td class="text-center text-wrap text-break">
+                                                <span class="font-weight-bold">
+                                                    <a href="{{ $ikl->pautan }}" target="blank">{{ $ikl->pautan }}</a>
+                                                </span>
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#butiraniklan-{{ $ikl->id }}">
+                                                    Butiran
+                                                </button>
+                                                <div class="btn-group " role="group" aria-label="Basic example">
+                                                    <a class="btn btn-primary btn-sm"
+                                                        href="{{ url('admin/kemaskini-iklan', [$ikl->id]) }}">
+                                                        Kemaskini
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger btn-sm">Padam</button>
+                                                </div>
+                                            </td>
+                                        </tr>
 
+                                        <!-- Modal Butiran Iklan-->
+                                        <div class="modal fade" id="butiraniklan-{{ $ikl->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title modal-title font-weight-normal"
+                                                            id="modal-title-default">Modal title</h5>
+                                                        <button type="button" class="btn-close text-dark"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="card-body p-3">
+                                                            <div class="timeline timeline-one-side">
+                                                                <div class="timeline-block mb-3">
+                                                                    <span class="timeline-step">
+                                                                        <i
+                                                                            class="material-icons text-success text-gradient">date_range</i>
+                                                                    </span>
+                                                                    <div class="timeline-content">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                            Tempoh Iklan Dibuka</h6>
+                                                                        <p
+                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                                                            {{ $ikl->tarikh_mula }} sehingga
+                                                                            {{ $ikl->tarikh_tamat }}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-block mb-3">
+                                                                    <span class="timeline-step">
+                                                                        <i
+                                                                            class="material-icons text-danger text-gradient">room_preferences</i>
+                                                                    </span>
+                                                                    <div class="timeline-content">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                            Rujukan</h6>
+                                                                        <p
+                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                                                            Bilangan {{ $ikl->bil }}
+                                                                            {{ $ikl->tahun }}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-block mb-3">
+                                                                    <span class="timeline-step">
+                                                                        <i
+                                                                            class="material-icons text-info text-gradient">format_quote</i>
+                                                                    </span>
+                                                                    <div class="timeline-content">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                            Jenis Iklan</h6>
+                                                                        <p
+                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                                                            {{ $ikl->jenis }}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="timeline-block mb-3">
+                                                                    <span class="timeline-step">
+                                                                        <i
+                                                                            class="material-icons text-danger text-gradient">link</i>
+                                                                    </span>
+                                                                    <div class="timeline-content">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                            Pautan Iklan
+                                                                        </h6>
+                                                                        <p
+                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                                                            <a href="{{ $ikl->pautan }}"
+                                                                                target="blank">{{ $ikl->pautan }}</a>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                {{-- <div class="timeline-block">
+                                                                        <span class="timeline-step">
+                                                                            <i class="material-icons text-dark text-gradient">payments</i>
+                                                                        </span>
+                                                                        <div class="timeline-content">
+                                                                            <h6 class="text-dark text-sm font-weight-bold mb-0">New order #9583120</h6>
+                                                                            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">17 DEC</p>
+                                                                        </div>
+                                                                    </div> --}}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            data-dismiss="modal">Tutup</button>
+                                                        {{-- <button type="button" class="btn btn-outline-primary">Save</button> --}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -174,7 +276,7 @@
     </div>
 
 
-    <!-- Modal -->
+    <!-- Modal Tambah Iklan-->
     <div class="modal fade" id="bukaiklan" tabindex="-1" role="dialog" aria-labelledby="modal-default"
         aria-hidden="true">
         <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
@@ -226,7 +328,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-outline-dark ml-auto" data-bs-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn bg-gradient-primary">Simpan</button>
                     </div>
                 </form>
@@ -236,6 +338,14 @@
 @endsection
 
 @section('script')
+    <script>
+        $('#butiraniklan').on('show.bs.modal', event => {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+            // Use above variables to manipulate the DOM
+
+        });
+    </script>
     <script>
         if (document.getElementById('choices-gender')) {
             var gender = document.getElementById('choices-gender');

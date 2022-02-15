@@ -72,4 +72,9 @@ class AdminController extends Controller
 
         return view('admin.kemaskini-iklan', compact('iklan'));
     }
+
+    public function konfigurasi()
+    {
+        return view('admin.konfigurasi');
+    }
 }

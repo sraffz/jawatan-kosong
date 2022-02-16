@@ -99,8 +99,7 @@ Negeri Kelantan Perubatan'])
                                             class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
                                             Bil
                                         </th>
-                                        <th
-                                            class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
                                             rujukan iklan
                                         </th>
                                         <th
@@ -189,8 +188,7 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-success text-gradient">date_range</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6
-                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                                                             Tempoh Iklan Dibuka</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -204,8 +202,7 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-danger text-gradient">room_preferences</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6
-                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                                                             Rujukan</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -220,8 +217,7 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-info text-gradient">format_quote</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6
-                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                                                             Jenis Iklan</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -267,7 +263,7 @@ Negeri Kelantan Perubatan'])
                                         </div>
                                     @endforeach
                                 </tbody>
-                            </table>
+                            </table>  
                         </div>
                     </div>
                 </div>
@@ -279,7 +275,7 @@ Negeri Kelantan Perubatan'])
     <!-- Modal Tambah Iklan-->
     <div class="modal fade" id="bukaiklan" tabindex="-1" role="dialog" aria-labelledby="modal-default"
         aria-hidden="true">
-        <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+        <div class="modal-dialog modal- modal-dialog-centered modal- modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title font-weight-normal" id="modal-title-default">Buka Iklan Jawatan Kosong</h6>
@@ -325,6 +321,9 @@ Negeri Kelantan Perubatan'])
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -339,14 +338,13 @@ Negeri Kelantan Perubatan'])
 
 @section('script')
     <script>
-        $('#butiraniklan').on('show.bs.modal', event => {
-            var button = $(event.relatedTarget);
-            var modal = $(this);
-            // Use above variables to manipulate the DOM
-
-        });
-    </script>
-    <script>
+         $('#butiraniklan').on('show.bs.modal', event => {
+              var button = $(event.relatedTarget);
+              var modal = $(this);
+              // Use above variables to manipulate the DOM
+        
+          });
+          
         if (document.getElementById('choices-gender')) {
             var gender = document.getElementById('choices-gender');
             const example = new Choices(gender);

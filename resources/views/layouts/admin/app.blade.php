@@ -31,6 +31,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
 
     @yield('link')
 </head>
@@ -127,6 +129,7 @@
         <script src="{{ asset('material/js/plugins/smooth-scrollbar.min.js') }}"></script>
         <script src="{{ asset('material/js/plugins/chartjs.min.js') }}"></script>
         <script src="{{ asset('material/js/plugins/choices.min.js') }}"></script>
+        <script src="{{ asset('material/js/plugins/dropzone.min.js') }}"></script>
         <script>
             var win = navigator.platform.indexOf('Win') > -1;
             if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -149,8 +152,32 @@
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="{{ asset('material/js/material-dashboard.min.js') }}"></script>
+        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
 
         @yield('script')
+        <script type="text/javascript">
+            function addRow(number) {
+            var count = 1;  
+        
+            var tr = '<tr>'+
+                '<td style="vertical-align:middle"> </td>'+
+                '<td><input class="form-control" name="first[]" placeholder="First name"></td>'+
+                '<td><input class="form-control" name="second[]" placeholder="Last Name"></td>'+
+                '<td><input class="form-control" name="twitter[]" placeholder="Twitter"></td>'+
+                '<td><button type="button" class="btn btn-danger buang">Buang</button></td>'+
+                '</tr>';
+                $('#mp').append(tr);
+            }; 
+            
+            $('.addRow').on('click', function(){
+                addRow();
+            });
+            
+            $('#mp').on('click', '.buang', function(){
+                $(this).parent().parent().remove();
+            });
+        </script>
     </body>
 
 </html>

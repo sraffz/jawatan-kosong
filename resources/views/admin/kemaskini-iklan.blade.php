@@ -109,50 +109,71 @@ Negeri Kelantan Perubatan'])
                                                 <form action="{{ url('tambah-jawatan') }}" method="post"
                                                     autocomplete="off">
                                                     {{ csrf_field() }}
-                                                    <div class="input-group input-group-outline my-3">
+                                                    <div class="input-group input-group-dynamic mt-4">
                                                         <label class="form-label">Jawatan</label>
                                                         <input type="text" class="form-control" name="jawatan"
                                                             id="jawatan" required>
                                                     </div>
-                                                    <div class="input-group input-group-outline my-3">
+                                                    <div class="input-group input-group-dynamic mt-4">
                                                         <label class="form-label">Gred</label>
                                                         <input type="text" class="form-control" name="gred" id="gred"
                                                             required>
                                                     </div>
-                                                    <div class=" ">
+                                                    <div class="input-group input-group-dynamic mt-4">
                                                         <label class="form-label ms-0 mb-0">Kumpulan Perkhidmatan</label>
-                                                        {{-- <label class="form-label ms-0 mb-0">Security Question</label> --}}
-                                                        <select class="form-control" name="choices-questions"
-                                                            id="choices-questions">
-                                                            <option value="Question 1">Question 1</option>
-                                                            <option value="Question 2">Question 2</option>
-                                                            <option value="Question 3">Question 3</option>
-                                                            <option value="Your Question" disabled>Your Question</option>
+                                                        <select class="form-control" name="choices-kump" id="choices-kump">
+                                                            <option value="">SILA PILIH KUMPULAN PERKHIDMATAN</option>
+                                                            <option value="PELAKSANA">PELAKSANA</option>
+                                                            <option value="PENGURUSAN DAN PROFESIONAL">PENGURUSAN DAN PROFESIONAL</option>
                                                         </select>
-                                                        {{-- <input type="text" class="form-control" name="kumpulan"
-                                                            id="kumpulan" required> --}}
-                                                    </div>
-                                                    <div class="input-group input-group-outline my-3">
-                                                        <label class="form-label">Taraf Jawatan</label>
-                                                        <input type="text" class="form-control" name="taraf" id="taraf"
-                                                            required>
-                                                    </div>
-                                                    <div class="input-group input-group-outline my-3">
-                                                        <label class="form-label">Syarat Lantikan</label>
-                                                        <input type="text" class="form-control" name="syarat" id="syarat"
-                                                            required>
                                                     </div>
                                                     <div class="input-group input-group-dynamic mt-4">
-                                                        <label class="form-label">Syarat Lantikan</label>
-                                                        <form action="/file-upload" class="form-control dropzone"
-                                                            id="my-awesome-dropzone">
-                                                        </form>
-                                                        <div class="fallback">
-                                                            {{-- <input name="file" type="file" multiple /> --}}
+                                                        <label class="form-label">Taraf Jawatan</label>
+                                                        <div class="form-check  mt-5">
+                                                            <div class="form-check form-check-inline">
+                                                                <input type="checkbox" class="form-check-input" name="taraf"
+                                                                    id="taraf" value="TETAP" checked>
+                                                                <label class="form-check-label" for="taraf">
+                                                                    TETAP
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input type="checkbox" class="form-check-input" name="taraf"
+                                                                    id="taraf" value="JBC">
+                                                                <label class="form-check-label" for="taraf">
+                                                                    JBC
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input type="checkbox" class="form-check-input" name="taraf"
+                                                                    id="taraf" value="KONTRAK(CFS)">
+                                                                <label class="form-check-label" for="taraf">
+                                                                    KONTRAK(CFS)
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input type="checkbox" class="form-check-input" name="taraf"
+                                                                    id="taraf" value="SAMBILAN">
+                                                                <label class="form-check-label" for="taraf">
+                                                                    SAMBILAN
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                        <form action="/file-upload" class="form-control dropzone"
-                                                            id="my-awesome-dropzone">
-                                                        </form>
+                                                    </div>
+                                                    <div class="input-group mt-4">
+                                                        <label class="form-label">Syarat Lantikan</label>
+                                                        <div class="col-md-12">
+                                                            <form action="/file-upload" class="dropzone"
+                                                                id="my-Dropzone">
+
+                                                            </form>
+                                                            <form action="/file-upload" class="dropzone"
+                                                                id="my-dropzone">
+                                                                <div class="fallback">
+                                                                    <input name="file" type="file" multiple />
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>
@@ -222,10 +243,16 @@ Negeri Kelantan Perubatan'])
 
 @section('script')
     <script>
-        Dropzone.autoDiscover = false;
+        if (document.getElementById('choices-kump')) {
+                var kump = document.getElementById('choices-kump');
+                const example = new Choices(kump);
+            }
+
+        Dropzone.autoDiscover = true;
         var drop = document.getElementById('dropzone')
         var myDropzone = new Dropzone(drop, {
-                    url: "/file/post",
-                    addRemoveLinks: true
+            url: "/file/post",
+            addRemoveLinks: true,
+        });
     </script>
 @endsection

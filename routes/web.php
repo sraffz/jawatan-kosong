@@ -20,7 +20,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-route::post('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
 
 route::prefix('admin')->group(function () {
     Route::get('/login', 'Auth\admin\LoginController@showLoginForm')->name('auth.admin.login');
@@ -29,21 +28,23 @@ route::prefix('admin')->group(function () {
 });
 
 Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
-        
-        Route::get('/', 'AdminController@index')->name('admin');
-        Route::get('/iklan', 'AdminController@iklan')->name('admin.iklan');
-        Route::get('/profil', 'AdminController@profil')->name('admin.profil');
-        Route::get('/tetapan', 'AdminController@tetapan')->name('admin.tetapan');
-        Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
-        Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
-        
-        Route::post('/buka-iklan', 'AdminController@bukaiklan')->name('buka-iklan');
-    });
+    
+    Route::get('/', 'AdminController@index')->name('admin');
+    Route::get('/iklan', 'AdminController@iklan')->name('admin.iklan');
+    Route::get('/profil', 'AdminController@profil')->name('admin.profil');
+    Route::get('/tetapan', 'AdminController@tetapan')->name('admin.tetapan');
+    Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
+    Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
+    
+    Route::post('/buka-iklan', 'AdminController@bukaiklan')->name('buka-iklan');
+});
 
-    Route::middleware(['auth:web'])->group(function () {
-        Route::get('/Halaman-utama', 'HomeController@index')->name('Halaman-utama');
-        Route::get('/profil', 'HomeController@profil')->name('profil');
-        Route::get('/tetapan', 'HomeController@tetapan')->name('tetapan');
+Route::middleware(['auth:web'])->group(function () {
+    route::post('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
+    
+    Route::get('/Halaman-utama', 'HomeController@index')->name('Halaman-utama');
+    Route::get('/profil', 'HomeController@profil')->name('profil');
+    Route::get('/tetapan', 'HomeController@tetapan')->name('tetapan');
     
 });
 

@@ -189,7 +189,7 @@
                                 <h3 class="block-title">Tarikh Tutup<small> Permohonan</small></h3>
                                 <p>Permohonan hendaklah dihantar sebelum atau pada
                                     @php
-                                        setlocale(LC_TIME, 'MS-my');
+                                        setlocale(LC_TIME, config('app.locale'));
                                         $date = Carbon\Carbon::parse($ikln->tarikh_tamat)->formatLocalized('%d %B %Y');
                                         $day = Carbon\Carbon::parse($ikln->tarikh_tamat)->formatLocalized('%A');
                                     @endphp

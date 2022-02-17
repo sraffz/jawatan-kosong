@@ -29,6 +29,9 @@
     <!-- CSS Files -->
     <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/codebase.min.css') }}">
 </head>
+@php
+    setlocale(LC_TIME, config('app.locale'));
+@endphp
 @include('buka-iklan')
 {{-- @include('tiada-iklan') --}}
 

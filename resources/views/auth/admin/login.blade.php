@@ -12,8 +12,7 @@
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
     <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180"
-        href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
@@ -90,8 +89,8 @@
         </div>
     </div>
     <main class="main-content  mt-0">
-        <div class="page-header align-items-start min-vh-100"
-            style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
+        {{-- <div class="page-header align-items-start min-vh-100" style="background-image: url('images/photo34.jpg');"> --}}
+        <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
             <span class="mask bg-gradient-dark opacity-6"></span>
             <div class="container my-auto">
 
@@ -102,7 +101,7 @@
                                 <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
                                     <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Dartar Masuk</h4>
                                     <div class="row mt-3">
-                                        <div class="col-2 text-center ms-auto">
+                                        {{-- <div class="col-2 text-center ms-auto">
                                             <a class="btn btn-link px-3" href="javascript:;">
                                                 <i class="fa fa-facebook text-white text-lg"></i>
                                             </a>
@@ -116,7 +115,7 @@
                                             <a class="btn btn-link px-3" href="javascript:;">
                                                 <i class="fa fa-google text-white text-lg"></i>
                                             </a>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                             </div>
@@ -191,39 +190,7 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer position-absolute bottom-2 py-2 w-100">
-                <div class="container">
-                    <div class="row align-items-center justify-content-lg-between">
-                        <div class="col-12 col-md-6 my-auto">
-                            <div class="copyright text-center text-sm text-white text-lg-start">
-                                <script>
-                                    document.write(new Date().getFullYear())
-                                </script>,
-                                made with <i class="fa fa-heart" aria-hidden="true"></i> by
-                                <a href="https://www.creative-tim.com" class="font-weight-bold text-white"
-                                    target="_blank">Creative Tim</a>
-                                for a better web.
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                                <li class="nav-item">
-
-                                </li>
-                                <li class="nav-item">
-                                    {{-- <a href="https://www.creative-tim.com/presentation" class="nav-link text-white" target="_blank">About Us</a> --}}
-                                </li>
-                                <li class="nav-item">
-                                    {{-- <a href="https://www.creative-tim.com/blog" class="nav-link text-white" target="_blank">Blog</a> --}}
-                                </li>
-                                <li class="nav-item">
-                                    {{-- <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-white" target="_blank">License</a> --}}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
+            @include('layouts.guest.footer')
         </div>
     </main>
     <!--   Core JS Files   -->

@@ -1,69 +1,96 @@
-@extends('layouts.app')
+@extends('layouts.guest.app', ['page' => 'Login', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
+Kelantan'])
 
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
-
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('login') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+    <div class="container my-auto">
+        <div class="row">
+            <div class="col-lg-4 col-md-8 col-12 mx-auto">
+                <div class="card z-index-0 fadeIn3 fadeInBottom">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Log Masuk</h4>
+                            <div class="row mt-3">
+                                {{-- <div class="col-2 text-center ms-auto">
+                                            <a class="btn btn-link px-3" href="javascript:;">
+                                                <i class="fa fa-facebook text-white text-lg"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-2 text-center px-1">
+                                            <a class="btn btn-link px-3" href="javascript:;">
+                                                <i class="fa fa-github text-white text-lg"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-2 text-center me-auto">
+                                            <a class="btn btn-link px-3" href="javascript:;">
+                                                <i class="fa fa-google text-white text-lg"></i>
+                                            </a>
+                                        </div> --}}
                             </div>
                         </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Login
+                    </div>
+                    <div class="card-body">
+                        @if ($errors->has('email'))
+                            <div class="alert alert-danger alert-dismissible text-white" role="alert">
+                                <span class="text-sm">
+                                    Alamat email dan Kata laluan tidak sepadan.
+                                </span>
+                                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert"
+                                    aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
                                 </button>
+                            </div>
+                        @endif
+                        <form role="form" class="text-start" method="POST" action="{{ route('login') }}">
+                            {{ csrf_field() }}
+                            <div
+                                class="input-group input-group-outline mb-3 {{ $errors->has('email') ? ' is-invalid' : '' }}">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" value="{{ old('email') }}"
+                                    required>
+                            </div>
+                            <div
+                                class="input-group input-group-outline mb-3  {{ $errors->has('password') ? ' is-invalid' : '' }}">
+                                <label class="form-label">Kata laluan</label>
+                                <input type="password" class="form-control" name="password" required>
 
+                            </div>
+                            <div class="form-check form-switch d-flex align-items-center mb-3">
+                                <input class="form-check-input" type="checkbox" id="rememberMe" name="remember"
+                                    {{ old('remember') ? 'checked' : '' }}>
+                                <label class="form-check-label mb-0 ms-2" for="rememberMe">Remember me</label>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Log Masuk</button>
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    Forgot Your Password?
+                                    Lupa Kata Laluan?
                                 </a>
                             </div>
-                        </div>
-                    </form>
+                            <p class="mt-4 text-sm text-center">
+                                Belum mempunyai akaun?
+                                <a href="{{ url('register') }}"
+                                    class="text-primary text-gradient font-weight-bold">Daftar</a>
+                            </p>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="position-fixed bottom-1 end-1 z-index-2">
+        <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="dangerToast"
+            aria-atomic="true">
+            <div class="toast-header border-0">
+                <i class="material-icons text-danger me-2">
+                    campaign
+                </i>
+                <span class="me-auto text-gradient text-danger font-weight-bold">Ralat </span>
+                {{-- <small class="text-body">11 mins ago</small> --}}
+                <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+                Alamat email dan kata laluan tidak sepadan.
+            </div>
+        </div>
+    </div>
 @endsection

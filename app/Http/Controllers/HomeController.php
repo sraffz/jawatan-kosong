@@ -25,4 +25,14 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function profil()
+    {
+        return view('pengguna.profil');
+    }
+
+    public function tetapan()
+    {
+        return view('pengguna.tetapan');
+    }
 }

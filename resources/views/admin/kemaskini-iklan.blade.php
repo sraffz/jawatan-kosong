@@ -1,5 +1,5 @@
 @extends('layouts.admin.app', ['page' => 'Iklan Jawatan Kosong', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan
-Negeri Kelantan Perubatan'])
+Negeri Kelantan'])
 
 @section('link')
     <style>

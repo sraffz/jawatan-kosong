@@ -38,8 +38,20 @@ Negeri Kelantan'])
                             </span>
                             <div class="timeline-content">
                                 <h6 class="text-dark text-sm font-weight-bold mb-0">Tempoh Iklan Dibuka</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ $iklan->tarikh_mula }}
-                                    sehingga {{ $iklan->tarikh_tamat }}</p>
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                    @php
+                                        setlocale(LC_TIME, config('app.locale'));
+                                        $tarikhmula = $iklan->tarikh_mula->format('d/m/Y');
+                                    @endphp
+                                     <div class="input-group input-group-static">
+                                        <input type="date" class="form-control" name="tarikhmula" value="{{ $tarikhmula }}" required>
+                                    </div>
+                                     Sehingga
+                                    <div class="input-group input-group-static">
+                                        <input type="date" class="form-control" name="tarikhtamat" required>
+                                    </div>
+                                    {{ $tarikhmula }}
+                                    {{ $iklan->tarikh_mula->formatLocalized('%d %B %Y') }} sehingga {{ $iklan->tarikh_tamat->formatLocalized('%d %B %Y') }}</p>
                             </div>
                         </div>
                         <div class="timeline-block mb-3">
@@ -186,55 +198,43 @@ Negeri Kelantan'])
                                     </div>
                                 </div>
                             </div>
-
-                            <script>
-                                var modelId = document.getElementById('modelId');
-
-                                modelId.addEventListener('show.bs.modal', function(event) {
-                                    // Button that triggered the modal
-                                    let button = event.relatedTarget;
-                                    // Extract info from data-bs-* attributes
-                                    let recipient = button.getAttribute('data-bs-whatever');
-
-                                    // Use above variables to manipulate the DOM
-                                });
-                            </script>
-
                         </div>
                     </div>
                 </div>
                 <div class="card-body p-3">
-                    <table class="table table-striped table-responsive">
-                        <thead>
-                            <tr class="text-center">
-                                <th class="text-uppercase">Bil</th>
-                                <th class="text-uppercase">Jawatan</th>
-                                <th class="text-uppercase">Gred</th>
-                                <th class="text-uppercase">Kumpulan Perkhidmatan</th>
-                                <th class="text-uppercase">Taraf Jawatan</th>
-                                <th class="text-uppercase">SYARAT LANTIKAN</th>
-                                <th class="text-uppercase">tindakan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="text-center">
-                                <td scope="row">1</td>
-                                <td class="text-right">PEGAWAI TADBIR </td>
-                                <td>N41</td>
-                                <td>PENGURUSAN DAN PROFESSIONAL</td>
-                                <td>TETAP</td>
-                                <td><button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                            class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
-                                        PDF</button></td>
-                                <td>
-                                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i
-                                            class="material-icons text-sm me-2">edit</i>Kemaskini</a>
-                                    <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i
-                                            class="material-icons text-sm me-2">delete</i>Padam</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-responsive">
+                            <thead>
+                                <tr class="text-center">
+                                    <th class="text-uppercase">Bil</th>
+                                    <th class="text-uppercase">Jawatan</th>
+                                    <th class="text-uppercase">Gred</th>
+                                    <th class="text-uppercase">Kumpulan Perkhidmatan</th>
+                                    <th class="text-uppercase">Taraf Jawatan</th>
+                                    <th class="text-uppercase">SYARAT LANTIKAN</th>
+                                    <th class="text-uppercase">tindakan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="text-center">
+                                    <td scope="row">1</td>
+                                    <td class="text-right">PEGAWAI TADBIR </td>
+                                    <td>N41</td>
+                                    <td>PENGURUSAN DAN PROFESSIONAL</td>
+                                    <td>TETAP</td>
+                                    <td><button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
+                                                class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
+                                            PDF</button></td>
+                                    <td>
+                                        <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i
+                                                class="material-icons text-sm me-2">edit</i>Kemaskini</a>
+                                        <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i
+                                                class="material-icons text-sm me-2">delete</i>Padam</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

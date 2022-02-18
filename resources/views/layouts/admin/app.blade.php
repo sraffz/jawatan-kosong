@@ -18,7 +18,8 @@
         href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
 
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    <link rel="stylesheet" type="text/css"
+        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
 
     <!-- Styles -->
     <!-- Nucleo Icons -->
@@ -31,18 +32,22 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
     {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 
     @yield('link')
 </head>
+
 <body class="g-sidenav-show bg-gray-200">
+    @php
+        setlocale(LC_TIME, config('app.locale'));
+    @endphp
     @auth
         @include('layouts.admin.sidebar')
     @endauth
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
         @auth
-        @include('layouts.admin.navbar')
+            @include('layouts.admin.navbar')
         @endauth
         <!-- End Navbar -->
         <div class="container-fluid py-4">

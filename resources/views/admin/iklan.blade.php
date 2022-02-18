@@ -7,6 +7,9 @@ Negeri Kelantan Perubatan'])
 @endsection
 
 @section('content')
+    @php
+    setlocale(LC_TIME, config('app.locale'));
+    @endphp
     <div class="row">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
@@ -138,7 +141,8 @@ Negeri Kelantan Perubatan'])
                                             </td>
                                             <td class="text-center text-uppercase">
                                                 <span class="font-weight-bold">
-                                                    {{ $ikl->tarikh_mula }} - {{ $ikl->tarikh_tamat }}
+                                                    {{ $ikl->tarikh_mula->formatLocalized('%d %B %Y') }} -
+                                                    {{ $ikl->tarikh_tamat->formatLocalized('%d %B %Y') }}
                                                 </span>
                                             </td>
                                             <td class="text-center text-uppercase">
@@ -192,8 +196,10 @@ Negeri Kelantan Perubatan'])
                                                                             Tempoh Iklan Dibuka</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
-                                                                            {{ $ikl->tarikh_mula }} sehingga
-                                                                            {{ $ikl->tarikh_tamat }}</p>
+                                                                            {{ $ikl->tarikh_mula->formatLocalized('%d %B %Y') }}
+                                                                            sehingga
+                                                                            {{ $ikl->tarikh_tamat->formatLocalized('%d %B %Y') }}
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="timeline-block mb-3">
@@ -263,7 +269,7 @@ Negeri Kelantan Perubatan'])
                                         </div>
                                     @endforeach
                                 </tbody>
-                            </table>  
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -283,7 +289,7 @@ Negeri Kelantan Perubatan'])
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="{{ url('buka-iklan') }}" method="POST">
+                <form action="{{ route('buka-iklan') }}" method="POST">
                     {{ csrf_field() }}
                     <div class="modal-body">
                         <div class="container-fluid">
@@ -322,7 +328,7 @@ Negeri Kelantan Perubatan'])
                                 </div>
                             </div>
                             <div class="row">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -338,13 +344,13 @@ Negeri Kelantan Perubatan'])
 
 @section('script')
     <script>
-         $('#butiraniklan').on('show.bs.modal', event => {
-              var button = $(event.relatedTarget);
-              var modal = $(this);
-              // Use above variables to manipulate the DOM
-        
-          });
-          
+        $('#butiraniklan').on('show.bs.modal', event => {
+            var button = $(event.relatedTarget);
+            var modal = $(this);
+            // Use above variables to manipulate the DOM
+
+        });
+
         if (document.getElementById('choices-gender')) {
             var gender = document.getElementById('choices-gender');
             const example = new Choices(gender);

@@ -43,13 +43,13 @@ Kelantan'])
                         <form role="form" class="text-start" method="POST" action="{{ route('login') }}">
                             {{ csrf_field() }}
                             <div
-                                class="input-group input-group-outline mb-3 {{ $errors->has('email') ? ' is-invalid' : '' }}">
+                                class="input-group input-group-outline mb-3 {{ old('email') != '' || $errors->has('email') ? 'is-filled focused is-focused' : '' }}">
                                 <label class="form-label">Email</label>
                                 <input type="email" class="form-control" name="email" value="{{ old('email') }}"
                                     required>
                             </div>
                             <div
-                                class="input-group input-group-outline mb-3  {{ $errors->has('password') ? ' is-invalid' : '' }}">
+                                class="input-group input-group-outline mb-3  {{ $errors->has('password') ? 'focused is-focused' : '' }}">
                                 <label class="form-label">Kata laluan</label>
                                 <input type="password" class="form-control" name="password" required>
 

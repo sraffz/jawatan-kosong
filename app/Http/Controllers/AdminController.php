@@ -7,6 +7,8 @@ use App\Iklan;
 use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
 use Auth;
+use Vinkla\Hashids\Facades\Hashids;
+
 
 class AdminController extends Controller
 {
@@ -70,7 +72,9 @@ class AdminController extends Controller
 
     public function kemaskiniiklan($id)
     {
-        $iklan = Iklan::where('id', $id)->first();
+        $d = Hashids::decode($id);
+
+        $iklan = Iklan::where('id', $d)->first();
 
         return view('admin.kemaskini-iklan', compact('iklan'));
     }

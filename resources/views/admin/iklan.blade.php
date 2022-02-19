@@ -161,8 +161,12 @@ Negeri Kelantan Perubatan'])
                                                     Butiran
                                                 </button>
                                                 <div class="btn-group " role="group" aria-label="Basic example">
+                                                    @php
+                                                     
+                                                        $id = \Hashids::encode($ikl->id, 10);
+                                                    @endphp
                                                     <a class="btn btn-primary btn-sm"
-                                                        href="{{ url('admin/kemaskini-iklan', [$ikl->id]) }}">
+                                                        href="{{ url('admin/kemaskini-iklan', [$id]) }}">
                                                         Kemaskini
                                                     </a>
                                                     <button type="button" class="btn btn-danger btn-sm">Padam</button>

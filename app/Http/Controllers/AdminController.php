@@ -67,7 +67,9 @@ class AdminController extends Controller
             'updated_at' => \Carbon\Carbon::now()
         ]);
 
-        return redirect('/admin/kemaskini-iklan/'.$id.'');
+        $d = Hashids::encode($id);
+
+        return redirect('/admin/kemaskini-iklan/'.$d.'');
     }
 
     public function kemaskiniiklan($id)

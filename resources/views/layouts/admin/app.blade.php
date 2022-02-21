@@ -234,6 +234,8 @@
             reader.readAsDataURL(input.files[0]);
         };
     </script>
+
+@include('sweetalert::alert')
 </body>
 
 </html>

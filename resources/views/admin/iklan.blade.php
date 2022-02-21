@@ -264,8 +264,7 @@ Negeri Kelantan Perubatan'])
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-outline-secondary"
-                                                            data-dismiss="modal">Tutup</button>
+                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
                                                         {{-- <button type="button" class="btn btn-outline-primary">Save</button> --}}
                                                     </div>
                                                 </div>

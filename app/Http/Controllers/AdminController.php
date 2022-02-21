@@ -7,6 +7,7 @@ use App\Iklan;
 use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
 use Auth;
+Use Alert;
 use Vinkla\Hashids\Facades\Hashids;
 
 
@@ -53,7 +54,6 @@ class AdminController extends Controller
     {
         $bil = Iklan::where('tahun', now()->year)
         ->count();
-        // return dd(\Carbon\Carbon::now());
 
         $id = Iklan::insertGetId([
             'tahun' => now()->year,
@@ -68,7 +68,7 @@ class AdminController extends Controller
         ]);
 
         $d = Hashids::encode($id);
-
+        Alert::success('Berjaya', 'Iklan baru berjaya ditambah');
         return redirect('/admin/kemaskini-iklan/'.$d.'');
     }
 
@@ -95,6 +95,7 @@ class AdminController extends Controller
         $data->kump_perkhidmatan = $req->kumpulan_jawatan;
         $data->save();
 
+        Alert::success('Berjaya', 'Maklumat berjaya ditambah');
         return back();
     }
 
@@ -105,6 +106,7 @@ class AdminController extends Controller
             'kump_perkhidmatan' => $r->kumpulan_jawatan
         ]);
 
+        Alert::success('Berjaya', 'Maklumat berjaya dikemaskini');
         return back();
     }
 
@@ -113,6 +115,7 @@ class AdminController extends Controller
         JK_kumuplan_perkhidmatan::where('id', $r->id)
         ->delete();
 
+        Alert::success('Berjaya', 'Maklumat berjaya dipadam');
         return back();
     }
 
@@ -123,6 +126,7 @@ class AdminController extends Controller
         $data->singkatan_taraf = $req->singkatan;
         $data->save();
 
+        Alert::success('Berjaya', 'Maklumat berjaya ditambah');
         return back();
     }
 
@@ -134,6 +138,7 @@ class AdminController extends Controller
             'singkatan_taraf' => $req->singkatan
         ]);
 
+        Alert::success('Berjaya', 'Maklumat berjaya dikemaskini');
         return back();
     }
 
@@ -142,6 +147,7 @@ class AdminController extends Controller
         JK_taraf_jawatan::where('id', $r->id)
         ->delete();
 
+        Alert::success('Berjaya', 'Maklumat berjaya dipadam');
         return back();
     }
 }

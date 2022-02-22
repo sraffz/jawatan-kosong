@@ -102,12 +102,12 @@ Negeri Kelantan'])
                         <div class="col-6 text-end">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn bg-gradient-dark mb-0" data-bs-toggle="modal"
-                                data-bs-target="#modelId">
+                                data-bs-target="#tambahsyarat-{{ $iklan->id }}">
                                 <i class="material-icons text-sm">add</i>&nbsp;&nbsp;tambah jawatan
                             </button>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="modelId" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="tambahsyarat-{{ $iklan->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="modelTitleId" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                     <div class="modal-content font-weight-normal" id="modal-title-default">
@@ -117,14 +117,13 @@ Negeri Kelantan'])
                                                 aria-label="Close">X</button>
                                         </div>
                                         <div class="modal-body">
+                                            <form action="{{ route('tambah-jawatan') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                                             <div class="container-fluid">
-                                                <form action="{{ url('tambah-jawatan') }}" method="post"
-                                                    autocomplete="off">
                                                     {{ csrf_field() }}
+                                                    <input type="hidden" id="id" name="id" value="{{ $iklan->id }}">
                                                     <div class="input-group input-group-dynamic mt-4">
                                                         <label class="form-label">Jawatan</label>
-                                                        <input type="text" class="form-control" name="jawatan"
-                                                            id="jawatan" required>
+                                                        <input type="text" class="form-control" name="jawatan" id="jawatan" required>
                                                     </div>
                                                     <div class="input-group input-group-dynamic mt-4">
                                                         <label class="form-label">Gred</label>
@@ -133,7 +132,7 @@ Negeri Kelantan'])
                                                     </div>
                                                     <div class="input-group input-group-dynamic mt-4">
                                                         <label class="form-label ms-0 mb-0">Kumpulan Perkhidmatan</label>
-                                                        <select class="form-control" name="choices-kump" id="choices-kump">
+                                                        <select class="form-control" name="kump" id="choices-kump">
                                                             <option value="">SILA PILIH KUMPULAN PERKHIDMATAN</option>
                                                             <option value="PELAKSANA">PELAKSANA</option>
                                                             <option value="PENGURUSAN DAN PROFESIONAL">PENGURUSAN DAN PROFESIONAL</option>
@@ -172,29 +171,31 @@ Negeri Kelantan'])
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    {{-- <div class="input-group input-group-static mt-4">
+                                                        <label>Syarat</label>
+                                                        <input type="file" class="form-control" name="syarat" id="syarat" required>
+                                                    </div> --}}
                                                     <div class="input-group mt-4">
                                                         <label class="form-label">Syarat Lantikan</label>
                                                         <div class="col-md-12">
-                                                            <form action="/file-upload" class="dropzone"
-                                                                id="my-Dropzone">
+                                                            {{-- <form action="/file-upload" class="dropzone" id="my-Dropzone">
 
-                                                            </form>
-                                                            <form action="/file-upload" class="dropzone"
-                                                                id="my-dropzone">
+                                                            </form> --}}
+                                                            {{-- <form action="/file-upload" class="dropzone" id="my-dropzone"> --}}
                                                                 <div class="fallback">
-                                                                    <input name="file" type="file" multiple />
+                                                                    <input name="syarat" type="file" multiple />
                                                                 </div>
-                                                            </form>
+                                                            {{-- </form> --}}
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn bg-gradient-dark"
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn bg-gradient-dark"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="button" class="btn bg-gradient-success">Tambah</button>
-                                        </div>
+                                                <button type="submit" class="btn bg-gradient-success">Tambah</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -216,15 +217,23 @@ Negeri Kelantan'])
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $k = 1;
+                                @endphp
+                                @foreach ($syarat as $ss)
                                 <tr class="text-center">
-                                    <td scope="row">1</td>
-                                    <td class="text-right">PEGAWAI TADBIR </td>
-                                    <td>N41</td>
-                                    <td>PENGURUSAN DAN PROFESSIONAL</td>
-                                    <td>TETAP</td>
-                                    <td><button class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"><i
-                                                class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
-                                            PDF</button></td>
+                                    <td scope="row">{{ $k++ }}</td>
+                                    <td class="text-right">{{ $ss->nama_jawatan }}</td>
+                                    <td>{{ $ss->gred }}</td>
+                                    <td>{{ $ss->kump_perkhidmatan }}</td>
+                                    <td>{{ $ss->taraf_jawatan }}</td>
+                                    <td>
+                                        {{-- <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{{ url($ss->lokasi_fail) }}" role="button"> --}}
+                                        <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{{ url('dl-syarat', [$ss->id]) }}" role="button">
+                                            <i class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
+                                            PDF
+                                        </a>
+                                    </td>
                                     <td>
                                         <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i
                                                 class="material-icons text-sm me-2">edit</i>Kemaskini</a>
@@ -232,6 +241,7 @@ Negeri Kelantan'])
                                                 class="material-icons text-sm me-2">delete</i>Padam</a>
                                     </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -250,9 +260,9 @@ Negeri Kelantan'])
 
         Dropzone.autoDiscover = true;
         var drop = document.getElementById('dropzone')
-        var myDropzone = new Dropzone(drop, {
-            url: "/file/post",
-            addRemoveLinks: true,
-        });
+        // var dropzone = new Dropzone(drop, {
+        //     url: "/file/post",
+        //     addRemoveLinks: true,
+        // });
     </script>
 @endsection

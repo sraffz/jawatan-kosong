@@ -105,13 +105,13 @@
             $('#mp').append(tr);
         };
 
-        $('.addRow').on('click', function() {
-            addRow();
-        });
+        // $('.addRow').on('click', function() {
+        //     addRow();
+        // });
 
-        $('#mp').on('click', '.buang', function() {
-            $(this).parent().parent().remove();
-        });
+        // $('#mp').on('click', '.buang', function() {
+        //     $(this).parent().parent().remove();
+        // });
     </script>
     <script>
         if (document.getElementById('choices-gender')) {

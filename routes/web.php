@@ -35,6 +35,8 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::get('/tetapan', 'AdminController@tetapan')->name('admin.tetapan');
     Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
+
+    Route::post('/tambah-jawatan', 'AdminController@tambahjawatan')->name('tambah-jawatan');
     
     Route::post('/buka-iklan', 'AdminController@bukaiklan')->name('buka-iklan');
     Route::post('/tambah-kumpulan-jawatan', 'AdminController@tambahkumpulanjawatan')->name('tambah-kumpulan-jawatan');
@@ -45,6 +47,8 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/kemaskini-taraf-jawatan', 'AdminController@kemaskinitarafjawatan')->name('kemaskini-taraf-jawatan');
     Route::post('/padam-taraf-jawatan', 'AdminController@padamtarafjawatan')->name('padam-taraf-jawatan');
 });
+
+Route::get('dl-syarat/{id}', 'AdminController@dlsyarat')->name('dl-syarat');
 
 Route::middleware(['auth:web'])->group(function () {
     route::post('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');

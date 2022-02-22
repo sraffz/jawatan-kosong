@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Iklan;
 use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
+use App\Iklan_jawatan;
 use Auth;
 Use Alert;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Storage;
 
 
 class AdminController extends Controller
@@ -78,7 +80,73 @@ class AdminController extends Controller
 
         $iklan = Iklan::where('id', $d)->first();
 
-        return view('admin.kemaskini-iklan', compact('iklan'));
+        $syarat = Iklan_jawatan::where('id_iklan', $iklan->id)->get();
+
+        return view('admin.kemaskini-iklan', compact('iklan', 'syarat'));
+    }
+
+    public function tambahjawatan(Request $req)
+    {
+        $id = $req->id;
+
+        $iklan = Iklan::where('id', $id)->first();
+
+        
+        // return dd($iklan->tahun, $iklan->bil);
+        if ($req->hasFile('syarat')) {
+            // $allowedfileExtension=['pdf','jpg','png','docx'];
+            $file = $req->file('syarat');
+                $filename = $file->hashName();
+                // $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
+                
+                // return dd($filename, $extension);
+                if ($extension == 'pdf') {
+                    // check folder for 'current year', if not exist, create one
+                     $storagePath = $iklan->tahun.'/'.$iklan->bil;
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                // return dd($filePath);
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+
+                        $data = new Iklan_jawatan;
+                        $data->id_iklan = $id;
+                        $data->nama_jawatan = $req->jawatan;
+                        $data->gred = $req->gred;
+                        $data->kump_perkhidmatan = $req->kump;
+                        $data->taraf_jawatan = $req->taraf;
+                        $data->nama_fail = $filename;
+                        $data->format = $extension;
+                        $data->lokasi_fail = $filePath;
+                        $data->save();
+
+
+                        Alert::success('Berjaya', 'Permohonan Berjaya DidaftarKan');
+                        return back();
+                    } else {
+                        Alert::error('Tidak Berjaya', 'Muat naik tidak berjaya');
+                        return back();
+                    }
+                } else {
+                    echo '<div class="alert alert-warning"><strong>Warning!</strong> Sorry Only Upload png , jpg , doc</div>';
+                    Alert::error('Tidak Berjaya', 'Fail berformat PDF sahaja boleh di muat naik');
+                    return back();
+                }
+             
+        }
+    }
+
+    public function dlsyarat($id)
+    {
+        $f = Iklan_jawatan::where('jk_iklan_jawatan.id', $id)
+        ->join('jk_iklan', 'jk_iklan.id', '=', 'jk_iklan_jawatan.id_iklan')
+        ->first();
+
+        $nama_fail = 'SUK-JK_'.$f->tahun.'_'.$f->bil.'_'.$f->nama_jawatan.'('.$f->gred.').pdf';
+        // return dd($nama_fail);
+        // return dd($f->lokasi_fail);
+        return Storage::download($f->lokasi_fail, $nama_fail);
     }
 
     public function konfigurasi()

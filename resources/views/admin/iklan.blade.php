@@ -25,7 +25,8 @@ Negeri Kelantan Perubatan'])
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
+                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday
+                    </p>
                 </div>
             </div>
         </div>
@@ -252,19 +253,25 @@ Negeri Kelantan Perubatan'])
                                                                     </div>
                                                                 </div>
                                                                 <div class="timeline-block">
-                                                                        <span class="timeline-step">
-                                                                            <i class="material-icons text-dark text-gradient">dns</i>
-                                                                        </span>
-                                                                        <div class="timeline-content">
-                                                                            <h6 class="text-dark text-sm font-weight-bold mb-0">Senarai Jawatan</h6>
-                                                                            @foreach ($syarat as $ss)
+                                                                    <span class="timeline-step">
+                                                                        <i
+                                                                            class="material-icons text-dark text-gradient">dns</i>
+                                                                    </span>
+                                                                    <div class="timeline-content">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                            Senarai Jawatan</h6>
+                                                                        @foreach ($syarat as $ss)
                                                                             @if ($ss->id_iklan == $ikl->id)
-                                                                            <p class="text-dark text-sm  font-weight-bold text-uppercase mt-1 mb-0">{{ $ss->nama_jawatan }} ({{ $ss->gred }}), {{ $ss->singkatan_taraf }}</p>
-                                                                                
+                                                                                <p
+                                                                                    class="text-dark text-sm  font-weight-bold text-uppercase mt-1 mb-0">
+                                                                                    {{ $ss->nama_jawatan }}
+                                                                                    ({{ $ss->gred }}),
+                                                                                    {{ $ss->singkatan_taraf }}</p>
                                                                             @endif
-                                                                            @endforeach
-                                                                        </div>
+                                                                        @endforeach
                                                                     </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -509,5 +516,11 @@ Negeri Kelantan Perubatan'])
             };
             reader.readAsDataURL(input.files[0]);
         };
+
+        $(':input').keyup(function(){
+            $(this).val($(this).val().toUpperCase());
+        });
     </script>
+
+
 @endsection

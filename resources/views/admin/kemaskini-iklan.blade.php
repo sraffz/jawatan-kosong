@@ -127,15 +127,15 @@ Negeri Kelantan'])
                                     <div class="container-fluid">
                                         {{ csrf_field() }}
                                         <input type="hidden" id="id" name="id" value="{{ $iklan->id }}">
-                                        <div class="input-group input-group-dynamic mt-2">
+                                        <div class="input-group input-group-dynamic mt-3">
                                             <label class="form-label">Jawatan</label>
                                             <input type="text" class="form-control" name="jawatan" id="jawatan" required>
                                         </div>
-                                        <div class="input-group input-group-dynamic mt-2">
+                                        <div class="input-group input-group-dynamic mt-3">
                                             <label class="form-label">Gred</label>
                                             <input type="text" class="form-control" name="gred" id="gred" required>
                                         </div>
-                                        <div class="input-group input-group-dynamic mt-2">
+                                        <div class="input-group input-group-dynamic mt-3">
                                             <label class="form-label ms-0 mb-0">Kumpulan Perkhidmatan</label>
                                             <select class="form-control" name="kump" id="choices-kump">
                                                 <option value="">SILA PILIH KUMPULAN PERKHIDMATAN</option>
@@ -145,7 +145,7 @@ Negeri Kelantan'])
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="input-group input-group-dynamic mt-2">
+                                        <div class="input-group input-group-dynamic mt-3">
                                             <label class="form-label">Taraf Jawatan</label>
                                             <div class="form-check mt-5">
                                                 @foreach ($taraf as $trf)
@@ -160,7 +160,7 @@ Negeri Kelantan'])
                                                 @endforeach
                                             </div>
                                         </div>
-                                        <div class="input-group input-group-static mt-2">
+                                        <div class="input-group input-group-static mt-3">
                                             <label>Syarat Lantikan</label>
                                             <input type="file" class="form-control" name="syarat" id="syarat" required>
                                         </div>
@@ -234,16 +234,16 @@ Negeri Kelantan'])
                                                             <input type="hidden" id="id" name="id" value="{{ $ss->id }}">
                                                             <div class="input-group input-group-static">
                                                                 <label>Jawatan</label>
-                                                                <input type="text" class="form-control" name="jawatan"
+                                                                <input type="text" class="form-control upper" name="jawatan"
                                                                     id="jawatan" value="{{ $ss->nama_jawatan }}"
                                                                     required>
                                                             </div>
-                                                            <div class="input-group input-group-static mt-2">
+                                                            <div class="input-group input-group-static mt-3">
                                                                 <label>Gred</label>
                                                                 <input type="text" class="form-control" name="gred"
                                                                     value="{{ $ss->gred }}" id="gred" required>
                                                             </div>
-                                                            <div class="input-group input-group-static mt-2">
+                                                            <div class="input-group input-group-static mt-3">
                                                                 <label class=" ms-0 mb-0">Kumpulan
                                                                     Perkhidmatan</label>
                                                                 <select class="form-control" name="kump">
@@ -257,7 +257,7 @@ Negeri Kelantan'])
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div class="input-group input-group-dynamic mt-2">
+                                                            <div class="input-group input-group-dynamic mt-3">
                                                                 <label class="form-label">Taraf Jawatan</label>
                                                                 <div class="form-check mt-5">
                                                                     @foreach ($taraf as $trf)
@@ -275,7 +275,7 @@ Negeri Kelantan'])
                                                                     @endforeach
                                                                 </div>
                                                             </div>
-                                                            <div class="input-group input-group-static mt-2">
+                                                            <div class="input-group input-group-static mt-3">
                                                                 <div class="col-md-10">
                                                                     <label>Syarat Lantikan</label>
                                                                     <input type="file" class="form-control" name="failbaru">
@@ -337,6 +337,8 @@ Negeri Kelantan'])
 @endsection
 
 @section('script')
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     <script>
         if (document.getElementById('choices-kump')) {
             var kump = document.getElementById('choices-kump');
@@ -346,5 +348,9 @@ Negeri Kelantan'])
             var kump = document.getElementById('choices-kump-kemaskini');
             const example = new Choices(kump);
         }
+ 
+        $(':input').keyup(function(){
+            $(this).val($(this).val().toUpperCase());
+        });
     </script>
 @endsection

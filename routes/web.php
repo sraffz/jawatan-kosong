@@ -13,9 +13,37 @@ use App\Iklan;
 */
 
 Route::get('/', function () {
-    $iklan = Iklan::all();
+
+    $iklan = Iklan::where('jenis', "TERBUKA")->get();
+
+    $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+
+    $bil = Iklan::where('tarikh_mula','<=',$tarikh_kini)
+    ->where('tarikh_tamat', '>=', $tarikh_kini)
+    ->where('jenis', "TERBUKA")
+    ->count();
+
+    // dd($bil);
+    $syarat = DB::table('senarai-syarat-jawatan')->get();
     
-    return view('welcome', compact('iklan'));
+    return view('welcome', compact('iklan', 'syarat','bil'));
+});
+
+Route::get('/tertutup', function () {
+
+    $iklan = Iklan::where('jenis', "TERTUTUP")->get();
+
+    $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+    
+    $bil = Iklan::where('tarikh_mula','<=',$tarikh_kini)
+    ->where('tarikh_tamat', '>=', $tarikh_kini)
+    ->where('jenis', "TERTUTUP")
+    ->count();
+
+    // dd($bil);
+    $syarat = DB::table('senarai-syarat-jawatan')->get();
+    
+    return view('welcome', compact('iklan', 'syarat','bil'));
 });
 
 Auth::routes();
@@ -35,6 +63,9 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::get('/tetapan', 'AdminController@tetapan')->name('admin.tetapan');
     Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
+
+    Route::post('/kemaskini-jawatan', 'AdminController@kemaskinijawatan')->name('kemaskini-jawatan');
+    Route::get('/padam-jawatan', 'AdminController@padamjawatan')->name('padam-jawatan');
 
     Route::post('/tambah-jawatan', 'AdminController@tambahjawatan')->name('tambah-jawatan');
     

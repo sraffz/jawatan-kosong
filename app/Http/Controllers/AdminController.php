@@ -8,10 +8,10 @@ use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
 use App\Iklan_jawatan;
 use Auth;
-Use Alert;
+use Alert;
+use DB;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Storage;
-
 
 class AdminController extends Controller
 {
@@ -43,8 +43,22 @@ class AdminController extends Controller
     public function iklan()
     {
         $iklan = Iklan::all();
+        $syarat = DB::table('senarai-syarat-jawatan')->get();
 
-        return view('admin.iklan', compact('iklan'));
+        $tarikh_kini = \Carbon\Carbon::now();
+
+        $bil_terbuka = Iklan::where('tarikh_mula','<=',$tarikh_kini)
+        ->where('tarikh_tamat', '>=', $tarikh_kini)
+        ->where('jenis', "TERTUTUP")
+        ->count();
+
+        $bil_tutup = Iklan::where('tarikh_mula','<=',$tarikh_kini)
+        ->where('tarikh_tamat', '>=', $tarikh_kini)
+        ->where('jenis', "TERTUTUP")
+        ->count();
+
+        // dd($bil_terbuka, $bil_tutup);
+        return view('admin.iklan', compact('iklan', 'syarat', 'bil_terbuka', 'bil_tutup'));
     }
 
     public function tetapan()
@@ -54,24 +68,23 @@ class AdminController extends Controller
 
     public function bukaiklan(Request $req)
     {
-        $bil = Iklan::where('tahun', now()->year)
-        ->count();
+        $bil = Iklan::where('tahun', now()->year)->count();
 
         $id = Iklan::insertGetId([
             'tahun' => now()->year,
-            'bil' => $bil+1,
+            'bil' => $bil + 1,
             'tarikh_mula' => $req->tarikhmula,
             'tarikh_tamat' => $req->tarikhtamat,
             'jenis' => $req->jenisiklan,
             'pautan' => $req->pautan,
             'id_pencipta' => Auth::user()->id,
             'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now()
+            'updated_at' => \Carbon\Carbon::now(),
         ]);
 
         $d = Hashids::encode($id);
         Alert::success('Berjaya', 'Iklan baru berjaya ditambah');
-        return redirect('/admin/kemaskini-iklan/'.$d.'');
+        return redirect('/admin/kemaskini-iklan/' . $d . '');
     }
 
     public function kemaskiniiklan($id)
@@ -79,10 +92,14 @@ class AdminController extends Controller
         $d = Hashids::decode($id);
 
         $iklan = Iklan::where('id', $d)->first();
+        $taraf = JK_taraf_jawatan::all();
+        $kump = JK_kumuplan_perkhidmatan::all();
 
-        $syarat = Iklan_jawatan::where('id_iklan', $iklan->id)->get();
+        $syarat = DB::table('senarai-syarat-jawatan')
+            ->where('id_iklan', $iklan->id)
+            ->get();
 
-        return view('admin.kemaskini-iklan', compact('iklan', 'syarat'));
+        return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
     }
 
     public function tambahjawatan(Request $req)
@@ -91,59 +108,124 @@ class AdminController extends Controller
 
         $iklan = Iklan::where('id', $id)->first();
 
-        
         // return dd($iklan->tahun, $iklan->bil);
         if ($req->hasFile('syarat')) {
             // $allowedfileExtension=['pdf','jpg','png','docx'];
             $file = $req->file('syarat');
-                $filename = $file->hashName();
-                // $filename = $file->getClientOriginalName();
-                $extension = $file->extension();
-                
-                // return dd($filename, $extension);
-                if ($extension == 'pdf') {
-                    // check folder for 'current year', if not exist, create one
-                     $storagePath = $iklan->tahun.'/'.$iklan->bil;
-                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+            $filename = $file->hashName();
+            // $filename = $file->getClientOriginalName();
+            $extension = $file->extension();
+
+            // return dd($filename, $extension);
+            if ($extension == 'pdf') {
+                // check folder for 'current year', if not exist, create one
+                $storagePath = $iklan->tahun . '/' . $iklan->bil;
+                $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
                 // return dd($filePath);
-                    $upload_success = $file->storeAs($storagePath, $filename);
+                $upload_success = $file->storeAs($storagePath, $filename);
 
-                    if ($upload_success) {
+                if ($upload_success) {
+                    $data = new Iklan_jawatan();
+                    $data->id_iklan = $id;
+                    $data->nama_jawatan = $req->jawatan;
+                    $data->gred = $req->gred;
+                    $data->kump_perkhidmatan = $req->kump;
+                    $data->taraf_jawatan = $req->taraf;
+                    $data->nama_fail = $filename;
+                    $data->format = $extension;
+                    $data->lokasi_fail = $filePath;
+                    $data->save();
 
-                        $data = new Iklan_jawatan;
-                        $data->id_iklan = $id;
-                        $data->nama_jawatan = $req->jawatan;
-                        $data->gred = $req->gred;
-                        $data->kump_perkhidmatan = $req->kump;
-                        $data->taraf_jawatan = $req->taraf;
-                        $data->nama_fail = $filename;
-                        $data->format = $extension;
-                        $data->lokasi_fail = $filePath;
-                        $data->save();
-
-
-                        Alert::success('Berjaya', 'Permohonan Berjaya DidaftarKan');
-                        return back();
-                    } else {
-                        Alert::error('Tidak Berjaya', 'Muat naik tidak berjaya');
-                        return back();
-                    }
+                    Alert::success('Berjaya', 'Permohonan Berjaya DidaftarKan');
+                    return back();
                 } else {
-                    echo '<div class="alert alert-warning"><strong>Warning!</strong> Sorry Only Upload png , jpg , doc</div>';
-                    Alert::error('Tidak Berjaya', 'Fail berformat PDF sahaja boleh di muat naik');
+                    Alert::error('Tidak Berjaya', 'Muat naik tidak berjaya');
                     return back();
                 }
-             
+            } else {
+                // echo '<div class="alert alert-warning"><strong>Warning!</strong> Sorry Only Upload png , jpg , doc</div>';
+                Alert::error('Tidak Berjaya', 'Fail berformat PDF sahaja boleh di muat naik');
+                return back();
+            }
         }
+    }
+
+    public function kemaskinijawatan(Request $req)
+    {
+        $id = $req->id;
+
+        $sdsds = Iklan_jawatan::where('id', $req->id)->first();
+        $iklan = Iklan::where('id', $sdsds->id_iklan)->first();
+
+        if ($req->hasFile('failbaru')) {
+            // return dd($id);
+
+            $file = $req->file('failbaru');
+            $filename = $file->hashName();
+            $extension = $file->extension();
+
+            // return dd($filename, $extension);
+            if ($extension == 'pdf') {
+                // check folder for 'current year', if not exist, create one
+                $storagePath = $iklan->tahun . '/' . $iklan->bil;
+                $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                // return dd($filePath);
+                $upload_success = $file->storeAs($storagePath, $filename);
+
+                if ($upload_success) {
+                    $old = Iklan_jawatan::where('id', $req->id)->first();
+                    if (Storage::exists($old->lokasi_fail)) {
+                        Storage::delete($old->lokasi_fail);
+                    }
+
+                    Iklan_jawatan::where('id', $req->id)->update([
+                        'nama_jawatan' => $req->jawatan,
+                        'gred' => $req->gred,
+                        'kump_perkhidmatan' => $req->kump,
+                        'taraf_jawatan' => $req->taraf,
+                        'nama_fail' => $filename,
+                        'format' => $extension,
+                        'lokasi_fail' => $filePath,
+                    ]);
+
+                    Alert::info('Berjaya', 'Maklumat telah dikemaskini.');
+                    return back();
+                } else {
+                    Alert::error('Tidak Berjaya', 'Muat naik tidak berjaya');
+                    return back();
+                }
+            } else {
+                Alert::error('Tidak Berjaya', 'Fail berformat PDF sahaja boleh di muat naik');
+                return back()->withInput();
+            }
+        }
+        // else {
+        //     Iklan_jawatan::where('id', $req->id)->update([
+        //         'nama_jawatan' => $req->jawatan,
+        //         'gred' => $req->gred,
+        //         'kump_perkhidmatan' => $req->kump,
+        //         'taraf_jawatan' => $req->taraf,
+        //     ]);
+        //     Alert::info('Berjaya', 'Maklumat telah dikemaskini. tanpa fail');
+        //     return back();
+        // }
+    }
+
+    public function padamjawatan(Request $req)
+    {
+        Iklan_jawatan::where('id', $req->id)->delete();
+
+        Alert::error('Berjaya', 'Jawatan telah dibuang dari senarai iklan.');
+        return back();
     }
 
     public function dlsyarat($id)
     {
         $f = Iklan_jawatan::where('jk_iklan_jawatan.id', $id)
-        ->join('jk_iklan', 'jk_iklan.id', '=', 'jk_iklan_jawatan.id_iklan')
-        ->first();
+            ->join('jk_iklan', 'jk_iklan.id', '=', 'jk_iklan_jawatan.id_iklan')
+            ->first();
 
-        $nama_fail = 'SUK-JK_'.$f->tahun.'_'.$f->bil.'_'.$f->nama_jawatan.'('.$f->gred.').pdf';
+        $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
         // return dd($nama_fail);
         // return dd($f->lokasi_fail);
         return Storage::download($f->lokasi_fail, $nama_fail);
@@ -154,12 +236,12 @@ class AdminController extends Controller
         $taraf = JK_taraf_jawatan::all();
         $kumpulan = JK_kumuplan_perkhidmatan::all();
 
-        return view('admin.konfigurasi',compact('taraf', 'kumpulan'));
+        return view('admin.konfigurasi', compact('taraf', 'kumpulan'));
     }
 
     public function tambahkumpulanjawatan(Request $req)
     {
-        $data = new JK_kumuplan_perkhidmatan;
+        $data = new JK_kumuplan_perkhidmatan();
         $data->kump_perkhidmatan = $req->kumpulan_jawatan;
         $data->save();
 
@@ -169,9 +251,8 @@ class AdminController extends Controller
 
     public function kemaskinikumpulanjawatan(Request $r)
     {
-        JK_kumuplan_perkhidmatan::where('id', $r->id)
-        ->update([
-            'kump_perkhidmatan' => $r->kumpulan_jawatan
+        JK_kumuplan_perkhidmatan::where('id', $r->id)->update([
+            'kump_perkhidmatan' => $r->kumpulan_jawatan,
         ]);
 
         Alert::success('Berjaya', 'Maklumat berjaya dikemaskini');
@@ -180,8 +261,7 @@ class AdminController extends Controller
 
     public function padamkumpulanjawatan(Request $r)
     {
-        JK_kumuplan_perkhidmatan::where('id', $r->id)
-        ->delete();
+        JK_kumuplan_perkhidmatan::where('id', $r->id)->delete();
 
         Alert::success('Berjaya', 'Maklumat berjaya dipadam');
         return back();
@@ -189,7 +269,7 @@ class AdminController extends Controller
 
     public function tambahtarafjawatan(Request $req)
     {
-        $data = new JK_taraf_jawatan;
+        $data = new JK_taraf_jawatan();
         $data->taraf = $req->taraf_jawatan;
         $data->singkatan_taraf = $req->singkatan;
         $data->save();
@@ -200,10 +280,9 @@ class AdminController extends Controller
 
     public function kemaskinitarafjawatan(Request $req)
     {
-        JK_taraf_jawatan::where('id', $req->id)
-        ->update([
+        JK_taraf_jawatan::where('id', $req->id)->update([
             'taraf' => $req->taraf_jawatan,
-            'singkatan_taraf' => $req->singkatan
+            'singkatan_taraf' => $req->singkatan,
         ]);
 
         Alert::success('Berjaya', 'Maklumat berjaya dikemaskini');
@@ -212,8 +291,7 @@ class AdminController extends Controller
 
     public function padamtarafjawatan(Request $r)
     {
-        JK_taraf_jawatan::where('id', $r->id)
-        ->delete();
+        JK_taraf_jawatan::where('id', $r->id)->delete();
 
         Alert::success('Berjaya', 'Maklumat berjaya dipadam');
         return back();

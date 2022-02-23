@@ -15,6 +15,43 @@ Negeri Kelantan Perubatan'])
             <div class="card">
                 <div class="card-header p-3 pt-2">
                     <div
+                        class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">weekend</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Iklan Terbuka Aktif</p>
+                        <h4 class="mb-0">{{ $bil_terbuka }}</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div
+                        class="icon icon-lg icon-shape bg-gradient-danger shadow-danger text-center border-radius-xl mt-n4 position-absolute">
+                        <i class="material-icons opacity-10">weekend</i>
+                    </div>
+                    <div class="text-end pt-1">
+                        <p class="text-sm mb-0 text-capitalize">Iklan Tertutup Aktif</p>
+                        <h4 class="mb-0">{{ $bil_tutup }}</h4>
+                    </div>
+                </div>
+                <hr class="dark horizontal my-0">
+                <div class="card-footer p-3">
+                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than
+                        yesterday</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card">
+                <div class="card-header p-3 pt-2">
+                    <div
                         class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
                         <i class="material-icons opacity-10">weekend</i>
                     </div>
@@ -27,44 +64,6 @@ Negeri Kelantan Perubatan'])
                 <div class="card-footer p-3">
                     <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than
                         lask week</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-header p-3 pt-2">
-                    <div
-                        class="icon icon-lg icon-shape bg-gradient-success shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">person</i>
-                    </div>
-                    <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">New Clients</p>
-                        <h4 class="mb-0">3,462</h4>
-                    </div>
-                </div>
-                <hr class="dark horizontal my-0">
-                <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than
-                        yesterday</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6">
-            <div class="card">
-                <div class="card-header p-3 pt-2">
-                    <div
-                        class="icon icon-lg icon-shape bg-gradient-info shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">weekend</i>
-                    </div>
-                    <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Sales</p>
-                        <h4 class="mb-0">$103,430</h4>
-                    </div>
-                </div>
-                <hr class="dark horizontal my-0">
-                <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than
-                        yesterday</p>
                 </div>
             </div>
         </div>
@@ -95,7 +94,7 @@ Negeri Kelantan Perubatan'])
                     </div>
                     <div class="card-body px-0">
                         <div class="table-responsive">
-                            <table class="table table-sm align-items-center mb-0">
+                            <table class="table table-sm align-items-center mb-0 display">
                                 <thead>
                                     <tr>
                                         <th
@@ -136,13 +135,13 @@ Negeri Kelantan Perubatan'])
                                             </td>
                                             <td>
                                                 <span class="font-weight-bold text-uppercase">
-                                                    Bil {{ $ikl->bil }} {{ $ikl->tahun }}
+                                                    Bil {{ $ikl->bil }}/{{ $ikl->tahun }}
                                                 </span>
                                             </td>
                                             <td class="text-center text-uppercase">
                                                 <span class="font-weight-bold">
-                                                    {{ $ikl->tarikh_mula->formatLocalized('%d %B %Y') }} -
-                                                    {{ $ikl->tarikh_tamat->formatLocalized('%d %B %Y') }}
+                                                    {{ $ikl->tarikh_mula->formatLocalized('%d/%m/%Y') }} -
+                                                    {{ $ikl->tarikh_tamat->formatLocalized('%d/%m/%Y') }}
                                                 </span>
                                             </td>
                                             <td class="text-center text-uppercase">
@@ -152,7 +151,7 @@ Negeri Kelantan Perubatan'])
                                             </td>
                                             <td class="text-center text-wrap text-break">
                                                 <span class="font-weight-bold">
-                                                    <a href="{{ $ikl->pautan }}" target="blank">{{ $ikl->pautan }}</a>
+                                                    <a href="{{ $ikl->pautan }}" target="blank">Cetak Iklan</a>
                                                 </span>
                                             </td>
                                             <td class="text-center">
@@ -162,14 +161,15 @@ Negeri Kelantan Perubatan'])
                                                 </button>
                                                 <div class="btn-group " role="group" aria-label="Basic example">
                                                     @php
-                                                     
+                                                        
                                                         $id = \Hashids::encode($ikl->id, 10);
                                                     @endphp
                                                     <a class="btn btn-primary btn-sm"
                                                         href="{{ url('admin/kemaskini-iklan', [$id]) }}">
                                                         Kemaskini
                                                     </a>
-                                                    <button type="button" class="btn btn-danger btn-sm">Padam</button>
+                                                    <button type="button"
+                                                        class="btn btn-danger btn-sm padam_klan">Padam</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -181,7 +181,7 @@ Negeri Kelantan Perubatan'])
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title modal-title font-weight-normal"
-                                                            id="modal-title-default">Modal title</h5>
+                                                            id="modal-title-default">Butiran Iklan</h5>
                                                         <button type="button" class="btn-close text-dark"
                                                             data-bs-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">×</span>
@@ -190,6 +190,21 @@ Negeri Kelantan Perubatan'])
                                                     <div class="modal-body">
                                                         <div class="card-body p-3">
                                                             <div class="timeline timeline-one-side">
+                                                                <div class="timeline-block mb-3">
+                                                                    <span class="timeline-step">
+                                                                        <i
+                                                                            class="material-icons text-danger text-gradient">room_preferences</i>
+                                                                    </span>
+                                                                    <div class="timeline-content">
+                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
+                                                                            Rujukan</h6>
+                                                                        <p
+                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                                                            Bilangan {{ $ikl->bil }}
+                                                                            {{ $ikl->tahun }}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="timeline-block mb-3">
                                                                     <span class="timeline-step">
                                                                         <i
@@ -203,21 +218,6 @@ Negeri Kelantan Perubatan'])
                                                                             {{ $ikl->tarikh_mula->formatLocalized('%d %B %Y') }}
                                                                             sehingga
                                                                             {{ $ikl->tarikh_tamat->formatLocalized('%d %B %Y') }}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="timeline-block mb-3">
-                                                                    <span class="timeline-step">
-                                                                        <i
-                                                                            class="material-icons text-danger text-gradient">room_preferences</i>
-                                                                    </span>
-                                                                    <div class="timeline-content">
-                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
-                                                                            Rujukan</h6>
-                                                                        <p
-                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
-                                                                            Bilangan {{ $ikl->bil }}
-                                                                            {{ $ikl->tahun }}
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -251,20 +251,26 @@ Negeri Kelantan Perubatan'])
                                                                         </p>
                                                                     </div>
                                                                 </div>
-                                                                {{-- <div class="timeline-block">
+                                                                <div class="timeline-block">
                                                                         <span class="timeline-step">
-                                                                            <i class="material-icons text-dark text-gradient">payments</i>
+                                                                            <i class="material-icons text-dark text-gradient">dns</i>
                                                                         </span>
                                                                         <div class="timeline-content">
-                                                                            <h6 class="text-dark text-sm font-weight-bold mb-0">New order #9583120</h6>
-                                                                            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">17 DEC</p>
+                                                                            <h6 class="text-dark text-sm font-weight-bold mb-0">Senarai Jawatan</h6>
+                                                                            @foreach ($syarat as $ss)
+                                                                            @if ($ss->id_iklan == $ikl->id)
+                                                                            <p class="text-dark text-sm  font-weight-bold text-uppercase mt-1 mb-0">{{ $ss->nama_jawatan }} ({{ $ss->gred }}), {{ $ss->singkatan_taraf }}</p>
+                                                                                
+                                                                            @endif
+                                                                            @endforeach
                                                                         </div>
-                                                                    </div> --}}
+                                                                    </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                        <button type="button" class="btn btn-outline-secondary"
+                                                            data-bs-dismiss="modal">Tutup</button>
                                                         {{-- <button type="button" class="btn btn-outline-primary">Save</button> --}}
                                                     </div>
                                                 </div>
@@ -314,7 +320,7 @@ Negeri Kelantan Perubatan'])
                                 <div class="col-12">
                                     <div class="input-group input-group-static">
                                         <label>Jenis Iklan</label>
-                                        <select class="form-control" name="jenisiklan" id="jenis" required>
+                                        <select class="form-control" name="jenisiklan" id="choices-jenis" required>
                                             <option value="">Sila Pilih</option>
                                             <option value="TERBUKA">TERBUKA</option>
                                             <option value="TERTUTUP">TERTUTUP</option>
@@ -346,13 +352,43 @@ Negeri Kelantan Perubatan'])
 @endsection
 
 @section('script')
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>
+        $(document).on('click', '.padam_klan', function(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+            })
+        });
+
         $('#butiraniklan').on('show.bs.modal', event => {
             var button = $(event.relatedTarget);
             var modal = $(this);
             // Use above variables to manipulate the DOM
 
         });
+    </script>
+    <script>
+        if (document.getElementById('choices-jenis')) {
+            var jenis = document.getElementById('choices-jenis');
+            const example = new Choices(jenis);
+        }
+
+
 
         if (document.getElementById('choices-gender')) {
             var gender = document.getElementById('choices-gender');
@@ -447,6 +483,7 @@ Negeri Kelantan Perubatan'])
                 month.options.add(optn);
             }
         }
+
 
         function visible() {
             var elem = document.getElementById('profileVisibility');

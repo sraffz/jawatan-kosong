@@ -38,11 +38,16 @@
             <div class="content">
                 <!-- Default Table Style -->
                 <!-- Table -->
+                @php
+                    $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+                @endphp
                 @foreach ($iklan as $ikln)
-                    @if ($ikln->jenis == 'TERBUKA')
+                {{-- @if ($tarikh_kini->between($ikln->tarikh_mula, $ikln->tarikh_tamat)) --}}
+                    @if ($ikln->tarikh_mula <= $tarikh_kini && $ikln->tarikh_tamat >= $tarikh_kini )
+                    {{-- @if ($ikln->jenis == 'TERBUKA') --}}
                         <div class="block">
                             <div class="block-content">
-                                <h4 class="text-center">BILANGAN {{ $ikln->bil }} {{ $ikln->tahun }}</h4>
+                                <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3>
                                 <hr>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-vcenter">
@@ -58,122 +63,29 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <th class="text-center" scope="row">1</th>
-                                                <td>JURUTERA</td>
-                                                <td class="text-center">J41</td>
-                                                <td class="text-center d-none d-sm-table-cell">PENGURUSAN DAN
-                                                    PROFESIONAL</td>
-                                                <td class="text-center"><i>CONTRACT FOR SERVICE</i></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="doc/jurutera-j41-2.pdf" target="_blank">
-                                                            <button type="button" class="btn btn-sm btn-secondary">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" scope="row">2</th>
-                                                <td>PEGAWAI PERTANIAN</td>
-                                                <td class="text-center">G41</td>
-                                                <td class="text-center d-none d-sm-table-cell">PENGURUSAN DAN
-                                                    PROFESIONAL</td>
-                                                <td class="text-center"><i>CONTRACT FOR SERVICE</i></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="doc/pegawai-pertanian-g41-2.pdf" target="_blank">
-                                                            <button type="button" class="btn btn-sm btn-secondary">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" scope="row">3</th>
-                                                <td>PEGAWAI VETERINAR</td>
-                                                <td class="text-center">GV41</td>
-                                                <td class="text-center d-none d-sm-table-cell">PENGURUSAN DAN
-                                                    PROFESIONAL</td>
-                                                <td class="text-center"><i>CONTRACT FOR SERVICE</i></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="doc/pegawai-veterinar-gv41.pdf" target="_blank">
-                                                            <button type="button" class="btn btn-sm btn-secondary">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" scope="row">4</th>
-                                                <td>PENOLONG PEGAWAI SENIBINA</td>
-                                                <td class="text-center">JA29</td>
-                                                <td class="text-center d-none d-sm-table-cell">PELAKSANA</td>
-                                                <td class="text-center"><i>CONTRACT FOR SERVICE</i></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="doc/pen-peg-senibina-ja29.pdf" target="_blank">
-                                                            <button type="button" class="btn btn-sm btn-secondary">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" scope="row">5</th>
-                                                <td>PENOLONG PEGAWAI PERANCANG BANDAR DAN DESA</td>
-                                                <td class="text-center">JA29</td>
-                                                <td class="text-center d-none d-sm-table-cell">PELAKSANA</td>
-                                                <td class="text-center"><i>CONTRACT FOR SERVICE</i></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="doc/pen-peg-perancang-bandar-desa-ja29.pdf"
-                                                            target="_blank">
-                                                            <button type="button" class="btn btn-sm btn-secondary">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" scope="row">6</th>
-                                                <td>PENOLONG PEGAWAI PERTANIAN</td>
-                                                <td class="text-center">G29</td>
-                                                <td class="text-center d-none d-sm-table-cell">PELAKSANA</td>
-                                                <td class="text-center"><i>CONTRACT FOR SERVICE</i></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="doc/pen-peg-pertanian-g29.pdf" target="_blank">
-                                                            <button type="button" class="btn btn-sm btn-secondary">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" scope="row">7</th>
-                                                <td>PEMBANTU VETERINAR</td>
-                                                <td class="text-center">G19</td>
-                                                <td class="text-center d-none d-sm-table-cell">PELAKSANA</td>
-                                                <td class="text-center"><i>CONTRACT FOR SERVICE</i></td>
-                                                <td class="text-center">
-                                                    <div class="btn-group">
-                                                        <a href="doc/pembantu-veterinar-g19.pdf" target="_blank">
-                                                            <button type="button" class="btn btn-sm btn-secondary">
-                                                                <i class="fa fa-file-pdf-o"></i>
-                                                            </button>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @php
+                                                $i=1;
+                                            @endphp
+                                            @foreach ($syarat as $ss)
+                                                @if ($ss->id_iklan == $ikln->id)
+                                                <tr class="text-uppercase">
+                                                    <th class="text-center" scope="row">{{ $i++ }}</th>
+                                                    <td>{{ $ss->nama_jawatan }}</td>
+                                                    <td class="text-center">{{ $ss->gred }}</td>
+                                                    <td class="text-center d-none d-sm-table-cell">{{ $ss->kump_perkhidmatan }}</td>
+                                                    <td class="text-center"><i>{{ $ss->taraf }}</i></td>
+                                                    <td class="text-center">
+                                                        <div class="btn-group">
+                                                            <a href="{{ url('dl-syarat', [$ss->id]) }}"  >
+                                                                <button type="button" class="btn btn-sm btn-secondary">
+                                                                    <i class="fa fa-file-pdf-o"></i>
+                                                                </button>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -199,10 +111,9 @@
                                 </p>
                             </div>
                         </div>
+                    {{-- @endif --}}
                     @endif
                 @endforeach
-
-
 
                 <div class="block">
                     <div class="block-header block-header-default">

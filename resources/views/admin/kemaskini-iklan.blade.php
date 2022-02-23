@@ -43,15 +43,17 @@ Negeri Kelantan'])
                                         setlocale(LC_TIME, config('app.locale'));
                                         $tarikhmula = $iklan->tarikh_mula->format('d/m/Y');
                                     @endphp
-                                     <div class="input-group input-group-static">
-                                        <input type="date" class="form-control" name="tarikhmula" value="{{ $tarikhmula }}" required>
-                                    </div>
-                                     Sehingga
-                                    <div class="input-group input-group-static">
-                                        <input type="date" class="form-control" name="tarikhtamat" required>
-                                    </div>
-                                    {{ $tarikhmula }}
-                                    {{ $iklan->tarikh_mula->formatLocalized('%d %B %Y') }} sehingga {{ $iklan->tarikh_tamat->formatLocalized('%d %B %Y') }}</p>
+                                <div class="input-group input-group-static">
+                                    <input type="date" class="form-control" name="tarikhmula" value="{{ $tarikhmula }}"
+                                        required>
+                                </div>
+                                Sehingga
+                                <div class="input-group input-group-static">
+                                    <input type="date" class="form-control" name="tarikhtamat" required>
+                                </div>
+                                {{ $tarikhmula }}
+                                {{ $iklan->tarikh_mula->formatLocalized('%d %B %Y') }} sehingga
+                                {{ $iklan->tarikh_tamat->formatLocalized('%d %B %Y') }}</p>
                             </div>
                         </div>
                         <div class="timeline-block mb-3">
@@ -106,99 +108,70 @@ Negeri Kelantan'])
                                 <i class="material-icons text-sm">add</i>&nbsp;&nbsp;tambah jawatan
                             </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="tambahsyarat-{{ $iklan->id }}" tabindex="-1" role="dialog"
-                                aria-labelledby="modelTitleId" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                    <div class="modal-content font-weight-normal" id="modal-title-default">
-                                        <div class="modal-header">
-                                            <h6 class="modal-title">Modal title</h6>
-                                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                                aria-label="Close">X</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Tambah-->
+                <div class="modal fade" id="tambahsyarat-{{ $iklan->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="modelTitleId" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content font-weight-normal" id="modal-title-default">
+                            <div class="modal-header">
+                                <h6 class="modal-title">Tambah Jawatan</h6>
+                                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
+                                    aria-label="Close">X</button>
+                            </div>
+                            <form action="{{ route('tambah-jawatan') }}" method="post" autocomplete="off"
+                                enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" id="id" name="id" value="{{ $iklan->id }}">
+                                        <div class="input-group input-group-dynamic mt-2">
+                                            <label class="form-label">Jawatan</label>
+                                            <input type="text" class="form-control" name="jawatan" id="jawatan" required>
                                         </div>
-                                        <div class="modal-body">
-                                            <form action="{{ route('tambah-jawatan') }}" method="post" autocomplete="off" enctype="multipart/form-data">
-                                            <div class="container-fluid">
-                                                    {{ csrf_field() }}
-                                                    <input type="hidden" id="id" name="id" value="{{ $iklan->id }}">
-                                                    <div class="input-group input-group-dynamic mt-4">
-                                                        <label class="form-label">Jawatan</label>
-                                                        <input type="text" class="form-control" name="jawatan" id="jawatan" required>
+                                        <div class="input-group input-group-dynamic mt-2">
+                                            <label class="form-label">Gred</label>
+                                            <input type="text" class="form-control" name="gred" id="gred" required>
+                                        </div>
+                                        <div class="input-group input-group-dynamic mt-2">
+                                            <label class="form-label ms-0 mb-0">Kumpulan Perkhidmatan</label>
+                                            <select class="form-control" name="kump" id="choices-kump">
+                                                <option value="">SILA PILIH KUMPULAN PERKHIDMATAN</option>
+                                                @foreach ($kump as $kmp)
+                                                    <option class="text-uppercase" value="{{ $kmp->id }}">
+                                                        {{ $kmp->kump_perkhidmatan }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="input-group input-group-dynamic mt-2">
+                                            <label class="form-label">Taraf Jawatan</label>
+                                            <div class="form-check mt-5">
+                                                @foreach ($taraf as $trf)
+                                                    <div class="form-check form-check-inline">
+                                                        <input type="checkbox" class="form-check-input" name="taraf"
+                                                            id="taraf" value="{{ $trf->id }}">
+                                                        <label class="form-check-label text-uppercase" for="taraf">
+                                                            {{ $trf->taraf }}
+                                                            ({{ $trf->singkatan_taraf }})
+                                                        </label>
                                                     </div>
-                                                    <div class="input-group input-group-dynamic mt-4">
-                                                        <label class="form-label">Gred</label>
-                                                        <input type="text" class="form-control" name="gred" id="gred"
-                                                            required>
-                                                    </div>
-                                                    <div class="input-group input-group-dynamic mt-4">
-                                                        <label class="form-label ms-0 mb-0">Kumpulan Perkhidmatan</label>
-                                                        <select class="form-control" name="kump" id="choices-kump">
-                                                            <option value="">SILA PILIH KUMPULAN PERKHIDMATAN</option>
-                                                            <option value="PELAKSANA">PELAKSANA</option>
-                                                            <option value="PENGURUSAN DAN PROFESIONAL">PENGURUSAN DAN PROFESIONAL</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="input-group input-group-dynamic mt-4">
-                                                        <label class="form-label">Taraf Jawatan</label>
-                                                        <div class="form-check  mt-5">
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="checkbox" class="form-check-input" name="taraf"
-                                                                    id="taraf" value="TETAP" checked>
-                                                                <label class="form-check-label" for="taraf">
-                                                                    TETAP
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="checkbox" class="form-check-input" name="taraf"
-                                                                    id="taraf" value="JBC">
-                                                                <label class="form-check-label" for="taraf">
-                                                                    JBC
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="checkbox" class="form-check-input" name="taraf"
-                                                                    id="taraf" value="KONTRAK(CFS)">
-                                                                <label class="form-check-label" for="taraf">
-                                                                    KONTRAK(CFS)
-                                                                </label>
-                                                            </div>
-                                                            <div class="form-check form-check-inline">
-                                                                <input type="checkbox" class="form-check-input" name="taraf"
-                                                                    id="taraf" value="SAMBILAN">
-                                                                <label class="form-check-label" for="taraf">
-                                                                    SAMBILAN
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {{-- <div class="input-group input-group-static mt-4">
-                                                        <label>Syarat</label>
-                                                        <input type="file" class="form-control" name="syarat" id="syarat" required>
-                                                    </div> --}}
-                                                    <div class="input-group mt-4">
-                                                        <label class="form-label">Syarat Lantikan</label>
-                                                        <div class="col-md-12">
-                                                            {{-- <form action="/file-upload" class="dropzone" id="my-Dropzone">
-
-                                                            </form> --}}
-                                                            {{-- <form action="/file-upload" class="dropzone" id="my-dropzone"> --}}
-                                                                <div class="fallback">
-                                                                    <input name="syarat" type="file" multiple />
-                                                                </div>
-                                                            {{-- </form> --}}
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                @endforeach
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn bg-gradient-dark"
-                                                data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn bg-gradient-success">Tambah</button>
-                                            </div>
-                                        </form>
+                                        </div>
+                                        <div class="input-group input-group-static mt-2">
+                                            <label>Syarat Lantikan</label>
+                                            <input type="file" class="form-control" name="syarat" id="syarat" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn bg-gradient-dark"
+                                        data-bs-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn bg-gradient-success">Tambah</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -221,26 +194,138 @@ Negeri Kelantan'])
                                     $k = 1;
                                 @endphp
                                 @foreach ($syarat as $ss)
-                                <tr class="text-center">
-                                    <td scope="row">{{ $k++ }}</td>
-                                    <td class="text-right">{{ $ss->nama_jawatan }}</td>
-                                    <td>{{ $ss->gred }}</td>
-                                    <td>{{ $ss->kump_perkhidmatan }}</td>
-                                    <td>{{ $ss->taraf_jawatan }}</td>
-                                    <td>
-                                        {{-- <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{{ url($ss->lokasi_fail) }}" role="button"> --}}
-                                        <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{{ url('dl-syarat', [$ss->id]) }}" role="button">
-                                            <i class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
-                                            PDF
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i
-                                                class="material-icons text-sm me-2">edit</i>Kemaskini</a>
-                                        <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i
-                                                class="material-icons text-sm me-2">delete</i>Padam</a>
-                                    </td>
-                                </tr>
+                                    <tr class="text-center text-uppercase">
+                                        <td scope="row">{{ $k++ }}</td>
+                                        <td class="text-right">{{ $ss->nama_jawatan }}</td>
+                                        <td>{{ $ss->gred }}</td>
+                                        <td>{{ $ss->kump_perkhidmatan }}</td>
+                                        <td class="text-uppercase">{{ $ss->taraf }}</td>
+                                        <td>
+                                            {{-- <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{{ url($ss->lokasi_fail) }}" role="button"> --}}
+                                            <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"
+                                                href="{{ url('dl-syarat', [$ss->id]) }}" role="button">
+                                                <i class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
+                                                PDF
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-link text-dark px-3 mb-0" data-bs-toggle="modal"
+                                                data-bs-target="#kemaskini-{{ $ss->id }}"><i
+                                                    class="material-icons text-sm me-2">edit</i>Kemaskini</a>
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0 padam-iklan"  data-bs-toggle="modal"
+                                            data-bs-target="#padam-{{ $ss->id }}">
+                                            <i class="material-icons text-sm me-2">delete</i>Padam</a>
+                                        </td>
+                                    </tr>
+                                    <!-- Modal Kemaskini-->
+                                    <div class="modal fade" id="kemaskini-{{ $ss->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Kemaskini</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ route('kemaskini-jawatan') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                                                    <div class="modal-body">
+                                                        <div class=" ">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" id="id" name="id" value="{{ $ss->id }}">
+                                                            <div class="input-group input-group-static">
+                                                                <label>Jawatan</label>
+                                                                <input type="text" class="form-control" name="jawatan"
+                                                                    id="jawatan" value="{{ $ss->nama_jawatan }}"
+                                                                    required>
+                                                            </div>
+                                                            <div class="input-group input-group-static mt-2">
+                                                                <label>Gred</label>
+                                                                <input type="text" class="form-control" name="gred"
+                                                                    value="{{ $ss->gred }}" id="gred" required>
+                                                            </div>
+                                                            <div class="input-group input-group-static mt-2">
+                                                                <label class=" ms-0 mb-0">Kumpulan
+                                                                    Perkhidmatan</label>
+                                                                <select class="form-control" name="kump">
+                                                                    <option value="">SILA PILIH KUMPULAN PERKHIDMATAN
+                                                                    </option>
+                                                                    @foreach ($kump as $kmp)
+                                                                        <option class="text-uppercase"
+                                                                            value="{{ $kmp->id }}"
+                                                                            {{ $kmp->kump_perkhidmatan == $ss->kump_perkhidmatan ? 'selected' : '' }}>
+                                                                            {{ $kmp->kump_perkhidmatan }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                            <div class="input-group input-group-dynamic mt-2">
+                                                                <label class="form-label">Taraf Jawatan</label>
+                                                                <div class="form-check mt-5">
+                                                                    @foreach ($taraf as $trf)
+                                                                        <div class="form-check form-check-inline">
+                                                                            <input type="checkbox" class="form-check-input"
+                                                                                name="taraf" id="taraf"
+                                                                                value="{{ $trf->id }}"
+                                                                                {{ $trf->taraf == $ss->taraf ? 'checked' : '' }}>
+                                                                            <label class="form-check-label text-uppercase"
+                                                                                for="taraf">
+                                                                                {{ $trf->taraf }}
+                                                                                ({{ $trf->singkatan_taraf }})
+                                                                            </label>
+                                                                        </div>
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                            <div class="input-group input-group-static mt-2">
+                                                                <div class="col-md-10">
+                                                                    <label>Syarat Lantikan</label>
+                                                                    <input type="file" class="form-control" name="failbaru">
+                                                                </div>
+                                                                <div class="col-md-2 mt-3">
+                                                                    <a href="{{ url('dl-syarat', [$ss->id]) }}" class="btn btn-dark"><i class="fa fa-file-pdf-o"></i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn bg-gradient-dark" data-bs-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn bg-gradient-primary">Kemaskini</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal padam-->
+                                    <div class="modal fade" id="padam-{{ $ss->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Padam</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ route('padam-jawatan') }}" method="get"
+                                                    autocomplete="off" enctype="multipart/form-data">
+                                                    <div class="modal-body">
+                                                        <div class="container">
+                                                            {{ csrf_field() }}
+                                                            <input type="hidden" id="id" name="id" value="{{ $ss->id }}">
+                                                            <div class="text-dark text-center">
+
+                                                                Adakah anda ingin padam jawatan ini?
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn bg-gradient-dark"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <button type="submit"
+                                                            class="btn bg-gradient-danger">Padam</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -254,15 +339,12 @@ Negeri Kelantan'])
 @section('script')
     <script>
         if (document.getElementById('choices-kump')) {
-                var kump = document.getElementById('choices-kump');
-                const example = new Choices(kump);
-            }
-
-        Dropzone.autoDiscover = true;
-        var drop = document.getElementById('dropzone')
-        // var dropzone = new Dropzone(drop, {
-        //     url: "/file/post",
-        //     addRemoveLinks: true,
-        // });
+            var kump = document.getElementById('choices-kump');
+            const example = new Choices(kump);
+        }
+        if (document.getElementById('choices-kump-kemaskini')) {
+            var kump = document.getElementById('choices-kump-kemaskini');
+            const example = new Choices(kump);
+        }
     </script>
 @endsection

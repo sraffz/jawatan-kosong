@@ -21,6 +21,8 @@
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.css"/>
+
     <!-- Styles -->
     <!-- Nucleo Icons -->
     <link href="{{ asset('material/css/nucleo-icons.css') }}" rel="stylesheet" />
@@ -33,7 +35,7 @@
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
     {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
     @yield('link')
 </head>
 
@@ -65,6 +67,8 @@
     <script src="{{ asset('material/js/plugins/choices.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+ 
+    
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -233,8 +237,31 @@
             };
             reader.readAsDataURL(input.files[0]);
         };
-    </script>
 
+        $(document).ready(function() {
+            $('table.display').DataTable({
+                "pageLength": 10,
+                "lengthMenu": [10, 20, 50, 100],
+                "language": {
+                    "emptyTable": "Tiada data",
+                    "lengthMenu": "_MENU_ Rekod setiap halaman",
+                    "zeroRecords": "Tiada padanan rekod yang dijumpai.",
+                    "info": "Paparan dari _START_ hingga _END_ dari _TOTAL_ rekod",
+                    "infoEmpty": "Paparan 0 hingga 0 dari 0 rekod",
+                    "infoFiltered": "(Ditapis dari jumlah _MAX_ rekod)",
+                    'search': "_INPUT_",
+                    "searchPlaceholder": "Carian...",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "<span class='material-icons'>navigate_before </span>",
+                        "sNext": "<span class='material-icons'>navigate_next </span>",
+                        "sLast": "Akhir"
+                    }
+                },
+            });
+        });
+    </script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.js"></script>
 @include('sweetalert::alert')
 </body>
 

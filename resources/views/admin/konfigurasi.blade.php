@@ -324,7 +324,7 @@ Kelantan Perubatan'])
             </div>
         </div>
     </div>
-    <div class="row mb-4">
+    {{-- <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
                 <div class="card-header">
@@ -417,5 +417,5 @@ Kelantan Perubatan'])
             </div>
         </div>
 
-    </div>
+    </div> --}}
 @endsection

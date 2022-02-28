@@ -64,8 +64,87 @@
             <li class="nav-item">
                 <a class="nav-link text-white {{ $page == 'Konfigurasi' ? ' active bg-gradient-success' : '' }}"
                     href="{{ url('konfigurasi') }}">
-                    <span class="sidenav-mini-icon"> K </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Konfigurasi </span>
+                    <span class="sidenav-mini-icon"> M </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Maklumat Diri </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a data-bs-toggle="collapse" href="#education" class="nav-link text-white {{ $page == 'Profil' ? ' active' : '' }}" aria-controls="education"
+                    role="button" aria-expanded="false">
+                    <span class="sidenav-mini-icon"> A </span>
+                    <span class="nav-link-text ms-2 ps-1">Maklumat Akademik</span>
+                </a>
+                <div class="collapse {{ $page == 'Profil' || $page == 'Tetapan' ? ' show' : '' }}" id="education" style="">
+                    <ul class="nav ">
+                        <li class="nav-item">
+                            <a class="nav-link text-white {{ $page == 'Profil' ? ' active bg-gradient-success' : '' }}" href="{{ route('profil') }}">
+                                <span class="sidenav-mini-icon"> PT </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> PT3 / PMR / SRP </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> SP </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> SPM / SPMV </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> SU </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> SPM ULANGAN </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> SV </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> SVM </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> SK </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> SKM </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> STP </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> STPM </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> STM </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> STAM </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> M </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> SIJIL MATRIKULASI </span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ url('tetapan') }}">
+                                <span class="sidenav-mini-icon"> PT </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> PENGAJIAN TINGGI </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $page == 'Konfigurasi' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('konfigurasi') }}">
+                    <span class="sidenav-mini-icon"> P </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Pengalaman </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $page == 'Konfigurasi' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('konfigurasi') }}">
+                    <span class="sidenav-mini-icon"> P </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Pengesahan </span>
                 </a>
             </li>
 

@@ -42,9 +42,9 @@
                     $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
                 @endphp
                 @foreach ($iklan as $ikln)
-                {{-- @if ($tarikh_kini->between($ikln->tarikh_mula, $ikln->tarikh_tamat)) --}}
-                    @if ($ikln->tarikh_mula <= $tarikh_kini && $ikln->tarikh_tamat >= $tarikh_kini )
-                    {{-- @if ($ikln->jenis == 'TERBUKA') --}}
+                    {{-- @if ($tarikh_kini->between($ikln->tarikh_mula, $ikln->tarikh_tamat)) --}}
+                    @if ($ikln->tarikh_mula <= $tarikh_kini && $ikln->tarikh_tamat >= $tarikh_kini)
+                        {{-- @if ($ikln->jenis == 'TERBUKA') --}}
                         <div class="block">
                             <div class="block-content">
                                 <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3>
@@ -64,26 +64,28 @@
                                         </thead>
                                         <tbody>
                                             @php
-                                                $i=1;
+                                                $i = 1;
                                             @endphp
                                             @foreach ($syarat as $ss)
                                                 @if ($ss->id_iklan == $ikln->id)
-                                                <tr class="text-uppercase">
-                                                    <th class="text-center" scope="row">{{ $i++ }}</th>
-                                                    <td>{{ $ss->nama_jawatan }}</td>
-                                                    <td class="text-center">{{ $ss->gred }}</td>
-                                                    <td class="text-center d-none d-sm-table-cell">{{ $ss->kump_perkhidmatan }}</td>
-                                                    <td class="text-center"><i>{{ $ss->taraf }}</i></td>
-                                                    <td class="text-center">
-                                                        <div class="btn-group">
-                                                            <a href="{{ url('dl-syarat', [$ss->id]) }}"  >
-                                                                <button type="button" class="btn btn-sm btn-secondary">
-                                                                    <i class="fa fa-file-pdf-o"></i>
-                                                                </button>
-                                                            </a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                    <tr class="text-uppercase">
+                                                        <th class="text-center" scope="row">{{ $i++ }}</th>
+                                                        <td>{{ $ss->nama_jawatan }}</td>
+                                                        <td class="text-center">{{ $ss->gred }}</td>
+                                                        <td class="text-center d-none d-sm-table-cell">
+                                                            {{ $ss->kump_perkhidmatan }}</td>
+                                                        <td class="text-center"><i>{{ $ss->taraf }}</i></td>
+                                                        <td class="text-center">
+                                                            <div class="btn-group">
+                                                                <a href="{{ url('dl-syarat', [$ss->id]) }}">
+                                                                    <button type="button"
+                                                                        class="btn btn-sm btn-secondary">
+                                                                        <i class="fa fa-file-pdf-o"></i>
+                                                                    </button>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 @endif
                                             @endforeach
                                         </tbody>
@@ -101,17 +103,22 @@
                                 <h3 class="block-title">Tarikh Tutup<small> Permohonan</small></h3>
                                 <p>Permohonan hendaklah dihantar sebelum atau pada
                                     @php
-                                        setlocale(LC_TIME, config('app.locale'));
-                                        $date = Carbon\Carbon::parse($ikln->tarikh_tamat)->formatLocalized('%d %B %Y');
+                                        $nama_hari = dayNames[Carbon\Carbon::parse($ikln->tarikh_tamat)->dayOfWeek];
+                                        $bulan = monthNames[Carbon\Carbon::parse($ikln->tarikh_tamat)->month - 1];
+                                        $tahun = Carbon\Carbon::parse($ikln->tarikh_tamat)->year;
+                                        $hari = Carbon\Carbon::parse($ikln->tarikh_tamat)->day;
+
+
+                                        // $date = Carbon\Carbon::parse($ikln->tarikh_tamat)->formatLocalized('%d %B %Y');
+                                        $date = $hari.' '.$bulan.' '.$tahun;
                                         $day = Carbon\Carbon::parse($ikln->tarikh_tamat)->formatLocalized('%A');
                                     @endphp
                                     <span class="badge badge-danger btn-rounded">{{ $date }}
-                                        ( {{ $day }} )
-                                        , jam 11.59 malam</span>
+                                        ({{ $nama_hari }}), jam 11.59 malam</span>
                                 </p>
                             </div>
                         </div>
-                    {{-- @endif --}}
+                        {{-- @endif --}}
                     @endif
                 @endforeach
 

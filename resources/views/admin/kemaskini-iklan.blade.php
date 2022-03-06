@@ -212,9 +212,9 @@ Negeri Kelantan'])
                                             <a class="btn btn-link text-dark px-3 mb-0" data-bs-toggle="modal"
                                                 data-bs-target="#kemaskini-{{ $ss->id }}"><i
                                                     class="material-icons text-sm me-2">edit</i>Kemaskini</a>
-                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0 padam-iklan"  data-bs-toggle="modal"
-                                            data-bs-target="#padam-{{ $ss->id }}">
-                                            <i class="material-icons text-sm me-2">delete</i>Padam</a>
+                                            <a class="btn btn-link text-danger text-gradient px-3 mb-0 padam-iklan"
+                                                data-bs-toggle="modal" data-bs-target="#padam-{{ $ss->id }}">
+                                                <i class="material-icons text-sm me-2">delete</i>Padam</a>
                                         </td>
                                     </tr>
                                     <!-- Modal Kemaskini-->
@@ -227,16 +227,18 @@ Negeri Kelantan'])
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <form action="{{ route('kemaskini-jawatan') }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                                                <form action="{{ route('kemaskini-jawatan') }}" method="post"
+                                                    autocomplete="off" enctype="multipart/form-data">
                                                     <div class="modal-body">
                                                         <div class=" ">
                                                             {{ csrf_field() }}
-                                                            <input type="hidden" id="id" name="id" value="{{ $ss->id }}">
+                                                            <input type="hidden" id="id" name="id"
+                                                                value="{{ $ss->id }}">
                                                             <div class="input-group input-group-static">
                                                                 <label>Jawatan</label>
-                                                                <input type="text" class="form-control upper" name="jawatan"
-                                                                    id="jawatan" value="{{ $ss->nama_jawatan }}"
-                                                                    required>
+                                                                <input type="text" class="form-control upper"
+                                                                    name="jawatan" id="jawatan"
+                                                                    value="{{ $ss->nama_jawatan }}" required>
                                                             </div>
                                                             <div class="input-group input-group-static mt-3">
                                                                 <label>Gred</label>
@@ -278,25 +280,30 @@ Negeri Kelantan'])
                                                             <div class="input-group input-group-static mt-3">
                                                                 <div class="col-md-10">
                                                                     <label>Syarat Lantikan</label>
-                                                                    <input type="file" class="form-control" name="failbaru">
+                                                                    <input type="file" class="form-control"
+                                                                        name="failbaru">
                                                                 </div>
                                                                 <div class="col-md-2 mt-3">
-                                                                    <a href="{{ url('dl-syarat', [$ss->id]) }}" class="btn btn-dark"><i class="fa fa-file-pdf-o"></i></a>
+                                                                    <a href="{{ url('dl-syarat', [$ss->id]) }}"
+                                                                        class="btn btn-dark"><i
+                                                                            class="fa fa-file-pdf-o"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn bg-gradient-dark" data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn bg-gradient-primary">Kemaskini</button>
+                                                        <button type="button" class="btn bg-gradient-dark"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <button type="submit"
+                                                            class="btn bg-gradient-primary">Kemaskini</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Modal padam-->
-                                    <div class="modal fade" id="padam-{{ $ss->id }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div class="modal fade" id="padam-{{ $ss->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="modelTitleId" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -309,7 +316,8 @@ Negeri Kelantan'])
                                                     <div class="modal-body">
                                                         <div class="container">
                                                             {{ csrf_field() }}
-                                                            <input type="hidden" id="id" name="id" value="{{ $ss->id }}">
+                                                            <input type="hidden" id="id" name="id"
+                                                                value="{{ $ss->id }}">
                                                             <div class="text-dark text-center">
 
                                                                 Adakah anda ingin padam jawatan ini?
@@ -319,8 +327,7 @@ Negeri Kelantan'])
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn bg-gradient-dark"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit"
-                                                            class="btn bg-gradient-danger">Padam</button>
+                                                        <button type="submit" class="btn bg-gradient-danger">Padam</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -337,7 +344,7 @@ Negeri Kelantan'])
 @endsection
 
 @section('script')
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <script>
         if (document.getElementById('choices-kump')) {
@@ -348,9 +355,16 @@ Negeri Kelantan'])
             var kump = document.getElementById('choices-kump-kemaskini');
             const example = new Choices(kump);
         }
- 
-        $(':input').keyup(function(){
+
+        $(':input').keyup(function() {
             $(this).val($(this).val().toUpperCase());
         });
+
+        const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun",
+            "Julai", "Ogos", "September", "October", "November", "Disember"
+        ];
+
+        
+        
     </script>
 @endsection

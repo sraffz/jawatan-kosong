@@ -30,7 +30,10 @@
     <link rel="stylesheet" id="css-main" href="{{ asset('assets/css/codebase.min.css') }}">
 </head>
 @php
-setlocale(LC_TIME, config('app.locale'));
+// setlocale(LC_TIME, config('app.locale'));
+use Carbon\Carbon;
+const dayNames = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
+const monthNames = ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'October', 'November', 'Disember'];
 @endphp
 
 @if ($bil > 0)

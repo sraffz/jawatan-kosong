@@ -38,13 +38,13 @@
             <div class="content">
                 <!-- Default Table Style -->
                 <!-- Table -->
+                @foreach ($iklan as $ikln)
                 @php
                     $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+                    $tarikh_mula =\Carbon\Carbon::parse($ikln->tarikh_mula)->format('Y-m-d');
+                    $tarikh_tamat =\Carbon\Carbon::parse($ikln->tarikh_tamat)->format('Y-m-d');
                 @endphp
-                @foreach ($iklan as $ikln)
-                    {{-- @if ($tarikh_kini->between($ikln->tarikh_mula, $ikln->tarikh_tamat)) --}}
-                    @if ($ikln->tarikh_mula <= $tarikh_kini && $ikln->tarikh_tamat >= $tarikh_kini)
-                        {{-- @if ($ikln->jenis == 'TERBUKA') --}}
+                    @if ($tarikh_mula <= $tarikh_kini && $tarikh_tamat >= $tarikh_kini)
                         <div class="block">
                             <div class="block-content">
                                 <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3>
@@ -118,7 +118,6 @@
                                 </p>
                             </div>
                         </div>
-                        {{-- @endif --}}
                     @endif
                 @endforeach
 
@@ -160,24 +159,8 @@
                 </div>
 
             </div>
-            <!-- END Page Content -->
-
         </main>
-        <!-- END Main Container -->
-
-        <!-- Footer -->
-        <!--             <footer id="page-footer" class="opacity-0">
-                <div class="content py-20 font-size-xs clearfix">
-                   <div class="float-left">
-                        Bahagian Pengurusan Sumber Manusia &copy; <span class="js-year-copy"></span>
-                    </div>
-                </div>
-            </footer>
- -->
-        <!-- END Footer -->
     </div>
-    <!-- END Page Container -->
-
     <script src="{{ asset('assets/js/codebase.core.min.js') }}"></script>
     <script src="{{ asset('assets/js/codebase.app.min.js') }}"></script>
 </body>

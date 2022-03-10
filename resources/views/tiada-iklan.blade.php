@@ -1,10 +1,8 @@
 <body>
     <!-- Page Container -->
     <div id="page-container" class="main-content-boxed">
-
         <!-- Main Container -->
         <main id="main-container">
-
             <!-- Page Content -->
             <div class="hero bg-white">
                 <div class="hero-inner">
@@ -18,12 +16,10 @@
                 </div>
             </div>
             <!-- END Page Content -->
-
         </main>
         <!-- END Main Container -->
     </div>
     <!-- END Page Container -->
-
     <script src="{{ asset('assets/js/codebase.core.min.js') }}"></script>
     <script src="{{ asset('assets/js/codebase.app.min.js') }}"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->

@@ -10,7 +10,7 @@
         </a>
     </div>
     <hr class="horizontal light mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
+    <div class="collapse navbar-collapse w-auto h-auto" id="sidenav-collapse-main">
         <ul class="navbar-nav">
             <li class="nav-item mb-2 mt-0">
                 <a data-bs-toggle="collapse" href="#ProfileNav"
@@ -21,7 +21,7 @@
                 </a>
                 <div class="collapse {{ $page == 'Profil' || $page == 'Tetapan' ? ' show' : '' }}" id="ProfileNav"
                     style="">
-                    <ul class="nav ">
+                    <ul class="nav">
                         <li class="nav-item">
                             <a class="nav-link text-white {{ $page == 'Profil' ? ' active bg-gradient-success' : '' }}"
                                 href="{{ url('admin/profil') }}">

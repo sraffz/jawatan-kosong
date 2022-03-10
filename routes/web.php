@@ -26,17 +26,20 @@ Route::get('/', function () {
     // dd($bil);
     $syarat = DB::table('senarai-syarat-jawatan')->get();
     
-    return view('welcome', compact('iklan', 'syarat','bil'));
+    return view('welcome', compact('iklan', 'syarat', 'bil'));
 });
 
-Route::get('/tertutup', function () {
+Route::get('/suk{url}', function ($url) {
 
-    $iklan = Iklan::where('jenis', "TERTUTUP")->get();
+    $iklan = Iklan::where('jenis', "TERTUTUP")
+    ->where('url', $url)
+    ->get();
 
     $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
     
     $bil = Iklan::where('tarikh_mula','<=',$tarikh_kini)
     ->where('tarikh_tamat', '>=', $tarikh_kini)
+    ->where('url', $url)
     ->where('jenis', "TERTUTUP")
     ->count();
 

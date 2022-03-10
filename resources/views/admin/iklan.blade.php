@@ -152,7 +152,34 @@ Negeri Kelantan Perubatan'])
                                             </td>
                                             <td class="text-center text-wrap text-break">
                                                 <span class="font-weight-bold">
-                                                    <a href="{{ $ikl->pautan }}" target="blank">Cetak Iklan</a>
+                                                    <a href="{{ $ikl->pautan }}" target="blank">
+                                                        <span class="material-icons">
+                                                            print
+                                                        </span>
+                                                    </a>
+                                                    @if ($ikl->jenis == 'TERTUTUP')
+                                                        <a class="" href="{{ url('suk' . $ikl->url . '') }}"
+                                                            target="_blank">
+                                                            <span class="material-icons">
+                                                                link
+                                                            </span>
+                                                        </a>
+                                                        <input type="text"  value="{{ url('suk' . $ikl->url . '') }}"
+                                                            id="myInput">
+                                                        <a role="button" id="{{ $ikl->id }}" class="copy">
+                                                            <span class="material-icons">
+                                                                content_copy
+                                                            </span>
+                                                        </a>
+                                                    @else
+                                                        <a class="" href="{{ url('/') }}"
+                                                            target="_blank">
+                                                            <span class="material-icons">
+                                                                link
+                                                            </span>
+                                                        </a>
+                                                    @endif
+
                                                 </span>
                                             </td>
                                             <td class="text-center">
@@ -161,12 +188,8 @@ Negeri Kelantan Perubatan'])
                                                     Butiran
                                                 </button>
                                                 <div class="btn-group " role="group" aria-label="Basic example">
-                                                    @php
-                                                        
-                                                        $id = \Hashids::encode($ikl->id, 10);
-                                                    @endphp
                                                     <a class="btn btn-primary btn-sm"
-                                                        href="{{ url('admin/kemaskini-iklan', [$id]) }}">
+                                                        href="{{ url('admin/kemaskini-iklan', [$ikl->url]) }}">
                                                         Kemaskini
                                                     </a>
                                                     <button type="button"
@@ -228,7 +251,8 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-info text-gradient">format_quote</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
                                                                             Jenis Iklan</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -266,7 +290,8 @@ Negeri Kelantan Perubatan'])
                                                                                 <p
                                                                                     class="text-dark text-sm  font-weight-bold text-uppercase mt-1 mb-0">
                                                                                     {{ $ss->nama_jawatan }}
-                                                                                    ({{ $ss->gred }}),
+                                                                                    ({{ $ss->gred }})
+                                                                                    ,
                                                                                     {{ $ss->singkatan_taraf }}</p>
                                                                             @endif
                                                                         @endforeach
@@ -305,7 +330,7 @@ Negeri Kelantan Perubatan'])
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="{{ route('buka-iklan') }}" method="POST">
+                <form action="{{ route('buka-iklan') }}" method="POST" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="modal-body">
                         <div class="container-fluid">
@@ -388,109 +413,11 @@ Negeri Kelantan Perubatan'])
             // Use above variables to manipulate the DOM
 
         });
-    </script>
-    <script>
+
         if (document.getElementById('choices-jenis')) {
             var jenis = document.getElementById('choices-jenis');
             const example = new Choices(jenis);
         }
-
-
-
-        if (document.getElementById('choices-gender')) {
-            var gender = document.getElementById('choices-gender');
-            const example = new Choices(gender);
-        }
-
-        if (document.getElementById('choices-language')) {
-            var language = document.getElementById('choices-language');
-            const example = new Choices(language);
-        }
-
-        if (document.getElementById('choices-skills')) {
-            var skills = document.getElementById('choices-skills');
-            const example = new Choices(skills, {
-                delimiter: ',',
-                editItems: true,
-                maxItemCount: 5,
-                removeItemButton: true,
-                addItems: true
-            });
-        }
-
-        if (document.getElementById('choices-year')) {
-            var year = document.getElementById('choices-year');
-            setTimeout(function() {
-                const example = new Choices(year);
-            }, 1);
-
-            for (y = 1900; y <= 2020; y++) {
-                var optn = document.createElement("OPTION");
-                optn.text = y;
-                optn.value = y;
-
-                if (y == 2020) {
-                    optn.selected = true;
-                }
-
-                year.options.add(optn);
-            }
-        }
-
-        if (document.getElementById('choices-day')) {
-            var day = document.getElementById('choices-day');
-            setTimeout(function() {
-                const example = new Choices(day);
-            }, 1);
-
-
-            for (y = 1; y <= 31; y++) {
-                var optn = document.createElement("OPTION");
-                optn.text = y;
-                optn.value = y;
-
-                if (y == 1) {
-                    optn.selected = true;
-                }
-
-                day.options.add(optn);
-            }
-
-        }
-
-        if (document.getElementById('choices-month')) {
-            var month = document.getElementById('choices-month');
-            setTimeout(function() {
-                const example = new Choices(month);
-            }, 1);
-
-            var d = new Date();
-            var monthArray = new Array();
-            monthArray[0] = "January";
-            monthArray[1] = "February";
-            monthArray[2] = "March";
-            monthArray[3] = "April";
-            monthArray[4] = "May";
-            monthArray[5] = "June";
-            monthArray[6] = "July";
-            monthArray[7] = "August";
-            monthArray[8] = "September";
-            monthArray[9] = "October";
-            monthArray[10] = "November";
-            monthArray[11] = "December";
-            for (m = 0; m <= 11; m++) {
-                var optn = document.createElement("OPTION");
-                optn.text = monthArray[m];
-                // server side month start from one
-                optn.value = (m + 1);
-                // if june selected
-                if (m == 1) {
-                    optn.selected = true;
-                }
-                month.options.add(optn);
-            }
-        }
-
 
         function visible() {
             var elem = document.getElementById('profileVisibility');
@@ -517,10 +444,26 @@ Negeri Kelantan Perubatan'])
             reader.readAsDataURL(input.files[0]);
         };
 
-        $(':input').keyup(function(){
+        $('.upper').keyup(function() {
             $(this).val($(this).val().toUpperCase());
         });
+
+
+        $(function() {
+            $(".copy").on("click", function() {
+                var id = $(this).attr("id");
+                var copyText = document.getElementById("myInput");
+
+                /* Select the text field */
+                // copyText.select();
+                // copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+                /* Copy the text inside the text field */
+                navigator.clipboard.writeText(copyText.value);
+
+                /* Alert the copied text */
+                alert("Copied the text: " + copyText.value);
+            });
+        })
     </script>
-
-
 @endsection

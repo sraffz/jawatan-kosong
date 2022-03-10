@@ -21,7 +21,6 @@
     <link rel="stylesheet" type="text/css"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.css" />
 
     <!-- Styles -->
     <!-- Nucleo Icons -->
@@ -37,7 +36,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
     {{--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" /> --}}
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.css" /> --}}
     @yield('link')
 </head>
 
@@ -69,10 +67,7 @@
     <script src="{{ asset('material/js/plugins/choices.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/js/bootstrap.bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.11.4/datatables.min.js"></script>
 
     @include('sweetalert::alert')
 
@@ -103,28 +98,6 @@
 
 
     @yield('script')
-    <script type="text/javascript">
-        function addRow(number) {
-            var count = 1;
-
-            var tr = '<tr>' +
-                '<td style="vertical-align:middle"> </td>' +
-                '<td><input class="form-control" name="first[]" placeholder="First name"></td>' +
-                '<td><input class="form-control" name="second[]" placeholder="Last Name"></td>' +
-                '<td><input class="form-control" name="twitter[]" placeholder="Twitter"></td>' +
-                '<td><button type="button" class="btn btn-danger buang">Buang</button></td>' +
-                '</tr>';
-            $('#mp').append(tr);
-        };
-
-        // $('.addRow').on('click', function() {
-        //     addRow();
-        // });
-
-        // $('#mp').on('click', '.buang', function() {
-        //     $(this).parent().parent().remove();
-        // });
-    </script>
     <script>
         if (document.getElementById('choices-gender')) {
             var gender = document.getElementById('choices-gender');
@@ -245,29 +218,6 @@
             };
             reader.readAsDataURL(input.files[0]);
         };
-
-        $(document).ready(function() {
-            $('table.display').DataTable({
-                "pageLength": 10,
-                "lengthMenu": [10, 20, 50, 100],
-                "language": {
-                    "emptyTable": "Tiada data",
-                    "lengthMenu": "_MENU_ Rekod setiap halaman",
-                    "zeroRecords": "Tiada padanan rekod yang dijumpai.",
-                    "info": "Paparan dari _START_ hingga _END_ dari _TOTAL_ rekod",
-                    "infoEmpty": "Paparan 0 hingga 0 dari 0 rekod",
-                    "infoFiltered": "(Ditapis dari jumlah _MAX_ rekod)",
-                    'search': "_INPUT_",
-                    "searchPlaceholder": "Carian...",
-                    "oPaginate": {
-                        "sFirst": "Pertama",
-                        "sPrevious": "<span class='material-icons'>navigate_before </span>",
-                        "sNext": "<span class='material-icons'>navigate_next </span>",
-                        "sLast": "Akhir"
-                    }
-                },
-            });
-        });
     </script>
 
 </body>

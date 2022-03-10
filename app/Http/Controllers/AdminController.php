@@ -11,6 +11,7 @@ use Auth;
 use Alert;
 use DB;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -70,6 +71,8 @@ class AdminController extends Controller
     {
         $bil = Iklan::where('tahun', now()->year)->count();
 
+        $random = Str::random(5);
+
         $id = Iklan::insertGetId([
             'tahun' => now()->year,
             'bil' => $bil + 1,
@@ -78,20 +81,24 @@ class AdminController extends Controller
             'jenis' => $req->jenisiklan,
             'pautan' => $req->pautan,
             'id_pencipta' => Auth::user()->id,
+            'url' => $random,
             'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
-        $d = Hashids::encode($id);
+        // $d = Hashids::encode($id);
+        $d = $random;
         Alert::success('Berjaya', 'Iklan baru berjaya ditambah');
         return redirect('/admin/kemaskini-iklan/' . $d . '');
     }
 
     public function kemaskiniiklan($id)
     {
-        $d = Hashids::decode($id);
+        // $d = Hashids::decode($id);
+        // $d = Crypt::decryptString($id);
 
-        $iklan = Iklan::where('id', $d)->first();
+        $iklan = Iklan::where('url', $id)->first();
+        // $iklan = Iklan::where('id', $d)->first();
         $taraf = JK_taraf_jawatan::all();
         $kump = JK_kumuplan_perkhidmatan::all();
 

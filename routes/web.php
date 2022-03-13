@@ -67,12 +67,15 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
 
+    Route::get('/cetak-iklan/{id}', 'AdminController@cetakiklan')->name('cetak-iklan');
+
     Route::post('/kemaskini-jawatan', 'AdminController@kemaskinijawatan')->name('kemaskini-jawatan');
     Route::get('/padam-jawatan', 'AdminController@padamjawatan')->name('padam-jawatan');
 
     Route::post('/tambah-jawatan', 'AdminController@tambahjawatan')->name('tambah-jawatan');
     
     Route::post('/buka-iklan', 'AdminController@bukaiklan')->name('buka-iklan');
+    Route::post('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklann')->name('kemaskini-iklan');
     Route::post('/tambah-kumpulan-jawatan', 'AdminController@tambahkumpulanjawatan')->name('tambah-kumpulan-jawatan');
     Route::post('/kemaskini-kumpulan-jawatan', 'AdminController@kemaskinikumpulanjawatan')->name('kemaskini-kumpulan-jawatan');
     Route::post('/padam-kumpulan-jawatan', 'AdminController@padamkumpulanjawatan')->name('padam-kumpulan-jawatan');
@@ -80,6 +83,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/tambah-taraf-jawatan', 'AdminController@tambahtarafjawatan')->name('tambah-taraf-jawatan');
     Route::post('/kemaskini-taraf-jawatan', 'AdminController@kemaskinitarafjawatan')->name('kemaskini-taraf-jawatan');
     Route::post('/padam-taraf-jawatan', 'AdminController@padamtarafjawatan')->name('padam-taraf-jawatan');
+
 });
 
 Route::get('dl-syarat/{id}', 'AdminController@dlsyarat')->name('dl-syarat');

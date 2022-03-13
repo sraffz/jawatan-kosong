@@ -10,7 +10,7 @@ use App\Iklan_jawatan;
 use Auth;
 use Alert;
 use DB;
-use Vinkla\Hashids\Facades\Hashids;
+use PDF;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,11 +46,11 @@ class AdminController extends Controller
         $iklan = Iklan::all();
         $syarat = DB::table('senarai-syarat-jawatan')->get();
 
-        $tarikh_kini = \Carbon\Carbon::now();
+        $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
 
         $bil_terbuka = Iklan::where('tarikh_mula','<=',$tarikh_kini)
         ->where('tarikh_tamat', '>=', $tarikh_kini)
-        ->where('jenis', "TERTUTUP")
+        ->where('jenis', "TERBUKA")
         ->count();
 
         $bil_tutup = Iklan::where('tarikh_mula','<=',$tarikh_kini)
@@ -86,7 +86,6 @@ class AdminController extends Controller
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
-        // $d = Hashids::encode($id);
         $d = $random;
         Alert::success('Berjaya', 'Iklan baru berjaya ditambah');
         return redirect('/admin/kemaskini-iklan/' . $d . '');
@@ -94,11 +93,7 @@ class AdminController extends Controller
 
     public function kemaskiniiklan($id)
     {
-        // $d = Hashids::decode($id);
-        // $d = Crypt::decryptString($id);
-
         $iklan = Iklan::where('url', $id)->first();
-        // $iklan = Iklan::where('id', $d)->first();
         $taraf = JK_taraf_jawatan::all();
         $kump = JK_kumuplan_perkhidmatan::all();
 
@@ -107,6 +102,22 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
+    }
+
+    public function kemaskiniiklann(Request $req, $id)
+    {
+        $id = Iklan::where('id', $id)->update([
+            'tahun' =>$req->tahun,
+            'bil' => $req->bil,
+            'tarikh_mula' => $req->tarikhmula,
+            'tarikh_tamat' => $req->tarikhtamat,
+            'jenis' => $req->jenisiklan,
+            'pautan' => $req->pautan,
+            'id_pencipta' => Auth::user()->id,
+            'updated_at' => \Carbon\Carbon::now(),
+        ]);
+
+        return back();
     }
 
     public function tambahjawatan(Request $req)
@@ -302,5 +313,18 @@ class AdminController extends Controller
 
         Alert::success('Berjaya', 'Maklumat berjaya dipadam');
         return back();
+    }
+
+    public function cetakiklan($id)
+    {
+        $iklan = DB::table('senarai-syarat-jawatan')
+        ->where('id_iklan', $id)
+        ->get();
+
+        $iklan2 = Iklan::where('id', $id)->first();
+
+        // return view('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'));
+        $pdf = PDF::loadview('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'))->setPaper('a4','potrait');
+        return $pdf->download('Iklan Jawatan '.$iklan2->tahun.' '.$iklan2->bil.'.pdf');
     }
 }

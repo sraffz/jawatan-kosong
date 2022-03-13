@@ -30,19 +30,19 @@ Negeri Kelantan'])
                         <span class="font-weight-bold">24%</span> this month
                     </p> --}}
                 </div>
+                <form action="{{ route('kemaskini-iklan', [$iklan->id]) }}" method="POST" autocomplete="off">
                 <div class="card-body p-3">
-                    <div class="timeline timeline-one-side">
+                    {{-- <div class="timeline timeline-one-side">
                         <div class="timeline-block mb-3">
                             <span class="timeline-step">
                                 <i class="material-icons text-success text-gradient">date_range</i>
                             </span>
                             <div class="timeline-content">
                                 <h6 class="text-dark text-sm font-weight-bold mb-0">Tempoh Iklan Dibuka</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
-                                    @php
-                                        setlocale(LC_TIME, config('app.locale'));
-                                        $tarikhmula = $iklan->tarikh_mula->format('d/m/Y');
-                                    @endphp
+                                @php
+                                    setlocale(LC_TIME, config('app.locale'));
+                                    $tarikhmula = $iklan->tarikh_mula->format('d/m/Y');
+                                @endphp
                                 <div class="input-group input-group-static">
                                     <input type="date" class="form-control" name="tarikhmula" value="{{ $tarikhmula }}"
                                         required>
@@ -53,7 +53,9 @@ Negeri Kelantan'])
                                 </div>
                                 {{ $tarikhmula }}
                                 {{ $iklan->tarikh_mula->formatLocalized('%d %B %Y') }} sehingga
-                                {{ $iklan->tarikh_tamat->formatLocalized('%d %B %Y') }}</p>
+                                {{ $iklan->tarikh_tamat->formatLocalized('%d %B %Y') }}
+                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                </p>
                             </div>
                         </div>
                         <div class="timeline-block mb-3">
@@ -62,6 +64,16 @@ Negeri Kelantan'])
                             </span>
                             <div class="timeline-content">
                                 <h6 class="text-dark text-sm font-weight-bold mb-0">Rujukan</h6>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-static col-md-6">
+                                        <input type="text" class="form-control" name="bil" value="{{ $iklan->bil }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group input-group-static col-md-6">
+                                        <input type="text" class="form-control" name="tahun" value="{{ $iklan->tahun }}" required>
+                                    </div>
+                                </div>
                                 <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">Bilangan {{ $iklan->bil }}
                                     {{ $iklan->tahun }}</p>
                             </div>
@@ -87,8 +99,61 @@ Negeri Kelantan'])
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+                        {{ csrf_field() }}
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Bil</label>
+                                    <input type="text" class="form-control" name="bil" value="{{ $iklan->bil }}" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Tahun</label>
+                                    <input type="text" class="form-control" name="tahun" value="{{ $iklan->tahun }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="input-group input-group-static is-filled">
+                                    <label>Tarikh Mula</label>
+                                    <input type="date" class="form-control" name="tarikhmula" value="{{ $iklan->tarikh_mula->format('d/m/y') }}" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="input-group input-group-static">
+                                    <label>Tarikh Tamat</label>
+                                    <input type="date" class="form-control" name="tarikhtamat" value="{{ $iklan->tarikh_tamat->format('d/m/y') }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="input-group input-group-static">
+                                    <label>Jenis Iklan</label>
+                                    <select class="form-control" name="jenisiklan" required>
+                                        <option value="">Sila Pilih</option>
+                                        <option value="TERBUKA" {{ 'TERBUKA' == $iklan->jenis? 'selected' : '' }}>TERBUKA</option>
+                                        <option value="TERTUTUP"{{ 'TERTUTUP' == $iklan->jenis? 'selected' : '' }}>TERTUTUP</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="input-group input-group-static">
+                                    <label>Pautan</label>
+                                    <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}" required placeholder="">
+                                </div>
+                            </div>
+                        </div>
                 </div>
+                <div class="card-footer text-end">
+                    <button type="submit" class="btn btn-danger">Kemaskini</button>
+                </div>
+            </form>
             </div>
         </div>
     </div>
@@ -236,9 +301,9 @@ Negeri Kelantan'])
                                                                 value="{{ $ss->id }}">
                                                             <div class="input-group input-group-static">
                                                                 <label>Jawatan</label>
-                                                                <input type="text" class="form-control upper"
-                                                                    name="jawatan" id="jawatan"
-                                                                    value="{{ $ss->nama_jawatan }}" required>
+                                                                <input type="text" class="form-control upper" name="jawatan"
+                                                                    id="jawatan" value="{{ $ss->nama_jawatan }}"
+                                                                    required>
                                                             </div>
                                                             <div class="input-group input-group-static mt-3">
                                                                 <label>Gred</label>
@@ -347,6 +412,7 @@ Negeri Kelantan'])
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <script>
+         
         if (document.getElementById('choices-kump')) {
             var kump = document.getElementById('choices-kump');
             const example = new Choices(kump);
@@ -363,8 +429,5 @@ Negeri Kelantan'])
         const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun",
             "Julai", "Ogos", "September", "October", "November", "Disember"
         ];
-
-        
-        
     </script>
 @endsection

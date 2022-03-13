@@ -108,10 +108,7 @@
                                         $tahun = Carbon\Carbon::parse($ikln->tarikh_tamat)->year;
                                         $hari = Carbon\Carbon::parse($ikln->tarikh_tamat)->day;
 
-
-                                        // $date = Carbon\Carbon::parse($ikln->tarikh_tamat)->formatLocalized('%d %B %Y');
                                         $date = $hari.' '.$bulan.' '.$tahun;
-                                        $day = Carbon\Carbon::parse($ikln->tarikh_tamat)->formatLocalized('%A');
                                     @endphp
                                     <span class="badge badge-danger btn-rounded">{{ $date }}
                                         ({{ $nama_hari }}), jam 11.59 malam</span>

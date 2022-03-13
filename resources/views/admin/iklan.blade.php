@@ -25,8 +25,8 @@ Negeri Kelantan Perubatan'])
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday
-                    </p>
+                    {{-- <p class="mb-0"><span class="text-danger text-sm font-weight-bolder">-2%</span> than yesterday
+                    </p> --}}
                 </div>
             </div>
         </div>
@@ -44,12 +44,12 @@ Negeri Kelantan Perubatan'])
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than
-                        yesterday</p>
+                    {{-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than
+                        yesterday</p> --}}
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+        {{-- <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card">
                 <div class="card-header p-3 pt-2">
                     <div
@@ -67,7 +67,7 @@ Negeri Kelantan Perubatan'])
                         lask week</p>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <br>
     <div class="row mb-4">
@@ -152,25 +152,25 @@ Negeri Kelantan Perubatan'])
                                             </td>
                                             <td class="text-center text-wrap text-break">
                                                 <span class="font-weight-bold">
-                                                    <a href="{{ $ikl->pautan }}" target="blank">
+                                                    <a href="{{ url('/admin/cetak-iklan',[$ikl->id]) }}">
                                                         <span class="material-icons">
                                                             print
                                                         </span>
                                                     </a>
                                                     @if ($ikl->jenis == 'TERTUTUP')
-                                                        <a class="" href="{{ url('suk' . $ikl->url . '') }}"
-                                                            target="_blank">
+                                                    <a href="{{ url('suk' . $ikl->url . '') }}" target="_blank">
                                                             <span class="material-icons">
                                                                 link
                                                             </span>
                                                         </a>
-                                                        <input type="text"  value="{{ url('suk' . $ikl->url . '') }}"
-                                                            id="myInput">
-                                                        <a role="button" id="{{ $ikl->id }}" class="copy">
+                                                        <a  role="button" href="#" id="{{ $ikl->id }}" value="copy" onclick="copyToClipboard('copy_{{ $ikl->id }}')">
                                                             <span class="material-icons">
                                                                 content_copy
                                                             </span>
                                                         </a>
+                                                        <input type="text" class="form-control" id="copy_{{ $ikl->id }}" value="{{ url('suk' . $ikl->url . '') }}">
+                                                        {{-- <button value="copy" onclick="copyToClipboard('copy_{{ $ikl->id }}')">Copy!</button> --}}
+                                                        {{-- <input type="text" value="{{ url('suk' . $ikl->url . '') }}" id="myInput"> --}}
                                                     @else
                                                         <a class="" href="{{ url('/') }}"
                                                             target="_blank">
@@ -251,8 +251,7 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-info text-gradient">format_quote</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6
-                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                                                             Jenis Iklan</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -465,5 +464,13 @@ Negeri Kelantan Perubatan'])
                 alert("Copied the text: " + copyText.value);
             });
         })
+    </script>
+    <script>
+        function copyToClipboard(id) {
+            document.getElementById(id).select();
+            // var copyText = document.querySelector(".inputcopy");
+            // copyText.select();
+            document.execCommand('copy');
+        }
     </script>
 @endsection

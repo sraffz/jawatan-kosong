@@ -55,15 +55,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $page == 'Iklan Jawatan Kosong' ? ' active bg-gradient-success' : '' }}"
+                <a class="nav-link text-white {{ $page == 'Iklan' ? ' active bg-gradient-success' : '' }}"
                     href="{{ url('iklan') }}">
                     <span class="sidenav-mini-icon"> I </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Iklan Jawatan </span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $page == 'Konfigurasi' ? ' active bg-gradient-success' : '' }}"
-                    href="{{ url('konfigurasi') }}">
+                <a class="nav-link text-white {{ $page == 'maklumatdiri' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('maklumat-diri') }}">
                     <span class="sidenav-mini-icon"> M </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Maklumat Diri </span>
                 </a>
@@ -134,15 +134,15 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $page == 'Konfigurasi' ? ' active bg-gradient-success' : '' }}"
-                    href="{{ url('konfigurasi') }}">
+                <a class="nav-link text-white {{ $page == 'Pengalaman' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('pengalaman') }}">
                     <span class="sidenav-mini-icon"> P </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Pengalaman </span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $page == 'Konfigurasi' ? ' active bg-gradient-success' : '' }}"
-                    href="{{ url('konfigurasi') }}">
+                <a class="nav-link text-white {{ $page == 'Pengesahan' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('pengesahan') }}">
                     <span class="sidenav-mini-icon"> P </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Pengesahan </span>
                 </a>

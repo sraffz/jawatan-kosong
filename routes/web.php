@@ -95,5 +95,11 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/profil', 'HomeController@profil')->name('profil');
     Route::get('/tetapan', 'HomeController@tetapan')->name('tetapan');
     
+    Route::get('/iklan', 'PenggunaController@iklan')->name('iklan');
+    Route::get('/maklumat-diri', 'PenggunaController@maklumatdiri')->name('maklumat-diri');
+    Route::get('/pengalaman', 'PenggunaController@pengalaman')->name('pengalaman');
+    Route::get('/pengesahan', 'PenggunaController@pengesahan')->name('pengesahan');
+
+    
 });
 

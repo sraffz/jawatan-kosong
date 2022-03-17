@@ -17,7 +17,7 @@ Kelantan'])
                         <form role="form" autocomplete="off" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
                             <div
-                                class="input-group input-group-static mb-3 {{ $errors->has('nama') ? ' has-error' : '' }}">
+                                class="input-group input-group-static mb-2 {{ $errors->has('nama') ? ' has-error' : '' }}">
                                 <label  >Nama</label>
                                 <input type="text" class="form-control" aria-label="Name" name="nama"
                                     value="{{ old('nama') }}" required>
@@ -28,7 +28,7 @@ Kelantan'])
                                 @endif
                             </div>
                             <div
-                                class="input-group input-group-static mb-3 {{ $errors->has('ic') ? ' has-error' : '' }}">
+                                class="input-group input-group-static mb-2 {{ $errors->has('ic') ? ' has-error' : '' }}">
                                 <label for="ic"  >No Kad Pengenalan</label>
                                 <input type="text" class="form-control" aria-label="Name" name="ic"
                                     value="{{ old('ic') }}" required>
@@ -39,7 +39,7 @@ Kelantan'])
                                 @endif
                             </div>
                             <div
-                                class="input-group input-group-static mb-3 {{ $errors->has('email') ? ' has-error' : '' }}">
+                                class="input-group input-group-static mb-2 {{ $errors->has('email') ? ' has-error' : '' }}">
                                 <label  >Email</label>
                                 <input type="email" class="form-control" aria-label="Email" name="email"
                                     value="{{ old('email') }}" required>
@@ -50,7 +50,7 @@ Kelantan'])
                                 @endif
                             </div>
                             <div
-                                class="input-group input-group-static mb-3 {{ $errors->has('password') ? ' has-error' : '' }}">
+                                class="input-group input-group-static mb-2 {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label  >Kata Laluan</label>
                                 <input type="password" class="form-control" aria-label="Password" name="password"
                                     required>
@@ -61,7 +61,7 @@ Kelantan'])
                                 @endif
                             </div>
                             <div
-                                class="input-group input-group-static mb-3 {{ $errors->has('password-confirm') ? ' has-error' : '' }}">
+                                class="input-group input-group-static mb-2 {{ $errors->has('password-confirm') ? ' has-error' : '' }}">
                                 <label  >Kata Laluan</label>
                                 <input type="password" class="form-control" id="password-confirm"
                                     aria-label="password-confirm" name="password_confirmation" required>

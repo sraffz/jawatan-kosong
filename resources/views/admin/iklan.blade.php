@@ -336,6 +336,20 @@ Negeri Kelantan Perubatan'])
                             <div class="row">
                                 <div class="col-6">
                                     <div class="input-group input-group-static">
+                                        <label>Bilangan</label>
+                                        <input type="text" class="form-control" name="tarikhmula" required>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
+                                        <label>Tahun</label>
+                                        <input type="text" class="form-control" name="tarikhtamat" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
                                         <label>Tarikh Mula</label>
                                         <input type="date" class="form-control" name="tarikhmula" required>
                                     </div>

@@ -56,7 +56,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-white {{ $page == 'Iklan' ? ' active bg-gradient-success' : '' }}"
-                    href="{{ url('iklan') }}">
+                    href="{{ url('iklan-jawatan') }}">
                     <span class="sidenav-mini-icon"> I </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Iklan Jawatan </span>
                 </a>

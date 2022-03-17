@@ -35,4 +35,41 @@ class PenggunaController extends Controller
     {
         return view('pengguna.pengesahan');
     }
+
+    public function pt3()
+    {
+        return view('pengguna.akademik.srp-pmr-pt3');
+    }
+    public function spm()
+    {
+        return view('pengguna.akademik.spm-spmv');
+    }
+    public function spmu()
+    {
+        return view('pengguna.akademik.spm-ulangan');
+    }
+    public function svm()
+    {
+        return view('pengguna.akademik.svm');
+    }
+    public function skm()
+    {
+        return view('pengguna.akademik.skm');
+    }
+    public function stpm()
+    {
+        return view('pengguna.akademik.stpm');
+    }
+    public function stam()
+    {
+        return view('pengguna.akademik.stam');
+    }
+    public function matrikulasi()
+    {
+        return view('pengguna.akademik.matrikulasi');
+    }
+    public function ipt()
+    {
+        return view('pengguna.akademik.pengajian-tinggi');
+    }
 }

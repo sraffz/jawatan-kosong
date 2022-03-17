@@ -100,6 +100,16 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/pengalaman', 'PenggunaController@pengalaman')->name('pengalaman');
     Route::get('/pengesahan', 'PenggunaController@pengesahan')->name('pengesahan');
 
+    Route::get('/akademik/pt3-pmr-srp', 'PenggunaController@pt3')->name('akademik.pt3');
+    Route::get('/akademik/spm-spmv', 'PenggunaController@spm')->name('akademik.spm');
+    Route::get('/akademik/spm-ulangan', 'PenggunaController@spmu')->name('akademik.spmu');
+    Route::get('/akademik/svm', 'PenggunaController@svm')->name('akademik.svm');
+    Route::get('/akademik/skm', 'PenggunaController@skm')->name('akademik.skm');
+    Route::get('/akademik/stpm', 'PenggunaController@stpm')->name('akademik.stpm');
+    Route::get('/akademik/stam', 'PenggunaController@stam')->name('akademik.stam');
+    Route::get('/akademik/matrikulasi', 'PenggunaController@matrikulasi')->name('akademik.matrikulasi');
+    Route::get('/akademik/pengajian-tinggi', 'PenggunaController@ipt')->name('akademik.ipt');
+
     
 });
 

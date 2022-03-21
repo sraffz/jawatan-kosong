@@ -2,6 +2,7 @@
 Negeri Kelantan'])
 
 @section('link')
+<link rel="stylesheet" href="{{ asset('material/css/bootstrap-datepicker.css') }}">
     <style>
 
     </style>
@@ -117,15 +118,15 @@ Negeri Kelantan'])
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <div class="input-group input-group-static is-filled">
+                                <div class="input-group input-group-static">
                                     <label>Tarikh Mula</label>
-                                    <input type="date" class="form-control" name="tarikhmula" value="{{ $iklan->tarikh_mula->format('d/m/y') }}" required>
+                                    <input type="text" class="form-control datepicker" name="tarikhmula" value="{{ $iklan->tarikh_mula->format('Y-m-d') }}" required>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group input-group-static">
                                     <label>Tarikh Tamat</label>
-                                    <input type="date" class="form-control" name="tarikhtamat" value="{{ $iklan->tarikh_tamat->format('d/m/y') }}" required>
+                                    <input type="text" class="form-control datepicker" name="tarikhtamat" value="{{ $iklan->tarikh_tamat->format('Y-m-d') }}" required>
                                 </div>
                             </div>
                         </div>
@@ -410,6 +411,7 @@ Negeri Kelantan'])
 
 @section('script')
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="{{ asset('material/js/bootstrap-datepicker.js') }}"></script>
 
     <script>
          
@@ -429,5 +431,12 @@ Negeri Kelantan'])
         const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun",
             "Julai", "Ogos", "September", "October", "November", "Disember"
         ];
-    </script>
+
+        
+        $('.datepicker').datepicker({
+            weekStart:1,
+            color: 'red',
+            format: 'yyyy-mm-dd'
+        });
+	</script>
 @endsection

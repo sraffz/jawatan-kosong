@@ -1,8 +1,8 @@
 @extends('layouts.admin.app', ['page' => 'Iklan Jawatan Kosong', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan Perubatan'])
 
 @section('link')
+<link href="{{ asset('material/css/nucleo-svg.css') }}" rel="stylesheet" />
 <style>
-
 </style>
 @endsection
 

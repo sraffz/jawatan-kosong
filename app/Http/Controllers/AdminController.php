@@ -44,6 +44,9 @@ class AdminController extends Controller
     public function iklan()
     {
         $iklan = Iklan::all();
+        
+        $iklan_last = Iklan::orderBy('created_at', 'desc')->first();
+
         $syarat = DB::table('senarai-syarat-jawatan')->get();
 
         $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
@@ -59,7 +62,7 @@ class AdminController extends Controller
         ->count();
 
         // dd($bil_terbuka, $bil_tutup);
-        return view('admin.iklan', compact('iklan', 'syarat', 'bil_terbuka', 'bil_tutup'));
+        return view('admin.iklan', compact('iklan', 'syarat', 'bil_terbuka', 'bil_tutup', 'iklan_last'));
     }
 
     public function tetapan()
@@ -100,6 +103,9 @@ class AdminController extends Controller
         $syarat = DB::table('senarai-syarat-jawatan')
             ->where('id_iklan', $iklan->id)
             ->get();
+
+            // Toast('Done Update', 'success')->position('top-end')->theme('success');
+            toastr()->error('An error has occurred please try again later.');
 
         return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
     }

@@ -3,6 +3,7 @@ Negeri Kelantan Perubatan'])
 
 @section('link')
     <style>
+
     </style>
 @endsection
 
@@ -152,23 +153,26 @@ Negeri Kelantan Perubatan'])
                                             </td>
                                             <td class="text-center text-wrap text-break">
                                                 <span class="font-weight-bold">
-                                                    <a href="{{ url('/admin/cetak-iklan',[$ikl->id]) }}">
+                                                    <a href="{{ url('/admin/cetak-iklan', [$ikl->id]) }}">
                                                         <span class="material-icons">
                                                             print
                                                         </span>
                                                     </a>
                                                     @if ($ikl->jenis == 'TERTUTUP')
-                                                    <a href="{{ url('suk' . $ikl->url . '') }}" target="_blank">
+                                                        <a href="{{ url('suk' . $ikl->url . '') }}" target="_blank">
                                                             <span class="material-icons">
                                                                 link
                                                             </span>
                                                         </a>
-                                                        <a  role="button" href="#" id="{{ $ikl->id }}" value="copy" onclick="copyToClipboard('copy_{{ $ikl->id }}')">
+                                                        <a role="button" href="#" id="{{ $ikl->id }}" value="copy"
+                                                            onclick="copyToClipboard('copy_{{ $ikl->id }}')">
                                                             <span class="material-icons">
                                                                 content_copy
                                                             </span>
                                                         </a>
-                                                        <input type="text" class="form-control" id="copy_{{ $ikl->id }}" value="{{ url('suk' . $ikl->url . '') }}">
+                                                        <input type="text" class="form-control"
+                                                            id="copy_{{ $ikl->id }}"
+                                                            value="{{ url('suk' . $ikl->url . '') }}">
                                                         {{-- <button value="copy" onclick="copyToClipboard('copy_{{ $ikl->id }}')">Copy!</button> --}}
                                                         {{-- <input type="text" value="{{ url('suk' . $ikl->url . '') }}" id="myInput"> --}}
                                                     @else
@@ -193,7 +197,7 @@ Negeri Kelantan Perubatan'])
                                                         Kemaskini
                                                     </a>
                                                     <button type="button"
-                                                        class="btn btn-danger btn-sm padam_klan">Padam</button>
+                                                        class="btn btn-danger btn-sm"  data-target="infoToast">Padam</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -264,8 +268,7 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-danger text-gradient">link</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6
-                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                                                             Pautan Iklan
                                                                         </h6>
                                                                         <p
@@ -281,8 +284,7 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-dark text-gradient">dns</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6
-                                                                            class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
                                                                             Senarai Jawatan</h6>
                                                                         @foreach ($syarat as $ss)
                                                                             @if ($ss->id_iklan == $ikl->id)
@@ -335,15 +337,32 @@ Negeri Kelantan Perubatan'])
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-6">
+                                    @php
+                                        if (count($iklan_last) > 0) {
+                                            if ($iklan_last->tahun != now()->year) {
+                                                $year = $iklan_last->tahun + 1;
+                                                $bil = 1;
+                                            } else {
+                                                $year = $iklan_last->tahun;
+                                                $bil = $iklan_last->bil + 1;
+                                            }
+                                        } else {
+                                            $year = now()->year;
+                                            $bil = 1;
+                                        }
+                                        
+                                    @endphp
                                     <div class="input-group input-group-static">
                                         <label>Bilangan</label>
-                                        <input type="text" class="form-control" name="tarikhmula" required>
+                                        <input type="number" class="form-control" name="tarikhmula"
+                                            value="{{ $bil }}" required>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="input-group input-group-static">
                                         <label>Tahun</label>
-                                        <input type="text" class="form-control" name="tarikhtamat" required>
+                                        <input type="text" class="form-control" name="tarikhtamat"
+                                            value="{{ $year }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -398,27 +417,31 @@ Negeri Kelantan Perubatan'])
 
 @section('script')
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+
     <script>
-        $(document).on('click', '.padam_klan', function(event) {
-            event.preventDefault();
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                }
-            })
-        });
+        // $(document).on('click', '.padam_klan', function(event) {
+            function executeExample(){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                    }
+                })
+            };
+             
+        // });
 
         $('#butiraniklan').on('show.bs.modal', event => {
             var button = $(event.relatedTarget);

@@ -26,87 +26,15 @@ Negeri Kelantan'])
             <div class="card h-100">
                 <div class="card-header pb-0">
                     <h6>Butiran Iklan</h6>
-                    {{-- <p class="text-sm">
-                        <i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
-                        <span class="font-weight-bold">24%</span> this month
-                    </p> --}}
                 </div>
                 <form action="{{ route('kemaskini-iklan', [$iklan->id]) }}" method="POST" autocomplete="off">
                 <div class="card-body p-3">
-                    {{-- <div class="timeline timeline-one-side">
-                        <div class="timeline-block mb-3">
-                            <span class="timeline-step">
-                                <i class="material-icons text-success text-gradient">date_range</i>
-                            </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">Tempoh Iklan Dibuka</h6>
-                                @php
-                                    setlocale(LC_TIME, config('app.locale'));
-                                    $tarikhmula = $iklan->tarikh_mula->format('d/m/Y');
-                                @endphp
-                                <div class="input-group input-group-static">
-                                    <input type="date" class="form-control" name="tarikhmula" value="{{ $tarikhmula }}"
-                                        required>
-                                </div>
-                                Sehingga
-                                <div class="input-group input-group-static">
-                                    <input type="date" class="form-control" name="tarikhtamat" required>
-                                </div>
-                                {{ $tarikhmula }}
-                                {{ $iklan->tarikh_mula->formatLocalized('%d %B %Y') }} sehingga
-                                {{ $iklan->tarikh_tamat->formatLocalized('%d %B %Y') }}
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
-                                </p>
-                            </div>
-                        </div>
-                        <div class="timeline-block mb-3">
-                            <span class="timeline-step">
-                                <i class="material-icons text-danger text-gradient">room_preferences</i>
-                            </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">Rujukan</h6>
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-static col-md-6">
-                                        <input type="text" class="form-control" name="bil" value="{{ $iklan->bil }}" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group input-group-static col-md-6">
-                                        <input type="text" class="form-control" name="tahun" value="{{ $iklan->tahun }}" required>
-                                    </div>
-                                </div>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">Bilangan {{ $iklan->bil }}
-                                    {{ $iklan->tahun }}</p>
-                            </div>
-                        </div>
-                        <div class="timeline-block mb-3">
-                            <span class="timeline-step">
-                                <i class="material-icons text-info text-gradient">format_quote</i>
-                            </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">Jenis Iklan</h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">{{ $iklan->jenis }}</p>
-                            </div>
-                        </div>
-                        <div class="timeline-block mb-3">
-                            <span class="timeline-step">
-                                <i class="material-icons text-danger text-gradient">link</i>
-                            </span>
-                            <div class="timeline-content">
-                                <h6 class="text-dark text-sm font-weight-bold mb-0">Pautan Iklan
-                                </h6>
-                                <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
-                                    <a href="{{ $iklan->pautan }}" target="blank">{{ $iklan->pautan }}</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div> --}}
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-6">
                                 <div class="input-group input-group-static">
                                     <label>Bil</label>
-                                    <input type="text" class="form-control" name="bil" value="{{ $iklan->bil }}" required>
+                                    <input type="number" class="form-control" name="bil" value="{{ $iklan->bil }}" required>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -120,13 +48,13 @@ Negeri Kelantan'])
                             <div class="col-6">
                                 <div class="input-group input-group-static">
                                     <label>Tarikh Mula</label>
-                                    <input type="text" class="form-control datepicker" name="tarikhmula" value="{{ $iklan->tarikh_mula->format('Y-m-d') }}" required>
+                                    <input type="text" class="form-control datepicker" name="tarikhmula" value="{{ $iklan->tarikh_mula->format('d-m-Y') }}" required>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="input-group input-group-static">
                                     <label>Tarikh Tamat</label>
-                                    <input type="text" class="form-control datepicker" name="tarikhtamat" value="{{ $iklan->tarikh_tamat->format('Y-m-d') }}" required>
+                                    <input type="text" class="form-control datepicker" name="tarikhtamat" value="{{ $iklan->tarikh_tamat->format('d-m-Y') }}" required>
                                 </div>
                             </div>
                         </div>
@@ -436,7 +364,8 @@ Negeri Kelantan'])
         $('.datepicker').datepicker({
             weekStart:1,
             color: 'red',
-            format: 'yyyy-mm-dd'
+            format: 'dd-mm-yyyy',
+            autoclose: true
         });
 	</script>
 @endsection

@@ -350,7 +350,7 @@
               <li class="nav-item ">
                 <a class="nav-link text-white " data-bs-toggle="collapse" aria-expanded="false" href="#signinExample">
                   <span class="sidenav-mini-icon"> S </span>
-                  <span class="sidenav-normal  ms-2  ps-1"> Sign In <b class="caret"></b></span>
+                  <span class="sidenav-normal  ms-2  ps-1"> Log Masuk <b class="caret"></b></span>
                 </a>
                 <div class="collapse " id="signinExample">
                   <ul class="nav nav-sm flex-column">

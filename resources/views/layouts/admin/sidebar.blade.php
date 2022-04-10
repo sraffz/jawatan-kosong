@@ -26,7 +26,7 @@
                             <a class="nav-link text-white {{ $page == 'Profil' ? ' active bg-gradient-success' : '' }}"
                                 href="{{ url('admin/profil') }}">
                                 <span class="sidenav-mini-icon"> MP </span>
-                                <span class="sidenav-normal  ms-3  ps-1"> My Profile </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> Profil </span>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -10,6 +10,7 @@ use App\Iklan_jawatan;
 use Auth;
 use Alert;
 use DB;
+use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +34,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin');
+        $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+        
+        $bil_iklan = Iklan::where('tarikh_mula','<=',$tarikh_kini)
+        ->where('tarikh_tamat', '>=', $tarikh_kini)
+        ->count();
+
+        return view('admin', compact('bil_iklan'));
     }
 
     public function profil()
@@ -104,8 +111,7 @@ class AdminController extends Controller
             ->where('id_iklan', $iklan->id)
             ->get();
 
-            // Toast('Done Update', 'success')->position('top-end')->theme('success');
-            toastr()->error('An error has occurred please try again later.');
+            // toastr()->error('An error has occurred please try again later.');
 
         return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
     }
@@ -115,13 +121,15 @@ class AdminController extends Controller
         $id = Iklan::where('id', $id)->update([
             'tahun' =>$req->tahun,
             'bil' => $req->bil,
-            'tarikh_mula' => $req->tarikhmula,
-            'tarikh_tamat' => $req->tarikhtamat,
+            'tarikh_mula' => Carbon::parse($req->tarikhmula)->format('Y-m-d'),
+            'tarikh_tamat' => Carbon::parse($req->tarikhtamat)->format('Y-m-d'),
             'jenis' => $req->jenisiklan,
             'pautan' => $req->pautan,
             'id_pencipta' => Auth::user()->id,
             'updated_at' => \Carbon\Carbon::now(),
         ]);
+
+        Toast('Telah Dikemaskini', 'success')->position('top-end');
 
         return back();
     }

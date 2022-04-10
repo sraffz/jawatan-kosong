@@ -83,7 +83,7 @@ Kelantan'])
                                 <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Daftar</button>
                             </div>
                             <p class="text-sm mt-3 mb-0">Mempunyai Akaun? <a href="{{ url('login') }}"
-                                    class="text-dark font-weight-bolder">Sign in</a></p>
+                                    class="text-dark font-weight-bolder">Log Masuk</a></p>
                         </form>
                     </div>
                 </div>

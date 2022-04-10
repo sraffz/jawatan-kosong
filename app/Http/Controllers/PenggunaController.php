@@ -18,7 +18,10 @@ class PenggunaController extends Controller
 {
     public function iklan()
     {
-        return view('pengguna.iklan');
+        $syarat = DB::table('senarai-syarat-jawatan')->get();
+        $iklan = Iklan::all();
+
+        return view('pengguna.iklan', compact('iklan', 'syarat'));
     }
 
     public function maklumatdiri()

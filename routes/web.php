@@ -75,6 +75,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/tambah-jawatan', 'AdminController@tambahjawatan')->name('tambah-jawatan');
     
     Route::post('/buka-iklan', 'AdminController@bukaiklan')->name('buka-iklan');
+    Route::get('/padam-iklan', 'AdminController@padamiklan')->name('padam-iklan');
     Route::post('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklann')->name('kemaskini-iklan');
     Route::post('/tambah-kumpulan-jawatan', 'AdminController@tambahkumpulanjawatan')->name('tambah-kumpulan-jawatan');
     Route::post('/kemaskini-kumpulan-jawatan', 'AdminController@kemaskinikumpulanjawatan')->name('kemaskini-kumpulan-jawatan');

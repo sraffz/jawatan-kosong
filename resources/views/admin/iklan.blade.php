@@ -70,8 +70,8 @@ Negeri Kelantan Perubatan'])
             </div>
         </div> --}}
     </div>
-    <br>
-    <div class="row mb-4">
+     
+    <div class="row mt-4">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
                 <div class="card">
@@ -85,7 +85,7 @@ Negeri Kelantan Perubatan'])
                                     </p> --}}
                             </div>
                             <div class="col-lg-6 col-5 my-auto text-end">
-                                <div class="float-lg-end pe-4">
+                                <div class="float-lg-end pe-2">
                                     <button type="button" class="btn bg-gradient-dark mb-0" data-bs-toggle="modal"
                                         data-bs-target="#bukaiklan">
                                         <i class="material-icons text-sm">add</i>&nbsp;Iklan Baru
@@ -94,7 +94,7 @@ Negeri Kelantan Perubatan'])
                             </div>
                         </div>
                     </div>
-                    <div class="card-body px-0">
+                    <div class="card-body p-3">
                         <div class="table-responsive">
                             <table class="table table-sm align-items-center mb-0 display">
                                 <thead>
@@ -173,8 +173,7 @@ Negeri Kelantan Perubatan'])
                                                         <input type="text" class="form-control"
                                                             id="copy_{{ $ikl->id }}"
                                                             value="{{ url('suk' . $ikl->url . '') }}">
-                                                        {{-- <button value="copy" onclick="copyToClipboard('copy_{{ $ikl->id }}')">Copy!</button> --}}
-                                                        {{-- <input type="text" value="{{ url('suk' . $ikl->url . '') }}" id="myInput"> --}}
+                                                       
                                                     @else
                                                         <a class="" href="{{ url('/') }}"
                                                             target="_blank">
@@ -196,8 +195,9 @@ Negeri Kelantan Perubatan'])
                                                         href="{{ url('admin/kemaskini-iklan', [$ikl->url]) }}">
                                                         Kemaskini
                                                     </a>
-                                                    <button type="button"
-                                                        class="btn btn-danger btn-sm"  data-target="infoToast">Padam</button>
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#padam-{{ $ikl->id }}">Padam</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -309,6 +309,37 @@ Negeri Kelantan Perubatan'])
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <!-- Modal Padam Iklan-->
+                                        <div class="modal fade" id="padam-{{ $ikl->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title text-bold modal-title font-weight-normal"
+                                                            id="modal-title-default">Padam Iklan</h5>
+                                                        <button type="button" class="btn-close text-dark"
+                                                            data-bs-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">×</span>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{ route('padam-iklan') }}" method="get">
+                                                        {{ csrf_field() }}
+                                                        <div class="modal-body">
+                                                            <div class="card-body text-center text-bold text-dark p-3">
+                                                                 Adakah anda ingin padam iklan ini?
+                                                                 <input type="hidden" name="id" value="{{ $ikl->id }}">
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-outline-secondary"
+                                                                data-bs-dismiss="modal">Tutup</button>
+                                                            <button type="submit" class="btn btn-danger">Padam</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -318,7 +349,6 @@ Negeri Kelantan Perubatan'])
             </div>
         </div>
     </div>
-
 
     <!-- Modal Tambah Iklan-->
     <div class="modal fade" id="bukaiklan" tabindex="-1" role="dialog" aria-labelledby="modal-default"
@@ -354,14 +384,14 @@ Negeri Kelantan Perubatan'])
                                     @endphp
                                     <div class="input-group input-group-static">
                                         <label>Bilangan</label>
-                                        <input type="number" class="form-control" name="tarikhmula"
+                                        <input type="number" class="form-control" name="bil"
                                             value="{{ $bil }}" required>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="input-group input-group-static">
                                         <label>Tahun</label>
-                                        <input type="text" class="form-control" name="tarikhtamat"
+                                        <input type="text" class="form-control" name="tahun"
                                             value="{{ $year }}" required>
                                     </div>
                                 </div>
@@ -420,29 +450,6 @@ Negeri Kelantan Perubatan'])
     <script src="sweetalert2.min.js"></script>
 
     <script>
-        // $(document).on('click', '.padam_klan', function(event) {
-            function executeExample(){
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
-                    }
-                })
-            };
-             
-        // });
-
         $('#butiraniklan').on('show.bs.modal', event => {
             var button = $(event.relatedTarget);
             var modal = $(this);

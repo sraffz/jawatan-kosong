@@ -28,30 +28,28 @@ Negeri Kelantan'])
                     <h6>Butiran Iklan</h6>
                 </div>
                 <form action="{{ route('kemaskini-iklan', [$iklan->id]) }}" method="POST" autocomplete="off">
-                <div class="card-body p-3">
+                <div class="card-body pb-0">
                         {{ csrf_field() }}
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-3">
                                 <div class="input-group input-group-static">
                                     <label>Bil</label>
                                     <input type="number" class="form-control" name="bil" value="{{ $iklan->bil }}" required>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-3">
                                 <div class="input-group input-group-static">
                                     <label>Tahun</label>
                                     <input type="text" class="form-control" name="tahun" value="{{ $iklan->tahun }}" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
+                            <div class="col-3 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Tarikh Mula</label>
                                     <input type="text" class="form-control datepicker" name="tarikhmula" value="{{ $iklan->tarikh_mula->format('d-m-Y') }}" required>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-3 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Tarikh Tamat</label>
                                     <input type="text" class="form-control datepicker" name="tarikhtamat" value="{{ $iklan->tarikh_tamat->format('d-m-Y') }}" required>
@@ -59,7 +57,7 @@ Negeri Kelantan'])
                             </div>
                         </div>
                         <div class="row mt-4">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="input-group input-group-static">
                                     <label>Jenis Iklan</label>
                                     <select class="form-control" name="jenisiklan" required>
@@ -69,9 +67,7 @@ Negeri Kelantan'])
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <div class="input-group input-group-static">
                                     <label>Pautan</label>
                                     <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}" required placeholder="">

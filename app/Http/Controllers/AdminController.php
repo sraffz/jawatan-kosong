@@ -7,6 +7,7 @@ use App\Iklan;
 use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
 use App\Iklan_jawatan;
+use App\Admin_log;
 use Auth;
 use Alert;
 use DB;
@@ -84,8 +85,8 @@ class AdminController extends Controller
         $random = Str::random(5);
 
         $id = Iklan::insertGetId([
-            'tahun' => now()->year,
-            'bil' => $bil + 1,
+            'tahun' => $req->tahun,
+            'bil' => $req->bil,
             'tarikh_mula' => $req->tarikhmula,
             'tarikh_tamat' => $req->tarikhtamat,
             'jenis' => $req->jenisiklan,
@@ -97,8 +98,43 @@ class AdminController extends Controller
         ]);
 
         $d = $random;
+
+        Admin_log::insert([
+            'admin_id' => Auth::user()->id,
+            'proses' => 'Buka Iklan bil '.$req->bil.' '.$req->tahun.'',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
+        ]);
+
         Alert::success('Berjaya', 'Iklan baru berjaya ditambah');
         return redirect('/admin/kemaskini-iklan/' . $d . '');
+    }
+    
+    public function padamiklan(Request $req)
+    {
+        $id = $req->id;
+
+        $listjawatan = Iklan_jawatan::where('id_iklan', $id)->get();
+
+        foreach ($listjawatan as $lj) {
+            Storage::delete($lj->lokasi_fail);
+
+            Iklan_jawatan::where('id', $lj->id)->delete();
+        }
+
+        $data = Iklan::where('id', $id)->first();
+   
+        Admin_log::insert([
+            'admin_id' => Auth::user()->id,
+            'proses' => 'Padam Iklan bil '.$data->bil.' '.$data->tahun.'',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
+        ]);
+        
+        Iklan::where('id', $id)->delete();
+
+        Alert::success('Berjaya', 'Iklan telah dipadam');
+        return back();
     }
 
     public function kemaskiniiklan($id)
@@ -110,8 +146,6 @@ class AdminController extends Controller
         $syarat = DB::table('senarai-syarat-jawatan')
             ->where('id_iklan', $iklan->id)
             ->get();
-
-            // toastr()->error('An error has occurred please try again later.');
 
         return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
     }
@@ -126,6 +160,13 @@ class AdminController extends Controller
             'jenis' => $req->jenisiklan,
             'pautan' => $req->pautan,
             'id_pencipta' => Auth::user()->id,
+            'updated_at' => \Carbon\Carbon::now(),
+        ]);
+
+        Admin_log::insert([
+            'admin_id' => Auth::user()->id,
+            'proses' => 'Kemaskini Iklan bil '.$data->bil.' '.$data->tahun.'',
+            'created_at' => \Carbon\Carbon::now(),
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
@@ -168,7 +209,7 @@ class AdminController extends Controller
                     $data->lokasi_fail = $filePath;
                     $data->save();
 
-                    Alert::success('Berjaya', 'Permohonan Berjaya DidaftarKan');
+                    Alert::success('Berjaya', 'Jawatan Berjaya Ditambah');
                     return back();
                 } else {
                     Alert::error('Tidak Berjaya', 'Muat naik tidak berjaya');
@@ -278,6 +319,7 @@ class AdminController extends Controller
         $data->save();
 
         Alert::success('Berjaya', 'Maklumat berjaya ditambah');
+        
         return back();
     }
 

@@ -163,13 +163,6 @@ class AdminController extends Controller
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
-        Admin_log::insert([
-            'admin_id' => Auth::user()->id,
-            'proses' => 'Kemaskini Iklan bil '.$data->bil.' '.$data->tahun.'',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
-        ]);
-
         Toast('Telah Dikemaskini', 'success')->position('top-end');
 
         return back();

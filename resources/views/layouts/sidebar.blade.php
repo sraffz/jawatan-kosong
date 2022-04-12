@@ -20,12 +20,12 @@
                 </a>
                 <div class="collapse {{ $page == 'Profil' || $page == 'Tetapan' ? ' show' : '' }}" id="ProfileNav" style="">
                     <ul class="nav ">
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link text-white {{ $page == 'Profil' ? ' active bg-gradient-success' : '' }}" href="{{ route('profil') }}">
                                 <span class="sidenav-mini-icon"> MP </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> Profil </span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link text-white  {{ $page == 'Tetapan' ? ' active bg-gradient-success' : '' }}" href="{{ url('tetapan') }}">
                                 <span class="sidenav-mini-icon"> S </span>
@@ -37,7 +37,7 @@
                                 style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                            <a class="nav-link text-white " href="{{ route('logout') }}"  onclick="event.preventDefault();
+                            <a class="nav-link text-white " href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                                 <span class="sidenav-mini-icon"> L </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> Logout </span>
@@ -147,8 +147,6 @@
                     <span class="sidenav-normal  ms-2  ps-1"> Pengesahan </span>
                 </a>
             </li>
-
-
     {{-- @include('layouts.admin.sidebar22') --}}
     </div>
 </aside>

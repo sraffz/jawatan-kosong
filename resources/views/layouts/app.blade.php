@@ -157,29 +157,6 @@
 
 
         @yield('script')
-        <script type="text/javascript">
-            function addRow(number) {
-            var count = 1;  
-        
-            var tr = '<tr>'+
-                '<td style="vertical-align:middle"> </td>'+
-                '<td><input class="form-control" name="first[]" placeholder="First name"></td>'+
-                '<td><input class="form-control" name="second[]" placeholder="Last Name"></td>'+
-                '<td><input class="form-control" name="twitter[]" placeholder="Twitter"></td>'+
-                '<td><button type="button" class="btn btn-danger buang">Buang</button></td>'+
-                '</tr>';
-                $('#mp').append(tr);
-            }; 
-            
-            $('.addRow').on('click', function(){
-                addRow();
-            });
-            
-            $('#mp').on('click', '.buang', function(){
-                $(this).parent().parent().remove();
-            });
-
-        </script>
         <script>
             if (document.getElementById('choices-gender')) {
                 var gender = document.getElementById('choices-gender');
@@ -190,6 +167,11 @@
             if (document.getElementById('choices-language')) {
                 var language = document.getElementById('choices-language');
                 const example = new Choices(language);
+            }
+
+            if (document.getElementById('choices-fhone')) {
+                var fhone = document.getElementById('choices-fhone');
+                const example = new Choices(fhone);
             }
     
             if (document.getElementById('choices-skills')) {
@@ -251,29 +233,29 @@
     
                 var d = new Date();
                 var monthArray = new Array();
-                monthArray[0] = "January";
-                monthArray[1] = "February";
-                monthArray[2] = "March";
+                monthArray[0] = "Januari";
+                monthArray[1] = "Februari";
+                monthArray[2] = "Mac";
                 monthArray[3] = "April";
-                monthArray[4] = "May";
-                monthArray[5] = "June";
-                monthArray[6] = "July";
-                monthArray[7] = "August";
+                monthArray[4] = "Mei";
+                monthArray[5] = "Jun";
+                monthArray[6] = "Julai";
+                monthArray[7] = "Ogos";
                 monthArray[8] = "September";
-                monthArray[9] = "October";
+                monthArray[9] = "Oktober";
                 monthArray[10] = "November";
-                monthArray[11] = "December";
-                for (m = 0; m <= 11; m++) {
-                    var optn = document.createElement("OPTION");
-                    optn.text = monthArray[m];
-                    // server side month start from one
-                    optn.value = (m + 1);
-                    // if june selected
-                    if (m == 1) {
-                        optn.selected = true;
-                    }
-                    month.options.add(optn);
-                }
+                monthArray[11] = "Disember";
+                // for (m = 0; m <= 11; m++) {
+                //     var optn = document.createElement("OPTION");
+                //     optn.text = monthArray[m];
+                //     // server side month start from one
+                //     optn.value = (m + 1);
+                //     // if june selected
+                //     if (m == 1) {
+                //         optn.selected = true;
+                //     }
+                //     month.options.add(optn);
+                // }
             }
     
             function visible() {

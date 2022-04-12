@@ -12,7 +12,7 @@ use Auth;
 use Alert;
 use DB;
 use Carbon\Carbon;
-use PDF;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 

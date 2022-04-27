@@ -14,7 +14,8 @@
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
     <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.png') }}">
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
 
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css"
@@ -31,10 +32,14 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
-    {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
+    <link id="pagestyle" href="{{ asset('jquery-ui-1.13.1/jquery-ui.css') }}" rel="stylesheet" />
+
+    <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
-    {{--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" /> --}}
+
+
+
+
     @yield('link')
 </head>
 
@@ -58,46 +63,78 @@
     </main>
 
     <!--   Core JS Files   -->
+    {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
     <script src="{{ asset('material/js/core/popper.min.js') }}"></script>
     <script src="{{ asset('material/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('material/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('material/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('material/js/plugins/chartjs.min.js') }}"></script>
     <script src="{{ asset('material/js/plugins/choices.min.js') }}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="{{ asset('datatable/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('datatable/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ asset('jquery-ui-1.13.1/jquery-ui.js') }}"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
 
     @include('sweetalert::alert')
 
-
-    <script>
-        var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
-            }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-        }
-    </script>
-    <script>
-        var win = navigator.platform.indexOf('Win') > -1;
-        if (win && document.querySelector('#sidenav-scrollbar')) {
-            var options = {
-                damping: '0.5'
-            }
-            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-        }
-    </script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     {{-- <script async defer src="{{ asset('material/js/buttons.js') }}"></script> --}}
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('material/js/material-dashboard.min.js') }}"></script>
-
-
     @yield('script')
+
     <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.datatable').DataTable({
+                "language": {
+                    "emptyTable": "Tiada data",
+                    "lengthMenu": "_MENU_ Rekod setiap halaman",
+                    "zeroRecords": "Tiada padanan rekod yang dijumpai.",
+                    "info": "Paparan dari _START_ hingga _END_ dari _TOTAL_ rekod",
+                    "infoEmpty": "Paparan 0 hingga 0 dari 0 rekod",
+                    "infoFiltered": "(Ditapis dari jumlah _MAX_ rekod)",
+                    "search": "Carian:",
+                    "oPaginate": {
+                        "sFirst": "Pertama",
+                        "sPrevious": "<",
+                        "sNext": ">",
+                        "sLast": "Akhir"
+                    }
+                },
+            });
+        });
+
+        $(".datepicker").datepicker({
+            weekStart: 1,
+            dateFormat: 'dd-mm-yy',
+        });
+
+
         if (document.getElementById('choices-gender')) {
             var gender = document.getElementById('choices-gender');
             const example = new Choices(gender);

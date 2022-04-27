@@ -85,12 +85,11 @@ Perubatan'])
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-sm table-bordered text-dark text-sm font-weight-bold">
+                                                                    <table class="table text-dark text-bold text-xs align-items-center mb-0">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Bil</th>
                                                                                 <th>Nama Jawatan</th>
-                                                                                {{-- <th>Kumpulan Perkhidmatan</th> --}}
                                                                                 <th>Taraf</th>
                                                                                 <th>Syarat</th>
                                                                                 <th>tindakan</th>
@@ -107,8 +106,7 @@ Perubatan'])
                                                                                         <td> {{ $ss->nama_jawatan }}
                                                                                             ({{ $ss->gred }})
                                                                                         </td>
-                                                                                        {{-- <td>{{ $ss->kump_perkhidmatan }}</td> --}}
-                                                                                        <td class="text-uppercase">
+                                                                                         <td class="text-uppercase">
                                                                                             {{ $ss->taraf }}</td>
                                                                                         <td>
                                                                                             <a class="btn btn-link text-dark text-sm "
@@ -118,8 +116,8 @@ Perubatan'])
                                                                                                 PDF
                                                                                             </a>
                                                                                         </td>
-                                                                                        <td><a class="badge bg-gradient-primary"
-                                                                                                href="#" role="button">Mohon</a>
+                                                                                        <td>
+                                                                                            <a class="btn btn-primary active btn-sm" href="#" role="button">Mohon</a>
                                                                                         </td>
                                                                                     </tr>
                                                                                 @endif

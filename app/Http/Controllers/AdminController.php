@@ -80,6 +80,8 @@ class AdminController extends Controller
 
     public function bukaiklan(Request $req)
     {
+        // dd($req->gaji_min);
+
         $bil = Iklan::where('tahun', now()->year)->count();
 
         $random = Str::random(5);
@@ -90,6 +92,7 @@ class AdminController extends Controller
             'tarikh_mula' => $req->tarikhmula,
             'tarikh_tamat' => $req->tarikhtamat,
             'jenis' => $req->jenisiklan,
+            'gaji_min' => $req->gaji_min,
             'pautan' => $req->pautan,
             'id_pencipta' => Auth::user()->id,
             'url' => $random,
@@ -97,6 +100,17 @@ class AdminController extends Controller
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
+        // $kk = new Iklan;
+        // $kk->tahun = $req->tahun;
+        // $kk->bil = $req->bil;
+        // $kk->tarikh_mula = $req->tarikhmula;
+        // $kk->tarikh_tamat = $req->tarikhtamat;
+        // $kk->jenis = $req->jenisiklan;
+        // $kk->pautan = $req->pautan;
+        // $kk->id_pencipta = Auth::user()->id;
+        // $kk->url = $random;
+        // $kk->save();
+         
         $d = $random;
 
         Admin_log::insert([
@@ -158,6 +172,7 @@ class AdminController extends Controller
             'tarikh_mula' => Carbon::parse($req->tarikhmula)->format('Y-m-d'),
             'tarikh_tamat' => Carbon::parse($req->tarikhtamat)->format('Y-m-d'),
             'jenis' => $req->jenisiklan,
+            'gaji_min' => $req->gaji_min,
             'pautan' => $req->pautan,
             'id_pencipta' => Auth::user()->id,
             'updated_at' => \Carbon\Carbon::now(),
@@ -195,6 +210,7 @@ class AdminController extends Controller
                     $data->id_iklan = $id;
                     $data->nama_jawatan = $req->jawatan;
                     $data->gred = $req->gred;
+                    $data->gajiMin = $req->gajiMin;
                     $data->kump_perkhidmatan = $req->kump;
                     $data->taraf_jawatan = $req->taraf;
                     $data->nama_fail = $filename;
@@ -247,6 +263,7 @@ class AdminController extends Controller
                     Iklan_jawatan::where('id', $req->id)->update([
                         'nama_jawatan' => $req->jawatan,
                         'gred' => $req->gred,
+                        'gajiMin' => $req->gajiMin,
                         'kump_perkhidmatan' => $req->kump,
                         'taraf_jawatan' => $req->taraf,
                         'nama_fail' => $filename,
@@ -265,16 +282,17 @@ class AdminController extends Controller
                 return back()->withInput();
             }
         }
-        // else {
-        //     Iklan_jawatan::where('id', $req->id)->update([
-        //         'nama_jawatan' => $req->jawatan,
-        //         'gred' => $req->gred,
-        //         'kump_perkhidmatan' => $req->kump,
-        //         'taraf_jawatan' => $req->taraf,
-        //     ]);
-        //     Alert::info('Berjaya', 'Maklumat telah dikemaskini. tanpa fail');
-        //     return back();
-        // }
+        else {
+            Iklan_jawatan::where('id', $req->id)->update([
+                'nama_jawatan' => $req->jawatan,
+                'gred' => $req->gred,
+                'gajiMin' => $req->gajiMin,
+                'kump_perkhidmatan' => $req->kump,
+                'taraf_jawatan' => $req->taraf,
+            ]);
+            Alert::info('Berjaya', 'Maklumat telah dikemaskini. tanpa fail');
+            return back();
+        }
     }
 
     public function padamjawatan(Request $req)

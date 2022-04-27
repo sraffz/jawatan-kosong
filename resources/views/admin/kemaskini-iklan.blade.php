@@ -2,7 +2,6 @@
 Negeri Kelantan'])
 
 @section('link')
-<link rel="stylesheet" href="{{ asset('material/css/bootstrap-datepicker.css') }}">
     <style>
 
     </style>
@@ -25,60 +24,103 @@ Negeri Kelantan'])
         <div class="col-lg-12 col-md-12">
             <div class="card h-100">
                 <div class="card-header pb-0">
-                    <h6>Butiran Iklan</h6>
+                    <div class="row">
+                        <div class="col-6">
+                            <h6>Butiran Iklan</h6>
+                        </div>
+                        <div class="col-6 text-end">
+                            <a href="{{ url('/admin/cetak-iklan', [$iklan->id]) }}" class="btn btn-sm btn-outline-info"> 
+                                <span class="material-icons">
+                                    print
+                                </span> Cetak
+                            </a>
+                            @if ($iklan->jenis == 'TERTUTUP')
+                                <a href="{{ url('suk' . $iklan->url . '') }}" target="_blank" class="btn btn-sm btn-outline-danger">
+                                    <span class="material-icons">
+                                        link
+                                    </span> pautan
+                                </a>
+                            @else
+                                <a href="{{ url('/') }}" target="_blank"  class="btn btn-sm btn-outline-danger">
+                                    <span class="material-icons">
+                                        link
+                                    </span> pautan
+                                </a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
                 <form action="{{ route('kemaskini-iklan', [$iklan->id]) }}" method="POST" autocomplete="off">
-                <div class="card-body pb-0">
+                    <div class="card-body pb-0">
                         {{ csrf_field() }}
                         <div class="row">
-                            <div class="col-3">
+                            <div class="col-12 col-xl-3 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Bil</label>
-                                    <input type="number" class="form-control" name="bil" value="{{ $iklan->bil }}" required>
+                                    <input type="number" class="form-control" name="bil" value="{{ $iklan->bil }}"
+                                        required>
                                 </div>
                             </div>
-                            <div class="col-3">
+                            <div class="col-12 col-xl-3 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Tahun</label>
-                                    <input type="text" class="form-control" name="tahun" value="{{ $iklan->tahun }}" required>
+                                    <input type="number" class="form-control" name="tahun" value="{{ $iklan->tahun }}"
+                                        required>
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-12 col-xl-3 mt-2 ">
                                 <div class="input-group input-group-static">
                                     <label>Tarikh Mula</label>
-                                    <input type="text" class="form-control datepicker" name="tarikhmula" value="{{ $iklan->tarikh_mula->format('d-m-Y') }}" required>
+                                    <input type="text" class="form-control datepicker" id="" name="tarikhmula"
+                                        value="{{ $iklan->tarikh_mula->format('d-m-Y') }}" required>
                                 </div>
                             </div>
-                            <div class="col-3 mt-2">
+                            <div class="col-12 col-xl-3 mt-2 ">
                                 <div class="input-group input-group-static">
                                     <label>Tarikh Tamat</label>
-                                    <input type="text" class="form-control datepicker" name="tarikhtamat" value="{{ $iklan->tarikh_tamat->format('d-m-Y') }}" required>
+                                    <input type="text" class="form-control datepicker" id="" name="tarikhtamat"
+                                        value="{{ $iklan->tarikh_tamat->format('d-m-Y') }}" required>
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-4">
-                            <div class="col-6">
+                            <div class="col-12 col-xl-4 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Jenis Iklan</label>
                                     <select class="form-control" name="jenisiklan" required>
                                         <option value="">Sila Pilih</option>
-                                        <option value="TERBUKA" {{ 'TERBUKA' == $iklan->jenis? 'selected' : '' }}>TERBUKA</option>
-                                        <option value="TERTUTUP"{{ 'TERTUTUP' == $iklan->jenis? 'selected' : '' }}>TERTUTUP</option>
+                                        <option value="TERBUKA" {{ 'TERBUKA' == $iklan->jenis ? 'selected' : '' }}>
+                                            TERBUKA
+                                        </option>
+                                        <option value="TERTUTUP" {{ 'TERTUTUP' == $iklan->jenis ? 'selected' : '' }}>
+                                            TERTUTUP</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-xl-4 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Pautan</label>
-                                    <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}" required placeholder="">
+                                    <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}"
+                                        required placeholder="">
                                 </div>
                             </div>
+                            <div class="col-12 col-xl-4 mt-4">
+                                <div class="input-group input-group-static">
+                                    <div class="form-check form-switch d-flex align-items-center mb-3">
+                                        <input class="form-check-input" type="checkbox" id="gajiMin" value="1"
+                                            name="gaji_min" {{ old('gaji_min') || $iklan->gaji_min ? 'checked' : '' }}>
+                                        <label class="form-check-label mb-0 ms-3 mt-1" for="gajiMin">Papar gaji
+                                            minimum.</label>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
-                </div>
-                <div class="card-footer text-end">
-                    <button type="submit" class="btn btn-danger">Kemaskini</button>
-                </div>
-            </form>
+                    </div>
+                    <div class="card-footer text-end">
+                        <button type="submit" class="btn btn-danger">Kemaskini</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -117,13 +159,18 @@ Negeri Kelantan'])
                                     <div class="container-fluid">
                                         {{ csrf_field() }}
                                         <input type="hidden" id="id" name="id" value="{{ $iklan->id }}">
-                                        <div class="input-group input-group-dynamic mt-3">
+                                        <div class="input-group input-group-dynamic mb-3">
                                             <label class="form-label">Jawatan</label>
                                             <input type="text" class="form-control" name="jawatan" id="jawatan" required>
                                         </div>
-                                        <div class="input-group input-group-dynamic mt-3">
+                                        <div class="input-group input-group-dynamic mb-3">
                                             <label class="form-label">Gred</label>
                                             <input type="text" class="form-control" name="gred" id="gred" required>
+                                        </div>
+                                        <div class="input-group input-group-dynamic mb-3">
+                                            <label class="form-label">Gaji Minimum</label>
+                                            <input type="number" class="form-control" name="gajiMin" id="gajiMin"
+                                                required>
                                         </div>
                                         <div class="input-group input-group-dynamic mt-3">
                                             <label class="form-label ms-0 mb-0">Kumpulan Perkhidmatan</label>
@@ -167,13 +214,13 @@ Negeri Kelantan'])
                 </div>
                 <div class="card-body p-3">
                     <div class="table-responsive">
-                        <table class="table table-striped table-responsive">
+                        <table class="table table-striped table-flush datatable">
                             <thead>
                                 <tr class="text-center">
                                     <th class="text-uppercase">Bil</th>
                                     <th class="text-uppercase">Jawatan</th>
                                     <th class="text-uppercase">Gred</th>
-                                    <th class="text-uppercase">Kumpulan Perkhidmatan</th>
+                                    {{-- <th class="text-uppercase">Kumpulan Perkhidmatan</th> --}}
                                     <th class="text-uppercase">Taraf Jawatan</th>
                                     <th class="text-uppercase">SYARAT LANTIKAN</th>
                                     <th class="text-uppercase">tindakan</th>
@@ -188,7 +235,7 @@ Negeri Kelantan'])
                                         <td scope="row">{{ $k++ }}</td>
                                         <td class="text-right">{{ $ss->nama_jawatan }}</td>
                                         <td>{{ $ss->gred }}</td>
-                                        <td>{{ $ss->kump_perkhidmatan }}</td>
+                                        {{-- <td>{{ $ss->kump_perkhidmatan }}</td> --}}
                                         <td class="text-uppercase">{{ $ss->taraf }}</td>
                                         <td>
                                             {{-- <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{{ url($ss->lokasi_fail) }}" role="button"> --}}
@@ -213,28 +260,34 @@ Negeri Kelantan'])
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title">Kemaskini</h5>
+                                                    <h5 class="modal-title">Kemaskini Jawatan</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <form action="{{ route('kemaskini-jawatan') }}" method="post"
                                                     autocomplete="off" enctype="multipart/form-data">
                                                     <div class="modal-body">
-                                                        <div class=" ">
+                                                        <div class="container-fluid ">
                                                             {{ csrf_field() }}
                                                             <input type="hidden" id="id" name="id"
                                                                 value="{{ $ss->id }}">
                                                             <div class="input-group input-group-static">
                                                                 <label>Jawatan</label>
-                                                                <input type="text" class="form-control upper" name="jawatan"
-                                                                    id="jawatan" value="{{ $ss->nama_jawatan }}"
-                                                                    required>
+                                                                <input type="text" class="form-control upper"
+                                                                    name="jawatan" id="jawatan"
+                                                                    value="{{ $ss->nama_jawatan }}" required>
                                                             </div>
                                                             <div class="input-group input-group-static mt-3">
                                                                 <label>Gred</label>
                                                                 <input type="text" class="form-control" name="gred"
                                                                     value="{{ $ss->gred }}" id="gred" required>
                                                             </div>
+                                                            <div class="input-group input-group-static mt-3">
+                                                                <label>Gaji Minimum</label>
+                                                                <input type="number" class="form-control" name="gajiMin"
+                                                                    value="{{ $ss->gajiMin }}" id="gajiMin" required>
+                                                            </div>
+
                                                             <div class="input-group input-group-static mt-3">
                                                                 <label class=" ms-0 mb-0">Kumpulan
                                                                     Perkhidmatan</label>
@@ -334,11 +387,7 @@ Negeri Kelantan'])
 @endsection
 
 @section('script')
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="{{ asset('material/js/bootstrap-datepicker.js') }}"></script>
-
     <script>
-         
         if (document.getElementById('choices-kump')) {
             var kump = document.getElementById('choices-kump');
             const example = new Choices(kump);
@@ -356,12 +405,9 @@ Negeri Kelantan'])
             "Julai", "Ogos", "September", "October", "November", "Disember"
         ];
 
-        
-        $('.datepicker').datepicker({
-            weekStart:1,
-            color: 'red',
-            format: 'dd-mm-yyyy',
-            autoclose: true
+        $(".datepicker").datepicker({
+            weekStart: 1,
+            dateFormat: 'dd-mm-yy',
         });
-	</script>
+    </script>
 @endsection

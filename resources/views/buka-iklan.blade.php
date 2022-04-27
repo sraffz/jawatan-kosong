@@ -38,6 +38,8 @@
             <div class="content">
                 <!-- Default Table Style -->
                 <!-- Table -->
+                @include('sub.button-login-register')
+
                 @foreach ($iklan as $ikln)
                 @php
                     $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
@@ -56,9 +58,11 @@
                                                 <th class="text-center" style="width: 50px;">Bil</th>
                                                 <th style="width: 20%;">Nama Jawatan</th>
                                                 <th class="text-center">Gred</th>
-                                                <th class="text-center d-none d-sm-table-cell">Kumpulan Perkhidmatan
-                                                </th>
+                                                <th class="text-center d-none d-sm-table-cell">Kumpulan Perkhidmatan</th>
                                                 <th class="text-center">Taraf Jawatan</th>
+                                                @if ($ikln->gaji_min == '1')
+                                                <th class="text-center">Gaji Minimum</th>
+                                                @endif
                                                 <th class="text-center">Syarat Lantikan</th>
                                             </tr>
                                         </thead>
@@ -75,6 +79,9 @@
                                                         <td class="text-center d-none d-sm-table-cell">
                                                             {{ $ss->kump_perkhidmatan }}</td>
                                                         <td class="text-center"><i>{{ $ss->taraf }}</i></td>
+                                                        @if ($ikln->gaji_min == '1')
+                                                        <td class="text-center"><i>RM{{ $ss->gajiMin }}</i></td>
+                                                        @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
                                                                 <a href="{{ url('dl-syarat', [$ss->id]) }}">

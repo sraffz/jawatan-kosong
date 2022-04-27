@@ -96,7 +96,7 @@ Negeri Kelantan Perubatan'])
                     </div>
                     <div class="card-body p-3">
                         <div class="table-responsive">
-                            <table class="table table-sm align-items-center mb-0 display">
+                            <table class="table table-striped table-flush datatable">
                                 <thead>
                                     <tr>
                                         <th
@@ -170,10 +170,7 @@ Negeri Kelantan Perubatan'])
                                                                 content_copy
                                                             </span>
                                                         </a>
-                                                        <input type="text" class="form-control"
-                                                            id="copy_{{ $ikl->id }}"
-                                                            value="{{ url('suk' . $ikl->url . '') }}">
-                                                       
+                                                        <input type="text" class="form-control form-control-sm border-radius-md" id="copy_{{ $ikl->id }}" value="{{ url('suk' . $ikl->url . '') }}">
                                                     @else
                                                         <a class="" href="{{ url('/') }}"
                                                             target="_blank">
@@ -271,10 +268,36 @@ Negeri Kelantan Perubatan'])
                                                                         <h6 class="text-dark text-sm font-weight-bold mb-0">
                                                                             Pautan Iklan
                                                                         </h6>
-                                                                        <p
-                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
-                                                                            <a href="{{ $ikl->pautan }}"
-                                                                                target="blank">{{ $ikl->pautan }}</a>
+                                                                        <div class="row">
+                                                                            @if ($ikl->jenis == 'TERTUTUP')
+                                                                            <div class="col-12 col-xl-10">
+                                                                                <input type="text" class="form-control form-control-sm border-radius-md" id="copy2_{{ $ikl->id }}" value="{{ url('suk' . $ikl->url . '') }}">
+                                                                            </div>
+                                                                            <div class="col-12 col-xl-2 mt-1 text-left">
+                                                                                <a href="{{ url('suk' . $ikl->url . '') }}" target="_blank">
+                                                                                    <span class="material-icons">
+                                                                                        link
+                                                                                    </span>
+                                                                                </a>
+                                                                                <a role="button" href="#" id="{{ $ikl->id }}" value="copy"
+                                                                                    onclick="copyToClipboard('copy2_{{ $ikl->id }}')">
+                                                                                    <span class="material-icons">
+                                                                                        content_copy
+                                                                                    </span>
+                                                                                </a>
+                                                                            </div>
+                                                                          
+                                                                            @else
+                                                                                <a class="" href="{{ url('/') }}"
+                                                                                    target="_blank">
+                                                                                    <span class="material-icons">
+                                                                                        link
+                                                                                    </span>
+                                                                                </a>
+                                                                            @endif
+                                                                            
+                                                                        </div>
+                                                                        <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -430,9 +453,14 @@ Negeri Kelantan Perubatan'])
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-
-                            </div>
+                            <div class="row mt-4">
+                                     <div class="input-group input-group-static">
+                                        <div class="form-check form-switch d-flex align-items-center mb-3">
+                                            <input class="form-check-input" type="checkbox" id="gajiMin" value="1" name="gaji_min" {{ old('gaji_min') ? 'checked' : '' }}>
+                                            <label class="form-check-label mb-0 ms-3 mt-1" for="gajiMin">Papar gaji minimum.</label>
+                                        </div>
+                                    </div>
+                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -446,8 +474,8 @@ Negeri Kelantan Perubatan'])
 @endsection
 
 @section('script')
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="sweetalert2.min.js"></script>
+    {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="sweetalert2.min.js"></script> --}}
 
     <script>
         $('#butiraniklan').on('show.bs.modal', event => {

@@ -79,10 +79,13 @@
                     <thead class="thead-dark">
                         <tr>
                             <th style="width: 7%">BIL</th>
-                            <th style="width: 44%">NAMA JAWATAN</th>
+                            <th style="width: 40%">NAMA JAWATAN</th>
                             <th style="width: 7%">GRED</th>
                             <th>KUMPULAN PERKHIDMATAN</th>
                             <th>TARAF LANTIKAN</th>
+                            @if ($iklan2->gaji_min == '1')
+                            <th>GAJI MINIMUM</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -96,6 +99,9 @@
                                 <td>{{ $ikl->gred }}</td>
                                 <td>{{ $ikl->kump_perkhidmatan }}</td>
                                 <td>{{ $ikl->taraf }}</td>
+                                @if ($iklan2->gaji_min == '1')
+                                <td>RM{{ $ikl->gajiMin }}</td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

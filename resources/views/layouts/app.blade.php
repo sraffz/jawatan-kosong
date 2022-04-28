@@ -129,9 +129,12 @@
         <script src="{{ asset('material/js/plugins/smooth-scrollbar.min.js') }}"></script>
         <script src="{{ asset('material/js/plugins/chartjs.min.js') }}"></script>
         <script src="{{ asset('material/js/plugins/choices.min.js') }}"></script>
+        <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
         {{-- <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script> --}}
         {{-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> --}}
-        <script>
+        
+        @include('sweetalert::alert')
+       <script>
             var win = navigator.platform.indexOf('Win') > -1;
             if (win && document.querySelector('#sidenav-scrollbar')) {
                 var options = {

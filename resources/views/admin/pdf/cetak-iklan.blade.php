@@ -112,11 +112,21 @@
                 <p class="fs-6 mt-2">
                     <strong> Syarat Lantikan :</strong> <br>
                     Syarat – syarat lantikan jawatan boleh muat-turun di
-                    <strong>https://www.kelantan.gov.my/jawatankosong</strong>
+                    @if ($iklan2->jenis == 'TERTUTUP')
+                    <strong>{{ url('suk'.$iklan2->url.'') }}</strong>
+                    {{-- <strong>https://www.kelantan.gov.my/jawatankosong/suk{{ $iklan2->url }}</strong> --}}
+                    @else
+                        <strong>https://www.kelantan.gov.my/jawatankosong</strong>
+                    @endif
                     <br><br>
                     <strong>Cara Memohon :</strong> <br>
                     Permohonan jawatan ini hendaklah diisi secara <i>online</i> di
-                    <strong>https://www.kelantan.gov.my/jawatankosong</strong>
+                    @if ($iklan2->jenis == 'TERTUTUP')
+                    <strong>{{ url('suk'.$iklan2->url.'') }}</strong>
+                    {{-- <strong>https://www.kelantan.gov.my/jawatankosong/suk{{ $iklan2->url }}</strong> --}}
+                    @else
+                        <strong>https://www.kelantan.gov.my/jawatankosong</strong>
+                    @endif
                     <br><br>
                     @php
                         $nama_hari = dayNames[Carbon::parse($iklan2->tarikh_tamat)->dayOfWeek];

@@ -64,12 +64,12 @@ Perubatan'])
 
                                             <td class="text-center">
                                                 <span type="button" class="badge bg-gradient-info" data-bs-toggle="modal"
-                                                    data-bs-target="#modelId">
+                                                    data-bs-target="#modelId_{{ $ikl->bil }}">
                                                     Butiran
                                                 </span>
 
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="modelId" tabindex="-1" role="dialog"
+                                                <div class="modal fade" id="modelId_{{ $ikl->bil }}" tabindex="-1" role="dialog"
                                                     aria-labelledby="modelTitleId" aria-hidden="true">
                                                     <div class="modal-dialog modal-lg modal-dialog-centered"
                                                         role="document">
@@ -85,7 +85,7 @@ Perubatan'])
                                                             </div>
                                                             <div class="modal-body">
                                                                 <div class="table-responsive">
-                                                                    <table class="table text-dark text-bold text-xs align-items-center mb-0">
+                                                                    <table class="table table-sm  text-dark text-bold text-xs align-items-center mb-0">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>Bil</th>
@@ -109,15 +109,15 @@ Perubatan'])
                                                                                          <td class="text-uppercase">
                                                                                             {{ $ss->taraf }}</td>
                                                                                         <td>
-                                                                                            <a class="btn btn-link text-dark text-sm "
+                                                                                            <a class="badge badge-info"
                                                                                                 href="{{ url('dl-syarat', [$ss->id]) }}"
                                                                                                 role="button">
-                                                                                                <i class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
-                                                                                                PDF
+                                                                                                <i class="material-icons">picture_as_pdf</i>
+                                                                                                 
                                                                                             </a>
                                                                                         </td>
                                                                                         <td>
-                                                                                            <a class="btn btn-primary active btn-sm" href="#" role="button">Mohon</a>
+                                                                                            <a class="badge badge-primary active text-xs" href="#" role="button">Mohon</a>
                                                                                         </td>
                                                                                     </tr>
                                                                                 @endif

@@ -7,6 +7,11 @@ use App\Iklan;
 use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
 use App\Iklan_jawatan;
+use App\JK_Agama;
+use App\JK_Keturunan;
+use App\JK_Negeri;
+use App\JK_Taraf;
+use App\User;
 use Auth;
 use Alert;
 use DB;
@@ -18,15 +23,31 @@ class PenggunaController extends Controller
 {
     public function iklan()
     {
+        $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+        // $tarikh_mula =\Carbon\Carbon::parse($ikln->tarikh_mula)->format('Y-m-d');
+        // $tarikh_tamat =\Carbon\Carbon::parse($ikln->tarikh_tamat)->format('Y-m-d');
+
         $syarat = DB::table('senarai-syarat-jawatan')->get();
-        $iklan = Iklan::all();
+
+        $iklan = Iklan::where('tarikh_mula','<=',$tarikh_kini)
+        ->where('tarikh_tamat', '>=', $tarikh_kini)
+        ->where('jenis', "TERBUKA")
+        ->get();
+
 
         return view('pengguna.iklan', compact('iklan', 'syarat'));
     }
 
     public function maklumatdiri()
     {
-        return view('pengguna.maklumat-diri');
+        $negeri = JK_Negeri::all();
+        $agama = JK_Agama::all();
+        $keturunan = JK_Keturunan::all();
+        $taraf = JK_Taraf::all();
+
+        $user = User::where('id', Auth::user()->id)->first();
+
+        return view('pengguna.maklumat-diri', compact('user', 'negeri', 'agama', 'keturunan', 'taraf'));
     }
 
     public function pengalaman()
@@ -74,5 +95,12 @@ class PenggunaController extends Controller
     public function ipt()
     {
         return view('pengguna.akademik.pengajian-tinggi');
+    }
+
+    public function kemaskinimaklumatdiri(Request $req, $id)
+    {
+        Alert::success('Berjaya', 'Maklumat dikemaskini');
+        // Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        return back();
     }
 }

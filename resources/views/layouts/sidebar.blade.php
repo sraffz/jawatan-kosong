@@ -62,7 +62,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $page == 'maklumatdiri' ? ' active bg-gradient-success' : '' }}"
+                <a class="nav-link text-white {{ $page == 'Maklumat Diri' ? ' active bg-gradient-success' : '' }}"
                     href="{{ url('maklumat-diri') }}">
                     <span class="sidenav-mini-icon"> M </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Maklumat Diri </span>
@@ -77,55 +77,55 @@
                 <div class="collapse {{ request()->is('akademik/*') ? ' show' : '' }}" id="education" style="">
                     <ul class="nav ">
                         <li class="nav-item">
-                            <a class="nav-link text-white {{ $page == 'akademik.pt3' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.pt3') }}">
+                            <a class="nav-link text-white {{ $page == 'PT3 /PMR / SRP' ? ' active bg-gradient-success' : '' }}" href="{{ route('PT3 /PMR / SRP') }}">
                                 <span class="sidenav-mini-icon"> PT </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> PT3 / PMR / SRP </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white {{ $page == 'akademik.spm' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.spm') }}">
+                            <a class="nav-link text-white {{ $page == 'SPM / SPMV' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.spm') }}">
                                 <span class="sidenav-mini-icon"> SP </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> SPM / SPMV </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white{{ $page == 'akademik.spmu' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.spmu') }}">
+                            <a class="nav-link text-white{{ $page == 'SPM ULANGAN' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.spmu') }}">
                                 <span class="sidenav-mini-icon"> SU </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> SPM ULANGAN </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white{{ $page == 'akademik.svm' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.svm') }}">
+                            <a class="nav-link text-white{{ $page == 'SVM' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.svm') }}">
                                 <span class="sidenav-mini-icon"> SV </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> SVM </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white{{ $page == 'akademik.skm' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.skm') }}">
+                            <a class="nav-link text-white{{ $page == 'SKM' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.skm') }}">
                                 <span class="sidenav-mini-icon"> SK </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> SKM </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white{{ $page == 'akademik.stpm' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.stpm') }}">
+                            <a class="nav-link text-white{{ $page == 'STPM' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.stpm') }}">
                                 <span class="sidenav-mini-icon"> STP </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> STPM </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white{{ $page == 'akademik.stam' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.stam') }}">
+                            <a class="nav-link text-white{{ $page == 'STAM' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.stam') }}">
                                 <span class="sidenav-mini-icon"> STM </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> STAM </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white{{ $page == 'akademik.matrikulasi' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.matrikulasi') }}">
+                            <a class="nav-link text-white{{ $page == 'MATRIKULASI' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.matrikulasi') }}">
                                 <span class="sidenav-mini-icon"> M </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> SIJIL MATRIKULASI </span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white {{ $page == 'akademik.ipt' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.ipt') }}">
+                            <a class="nav-link text-white {{ $page == 'PENGAJIAN TINGGI' ? ' active bg-gradient-success' : '' }}" href="{{ route('akademik.ipt') }}">
                                 <span class="sidenav-mini-icon"> PT </span>
                                 <span class="sidenav-normal  ms-3  ps-1"> PENGAJIAN TINGGI </span>
                             </a>

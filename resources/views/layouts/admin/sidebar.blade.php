@@ -16,7 +16,7 @@
                 <a data-bs-toggle="collapse" href="#ProfileNav"
                     class="nav-link text-white {{ $page == 'Profil' ? ' active' : '' }}" aria-controls="ProfileNav"
                     role="button" aria-expanded="false">
-                    <img src="{{ asset('material/img/team-3.jpg') }}" class="avatar">
+                    <img src="{{ asset('material/img/team-3.png') }}" class="avatar">
                     <span class="nav-link-text ms-2 ps-1">{{ Auth::user()->nama }}</span>
                 </a>
                 <div class="collapse {{ $page == 'Profil' || $page == 'Tetapan' ? ' show' : '' }}" id="ProfileNav"

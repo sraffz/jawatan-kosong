@@ -36,10 +36,6 @@
 
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
-
-
-
-
     @yield('link')
 </head>
 

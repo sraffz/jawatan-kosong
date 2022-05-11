@@ -1,4 +1,4 @@
-@extends('layouts.admin.app', ['page' => 'Profil', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan Perubatan'])
+@extends('layouts.admin.app', ['page' => 'Profil', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
     <div class="row mb-4">

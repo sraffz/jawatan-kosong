@@ -1,5 +1,4 @@
-@extends('layouts.app', ['page' => 'Tetapan', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
-Kelantan Perubatan'])
+@extends('layouts.app', ['page' => 'Tetapan', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri'])
 
 @section('content')
     <div class="card" id="password">

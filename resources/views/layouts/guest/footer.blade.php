@@ -6,7 +6,7 @@
                 Hakcipta terpelihara © <script>
                     document.write(new Date().getFullYear())
                   </script>,
-                  <a href="https://www.kelantan.gov.my/index.php/suk-kelantan/bahagian-unit/bahagian-pengurusan-sumber-manusia" class="font-weight-bold text-white"
+                  <a href="https://www.kelantan.gov.my/index.php/component/sppagebuilder/?view=page&id=68" class="font-weight-bold text-white"
                       target="_blank">Bahagian Pengurusan Sumber Manusia</a>
                   SUK Kelantan.
               </div>

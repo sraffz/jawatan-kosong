@@ -31,9 +31,10 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
-    {{-- <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" /> --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"/>   
+    <link id="pagestyle" href="{{ asset('jquery-ui-1.13.1/jquery-ui.css') }}" rel="stylesheet" />
 
+    <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     @yield('link')
 </head>
 
@@ -130,43 +131,57 @@
         <script src="{{ asset('material/js/plugins/chartjs.min.js') }}"></script>
         <script src="{{ asset('material/js/plugins/choices.min.js') }}"></script>
         <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
-        {{-- <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script> --}}
-        {{-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> --}}
-        
+
+        <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="{{ asset('datatable/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('datatable/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+        <script src="{{ asset('jquery-ui-1.13.1/jquery-ui.js') }}"></script>
+
+
         @include('sweetalert::alert')
-       <script>
-            var win = navigator.platform.indexOf('Win') > -1;
-            if (win && document.querySelector('#sidenav-scrollbar')) {
-                var options = {
-                    damping: '0.5'
-                }
-                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-            }
-        </script>
-        <script>
-            var win = navigator.platform.indexOf('Win') > -1;
-            if (win && document.querySelector('#sidenav-scrollbar')) {
-                var options = {
-                    damping: '0.5'
-                }
-                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-            }
-        </script>
+
         <!-- Github buttons -->
         {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
         <script async defer src="{{ asset('material/js/buttons.js') }}"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="{{ asset('material/js/material-dashboard.min.js') }}"></script>
 
-
         @yield('script')
+
+        <script>
+            var win = navigator.platform.indexOf('Win') > -1;
+            if (win && document.querySelector('#sidenav-scrollbar')) {
+                var options = {
+                    damping: '0.5'
+                }
+                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+            }
+        </script>
+        <script>
+            var win = navigator.platform.indexOf('Win') > -1;
+            if (win && document.querySelector('#sidenav-scrollbar')) {
+                var options = {
+                    damping: '0.5'
+                }
+                Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+            }
+        </script>
+
         <script>
             if (document.getElementById('choices-gender')) {
                 var gender = document.getElementById('choices-gender');
                 const example = new Choices(gender);
             }
-            
-    
+
+            $(".datepicker").datepicker({
+                weekStart: 1,
+                dateFormat: 'dd-mm-yy',
+            });
+
             if (document.getElementById('choices-language')) {
                 var language = document.getElementById('choices-language');
                 const example = new Choices(language);
@@ -176,7 +191,7 @@
                 var fhone = document.getElementById('choices-fhone');
                 const example = new Choices(fhone);
             }
-    
+
             if (document.getElementById('choices-skills')) {
                 var skills = document.getElementById('choices-skills');
                 const example = new Choices(skills, {
@@ -187,53 +202,58 @@
                     addItems: true
                 });
             }
-    
+
             if (document.getElementById('choices-year')) {
+
                 var year = document.getElementById('choices-year');
                 setTimeout(function() {
                     const example = new Choices(year);
                 }, 1);
-    
+
                 for (y = 1900; y <= 2020; y++) {
                     var optn = document.createElement("OPTION");
                     optn.text = y;
                     optn.value = y;
-    
+
                     if (y == 2020) {
                         optn.selected = true;
                     }
-    
+
                     year.options.add(optn);
                 }
             }
-    
+
             if (document.getElementById('choices-day')) {
                 var day = document.getElementById('choices-day');
                 setTimeout(function() {
                     const example = new Choices(day);
                 }, 1);
-    
-    
+
+
                 for (y = 1; y <= 31; y++) {
                     var optn = document.createElement("OPTION");
                     optn.text = y;
                     optn.value = y;
-    
+
                     if (y == 1) {
                         optn.selected = true;
                     }
-    
+
                     day.options.add(optn);
                 }
-    
+
             }
-    
+
             if (document.getElementById('choices-month')) {
+
                 var month = document.getElementById('choices-month');
                 setTimeout(function() {
-                    const example = new Choices(month);
+                    const example = new Choices(month, {
+                        shouldSort: false,
+                    });
                 }, 1);
-    
+
+
                 var d = new Date();
                 var monthArray = new Array();
                 monthArray[0] = "Januari";
@@ -248,19 +268,19 @@
                 monthArray[9] = "Oktober";
                 monthArray[10] = "November";
                 monthArray[11] = "Disember";
-                // for (m = 0; m <= 11; m++) {
-                //     var optn = document.createElement("OPTION");
-                //     optn.text = monthArray[m];
-                //     // server side month start from one
-                //     optn.value = (m + 1);
-                //     // if june selected
-                //     if (m == 1) {
-                //         optn.selected = true;
-                //     }
-                //     month.options.add(optn);
-                // }
+                for (m = 0; m <= 11; m++) {
+                    var optn = document.createElement("OPTION");
+                    optn.text = monthArray[m];
+                    // server side month start from one
+                    optn.value = (m + 1);
+                    // if june selected
+                    if (m == 1) {
+                        optn.selected = true;
+                    }
+                    month.options.add(optn);
+                }
             }
-    
+
             function visible() {
                 var elem = document.getElementById('profileVisibility');
                 if (elem) {
@@ -271,20 +291,40 @@
                     }
                 }
             }
-    
+
             var openFile = function(event) {
                 var input = event.target;
-    
+
                 // Instantiate FileReader
                 var reader = new FileReader();
                 reader.onload = function() {
                     imageFile = reader.result;
-    
+
                     document.getElementById("imageChange").innerHTML = '<img width="200" src="' + imageFile +
                         '" class="rounded-circle w-100 shadow" />';
                 };
                 reader.readAsDataURL(input.files[0]);
             };
+
+            $(document).ready(function() {
+                $('.datatable').DataTable({
+                    "language": {
+                        "emptyTable": "Tiada data",
+                        "lengthMenu": "_MENU_ Rekod setiap halaman",
+                        "zeroRecords": "Tiada padanan rekod yang dijumpai.",
+                        "info": "Paparan dari _START_ hingga _END_ dari _TOTAL_ rekod",
+                        "infoEmpty": "Paparan 0 hingga 0 dari 0 rekod",
+                        "infoFiltered": "(Ditapis dari jumlah _MAX_ rekod)",
+                        "search": "Carian:",
+                        "oPaginate": {
+                            "sFirst": "Pertama",
+                            "sPrevious": "<",
+                            "sNext": ">",
+                            "sLast": "Akhir"
+                        }
+                    },
+                });
+            });
         </script>
     </body>
 

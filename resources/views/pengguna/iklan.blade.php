@@ -1,5 +1,4 @@
-@extends('layouts.app', ['page' => 'Iklan', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan
-Perubatan'])
+@extends('layouts.app', ['page' => 'Iklan', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
     <div class="row mb-4">
@@ -18,126 +17,128 @@ Perubatan'])
                         </div>
                     </div>
                     <div class="card-body px-0">
-                        <div class="table-responsive">
-                            <table class="table table-sm align-items-center mb-0 display">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
-                                            Bil
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
-                                            rujukan iklan
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                            Tarikh mula dan tamat
-                                        </th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                            Butiran
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @php
-                                        $i = 1;
-                                    @endphp
-                                    @foreach ($iklan as $ikl)
+                        <div class="container-fluid">
+                            <div class="table-responsive">
+                                <table class="table table-sm align-items-center mb-0 display">
+                                    <thead>
                                         <tr>
-                                            <td class="text-center text-uppercase">
-                                                <span class="font-weight-bold">
-                                                    {{ $i++ }}
-                                                </span>
-                                            </td>
-                                            <td>
-                                                <span class="font-weight-bold text-uppercase">
-                                                    Bil {{ $ikl->bil }}/{{ $ikl->tahun }}
-                                                </span>
-                                            </td>
-                                            <td class="text-center text-uppercase">
-                                                <span class="font-weight-bold">
-                                                    {{ $ikl->tarikh_mula->formatLocalized('%d/%m/%Y') }} -
-                                                    {{ $ikl->tarikh_tamat->formatLocalized('%d/%m/%Y') }}
-                                                </span>
-                                            </td>
-
-                                            <td class="text-center">
-                                                <span type="button" class="badge bg-gradient-info" data-bs-toggle="modal"
-                                                    data-bs-target="#modelId_{{ $ikl->bil }}">
-                                                    Butiran
-                                                </span>
-
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="modelId_{{ $ikl->bil }}" tabindex="-1" role="dialog"
-                                                    aria-labelledby="modelTitleId" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg modal-dialog-centered"
-                                                        role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title modal-title font-weight-normal">BIL
-                                                                    {{ $ikl->bil }}
-                                                                    {{ $ikl->tahun }}</h5>
-                                                                <button type="button" class="btn-close text-dark"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">×</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="table-responsive">
-                                                                    <table class="table table-sm  text-dark text-bold text-xs align-items-center mb-0">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Bil</th>
-                                                                                <th>Nama Jawatan</th>
-                                                                                <th>Taraf</th>
-                                                                                <th>Syarat</th>
-                                                                                <th>tindakan</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @php
-                                                                                $d=1;
-                                                                            @endphp
-                                                                            @foreach ($syarat as $ss)
-                                                                                @if ($ss->id_iklan == $ikl->id)
-                                                                                    <tr class="align-items-center">
-                                                                                        <td scope="row">{{ $d++ }}</td>
-                                                                                        <td> {{ $ss->nama_jawatan }}
-                                                                                            ({{ $ss->gred }})
-                                                                                        </td>
-                                                                                         <td class="text-uppercase">
-                                                                                            {{ $ss->taraf }}</td>
-                                                                                        <td>
-                                                                                            <a class="badge badge-info"
-                                                                                                href="{{ url('dl-syarat', [$ss->id]) }}"
-                                                                                                role="button">
-                                                                                                <i class="material-icons">picture_as_pdf</i>
-                                                                                                 
-                                                                                            </a>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <a class="badge badge-primary active text-xs" href="#" role="button">Mohon</a>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                @endif
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
+                                            <th
+                                                class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
+                                                Bil
+                                            </th>
+                                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                                                rujukan iklan
+                                            </th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                                Tarikh mula dan tamat
+                                            </th>
+                                            <th
+                                                class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                                Butiran
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @foreach ($iklan as $ikl)
+                                            <tr>
+                                                <td class="text-center text-uppercase">
+                                                    <span class="font-weight-bold">
+                                                        {{ $i++ }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span class="font-weight-bold text-uppercase">
+                                                        Bil {{ $ikl->bil }}/{{ $ikl->tahun }}
+                                                    </span>
+                                                </td>
+                                                <td class="text-center text-uppercase">
+                                                    <span class="font-weight-bold">
+                                                        {{ $ikl->tarikh_mula->formatLocalized('%d/%m/%Y') }} -
+                                                        {{ $ikl->tarikh_tamat->formatLocalized('%d/%m/%Y') }}
+                                                    </span>
+                                                </td>
+    
+                                                <td class="text-center">
+                                                    <span type="button" class="badge bg-gradient-info" data-bs-toggle="modal"
+                                                        data-bs-target="#modelId_{{ $ikl->bil }}">
+                                                        Butiran
+                                                    </span>
+    
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="modelId_{{ $ikl->bil }}" tabindex="-1" role="dialog"
+                                                        aria-labelledby="modelTitleId" aria-hidden="true">
+                                                        <div class="modal-dialog modal-lg modal-dialog-centered"
+                                                            role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title modal-title font-weight-normal">BIL
+                                                                        {{ $ikl->bil }}
+                                                                        {{ $ikl->tahun }}</h5>
+                                                                    <button type="button" class="btn-close text-dark"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">×</span>
+                                                                    </button>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-danger"
-                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                                <div class="modal-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-sm  text-dark text-bold text-xs align-items-center mb-0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Bil</th>
+                                                                                    <th>Nama Jawatan</th>
+                                                                                    <th>Taraf</th>
+                                                                                    <th>Syarat</th>
+                                                                                    <th>tindakan</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                @php
+                                                                                    $d=1;
+                                                                                @endphp
+                                                                                @foreach ($syarat as $ss)
+                                                                                    @if ($ss->id_iklan == $ikl->id)
+                                                                                        <tr class="align-items-center">
+                                                                                            <td scope="row">{{ $d++ }}</td>
+                                                                                            <td> {{ $ss->nama_jawatan }}
+                                                                                                ({{ $ss->gred }})
+                                                                                            </td>
+                                                                                             <td class="text-uppercase">
+                                                                                                {{ $ss->taraf }}</td>
+                                                                                            <td>
+                                                                                                <a class="badge badge-info"
+                                                                                                    href="{{ url('dl-syarat', [$ss->id]) }}"
+                                                                                                    role="button">
+                                                                                                    <i class="material-icons">picture_as_pdf</i>
+                                                                                                     
+                                                                                                </a>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <a class="badge badge-primary active text-xs" href="#" role="button">Mohon</a>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    @endif
+                                                                                @endforeach
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-danger"
+                                                                        data-bs-dismiss="modal">Tutup</button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

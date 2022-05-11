@@ -1,5 +1,5 @@
 @extends('layouts.admin.app', ['page' => 'Tetapan', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
-Kelantan Perubatan'])
+Kelantan'])
 
 @section('content')
     <div class="row mb-4">

@@ -112,6 +112,9 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/akademik/pengajian-tinggi', 'PenggunaController@ipt')->name('akademik.ipt');
     
     Route::post('kemaskini-maklumat-diri/{id}', 'PenggunaController@kemaskinimaklumatdiri')->name('kemaskini-maklumat-diri');
+    Route::post('tambah-pengalaman', 'PenggunaController@tambahPengalaman')->name('tambah-pengalaman');
+    Route::post('kemaskini-pengalaman/{id}', 'PenggunaController@kemaskiniPengalaman')->name('kemaskini-pengalaman');
+    Route::get('padam-pengalaman/{id}', 'PenggunaController@padamPengalaman')->name('padam-pengalaman');
     
 });
 

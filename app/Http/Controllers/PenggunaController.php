@@ -11,6 +11,7 @@ use App\JK_Agama;
 use App\JK_Keturunan;
 use App\JK_Negeri;
 use App\JK_Taraf;
+use App\JK_Gambar_Passport;
 
 use App\JK_MaklumatDiri;
 use App\JK_Pengalaman;
@@ -37,6 +38,8 @@ class PenggunaController extends Controller
 {
     public function iklan()
     {
+        // $gambardp = $this->gambardp();
+
         $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
         // $tarikh_mula =\Carbon\Carbon::parse($ikln->tarikh_mula)->format('Y-m-d');
         // $tarikh_tamat =\Carbon\Carbon::parse($ikln->tarikh_tamat)->format('Y-m-d');
@@ -48,11 +51,12 @@ class PenggunaController extends Controller
             ->where('jenis', 'TERBUKA')
             ->get();
 
-        return view('pengguna.iklan', compact('iklan', 'syarat'));
+        return view('pengguna.iklan', compact('iklan', 'syarat', 'gambardp'));
     }
 
     public function maklumatdiri()
     {
+
         $negeri = JK_Negeri::all();
         $agama = JK_Agama::all();
         $keturunan = JK_Keturunan::all();
@@ -222,6 +226,26 @@ class PenggunaController extends Controller
         JK_Pengalaman::where('id', $id)->delete();
 
         Toast('Maklumat Dipadam', 'success')->position('top-end');
+        return back();
+    }
+
+    public function gambardp()
+    {
+        $gambardp = JK_Gambar_Passport::where('user_id', Auth::user()->id)
+        ->get();
+
+        return $gambardp;
+    }
+
+    public function simpanpmr(Request $req)
+    {
+        $data = new JK_PMR;
+        $data->user_id = Auth::user()->id;
+        $data->jenis = $req->jenis;
+        $data->tahun = $req->tahun;
+        $data->save();
+
+        Toast('Maklumat Disimpan', 'success')->position('top-end');
         return back();
     }
 }

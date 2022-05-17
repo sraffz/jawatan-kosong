@@ -1,98 +1,150 @@
-@extends('layouts.app', ['page' => 'PT3 /PMR / SRP', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
+@extends('layouts.app', ['page' => 'PT3 /PMR / SRP', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
+Kelantan'])
 
 @section('content')
     <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
                 <div class="card-header">
-                    <h5>Basic Info</h5>
+                    <h5>KEPUTUSAN PEPERIKSAAN TINGKATAN 3</h5>
+                </div>
+                <form action="{{ url('simpan-pmr') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="card-body pt-0">
+                        <div class="row col-lg-6">
+                            <div class="col-xl-6">
+                                <div class="input-group input-group-static">
+                                    <label>Tahun <span style="color: red">*</span></label>
+                                    <input type="number" name="tahun" class="form-control" placeholder="Alec" required>
+                                </div>
+                            </div>
+                            <div class="col-xl-6">
+                                <div class="input-group input-group-static">
+                                    <label>Peperiksaan <span style="color: red">*</span></label>
+                                    <select class="form-control" id="" name="jenis" required>
+                                        <option value="">Select one</option>
+                                        <option value="PT3">PT3</option>
+                                        <option value="PMR">PMR</option>
+                                        <option value="SRP">SRP</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-xl-8">
+                                <div class="input-group input-group-static">
+                                    <label>Mata Pelajaran <span style="color: red">*</span></label>
+                                          <select class="form-control" id="choices-year-md" name="matapelajaran" required>
+                                            <option selected>Select one</option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                            <option value=""></option>
+                                        </select>
+                                 </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="input-group input-group-static">
+                                    <div class="input-group input-group-static">
+                                        <label>Gred <span style="color: red">*</span></label>
+                                              <select class="form-control" id="gred" name="gred"  required>
+                                                <option selected>Select one</option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                                <option value=""></option>
+                                            </select>
+                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="material-icons text-sm">add</i>&nbsp;Tambah
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+            <div class="card mt-4" id="basic-info">
+                <div class="card-header">
+                    {{-- <h5>KEPUTUSAN PEPERIKSAAN TINGKATAN 3</h5> --}}
                 </div>
                 <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" placeholder="Alec">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" placeholder="Thompson">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <label class="form-label mt-4 ms-0">I'm</label>
-                            <select class="form-control" name="choices-gender" id="choices-gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-5 col-5">
-                                    <label class="form-label mt-4 ms-0">Birth Date</label>
-                                    <select class="form-control" name="choices-month" id="choices-month"></select>
-                                </div>
-                                <div class="col-sm-4 col-3">
-                                    <label class="form-label mt-4 ms-0">&nbsp;</label>
-                                    <select class="form-control" name="choices-day" id="choices-day"></select>
-                                </div>
-                                <div class="col-sm-3 col-4">
-                                    <label class="form-label mt-4">&nbsp;</label>
-                                    <select class="form-control" name="choices-year" id="choices-year"></select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Confirm Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Your location</label>
-                                <input type="text" class="form-control" placeholder="Sydney, A">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Phone Number</label>
-                                <input type="number" class="form-control" placeholder="+40 735 631 620">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 align-self-center">
-                            <label class="form-label mt-4 ms-0">Language</label>
-                            <select class="form-control" name="choices-language" id="choices-language">
-                                <option value="English">English</option>
-                                <option value="French">French</option>
-                                <option value="Spanish">Spanish</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label mt-4">Skills</label>
-                            <input class="form-control" id="choices-skills" type="text" value="vuejs, angular, react"
-                                placeholder="Enter something" />
-                        </div>
-                    </div>
+                    <table class="table table-sm table-striped table-bordered">
+                        <thead class=" ">
+                            <tr>
+                                <th class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
+                                    Bil
+                                </th>
+                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                                    MATA PELAJARAN
+                                </th>
+                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                    GRED
+                                </th>
+                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $i = 1;
+                            @endphp
+                            <tr>
+                                <td class="text-center">{{ $i++ }}</td>
+                                <td></td>
+                                <td class="text-center"></td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-outline-danger btn-sm">
+                                        <span class="material-icons">
+                                            delete
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-
     </div>
+@endsection
+
+@section('script')
+    <script>
+        if (document.getElementById('choices-year-md')) {
+
+            var tahun = now()->year;
+            
+            var year = document.getElementById('choices-year-md');
+            setTimeout(function() {
+                const example = new Choices(year);
+            }, 1);
+
+            for (y = 1900; y <= 2020; y++) {
+                var optn = document.createElement("OPTION");
+                optn.text = y;
+                optn.value = y;
+
+                if (y == tahun) {
+                    optn.selected = true;
+                }
+
+                year.options.add(optn);
+            }
+        }
+
+        if (document.getElementById('gred')) {
+            var negeri = document.getElementById('gred');
+            const example = new Choices(negeri, {
+                shouldSort: false
+            });
+        }
+    </script>
 @endsection

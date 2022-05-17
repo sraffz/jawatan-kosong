@@ -16,9 +16,9 @@ class CreateJKGambarPassportsTable extends Migration
         Schema::create('jk_gambar_passport', function (Blueprint $table) {
             $table->increments('id');
             $table->string('user_id');
-            $table->string('nama');
-            $table->string('extension');
-            $table->string('path');
+            $table->string('nama_gambar');
+            $table->string('extension_gambar');
+            $table->string('path_gambar');
             $table->timestamps();
         });
     }

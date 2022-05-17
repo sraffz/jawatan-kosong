@@ -90,8 +90,7 @@ Kelantan'])
                                     </div>
                                     <div class="col-12 col-xl-5">
                                         <label class="form-label mt-4 ms-0">&nbsp;</label>
-                                        <select class="form-control" name="bulan_lahir" id="choices-month-md"
-                                            data-month="{{ $detail->bulan_lahir }}" required>
+                                        <select class="form-control" name="bulan_lahir" id="choices-month-md" data-month="{{ $detail->bulan_lahir }}" required>
                                             {{-- <option value="1" {{ '1' == $detail->bulan_lahir ? 'selected' : ''}}>Januari</option>
                                             <option value="2" {{ '2' == $detail->bulan_lahir ? 'selected' : ''}}>Februari</option>
                                             <option value="3" {{ '3' == $detail->bulan_lahir ? 'selected' : ''}}>Mac</option>

@@ -116,5 +116,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('kemaskini-pengalaman/{id}', 'PenggunaController@kemaskiniPengalaman')->name('kemaskini-pengalaman');
     Route::get('padam-pengalaman/{id}', 'PenggunaController@padamPengalaman')->name('padam-pengalaman');
     
+    // Akademik
+    Route::post('simpan-pmr', 'PenggunaController@simpanpmr')->name('simpan-pmr');
 });
 

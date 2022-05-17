@@ -118,5 +118,6 @@ Route::middleware(['auth:web'])->group(function () {
     
     // Akademik
     Route::post('simpan-pmr', 'PenggunaController@simpanpmr')->name('simpan-pmr');
+    Route::post('simpan-matrikulasi', 'PenggunaController@simpanmatrikulasi')->name('simpan-matrikulasi');
 });
 

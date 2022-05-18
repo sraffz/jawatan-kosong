@@ -12,7 +12,7 @@ Kelantan',
                 <div class="card-header">
                     <h5>Maklumat Diri</h5>
                 </div>
-                <form action="{{ url('tambah-maklumat-diri', [$user->id]) }}" method="post" autocomplete="off">
+                <form action="{{ url('kemaskini-maklumat-diri', [$user->id]) }}" method="post" autocomplete="off">
                     {{ csrf_field() }}
                     <div class="card-body pt-0">
                         <input type="hidden" name="id" id="id" value="{{ $user->id }}">
@@ -46,7 +46,7 @@ Kelantan',
                                     <option value="">Pilih</option>
                                     @foreach ($negeri as $neg)
                                         <option value="{{ $neg->id }}"
-                                            {{ $neg->id == old('negeri_lahir') ? 'selected' : '' }}>{{ $neg->negeri }}
+                                            {{ $neg->id == $detail->negeri ? 'selected' : '' }}>{{ $neg->negeri }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -57,7 +57,7 @@ Kelantan',
                                     <option value="">Pilih</option>
                                     @foreach ($negeri as $neg)
                                         <option value="{{ $neg->id }}"
-                                            {{ $neg->id == old('negeri_lahir_bapa') ? 'selected' : '' }}>
+                                            {{ $neg->id == $detail->negeri_lahir_bapa ? 'selected' : '' }}>
                                             {{ $neg->negeri }}</option>
                                     @endforeach
                                 </select>
@@ -68,7 +68,7 @@ Kelantan',
                                     <option value="">Pilih</option>
                                     @foreach ($negeri as $neg)
                                         <option value="{{ $neg->id }}"
-                                            {{ $neg->id == old('negeri_lahir_ibu') ? 'selected' : '' }}>
+                                            {{ $neg->id == $detail->negeri_lahir_ibu ? 'selected' : '' }}>
                                             {{ $neg->negeri }}</option>
                                     @endforeach
                                 </select>
@@ -79,9 +79,9 @@ Kelantan',
                                 <label class="form-label mt-4 ms-0">Jantina</label>
                                 <select class="form-control" name="jantina" id="choices-gender" required>
                                     <option value="">Pilih</option>
-                                    <option value="Lelaki" {{ 'Lelaki' == old('jantina') ? 'selected' : '' }}>Lelaki
+                                    <option value="Lelaki" {{ 'Lelaki' == $detail->jantina ? 'selected' : '' }}>Lelaki
                                     </option>
-                                    <option value="Perempuan" {{ 'Perempuan' == old('jantina') ? 'selected' : '' }}>
+                                    <option value="Perempuan" {{ 'Perempuan' == $detail->jantina ? 'selected' : '' }}>
                                         Perempuan</option>
                                 </select>
                             </div>
@@ -94,7 +94,8 @@ Kelantan',
                                     </div>
                                     <div class="col-12 col-xl-5">
                                         <label class="form-label mt-4 ms-0">&nbsp;</label>
-                                        <select class="form-control" name="bulan_lahir" id="choices-month-md" required>
+                                        <select class="form-control" name="bulan_lahir" id="choices-month-md"
+                                            data-month="{{ $detail->bulan_lahir }}" required>
                                             {{-- <option value="1" {{ '1' == $detail->bulan_lahir ? 'selected' : ''}}>Januari</option>
                                             <option value="2" {{ '2' == $detail->bulan_lahir ? 'selected' : ''}}>Februari</option>
                                             <option value="3" {{ '3' == $detail->bulan_lahir ? 'selected' : ''}}>Mac</option>
@@ -123,26 +124,26 @@ Kelantan',
                                 <div class="input-group input-group-static">
                                     <label>Alamat Surat Menyurat </label>
                                     <input type="text" name="alamat" class="form-control upcase"
-                                        value="{{ old('alamat') }}" placeholder="LOT / Aras / PT" required>
+                                        value="{{ $detail->alamat }}" placeholder="LOT / Aras / PT" required>
                                 </div>
                                 <div class="input-group input-group-static mt-4">
                                     <label>&nbsp; </label>
                                     <input type="text" name="alamat2" class="form-control upcase" placeholder="Jalan"
-                                        value="{{ old('alamat2') }}">
+                                        value="{{ $detail->alamat2 }}">
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col-4">
                                         <div class="input-group input-group-static mt-4">
                                             <label>Poskod</label>
                                             <input type="number" class="form-control" name="poskod"
-                                                value="{{ old('poskod') }}" placeholder="15100" required>
+                                                value="{{ $detail->poskod }}" placeholder="15100" required>
                                         </div>
                                     </div>
                                     <div class="col-8">
                                         <div class="input-group input-group-static mt-4">
                                             <label>Daerah</label>
                                             <input type="text" class="form-control upcase" name="daerah"
-                                                value="{{ old('daerah') }}" placeholder="Kota Bharu" required>
+                                                value="{{ $detail->daerah }}" placeholder="Kota Bharu" required>
                                         </div>
                                     </div>
                                 </div>
@@ -152,7 +153,7 @@ Kelantan',
                                         <option value="">Pilih</option>
                                         @foreach ($negeri as $neg)
                                             <option value="{{ $neg->id }}"
-                                                {{ $neg->id == old('negeri') ? 'selected' : '' }}>{{ $neg->negeri }}
+                                                {{ $neg->id == $detail->negeri ? 'selected' : '' }}>{{ $neg->negeri }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -166,25 +167,25 @@ Kelantan',
                                             {{-- <input type="number" class="form-control" name="notel" placeholder="+60 735 631 620"> --}}
                                             <select class="form-control" name="notel" id="choices-mobile" required>
                                                 <option value="">Pilih</option>
-                                                <option value="010" {{ '010' == old('notel') ? 'selected' : '' }}>010
+                                                <option value="010" {{ '010' == $detail->notel ? 'selected' : '' }}>010
                                                 </option>
-                                                <option value="011" {{ '011' == old('notel') ? 'selected' : '' }}>011
+                                                <option value="011" {{ '011' == $detail->notel ? 'selected' : '' }}>011
                                                 </option>
-                                                <option value="012" {{ '012' == old('notel') ? 'selected' : '' }}>012
+                                                <option value="012" {{ '012' == $detail->notel ? 'selected' : '' }}>012
                                                 </option>
-                                                <option value="013" {{ '013' == old('notel') ? 'selected' : '' }}>013
+                                                <option value="013" {{ '013' == $detail->notel ? 'selected' : '' }}>013
                                                 </option>
-                                                <option value="014" {{ '014' == old('notel') ? 'selected' : '' }}>014
+                                                <option value="014" {{ '014' == $detail->notel ? 'selected' : '' }}>014
                                                 </option>
-                                                <option value="015" {{ '015' == old('notel') ? 'selected' : '' }}>015
+                                                <option value="015" {{ '015' == $detail->notel ? 'selected' : '' }}>015
                                                 </option>
-                                                <option value="016" {{ '016' == old('notel') ? 'selected' : '' }}>016
+                                                <option value="016" {{ '016' == $detail->notel ? 'selected' : '' }}>016
                                                 </option>
-                                                <option value="017" {{ '017' == old('notel') ? 'selected' : '' }}>017
+                                                <option value="017" {{ '017' == $detail->notel ? 'selected' : '' }}>017
                                                 </option>
-                                                <option value="018" {{ '018' == old('notel') ? 'selected' : '' }}>018
+                                                <option value="018" {{ '018' == $detail->notel ? 'selected' : '' }}>018
                                                 </option>
-                                                <option value="019" {{ '019' == old('notel') ? 'selected' : '' }}>019
+                                                <option value="019" {{ '019' == $detail->notel ? 'selected' : '' }}>019
                                                 </option>
                                             </select>
                                         </div>
@@ -193,7 +194,7 @@ Kelantan',
                                         <div class="input-group input-group-static">
                                             <label>&nbsp;</label>
                                             <input type="number" class="form-control" name="notel2"
-                                                value="{{ old('notel') }}" placeholder="1648 546" required>
+                                                value="{{ $detail->notel2 }}" placeholder="1648 546" required>
                                         </div>
                                     </div>
                                 </div>
@@ -203,7 +204,7 @@ Kelantan',
                                         <option value="">Pilih</option>
                                         @foreach ($agama as $ag)
                                             <option value="{{ $ag->id }}"
-                                                {{ $ag->id == old('agama') ? 'selected' : '' }}>{{ $ag->agama }}
+                                                {{ $ag->id == $detail->agama ? 'selected' : '' }}>{{ $ag->agama }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -214,7 +215,7 @@ Kelantan',
                                         <option value="">Pilih</option>
                                         @foreach ($keturunan as $ket)
                                             <option value="{{ $ket->id }}"
-                                                {{ $ket->id == old('keturunan') ? 'selected' : '' }}>
+                                                {{ $ket->id == $detail->keturunan ? 'selected' : '' }}>
                                                 {{ $ket->keturunan }}</option>
                                         @endforeach
                                     </select>
@@ -225,7 +226,7 @@ Kelantan',
                                         <option value="">Pilih</option>
                                         @foreach ($taraf as $tar)
                                             <option value="{{ $tar->id }}"
-                                                {{ $tar->id == old('taraf_kahwin') ? 'selected' : '' }}>
+                                                {{ $tar->id == $detail->taraf_kahwin ? 'selected' : '' }}>
                                                 {{ $tar->taraf_kahwin }}</option>
                                         @endforeach
                                     </select>
@@ -250,6 +251,7 @@ Kelantan',
     <script>
         if (document.getElementById('choices-year-md')) {
 
+            var tahun = {{ $detail->tahun_lahir }};
 
             var year = document.getElementById('choices-year-md');
             setTimeout(function() {
@@ -261,7 +263,7 @@ Kelantan',
                 optn.text = y;
                 optn.value = y;
 
-                if (y == 2000) {
+                if (y == tahun) {
                     optn.selected = true;
                 }
 
@@ -270,7 +272,7 @@ Kelantan',
         }
 
         if (document.getElementById('choices-day-md')) {
-
+            var hari = {{ $detail->hari_lahir }};
 
             var day = document.getElementById('choices-day-md');
             setTimeout(function() {
@@ -283,7 +285,7 @@ Kelantan',
                 optn.text = y;
                 optn.value = y;
 
-                if (y == 0) {
+                if (y == hari) {
                     optn.selected = true;
                 }
 
@@ -293,7 +295,7 @@ Kelantan',
         }
 
         if (document.getElementById('choices-month-md')) {
-
+            var bulan = {{ $detail->bulan_lahir }} - 1;
 
             var month = document.getElementById('choices-month-md');
             setTimeout(function() {
@@ -323,7 +325,7 @@ Kelantan',
                 // server side month start from one
                 optn.value = (m + 1);
                 // if june selected
-                if (m == 0) {
+                if (m == bulan) {
                     optn.selected = true;
                 }
                 month.options.add(optn);
@@ -381,5 +383,9 @@ Kelantan',
         $('.upcase').keyup(function() {
             $(this).val($(this).val().toUpperCase());
         });
+
+        function refreshPage() {
+            window.location.reload();
+        }
     </script>
 @endsection

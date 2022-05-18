@@ -19,7 +19,7 @@
                     @if (Auth::user()->nama_gambar != null)
 
                     @else
-                        <img src="{{ asset('material/img/team-3.jpg') }}" class="avatar">
+                        <img src="{{ asset('material/img/team-3.png') }}" class="avatar">
                     @endif
                     <span
                         class="nav-link-text ms-2 ps-1">{{ \Illuminate\Support\Str::limit(Auth::user()->nama, 15, $end = '...') }}</span>

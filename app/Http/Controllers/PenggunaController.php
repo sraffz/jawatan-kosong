@@ -56,6 +56,7 @@ class PenggunaController extends Controller
 
     public function maklumatdiri()
     {
+        $bil = JK_MaklumatDiri::where('user_id', Auth::user()->id)->count();
 
         $negeri = JK_Negeri::all();
         $agama = JK_Agama::all();
@@ -65,7 +66,11 @@ class PenggunaController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
         $detail = JK_MaklumatDiri::where('user_id', Auth::user()->id)->first();
 
-        return view('pengguna.maklumat-diri', compact('user', 'detail', 'negeri', 'agama', 'keturunan', 'taraf'));
+        if ($bil > 0) {
+            return view('pengguna.maklumat-diri-kemaskini', compact('user', 'detail', 'negeri', 'agama', 'keturunan', 'taraf'));
+        } else {
+            return view('pengguna.maklumat-diri', compact('user', 'detail', 'negeri', 'agama', 'keturunan', 'taraf'));
+        }
     }
 
     public function pengalaman()
@@ -113,7 +118,7 @@ class PenggunaController extends Controller
         return view('pengguna.akademik.stam');
     }
     public function matrikulasi()
-    {   
+    {
         $bil = JK_Matrikulasi::where('user_id', Auth::user()->id)->count();
 
         $matrix = JK_Matrikulasi::where('user_id', Auth::user()->id)->first();
@@ -129,6 +134,43 @@ class PenggunaController extends Controller
         return view('pengguna.akademik.pengajian-tinggi');
     }
 
+    public function tambahmaklumatdiri(Request $req, $id)
+    {
+        User::where('id', $id)->update([
+            'nama' => $req->nama,
+            'ic' => $req->ic,
+            'email' => $req->email,
+        ]);
+
+
+        $data = new JK_MaklumatDiri();
+        $data->user_id = $id;
+        $data->negeri_lahir = $req->negeri_lahir;
+        $data->negeri_lahir_bapa = $req->negeri_lahir_bapa;
+        $data->negeri_lahir_ibu = $req->negeri_lahir_ibu;
+        $data->jantina = $req->jantina;
+        $data->hari_lahir = $req->hari_lahir;
+        $data->bulan_lahir = $req->bulan_lahir;
+        $data->tahun_lahir = $req->tahun_lahir;
+        $data->alamat = $req->alamat;
+        $data->alamat2 = $req->alamat2;
+        $data->poskod = $req->poskod;
+        $data->daerah = $req->daerah;
+        $data->negeri = $req->negeri;
+        $data->notel = $req->notel;
+        $data->notel2 = $req->notel2;
+        $data->agama = $req->agama;
+        $data->lain_agama = $req->lain_agama;
+        $data->keturunan = $req->keturunan;
+        $data->lain_keturunan = $req->lain_keturunan;
+        $data->taraf_kahwin = $req->taraf_kahwin;
+        $data->save();
+
+        // Alert::success('Berjaya', 'Maklumat disimpan');
+        Toast('Maklumat disimpan', 'success')->position('top-end');
+        return back();
+    }
+
     public function kemaskinimaklumatdiri(Request $req, $id)
     {
         User::where('id', $id)->update([
@@ -137,60 +179,30 @@ class PenggunaController extends Controller
             'email' => $req->email,
         ]);
 
-        $bil = JK_MaklumatDiri::where('user_id', $id)->count();
+        JK_MaklumatDiri::where('user_id', $id)->update([
+            'negeri_lahir' => $req->negeri_lahir,
+            'negeri_lahir_bapa' => $req->negeri_lahir_bapa,
+            'negeri_lahir_ibu' => $req->negeri_lahir_ibu,
+            'jantina' => $req->jantina,
+            'hari_lahir' => $req->hari_lahir,
+            'bulan_lahir' => $req->bulan_lahir,
+            'tahun_lahir' => $req->tahun_lahir,
+            'alamat' => $req->alamat,
+            'alamat2' => $req->alamat2,
+            'poskod' => $req->poskod,
+            'daerah' => $req->daerah,
+            'negeri' => $req->negeri,
+            'notel' => $req->notel,
+            'notel2' => $req->notel2,
+            'agama' => $req->agama,
+            'lain_agama' => $req->lain_agama,
+            'keturunan' => $req->keturunan,
+            'lain_keturunan' => $req->lain_keturunan,
+            'taraf_kahwin' => $req->taraf_kahwin,
+        ]);
 
-        if ($bil == 0) {
-            // dd($bil);
-            $data = new JK_MaklumatDiri();
-            $data->user_id = $id;
-            $data->negeri_lahir = $req->negeri_lahir;
-            $data->negeri_lahir_bapa = $req->negeri_lahir_bapa;
-            $data->negeri_lahir_ibu = $req->negeri_lahir_ibu;
-            $data->jantina = $req->jantina;
-            $data->hari_lahir = $req->hari_lahir;
-            $data->bulan_lahir = $req->bulan_lahir;
-            $data->tahun_lahir = $req->tahun_lahir;
-            $data->alamat = $req->alamat;
-            $data->alamat2 = $req->alamat2;
-            $data->poskod = $req->poskod;
-            $data->daerah = $req->daerah;
-            $data->negeri = $req->negeri;
-            $data->notel = $req->notel;
-            $data->notel2 = $req->notel2;
-            $data->agama = $req->agama;
-            $data->lain_agama = $req->lain_agama;
-            $data->keturunan = $req->keturunan;
-            $data->lain_keturunan = $req->lain_keturunan;
-            $data->taraf_kahwin = $req->taraf_kahwin;
-            $data->save();
-        } elseif ($bil == 1) {
-            // dd($bil);
-
-            JK_MaklumatDiri::where('user_id', $id)->update([
-                'negeri_lahir' => $req->negeri_lahir,
-                'negeri_lahir_bapa' => $req->negeri_lahir_bapa,
-                'negeri_lahir_ibu' => $req->negeri_lahir_ibu,
-                'jantina' => $req->jantina,
-                'hari_lahir' => $req->hari_lahir,
-                'bulan_lahir' => $req->bulan_lahir,
-                'tahun_lahir' => $req->tahun_lahir,
-                'alamat' => $req->alamat,
-                'alamat2' => $req->alamat2,
-                'poskod' => $req->poskod,
-                'daerah' => $req->daerah,
-                'negeri' => $req->negeri,
-                'notel' => $req->notel,
-                'notel2' => $req->notel2,
-                'agama' => $req->agama,
-                'lain_agama' => $req->lain_agama,
-                'keturunan' => $req->keturunan,
-                'lain_keturunan' => $req->lain_keturunan,
-                'taraf_kahwin' => $req->taraf_kahwin,
-            ]);
-        }
-
-        Alert::success('Berjaya', 'Maklumat dikemaskini');
-        // Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        // Alert::success('Berjaya', 'Maklumat disimpan');
+        Toast('Maklumat disimpan', 'success')->position('top-end');
         return back();
     }
 
@@ -239,15 +251,14 @@ class PenggunaController extends Controller
 
     public function gambardp()
     {
-        $gambardp = JK_Gambar_Passport::where('user_id', Auth::user()->id)
-        ->get();
+        $gambardp = JK_Gambar_Passport::where('user_id', Auth::user()->id)->get();
 
         return $gambardp;
     }
 
     public function simpanpmr(Request $req)
     {
-        $data = new JK_PMR;
+        $data = new JK_PMR();
         $data->user_id = Auth::user()->id;
         $data->jenis = $req->jenis;
         $data->tahun = $req->tahun;
@@ -261,27 +272,26 @@ class PenggunaController extends Controller
     {
         $bil = JK_Matrikulasi::where('user_id', Auth::user()->id)->count();
 
-            $data = new JK_Matrikulasi;
-            $data->user_id = Auth::user()->id;
-            $data->nama_kolej = $req->nama_kolej;
-            $data->bidang = $req->bidang;
-            $data->cgpa = $req->cgpa;
-            $data->tahun = $req->tahun;
-            $data->save();
-      
+        $data = new JK_Matrikulasi();
+        $data->user_id = Auth::user()->id;
+        $data->nama_kolej = $req->nama_kolej;
+        $data->bidang = $req->bidang;
+        $data->cgpa = $req->cgpa;
+        $data->tahun = $req->tahun;
+        $data->save();
+
         Toast('Maklumat Disimpan', 'success')->position('top-end');
         return back();
-
     }
 
     public function kemaskinimatrikulasi(Request $req)
     {
         JK_Matrikulasi::where('user_id', Auth::user()->id)->update([
-               'nama_kolej' => $req->nama_kolej,
-               'bidang' => $req->bidang,
-               'cgpa' => $req->cgpa,
-               'tahun' => $req->tahun,
-            ]);
+            'nama_kolej' => $req->nama_kolej,
+            'bidang' => $req->bidang,
+            'cgpa' => $req->cgpa,
+            'tahun' => $req->tahun,
+        ]);
 
         Toast('Maklumat Dikemaskini', 'success')->position('top-end');
         return back();

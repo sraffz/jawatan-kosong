@@ -1,9 +1,14 @@
 @extends('layouts.app', ['page' => 'PENGAJIAN TINGGI', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-    <div class="row mb-4">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 mb-md-0 mb-4 text-end">
+            <button type="button" class="btn btn-dark"><i class="material-icons text-sm">add</i>&nbsp;Tambah</button>  
+        </div>
+    </div>
+    <div class="row mb-2">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
-            <div class="card mt-4" id="basic-info">
+            <div class="card mt-2" id="basic-info">
                 <div class="card-header">
                     <h5>Basic Info</h5>
                 </div>

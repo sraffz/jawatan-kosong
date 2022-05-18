@@ -113,10 +113,16 @@ class PenggunaController extends Controller
         return view('pengguna.akademik.stam');
     }
     public function matrikulasi()
-    {
+    {   
+        $bil = JK_Matrikulasi::where('user_id', Auth::user()->id)->count();
+
         $matrix = JK_Matrikulasi::where('user_id', Auth::user()->id)->first();
 
-        return view('pengguna.akademik.matrikulasi', compact('matrix'));
+        if ($bil > 0) {
+            return view('pengguna.akademik.matrikulasi-kemaskini', compact('matrix'));
+        } else {
+            return view('pengguna.akademik.matrikulasi', compact('matrix'));
+        }
     }
     public function ipt()
     {
@@ -255,7 +261,6 @@ class PenggunaController extends Controller
     {
         $bil = JK_Matrikulasi::where('user_id', Auth::user()->id)->count();
 
-        if ($bil == 0) {
             $data = new JK_Matrikulasi;
             $data->user_id = Auth::user()->id;
             $data->nama_kolej = $req->nama_kolej;
@@ -263,17 +268,22 @@ class PenggunaController extends Controller
             $data->cgpa = $req->cgpa;
             $data->tahun = $req->tahun;
             $data->save();
-        } elseif ($bil == 1) {
-            JK_Matrikulasi::where('user_id', Auth::user()->id)->update([
+      
+        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        return back();
+
+    }
+
+    public function kemaskinimatrikulasi(Request $req)
+    {
+        JK_Matrikulasi::where('user_id', Auth::user()->id)->update([
                'nama_kolej' => $req->nama_kolej,
                'bidang' => $req->bidang,
                'cgpa' => $req->cgpa,
                'tahun' => $req->tahun,
             ]);
-        }
 
-        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        Toast('Maklumat Dikemaskini', 'success')->position('top-end');
         return back();
-
     }
 }

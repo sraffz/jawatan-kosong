@@ -8,58 +8,34 @@
                     <h5>KEPUTUSAN SIJIL MATRIKULASI KPM</h5>
                 </div>
                 <div class="card-body pt-0">
-                    <form action="{{ url('simpan-matrikulasi') }}" method="post" autocomplete="off">
+                    <form action="{{ url('kemaskini-matrikulasi') }}" method="post" autocomplete="off">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span class="text-danger">*</span></label>
-                                    <input type="number" name="tahun" class="form-control" value="{{ old('tahun') }}" required>
+                                    <input type="number" name="tahun" class="form-control" value="{{ $matrix->tahun }}" required>
                                 </div>
                             </div>
                             <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>CGPA (PNGK) <span class="text-danger">*</span></label>
-                                    <input type="number" name="cgpa" step=".01" class="form-control" value="{{ old('cgpa') }}" required>
+                                    <input type="number" name="cgpa" step=".01" class="form-control" value="{{ $matrix->cgpa }}" required>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="row">
-                            <div class="col-sm-4 col-xl-6">
-                                <label class="form-label mt-4 ms-0">I'm</label>
-                                <select class="form-control" name="choices-gender" id="choices-gender">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-8">
-                                <div class="row">
-                                    <div class="col-sm-5 col-5">
-                                        <label class="form-label mt-4 ms-0">Birth Date</label>
-                                        <select class="form-control" name="choices-month" id="choices-month"></select>
-                                    </div>
-                                    <div class="col-sm-4 col-3">
-                                        <label class="form-label mt-4 ms-0">&nbsp;</label>
-                                        <select class="form-control" name="choices-day" id="choices-day"></select>
-                                    </div>
-                                    <div class="col-sm-3 col-4">
-                                        <label class="form-label mt-4">&nbsp;</label>
-                                        <select class="form-control" name="choices-year" id="choices-year"></select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
+                      
                         <div class="row mt-3">
                             <div class="col-xl-12">
                                 <div class="input-group input-group-static">
                                     <label>Institusi Mengeluarkan Sijil <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control upcase" name="nama_kolej" value="{{ old('nama_kolej') }}" required>
+                                    <input type="text" class="form-control upcase" name="nama_kolej" value="{{ $matrix->nama_kolej }}" required>
                                 </div>
                             </div>
                             <div class="col-xl-12 mt-3">
                                 <div class="input-group input-group-static">
                                     <label>Pengkhususan <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control upcase" name="bidang" value="{{ old('bidang') }}" required>
+                                    <input type="text" class="form-control upcase" name="bidang" value="{{ $matrix->bidang }}" required>
                                 </div>
                             </div>
                         </div>

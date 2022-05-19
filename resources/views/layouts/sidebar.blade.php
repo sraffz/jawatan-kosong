@@ -16,11 +16,15 @@
                 <a data-bs-toggle="collapse" href="#ProfileNav"
                     class="nav-link text-white {{ $page == 'Profil' ? ' active' : '' }}" aria-controls="ProfileNav"
                     role="button" aria-expanded="false">
-                    @if (Auth::user()->nama_gambar != null)
-
-                    @else
-                        <img src="{{ asset('material/img/team-3.png') }}" class="avatar">
-                    @endif
+                    @php
+                        if (empty(Auth::user()->gambardp->nama_gambar)) {
+                            $path = '';
+                        } else {
+                            $path = Auth::user()->id . '/' . Auth::user()->gambardp->nama_gambar;
+                        }
+                    @endphp
+                    <img src="{{ asset('storage/gambarPemohon') }}/{{ $path == '' ? 'team-3.png' : $path }}"
+                        class="avatar image-previewer">
                     <span
                         class="nav-link-text ms-2 ps-1">{{ \Illuminate\Support\Str::limit(Auth::user()->nama, 15, $end = '...') }}</span>
                 </a>

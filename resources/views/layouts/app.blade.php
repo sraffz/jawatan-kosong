@@ -32,6 +32,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('jquery-ui-1.13.1/jquery-ui.css') }}" rel="stylesheet" />
+    <link id="stylesheet" href="{{ asset('ijaboCropTool/ijaboCropTool.min.css') }}" rel="stylesheet" />
 
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
@@ -140,6 +141,7 @@
         <script src="{{ asset('datatable/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
         <script src="{{ asset('jquery-ui-1.13.1/jquery-ui.js') }}"></script>
+        <script src="{{ asset('ijaboCropTool/ijaboCropTool.min.js') }}"></script>
 
 
         @include('sweetalert::alert')
@@ -325,9 +327,29 @@
                     },
                 });
             });
-        
+
             $('.upcase').keyup(function() {
                 $(this).val($(this).val().toUpperCase());
+            });
+
+            document.getElementById('get_file').onclick = function() {
+                document.getElementById('avatarFile').click();
+            };
+
+            $('#avatarFile').ijaboCropTool({
+                preview: '.image-previewer',
+                setRatio: 4 / 5,
+                allowedExtensions: ['jpg', 'jpeg', 'png'],
+                buttonsText: ['Simpan', 'Batal'],
+                buttonsColor: ['#30bf7d', '#ee5155', -15],
+                processUrl: '{{ route('cropGambar') }}',
+                withCSRF: ['_token', '{{ csrf_token() }}'],
+                onSuccess: function(message, element, status) {
+                    alert(message);
+                },
+                onError: function(message, element, status) {
+                    alert(message);
+                }
             });
         </script>
     </body>

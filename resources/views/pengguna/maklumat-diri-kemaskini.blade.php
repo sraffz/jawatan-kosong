@@ -249,6 +249,8 @@ Kelantan',
 
 @section('script')
     <script>
+        
+
         if (document.getElementById('choices-year-md')) {
 
             var tahun = {{ $detail->tahun_lahir }};

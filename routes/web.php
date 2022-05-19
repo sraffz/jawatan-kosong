@@ -87,6 +87,10 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
 
 });
 
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link');
+});
+
 Route::get('dl-syarat/{id}', 'AdminController@dlsyarat')->name('dl-syarat');
 
 Route::middleware(['auth:web'])->group(function () {
@@ -111,6 +115,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/akademik/matrikulasi', 'PenggunaController@matrikulasi')->name('akademik.matrikulasi');
     Route::get('/akademik/pengajian-tinggi', 'PenggunaController@ipt')->name('akademik.ipt');
     
+    Route::post('cropGambar', 'PenggunaController@crop')->name('cropGambar');
     Route::post('tambah-maklumat-diri/{id}', 'PenggunaController@tambahmaklumatdiri')->name('tambah-maklumat-diri');
     Route::post('kemaskini-maklumat-diri/{id}', 'PenggunaController@kemaskinimaklumatdiri')->name('kemaskini-maklumat-diri');
     Route::post('tambah-pengalaman', 'PenggunaController@tambahPengalaman')->name('tambah-pengalaman');

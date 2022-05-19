@@ -51,7 +51,7 @@ class PenggunaController extends Controller
             ->where('jenis', 'TERBUKA')
             ->get();
 
-        return view('pengguna.iklan', compact('iklan', 'syarat', 'gambardp'));
+        return view('pengguna.iklan', compact('iklan', 'syarat'));
     }
 
     public function maklumatdiri()
@@ -132,6 +132,50 @@ class PenggunaController extends Controller
     public function ipt()
     {
         return view('pengguna.akademik.pengajian-tinggi');
+    }
+
+    public function crop(Request $req)
+    {
+        $dest = 'public/gambarPemohon/'.Auth::user()->id.'/';
+        // $dest = 'gambarPemohon/'.Auth::user()->id.'/';
+        $file = $req->file('avatarFile');
+        $extension = $file->clientExtension();
+ 
+        $new_image_name = 'DP'.date('YmdHis').uniqid().'.'.$extension.'';
+
+        $upload_success = $file->storeAs($dest, $new_image_name);
+
+        if (!$upload_success) {
+            return response()->json(['status'=>0, 'msg'=>'Muat naik tidak berjaya']);
+        }else {
+
+            $checkgambar = JK_Gambar_Passport::where('user_id', Auth::user()->id)->count();
+            
+            if ($checkgambar > 0) {
+                //padam imej lama
+                $gambarlama = JK_Gambar_Passport::where('user_id', Auth::user()->id)->first();
+                $gambarpemohon = $gambarlama->path_gambar;
+                
+                if ($gambarpemohon != '') {
+                    Storage::delete($gambarlama->path_gambar);
+                }
+                //kemaskini gambar baru dalam DB
+                JK_Gambar_Passport::where('user_id', Auth::user()->id)->update([
+                    'nama_gambar' => $new_image_name,
+                    'extension_gambar' => $extension,
+                    'path_gambar' => $dest.$new_image_name
+                ]);
+            } else {
+                JK_Gambar_Passport::where('user_id', Auth::user()->id)->insert([
+                    'user_id' => Auth::user()->id,
+                    'nama_gambar' => $new_image_name,
+                    'extension_gambar' => $extension,
+                    'path_gambar' => $dest.$new_image_name
+                ]);
+            }
+            return response()->json(['status'=>1, 'msg'=>'Gambar telah berjaya dikemaskini', 'name'=>$new_image_name]);
+        }
+
     }
 
     public function tambahmaklumatdiri(Request $req, $id)
@@ -251,7 +295,7 @@ class PenggunaController extends Controller
 
     public function gambardp()
     {
-        $gambardp = JK_Gambar_Passport::where('user_id', Auth::user()->id)->get();
+        $gambardp = JK_Gambar_Passport::where('user_id', Auth::user()->id)->first();
 
         return $gambardp;
     }

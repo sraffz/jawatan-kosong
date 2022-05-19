@@ -32,8 +32,11 @@
                 </button>
             </div>
         </div>
+        <input type="file" name="avatarFile" hidden id="avatarFile" enctype='multipart/form-data'>
     </div>
-    <div class="col-lg-3 mb-md-2 mb-4">
-        <input type="file" hidden required name="avatarFile" id="avatarFile">
-    </div>
+    {{-- <form action="{{ route('cropGambar') }}" method="post" enctype='multipart/form-data'>
+        {{csrf_field()}}
+        <input type="file" name="avatarFile" id="" required>
+        <button type="submit" class="btn btn-info">Simpan</button>
+    </form> --}}
 </div>

@@ -339,7 +339,6 @@
             $('#avatarFile').ijaboCropTool({
                 preview: '.image-previewer',
                 setRatio: 4 / 5,
-                allowedExtensions: ['jpg', 'jpeg', 'png'],
                 buttonsText: ['Simpan', 'Batal'],
                 buttonsColor: ['#30bf7d', '#ee5155', -15],
                 processUrl: '{{ route('cropGambar') }}',

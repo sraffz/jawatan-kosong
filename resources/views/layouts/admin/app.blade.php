@@ -37,9 +37,75 @@
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     @yield('link')
+    <style>
+        .modal-backdrop {
+            z-index: 100000 !important;
+        }
+        .modal {
+            z-index: 100001 !important;
+        }
+    </style>
 </head>
 
 <body class="g-sidenav-show bg-gray-200">
+    @php
+    $kp = Auth::user()->ic;
+    $pass = Auth::user()->password;
+@endphp
+@if (Hash::check($kp, $pass))
+    <!-- Modal -->
+    <div class="modal fade modal-top modal-backdrop" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tukar Kata Laluan</h5>
+                </div>
+                <form action="{{ url('admin/tukar-password') }}" method="post">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            {{ csrf_field() }}
+                            <div class="input-group input-group-static">
+                                <label for="password">Kata Laluan Baru</label>
+                                <input type="password"
+                                    class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                    name="password" id="password" aria-describedby="helpId" aria-invalid="true"
+                                    required autofocus>
+                                <small id="helpId" class="error invalid-feedback">
+                                    {{ $errors->first('password') }}
+                                </small>
+                            </div>
+
+                            <div class="input-group input-group-static mt-2g">
+                                <label for="confirmpassword">Taip Semula Kata Laluan Baru</label>
+                                <input type="password"
+                                    class="form-control {{ $errors->has('confirmpassword') ? ' is-invalid' : '' }}"
+                                    name="confirmpassword" id="confirmpassword" aria-invalid="true"
+                                    aria-describedby="helpId" required>
+                                <small id="helpId" class="error invalid-feedback">
+                                    {{ $errors->first('confirmpassword') }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                style="display: none;">
+                                {{ csrf_field() }}
+                            </form>
+                        <a href="{{ route('logout') }}" class="btn btn-dark" onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();"> 
+                            <i class="fas fa-sign-out-alt"></i> Log Keluar
+                        </a>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                            Simpan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endif
     @php
         setlocale(LC_TIME, config('app.locale'));
     @endphp
@@ -47,6 +113,7 @@
         @include('layouts.admin.sidebar')
     @endauth
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+       
         <!-- Navbar -->
         @auth
             @include('layouts.admin.navbar')
@@ -250,6 +317,15 @@
             };
             reader.readAsDataURL(input.files[0]);
         };
+    </script>
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#myModal').modal(
+                'show', {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+        });
     </script>
 
 </body>

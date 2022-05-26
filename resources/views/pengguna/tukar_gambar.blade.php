@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-lg-2 mb-md-2 mb-4">
+    <div class="col-lg-3 mb-md-2 mb-4">
         <div class="card" data-animation="true">
             <div class="card-header p-0 position-relative mt-n4 mx-2 z-index-2">
                 <a class="d-block blur-shadow-image">
@@ -30,6 +30,7 @@
                 <button class="btn btn-dark btn-sm" id="get_file">
                     <i class="material-icons text-lg">file_upload</i>&nbsp;Tukar Gambar
                 </button>
+                <small class="text-sm text-weight-bold">Maksimum 1.5 MB</small>
             </div>
         </div>
         <input type="file" name="avatarFile" hidden id="avatarFile" enctype='multipart/form-data'>

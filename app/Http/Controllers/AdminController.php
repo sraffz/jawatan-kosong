@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Iklan;
+use App\Admin;
 use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
 use App\Iklan_jawatan;
 use App\Admin_log;
 use Auth;
+use Hash;
 use Alert;
 use DB;
 use Carbon\Carbon;
+use App\Rules\MatchOldPassword;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -76,6 +79,61 @@ class AdminController extends Controller
     public function tetapan()
     {
         return view('admin.tetapan');
+    }
+
+    public function tukarKataLaluan(Request $req)
+    {
+            // $req->validate( [
+            //     'passTerkini' => ['required', new MatchOldPassword],
+            //     'passBaru' => ['required'],
+            //     'passBaruSah' => ['same:passBaru'],
+            // ]);
+
+            $req->validate([
+                'passTerkini' => ['required', new MatchOldPassword()],
+                'passBaru' => ['required'],
+                'passBaruSah' => ['same:passBaru'],
+            ]);
+
+            Admin::where('id', Auth::user()->id)
+            ->update([
+                'password' => Hash::make($req->passBaru)
+            ]);
+
+        // toast('Kata laluan berjaya ditukar', 'success')->position('top-end');
+        Alert::success('Berjaya', 'Kata laluan berjaya ditukar');
+        return back();
+    }
+
+    public function tukarkatalaluanSama(Request $request)
+    {
+        $request->validate([
+            'password' => ['required', 'min:8'],
+            'confirmpassword' => ['same:password'],
+        ]);
+
+        Admin::where('id', Auth::user()->id)->update([
+            'password' => Hash::make($request->password),
+        ]);
+
+        // flash('Kata laluan telah ditukar.')->success();
+        Alert::Success('Makluman', 'Kata laluan telah ditukar.');
+
+        return back();
+    }
+
+    public function kemaskiniAdmin(Request $req)
+    {
+        Admin::where('id', Auth::user()->id)
+            ->update([
+                'nama' => $req->nama,
+                'ic' => $req->ic,
+                'email' => $req->email,
+            ]);
+            
+            toast('Maklumat dikemaskini', 'success')->position('top-end');
+            // Alert::success('Berjaya', 'Kata laluan berjaya ditukar');
+        return back();
     }
 
     public function bukaiklan(Request $req)
@@ -322,6 +380,17 @@ class AdminController extends Controller
 
         return view('admin.konfigurasi', compact('taraf', 'kumpulan'));
     }
+    
+    public function pentadbir()
+    {
+        $pentadbir = Admin::whereNotIn('lvl', ['super'])
+        ->get();
+
+        if (Auth::user()->lvl == '2') {
+            return redirect('/admin');
+        }
+        return view('admin.pentadbir', compact('pentadbir'));
+    }
 
     public function tambahkumpulanjawatan(Request $req)
     {
@@ -349,6 +418,21 @@ class AdminController extends Controller
         JK_kumuplan_perkhidmatan::where('id', $r->id)->delete();
 
         Alert::success('Berjaya', 'Maklumat berjaya dipadam');
+        return back();
+    }
+
+    public function tambahpentadbir(Request $req)
+    {
+        Admin::insert([
+            'nama' => $req->nama,
+            'ic' => $req->ic,
+            'email' => $req->email,
+            'lvl' => $req->peranan,
+            'password' => Hash::make($req->ic),
+            'created_at' => \Carbon\Carbon::now(),
+        ]);
+        
+        Alert::success('Berjaya', 'Pentadbir berjaya ditambah');
         return back();
     }
 

@@ -64,7 +64,11 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::get('/iklan', 'AdminController@iklan')->name('admin.iklan');
     Route::get('/profil', 'AdminController@profil')->name('admin.profil');
     Route::get('/tetapan', 'AdminController@tetapan')->name('admin.tetapan');
+    Route::post('/tukar-katalaluan', 'AdminController@tukarKataLaluan')->name('tukar-katalaluan-admin');
+    Route::POST('tukar-password', 'AdminController@tukarkatalaluanSama')->name('kemaskinikatalaluan');
+    Route::post('/kemaskini', 'AdminController@kemaskiniAdmin')->name('kemaskini-admin');
     Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
+    Route::get('/pentadbir', 'AdminController@pentadbir')->name('admin.pentadbir');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
 
     Route::get('/cetak-iklan/{id}', 'AdminController@cetakiklan')->name('cetak-iklan');
@@ -81,6 +85,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/kemaskini-kumpulan-jawatan', 'AdminController@kemaskinikumpulanjawatan')->name('kemaskini-kumpulan-jawatan');
     Route::post('/padam-kumpulan-jawatan', 'AdminController@padamkumpulanjawatan')->name('padam-kumpulan-jawatan');
 
+    Route::post('/tambah-pentadbir', 'AdminController@tambahpentadbir')->name('tambah-pentadbir');
     Route::post('/tambah-taraf-jawatan', 'AdminController@tambahtarafjawatan')->name('tambah-taraf-jawatan');
     Route::post('/kemaskini-taraf-jawatan', 'AdminController@kemaskinitarafjawatan')->name('kemaskini-taraf-jawatan');
     Route::post('/padam-taraf-jawatan', 'AdminController@padamtarafjawatan')->name('padam-taraf-jawatan');

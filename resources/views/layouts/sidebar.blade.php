@@ -25,8 +25,7 @@
                     @endphp
                     <img src="{{ asset('storage/gambarPemohon') }}/{{ $path == '' ? 'team-3.png' : $path }}"
                         class="avatar image-previewer">
-                    <span
-                        class="nav-link-text ms-2 ps-1">{{ \Illuminate\Support\Str::limit(Auth::user()->nama, 15, $end = '...') }}</span>
+                    <span class="nav-link-text ms-2 ps-1">{{ \Illuminate\Support\Str::limit(Auth::user()->nama, 15, $end = '...') }}</span>
                 </a>
                 <div class="collapse {{ $page == 'Profil' || $page == 'Tetapan' ? ' show' : '' }}" id="ProfileNav"
                     style="">

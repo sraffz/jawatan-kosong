@@ -2,9 +2,7 @@
 Negeri Kelantan Perubatan'])
 
 @section('link')
-    <style>
 
-    </style>
 @endsection
 
 @section('content')
@@ -185,7 +183,9 @@ Negeri Kelantan Perubatan'])
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#butiraniklan-{{ $ikl->id }}">
-                                                    Butiran
+                                                    <span class="material-icons">
+                                                        info_outline
+                                                        </span>
                                                 </button>
                                                 <div class="btn-group " role="group" aria-label="Basic example">
                                                     <a class="btn btn-primary btn-sm"
@@ -194,7 +194,9 @@ Negeri Kelantan Perubatan'])
                                                     </a>
                                                     <button type="button" class="btn btn-danger btn-sm"
                                                     data-bs-toggle="modal"
-                                                    data-bs-target="#padam-{{ $ikl->id }}">Padam</button>
+                                                    data-bs-target="#padam-{{ $ikl->id }}"><span class="material-icons">
+                                                        delete_outline
+                                                        </span></button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -202,7 +204,7 @@ Negeri Kelantan Perubatan'])
                                         <!-- Modal Butiran Iklan-->
                                         <div class="modal fade" id="butiraniklan-{{ $ikl->id }}" tabindex="-1"
                                             role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title modal-title font-weight-normal"
@@ -336,7 +338,7 @@ Negeri Kelantan Perubatan'])
                                         <!-- Modal Padam Iklan-->
                                         <div class="modal fade" id="padam-{{ $ikl->id }}" tabindex="-1"
                                             role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                            <div class="modal-dialog modal- modal-dialog-centered modal-" role="document">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title text-bold modal-title font-weight-normal"
@@ -376,7 +378,7 @@ Negeri Kelantan Perubatan'])
     <!-- Modal Tambah Iklan-->
     <div class="modal fade" id="bukaiklan" tabindex="-1" role="dialog" aria-labelledby="modal-default"
         aria-hidden="true">
-        <div class="modal-dialog modal- modal-dialog-centered modal- modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h6 class="modal-title font-weight-normal" id="modal-title-default">Buka Iklan Jawatan Kosong</h6>
@@ -474,9 +476,6 @@ Negeri Kelantan Perubatan'])
 @endsection
 
 @section('script')
-    {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <script src="sweetalert2.min.js"></script> --}}
-
     <script>
         $('#butiraniklan').on('show.bs.modal', event => {
             var button = $(event.relatedTarget);

@@ -136,7 +136,7 @@ class PenggunaController extends Controller
 
     public function crop(Request $req)
     {
-        if ($req->hasFile('avatarFile')) {
+        // if ($req->hasFile('avatarFile')) {
             $dest = 'public/gambarPemohon/'.Auth::user()->id.'/';
             // $dest = 'gambarPemohon/'.Auth::user()->id.'/';
             $file = $req->file('avatarFile');
@@ -176,9 +176,9 @@ class PenggunaController extends Controller
                 }
                 return response()->json(['status'=>1, 'msg'=>'Gambar telah berjaya dikemaskini', 'name'=>$new_image_name]);
             }
-        } else {
-            return 'neh';
-        }
+        // } else {
+        //     return 'neh';
+        // }
     }
 
     public function tambahmaklumatdiri(Request $req, $id)

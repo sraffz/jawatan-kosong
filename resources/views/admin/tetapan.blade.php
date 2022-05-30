@@ -9,21 +9,21 @@ Kelantan',
         <div class="col-xl-8">
             <div class="card" id="password">
                 <div class="card-header">
-                    <h5>Tukar Kata laluan</h5>
+                    <h5>Maklumat Pentadbir</h5>
                 </div>
                 <form action="{{ route('kemaskini-admin') }}" method="post">
                     {{ csrf_field() }}
                     <div class="card-body pt-0">
-                        <div class="input-group input-group-outline is-filled focused is-focused">
+                        <div class="input-group input-group-static is-filled focused is-focused">
                             <label class="form-label">Nama</label>
                             <input type="text" name="nama" class="form-control " value="{{ Auth::user()->nama }}"
                                 required>
                         </div>
-                        <div class="input-group input-group-outline my-4 is-filled">
+                        <div class="input-group input-group-static my-4 is-filled">
                             <label class="form-label">No Kad Pengenalan</label>
                             <input type="text" name="ic" class="form-control" value="{{ Auth::user()->ic }}" required>
                         </div>
-                        <div class="input-group input-group-outline is-filled">
+                        <div class="input-group input-group-static is-filled">
                             <label class="form-label">Alamat Email</label>
                             <input type="text" name="email" class="form-control" value="{{ Auth::user()->email }}"
                                 required>

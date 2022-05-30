@@ -38,12 +38,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     @yield('link')
     <style>
-        .modal-backdrop {
-            z-index: 100000 !important;
-        }
-        .modal {
-            z-index: 100001 !important;
-        }
+        
     </style>
 </head>
 
@@ -54,7 +49,7 @@
 @endphp
 @if (Hash::check($kp, $pass))
     <!-- Modal -->
-    <div class="modal fade modal-top modal-backdrop" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    <div class="modal fade modal-top " id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

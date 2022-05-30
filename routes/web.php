@@ -89,6 +89,8 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/tambah-taraf-jawatan', 'AdminController@tambahtarafjawatan')->name('tambah-taraf-jawatan');
     Route::post('/kemaskini-taraf-jawatan', 'AdminController@kemaskinitarafjawatan')->name('kemaskini-taraf-jawatan');
     Route::post('/padam-taraf-jawatan', 'AdminController@padamtarafjawatan')->name('padam-taraf-jawatan');
+    Route::post('/kemaskini-pentadbir', 'AdminController@kemaskinipentadbir')->name('kemaskini-pentadbir');
+    Route::post('/padam-pentadbir', 'AdminController@padampentadbir')->name('padam-pentadbir');
 
 });
 

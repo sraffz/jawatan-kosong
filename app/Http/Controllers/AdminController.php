@@ -83,22 +83,25 @@ class AdminController extends Controller
 
     public function tukarKataLaluan(Request $req)
     {
-            // $req->validate( [
-            //     'passTerkini' => ['required', new MatchOldPassword],
-            //     'passBaru' => ['required'],
-            //     'passBaruSah' => ['same:passBaru'],
-            // ]);
-
             $req->validate([
                 'passTerkini' => ['required', new MatchOldPassword()],
                 'passBaru' => ['required'],
                 'passBaruSah' => ['same:passBaru'],
             ]);
 
-            Admin::where('id', Auth::user()->id)
-            ->update([
-                'password' => Hash::make($req->passBaru)
-            ]);
+            $current = $req->passTerkini;
+            $old = Auth::user()->password;
+
+            // dd($current, $old);
+            if (Hash::check($current, $old)){
+                Admin::where('id', Auth::user()->id)
+                ->update([
+                    'password' => Hash::make($req->passBaru)
+                ]);
+            } else {
+                Alert::error('Ralat', 'Kata laluan terkini tidak sama dengan rekod kami.');
+                return back();
+            }
 
         // toast('Kata laluan berjaya ditukar', 'success')->position('top-end');
         Alert::success('Berjaya', 'Kata laluan berjaya ditukar');
@@ -423,6 +426,24 @@ class AdminController extends Controller
 
     public function tambahpentadbir(Request $req)
     {
+       $req->validate([
+            'nama' => 'required',
+            'ic' => 'required|unique:jk_admin',
+            'email' => 'required|unique:jk_admin|email',
+            'lvl' => 'required',
+        ]);
+       
+        // $validated = Validator::make($req->all(), [
+        //     'nama' => 'required',
+        //     'ic' => 'required|unique:jk_admin',
+        //     'email' => 'required|unique:jk_admin|email',
+        //     'lvl' => 'required',
+        // ]);
+
+        // if ($validated->fails()) {
+        //     return back()->withErrors($validated)->withInput();
+        // }
+
         Admin::insert([
             'nama' => $req->nama,
             'ic' => $req->ic,
@@ -431,6 +452,7 @@ class AdminController extends Controller
             'password' => Hash::make($req->ic),
             'created_at' => \Carbon\Carbon::now(),
         ]);
+        
         
         Alert::success('Berjaya', 'Pentadbir berjaya ditambah');
         return back();
@@ -463,6 +485,33 @@ class AdminController extends Controller
         JK_taraf_jawatan::where('id', $r->id)->delete();
 
         Alert::success('Berjaya', 'Maklumat berjaya dipadam');
+        return back();
+    }
+
+    public function kemaskinipentadbir(Request $r)
+    {
+        $id = $r->id;
+
+        Admin::where('id', $id)
+        ->update([
+            'nama' => $r->nama,
+            'ic' => $r->ic,
+            'email' => $r->email,
+            'lvl' => $r->peranan,
+        ]);
+
+        toast('Maklumat dikemaskini', 'success')->position('top-end');
+        return back();
+    }
+
+    public function padampentadbir(Request $req)
+    {
+        $id = $req->id;
+
+        Admin::where('id', $id)
+        ->delete();
+
+        toast('Pentadbir dipadam', 'success')->position('top-end');
         return back();
     }
 

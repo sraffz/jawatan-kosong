@@ -13,12 +13,12 @@ Kelantan Perubatan'])
                         <div class="col-6 text-end">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn bg-gradient-dark mb-0" data-bs-toggle="modal"
-                                data-bs-target="#tambahtaraf">
+                                data-bs-target="#tambahPentadbir">
                                 <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Pentadbir
                             </button>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="tambahtaraf" tabindex="-1" role="dialog"
+                            <div class="modal fade" id="tambahPentadbir" tabindex="-1" role="dialog"
                                 aria-labelledby="modelTitleId" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-xs" role="document">
                                     <div class="modal-content font-weight-normal" id="modal-title-default">
@@ -84,67 +84,74 @@ Kelantan Perubatan'])
                                 @php
                                     $t = 1;
                                 @endphp
-                                @foreach ($pentadbir as $trf)
+                                @foreach ($pentadbir as $ptbr)
                                     <tr class="text-center">
                                         <td scope="row" class="text-dark">{{ $t++ }}</td>
-                                        <td class="text-right text-uppercase text-dark">{{ $trf->nama }}</td>
-                                        <td class="text-dark text-uppercase">{{ $trf->ic }}</td>
-                                        <td class="text-dark">{{ $trf->email }}</td>
+                                        <td class="text-right text-uppercase text-dark">{{ $ptbr->nama }}</td>
+                                        <td class="text-dark text-uppercase">{{ $ptbr->ic }}</td>
+                                        <td class="text-dark">{{ $ptbr->email }}</td>
                                         <td class="text-left text-dark">
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-link text-dark px-3 mb-0"
-                                                data-bs-toggle="modal" data-bs-target="#kemaskinitaraf-{{ $trf->id }}">
+                                                data-bs-toggle="modal" data-bs-target="#kemaskiniPentadbir-{{ $ptbr->id }}">
                                                 <i class="material-icons text-sm me-2">edit</i>Kemaskini
                                             </button>
                                             <!-- Modal Kemaskini Taraf-->
-                                            <div class="modal fade" id="kemaskinitaraf-{{ $trf->id }}"
+                                            <div class="modal fade" id="kemaskiniPentadbir-{{ $ptbr->id }}"
                                                 tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-xs" role="document">
                                                     <div class="modal-content font-weight-normal" id="modal-title-default">
                                                         <div class="modal-header">
-                                                            <h6 class="modal-title">Kemaskini Taraf Jawatan</h6>
+                                                            <h6 class="modal-title">Kemaskini Pentadbir</h6>
                                                             <button type="button" class="btn-close text-dark"
                                                                 data-bs-dismiss="modal" aria-label="Close">X</button>
                                                         </div>
-                                                        <form action="{{ route('kemaskini-taraf-jawatan') }}"
-                                                            method="post" autocomplete="off">
+                                                        <form action="{{ route('kemaskini-pentadbir') }}" method="post" autocomplete="off">
                                                             <div class="modal-body">
-                                                                <div>
+                                                                <div class="container">
                                                                     {{ csrf_field() }}
-                                                                    <input type="hidden" class="form-control" name="id"
-                                                                        id="id" value="{{ $trf->id }}" required>
+                                                                    <input type="hidden" name="id" value="{{ $ptbr->id }}"> 
                                                                     <div class="input-group input-group-static">
-                                                                        <label>Taraf Jawatan</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="taraf_jawatan" id="taraf_jawatan"
-                                                                            value="{{ $trf->taraf }}" required>
+                                                                        <label>Nama</label>
+                                                                        <input type="text" class="form-control" name="nama"
+                                                                            id="nama" value="{{ $ptbr->nama }}" required>
                                                                     </div>
-                                                                    <div class="input-group input-group-static mt-4">
-                                                                        <label>Singkatan</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="singkatan" id="singkatan"
-                                                                            value="{{ $trf->singkatan_taraf }}" required>
+                                                                    <div class="input-group input-group-static mt-2">
+                                                                        <label>No KP</label>
+                                                                        <input type="text" class="form-control" name="ic"
+                                                                            id="ic" value="{{ $ptbr->ic }}" required>
                                                                     </div>
-
+                                                                    <div class="input-group input-group-static mt-2">
+                                                                        <label>Email</label>
+                                                                        <input type="text" class="form-control" name="email"
+                                                                            id="email" value="{{ $ptbr->email }}" required>
+                                                                    </div>
+                                                                    <div class="input-group input-group-static mt-2">
+                                                                        <label>Peranan</label>
+                                                                          <select class="form-control" required name="peranan" id="peranan">
+                                                                            <option value="">Sila Pilih</option>
+                                                                            <option value="1" {{ '1' ==  $ptbr->lvl ? 'selected' : ''}}>Pentadbir Utama</option>
+                                                                            <option value="2" {{ '2' ==  $ptbr->lvl ? 'selected' : ''}}>Pentadbir</option>
+                                                                           </select>
+                                                                        </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn bg-gradient-dark"
                                                                     data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn bg-gradient-primary">Kemaskini</button>
+                                                                <button type="submit" class="btn bg-gradient-success">Kemaskini</button>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </div>
                                             <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0"
-                                                data-bs-toggle="modal" data-bs-target="#padamtaraf-{{ $trf->id }}">
+                                                data-bs-toggle="modal" data-bs-target="#padamtaraf-{{ $ptbr->id }}">
                                                 <i class="material-icons text-sm me-2">delete</i>Padam</a>
                                             </button>
                                             <!-- Modal Padam Taraf-->
-                                            <div class="modal fade" id="padamtaraf-{{ $trf->id }}" tabindex="-1"
+                                            <div class="modal fade" id="padamtaraf-{{ $ptbr->id }}" tabindex="-1"
                                                 role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-xs" role="document">
                                                     <div class="modal-content font-weight-normal" id="modal-title-default">
@@ -153,14 +160,14 @@ Kelantan Perubatan'])
                                                             <button type="button" class="btn-close text-dark"
                                                                 data-bs-dismiss="modal" aria-label="Close">X</button>
                                                         </div>
-                                                        <form action="{{ route('padam-taraf-jawatan') }}" method="post"
+                                                        <form action="{{ route('padam-pentadbir') }}" method="post"
                                                             autocomplete="off">
                                                             <div class="modal-body">
                                                                 <div>
                                                                     {{ csrf_field() }}
                                                                     <input type="hidden" class="form-control" name="id"
-                                                                        id="id" value="{{ $trf->id }}">
-                                                                    Adakah anda pasti untuk padam maklumat ini?
+                                                                        id="id" value="{{ $ptbr->id }}">
+                                                                    Adakah anda pasti untuk padam pentadbir ini?
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
@@ -184,3 +191,11 @@ Kelantan Perubatan'])
         </div>
     </div>
 @endsection
+
+{{-- @section('script')
+<script type="text/javascript">
+    @if (count($errors) > 0)
+        $('#tambahPentadbir').modal('show');
+    @endif
+    </script>
+@endsection --}}

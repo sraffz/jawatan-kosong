@@ -96,7 +96,7 @@ Kelantan Perubatan'])
                                                 data-bs-toggle="modal" data-bs-target="#kemaskiniPentadbir-{{ $ptbr->id }}">
                                                 <i class="material-icons text-sm me-2">edit</i>Kemaskini
                                             </button>
-                                            <!-- Modal Kemaskini Taraf-->
+                                            <!-- Modal Kemaskini pentadbir-->
                                             <div class="modal fade" id="kemaskiniPentadbir-{{ $ptbr->id }}"
                                                 tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
                                                 aria-hidden="true">

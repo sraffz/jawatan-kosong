@@ -91,31 +91,50 @@ class PenggunaController extends Controller
 
     public function pt3()
     {
-        return view('pengguna.akademik.srp-pmr-pt3');
+        $mtpt3 = $this->subjekPt3();
+        $gredpt3 = $this->gredPt3();
+
+        return view('pengguna.akademik.srp-pmr-pt3', compact('mtpt3','gredpt3'));
     }
     public function spm()
     {
-        return view('pengguna.akademik.spm-spmv');
+        $mtspm = $this->subjekspm();
+        $gredspm = $this->gredSpm();
+        
+        return view('pengguna.akademik.spm-spmv', compact('mtspm','gredspm'));
     }
     public function spmu()
     {
-        return view('pengguna.akademik.spm-ulangan');
+        $gredspm = $this->gredSpm();
+        $mtspm = $this->subjekspm();
+
+        return view('pengguna.akademik.spm-ulangan', compact('mtspm', 'gredspm'));
     }
     public function svm()
     {
-        return view('pengguna.akademik.svm');
+        $listSijil = $this->sijilSvm();
+
+        return view('pengguna.akademik.svm', compact('listSijil'));
     }
     public function skm()
     {
-        return view('pengguna.akademik.skm');
+        $listSijil = $this->sijilSkm();
+        
+        return view('pengguna.akademik.skm', compact('listSijil'));
     }
     public function stpm()
     {
-        return view('pengguna.akademik.stpm');
+        $mtstpm = $this->subjekstpm();
+        $gredstpm = $this->gredStpm();
+
+        return view('pengguna.akademik.stpm', compact('mtstpm','gredstpm'));
     }
     public function stam()
     {
-        return view('pengguna.akademik.stam');
+        $mtstam = $this->subjekstam();
+        $gredstam = $this->gredStam();
+
+        return view('pengguna.akademik.stam', compact('mtstam', 'gredstam'));
     }
     public function matrikulasi()
     {
@@ -342,5 +361,75 @@ class PenggunaController extends Controller
 
         Toast('Maklumat Dikemaskini', 'success')->position('top-end');
         return back();
+    }
+
+    public function subjekPt3()
+    {
+        $subjPt3 = DB::table('jk_senarai_matapelajaran_pt3')->get();
+
+        return $subjPt3;
+    }
+
+    public function subjekspm()
+    {
+        $subjSpm = DB::table('jk_senarai_matapelajaran_spm')->get();
+
+        return $subjSpm;
+    }
+
+    public function subjekstam()
+    {
+        $subjStam = DB::table('jk_senarai_matapelajaran_stam')->get();
+
+        return $subjStam;
+    }
+
+    public function subjekstpm()
+    {
+        $subjStpm = DB::table('jk_senarai_matapelajaran_stpm')->get();
+
+        return $subjStpm;
+    }
+
+    public function sijilSkm()
+    {
+        $skm = DB::table('jk_senarai_sijil_skm')->get();
+
+        return $skm;
+    }
+    
+    public function sijilSvm()
+    {
+        $svm = DB::table('jk_senarai_sijil_svm')->get();
+
+        return $svm;
+    }
+
+    public function gredPt3()
+    {
+        $gredpt3 = DB::table('jk_senarai_gred_pt3')->get();
+
+        return $gredpt3;
+    }
+
+    public function gredSpm()
+    {
+        $gredspm = DB::table('jk_senarai_gred_spm')->get();
+
+        return $gredspm;
+    }
+
+    public function gredStam()
+    {
+        $gredstam = DB::table('jk_senarai_gred_stam')->get();
+
+        return $gredstam;
+    }
+
+    public function gredStpm()
+    {
+        $gredstpm = DB::table('jk_senarai_gred_stpm')->get();
+
+        return $gredstpm;
     }
 }

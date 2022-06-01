@@ -37,6 +37,19 @@
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     @yield('link')
+    <style>
+        .modal.show {
+        z-index: 100000!important;
+        }
+
+        .sidenav.show {
+        z-index: 100000!important;
+        }
+
+        /* .modal-backdrop.show {
+        z-index: 100000!important;
+        } */
+    </style>
 </head>
 
 @guest

@@ -22,7 +22,7 @@ Kelantan'])
                                 <div class="input-group input-group-static">
                                     <label>Peperiksaan <span style="color: red">*</span></label>
                                     <select class="form-control" id="" name="jenis" required>
-                                        <option value="">Select one</option>
+                                        <option value="">Sila Pilih</option>
                                         <option value="PT3">PT3</option>
                                         <option value="PMR">PMR</option>
                                         <option value="SRP">SRP</option>
@@ -35,10 +35,7 @@ Kelantan'])
                                 <div class="input-group input-group-static">
                                     <label>Mata Pelajaran <span style="color: red">*</span></label>
                                           <select class="form-control" id="choices-year-md" name="matapelajaran" required>
-                                            <option selected>Select one</option>
-                                            <option value=""></option>
-                                            <option value=""></option>
-                                            <option value=""></option>
+                                            <option selected>Sila Pilih</option>
                                         </select>
                                  </div>
                             </div>
@@ -46,11 +43,11 @@ Kelantan'])
                                 <div class="input-group input-group-static">
                                     <div class="input-group input-group-static">
                                         <label>Gred <span style="color: red">*</span></label>
-                                              <select class="form-control" id="gred" name="gred"  required>
-                                                <option selected>Select one</option>
-                                                <option value=""></option>
-                                                <option value=""></option>
-                                                <option value=""></option>
+                                              <select class="form-control" id="gred" name="gred" required>
+                                                <option value="">Sila Pilih</option>
+                                                @foreach ($gredpt3 as $gred)
+                                                <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
+                                                @endforeach
                                             </select>
                                      </div>
                                 </div>

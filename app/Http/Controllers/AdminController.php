@@ -426,12 +426,12 @@ class AdminController extends Controller
 
     public function tambahpentadbir(Request $req)
     {
-       $req->validate([
-            'nama' => 'required',
-            'ic' => 'required|unique:jk_admin',
-            'email' => 'required|unique:jk_admin|email',
-            'lvl' => 'required',
-        ]);
+    //    $req->validate([
+    //         'nama' => 'required',
+    //         'ic' => 'required|unique:jk_admin',
+    //         'email' => 'required|unique:jk_admin|email',
+    //         'lvl' => 'required',
+    //     ]);
        
         // $validated = Validator::make($req->all(), [
         //     'nama' => 'required',

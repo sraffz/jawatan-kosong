@@ -113,8 +113,9 @@ class PenggunaController extends Controller
     public function svm()
     {
         $listSijil = $this->sijilSvm();
+        $gredbm = $this->gredSpm();
 
-        return view('pengguna.akademik.svm', compact('listSijil'));
+        return view('pengguna.akademik.svm', compact('listSijil', 'gredbm'));
     }
     public function skm()
     {
@@ -400,7 +401,10 @@ class PenggunaController extends Controller
     
     public function sijilSvm()
     {
-        $svm = DB::table('jk_senarai_sijil_svm')->get();
+        $svm = DB::table('jk_kelulusan')
+        ->where('diskripsi', 'LIKE', '%SIJ VOKASIONAL MSIA%')
+        ->get();
+        // $svm = DB::table('jk_senarai_sijil_svm')->get();
 
         return $svm;
     }

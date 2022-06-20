@@ -1,93 +1,38 @@
-@extends('layouts.app', ['page' => 'SVM', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
+@extends('layouts.app', ['page' => 'SVM', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-    <div class="row mb-4">
+<form action="{{ url('simpan-svm') }}" method="post">
+    {{ csrf_field() }}
+    <div class="row mb-2">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
                 <div class="card-header">
-                    <h5>Basic Info</h5>
+                    <h5>KEPUTUSAN SIJIL VOKASIONAL MALAYSIA</h5>
                 </div>
                 <div class="card-body pt-0">
                     <div class="row">
                         <div class="col-6">
                             <div class="input-group input-group-static">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" placeholder="Alec">
+                                <label>Tahun <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control" name="tahun" placeholder="2008">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="input-group input-group-static">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" placeholder="Thompson">
+                                <label>Jenis Sijil</label>
+                                <input type="text" disabled class="form-control" value="SMV">
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <label class="form-label mt-4 ms-0">I'm</label>
-                            <select class="form-control" name="choices-gender" id="choices-gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                        <div class="col-12">
+                            <label class="form-label mt-4 ms-0">Nama Sijil <span class="text-danger">*</span></label>
+                            <select class="form-control" name="sijil" id="choices-svm" required>
+                                <option value="">Sila Pilih</option>
+                                @foreach ($listSijil as $list)
+                                    <option value="{{ $list->id_kelulusan }}">{{ $list->diskripsi }}</option>
+                                @endforeach
                             </select>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-5 col-5">
-                                    <label class="form-label mt-4 ms-0">Birth Date</label>
-                                    <select class="form-control" name="choices-month" id="choices-month"></select>
-                                </div>
-                                <div class="col-sm-4 col-3">
-                                    <label class="form-label mt-4 ms-0">&nbsp;</label>
-                                    <select class="form-control" name="choices-day" id="choices-day"></select>
-                                </div>
-                                <div class="col-sm-3 col-4">
-                                    <label class="form-label mt-4">&nbsp;</label>
-                                    <select class="form-control" name="choices-year" id="choices-year"></select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Confirm Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Your location</label>
-                                <input type="text" class="form-control" placeholder="Sydney, A">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Phone Number</label>
-                                <input type="number" class="form-control" placeholder="+40 735 631 620">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 align-self-center">
-                            <label class="form-label mt-4 ms-0">Language</label>
-                            <select class="form-control" name="choices-language" id="choices-language">
-                                <option value="English">English</option>
-                                <option value="French">French</option>
-                                <option value="Spanish">Spanish</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label mt-4">Skills</label>
-                            <input class="form-control" id="choices-skills" type="text" value="vuejs, angular, react"
-                                placeholder="Enter something" />
                         </div>
                     </div>
                 </div>
@@ -95,4 +40,104 @@
         </div>
 
     </div>
+    <div class="row mb-2">
+        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+            <div class="card mt-4" id="basic-info">
+                <div class="card-header">
+                 </div>
+                <div class="card-body pt-0">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <table class="table table-bordered table-inverse">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th>Kod</th>
+                                        <th>Mata Pelajaran</th>
+                                        <th style="width: 20%">Gred</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row" class="text-center">104</td>
+                                        <td>BAHASA MELAYU SVM</td>
+                                        <td>
+                                            <div class="input-group input-group-outline ">
+                                                 <select class="form-control" name="gredBmSvm" id="choices-gred" required>
+                                                    <option value="">Sila Pilih</option>
+                                                    @foreach ($gredbm as $gbm)
+                                                      <option value="{{ $gbm->gred }}">{{ $gbm->gred }}</option>
+                                                  @endforeach
+                                                </select>
+                                              </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <table class="table table-bordered">
+                                <thead class="text-center">
+                                    <tr>
+                                        <th colspan="2" style="width: 80%">Kompeten Semua Modul</th>
+                                        <th>Gred</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row" colspan="2">PURATA NILAI GRED KUMULATIF AKADEMIK (PNGKA)
+                                        </td>
+                                        <td>
+                                            <div class="input-group input-group-outline">
+                                                <label class="form-label"></label>
+                                                <input type="text" name="pngka" class="form-control" value="{{ old('pngka') }}" required>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row" colspan="2">PURATA NILAI GRED KUMULATIF VOKASIONAL (PNGKV)
+                                        </td>
+                                        <td>
+                                            <div class="input-group input-group-outline">
+                                                <label class="form-label"></label>
+                                                <input type="text" name="pngkv" class="form-control" value="{{ old('pngkv') }}" required>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="card-footer pt-0">
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <span class="material-icons"> save </span> Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+@endsection
+@section('script')
+    <script>
+        if (document.getElementById('choices-svm')) {
+            var gender = document.getElementById('choices-svm');
+            const example = new Choices(gender, {
+                position: 'bottom',
+                shouldSort: false,
+            });
+        }
+        if (document.getElementById('choices-gred')) {
+            var gender = document.getElementById('choices-gred');
+            const example = new Choices(gender, {
+                position: 'bottom',
+                shouldSort: false,
+            });
+        }
+    </script>
 @endsection

@@ -34,7 +34,10 @@
                                     <label>Mata Pelajaran <span style="color: red">*</span></label>
                                     <select class="form-control" id="choices-year-md" name="matapelajaran" required>
                                         <option selected>Sila Pilih</option>
-                                    </select>
+                                            @foreach ($mtspm as $spm)
+                                            <option value="{{ $spm->subjek }}">{{ $spm->subjek }}</option>
+                                            @endforeach
+                                     </select>
                                 </div>
                             </div>
                             <div class="col-xl-4">

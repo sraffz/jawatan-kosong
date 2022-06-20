@@ -5,7 +5,7 @@
     <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
         <div class="card mt-4" id="basic-info">
             <div class="card-header">
-                <h5>KEPUTUSAN PEPERIKSAAN TINGKATAN 5</h5>
+                <h5>KEPUTUSAN PEPERIKSAAN SIJIL TINGGI PERSEKOLAHAN MALAYSIA</h5>
             </div>
             <form action="{{ url('simpan-stpm') }}" method="post">
                 {{ csrf_field() }}
@@ -31,7 +31,7 @@
                         <div class="col-xl-8">
                             <div class="input-group input-group-static">
                                 <label>Mata Pelajaran <span style="color: red">*</span></label>
-                                <select class="form-control" id="choices-year-md" name="matapelajaran" required>
+                                <select class="form-control select2" id="choices-year-md" name="matapelajaran" required>
                                     <option selected>Sila Pilih</option>
                                     @foreach ($mtstpm as $mstpm)
                                     <option value="{{ $mstpm->id }}">{{ $mstpm->subjek }}</option>                                    @endforeach

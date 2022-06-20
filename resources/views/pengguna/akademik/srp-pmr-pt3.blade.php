@@ -35,7 +35,10 @@ Kelantan'])
                                 <div class="input-group input-group-static">
                                     <label>Mata Pelajaran <span style="color: red">*</span></label>
                                           <select class="form-control" id="choices-year-md" name="matapelajaran" required>
-                                            <option selected>Sila Pilih</option>
+                                            <option>Sila Pilih</option>
+                                            @foreach ($mtpt3 as $pt3)
+                                            <option value="{{ $pt3->subjek }}">{{ $pt3->subjek }}</option>
+                                            @endforeach
                                         </select>
                                  </div>
                             </div>

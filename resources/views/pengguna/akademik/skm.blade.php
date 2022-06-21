@@ -1,98 +1,139 @@
-@extends('layouts.app', ['page' => 'SKM', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
+@extends('layouts.app', ['page' => 'SKM', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-    <div class="row mb-4">
-        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
-            <div class="card mt-4" id="basic-info">
-                <div class="card-header">
-                    <h5>Basic Info</h5>
-                </div>
-                <div class="card-body pt-0">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" placeholder="Alec">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" placeholder="Thompson">
-                            </div>
-                        </div>
+    <form action="{{ url('simpan-skm') }}" method="post">
+        {{ csrf_field() }}
+        <div class="row mb-2">
+            <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+                <div class="card mt-4" id="basic-info">
+                    <div class="card-header">
+                        <h5>MAKLUMAT SIJIL KEMAHIRAN MALAYSIA (SKM)</h5>
                     </div>
-                    <div class="row">
-                        <div class="col-sm-4 col-6">
-                            <label class="form-label mt-4 ms-0">I'm</label>
-                            <select class="form-control" name="choices-gender" id="choices-gender">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="row">
-                                <div class="col-sm-5 col-5">
-                                    <label class="form-label mt-4 ms-0">Birth Date</label>
-                                    <select class="form-control" name="choices-month" id="choices-month"></select>
-                                </div>
-                                <div class="col-sm-4 col-3">
-                                    <label class="form-label mt-4 ms-0">&nbsp;</label>
-                                    <select class="form-control" name="choices-day" id="choices-day"></select>
-                                </div>
-                                <div class="col-sm-3 col-4">
-                                    <label class="form-label mt-4">&nbsp;</label>
-                                    <select class="form-control" name="choices-year" id="choices-year"></select>
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-12 col-xl-3 mb-3">
+                                <div class="input-group input-group-static">
+                                    <label>Tahun <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control" name="tahunSijil" placeholder="2008"
+                                        required>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Confirm Email</label>
-                                <input type="email" class="form-control" placeholder="example@email.com">
+                            <div class="col-12 col-xl-9">
+                                <label class="form-label">Nama Sijil <span class="text-danger">*</span></label>
+                                <select class="form-control" name="namaSijil" id="choices-skm" required>
+                                    <option value="">Sila Pilih</option>
+                                    @foreach ($listSijil as $list)
+                                        <option value="{{ $list->id_kelulusan }}">{{ $list->diskripsi }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Your location</label>
-                                <input type="text" class="form-control" placeholder="Sydney, A">
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="input-group input-group-static">
-                                <label>Phone Number</label>
-                                <input type="number" class="form-control" placeholder="+40 735 631 620">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 align-self-center">
-                            <label class="form-label mt-4 ms-0">Language</label>
-                            <select class="form-control" name="choices-language" id="choices-language">
-                                <option value="English">English</option>
-                                <option value="French">French</option>
-                                <option value="Spanish">Spanish</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label mt-4">Skills</label>
-                            <input class="form-control" id="choices-skills" type="text" value="vuejs, angular, react"
-                                placeholder="Enter something" />
+                    <div class="card-footer pt-0">
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-dark">
+                                <span class="material-icons"> add </span> Tambah
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
+    </form>
+    <div class="row mb-2">
+        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+            <div class="card mt-4" id="basic-info">
+                <div class="card-header">
+                </div>
+                <div class="card-body pt-0">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table  text-dark">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th style="width: 10%">#</th>
+                                            <th>NAMA SIJIL SKM</th>
+                                            <th style="width: 20%">TAHUN</th>
+                                            <th style="width: 20%">
+                                                <span class="material-icons">delete</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @if (count($skm) > 0)
+                                            @foreach ($skm as $listskm)
+                                                <tr style="vertical-align: middle">
+                                                    <td scope="row" class="text-center">{{ $i++ }}</td>
+                                                    <td>{{ $listskm->diskripsi }}</td>
+                                                    <td class="text-center">{{ $listskm->tahunSijil }}</td>
+                                                    <td class="text-center">
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#padamskm-{{ $listskm->id }}">
+                                                            <span class="material-icons">delete</span>
+                                                        </button>
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="padamskm-{{ $listskm->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <form action="{{ url('padam-skm') }}" method="get">
+                                                                    {{ csrf_field() }}
+                                                                    <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                    {{-- <h5 class="modal-title">Modal title</h5> --}}
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="container-fluid">
+                                                                                <input type="hidden" name="id" value="{{ $listskm->id }}">
+                                                                                Adakah anda pasti untuk hapus subjek ini?
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer justify-content-center">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                                                                            <button type="submit" class="btn btn-primary">Ya</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr class="text-center">
+                                                <td colspan="4">
+                                                    Tiada Maklumat
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        if (document.getElementById('choices-skm')) {
+            var gender = document.getElementById('choices-skm');
+            const example = new Choices(gender, {
+                position: 'bottom',
+                shouldSort: false,
+            });
+        }
+        if (document.getElementById('choices-gred')) {
+            var gender = document.getElementById('choices-gred');
+            const example = new Choices(gender, {
+                position: 'bottom',
+                shouldSort: false,
+            });
+        }
+    </script>
 @endsection

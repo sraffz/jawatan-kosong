@@ -18,8 +18,7 @@
         href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
 
     <!--     Fonts and icons     -->
-    <link rel="stylesheet" type="text/css"
-        href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
+    {{-- <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" /> --}}
 
     <!-- Styles -->
     <!-- Nucleo Icons -->
@@ -44,6 +43,10 @@
 
         .sidenav.show {
         z-index: 100000!important;
+        }
+
+        .datepicker2 {
+        z-index: 100000  !important; /* has to be larger than 1050 */
         }
 
         /* .modal-backdrop.show {
@@ -147,7 +150,7 @@
         <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+        {{-- <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script> --}}
 
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         <script src="{{ asset('datatable/jquery.dataTables.min.js') }}"></script>
@@ -345,9 +348,7 @@
                 $(this).val($(this).val().toUpperCase());
             });
 
-            document.getElementById('get_file').onclick = function() {
-                document.getElementById('avatarFile').click();
-            };
+            
 
             $('#avatarFile').ijaboCropTool({
                 preview: '.image-previewer',

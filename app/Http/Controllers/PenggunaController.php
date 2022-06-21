@@ -24,6 +24,8 @@ use App\JK_SPM;
 use App\JK_SPMU;
 use App\JK_STAM;
 use App\JK_STPA;
+use App\JK_SVM;
+use App\JK_SKM;
 
 use App\User;
 use Auth;
@@ -115,13 +117,29 @@ class PenggunaController extends Controller
         $listSijil = $this->sijilSvm();
         $gredbm = $this->gredSpm();
 
-        return view('pengguna.akademik.svm', compact('listSijil', 'gredbm'));
+        $bil = JK_SVM::where('user_id', Auth::user()->id)->count();
+
+        $svm = JK_SVM::where('user_id', Auth::user()->id)->first();
+
+        if ($bil > 0) {
+            return view('pengguna.akademik.svm-kemaskini', compact('svm', 'listSijil', 'gredbm'));
+        } else {
+            return view('pengguna.akademik.svm', compact('listSijil', 'gredbm'));
+        }
+
+        // return view('pengguna.akademik.svm', compact('listSijil', 'gredbm'));
     }
     public function skm()
     {
         $listSijil = $this->sijilSkm();
+
+        $skm = JK_SKM::select('jk_skm.*', 'jk_kelulusan.diskripsi')
+        ->join('jk_kelulusan', 'jk_kelulusan.id_kelulusan', '=', 'jk_skm.namaSijil')
+        ->where('user_id', Auth::user()->id)
+        ->orderBy('tahunSijil', 'desc')
+        ->get();
         
-        return view('pengguna.akademik.skm', compact('listSijil'));
+        return view('pengguna.akademik.skm', compact('listSijil', 'skm'));
     }
     public function stpm()
     {
@@ -151,7 +169,11 @@ class PenggunaController extends Controller
     }
     public function ipt()
     {
-        return view('pengguna.akademik.pengajian-tinggi');
+        $peringkatIpt = $this->peringkatIpt();
+        $pengkhususan = $this->pengkhususan();
+        $institusi = $this->institusi();
+
+        return view('pengguna.akademik.pengajian-tinggi', compact('peringkatIpt', 'pengkhususan', 'institusi'));
     }
 
     public function crop(Request $req)
@@ -364,6 +386,74 @@ class PenggunaController extends Controller
         return back();
     }
 
+    public function simpansvm(Request $req)
+    {
+        $data = new JK_SVM();
+        $data->user_id = Auth::user()->id;
+        $data->namaSijil = $req->namaSijil;
+        $data->tahunSijil = $req->tahunSijil;
+        $data->bm_svm = $req->bm_svm;
+        $data->pngka = $req->pngka;
+        $data->pngkv = $req->pngkv;
+        $data->save();
+
+        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        return back();
+    }
+
+    public function kemaskinisvm(Request $req)
+    {
+        $id = $req->id;
+
+        JK_SVM::where('id', $id)->update([
+            'namaSijil' => $req->namaSijil,
+            'tahunSijil' => $req->tahunSijil,
+            'bm_svm' => $req->bm_svm,
+            'pngka' => $req->pngka,
+            'pngkv' => $req->pngkv,
+        ]);
+
+        Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        return back();
+    }
+
+    public function simpanskm(Request $req)
+    {
+        $data = new JK_SKM();
+        $data->user_id = Auth::user()->id;
+        $data->namaSijil = $req->namaSijil;
+        $data->tahunSijil = $req->tahunSijil;
+        $data->save();
+
+        Toast('Maklumat ditambah', 'success')->position('top-end');
+        return back();
+    }
+
+    public function padamskm(Request $req)
+    {
+        JK_SKM::where('id', $req->id)->delete();
+
+        Toast('Maklumat Dipadam', 'success')->position('top-end');
+        return back();
+    }
+
+    public function simpanipt(Request $req)
+    {
+        JK_Pengajian_Tinggi::insert([
+            'user_id' => Auth::user()->id,
+            'kelulusan' => $req->peringkat,
+            'institusi' => $req->institusi,
+            'cgpa' => $req->cgpa,
+            'tahun_graduasi' => $req->tahunGrad,
+            'nama_skrol' => $req->namaSijil,
+            'bidang_pengkhususan' => $req->pengkhususan,
+            'tarikh_senat' => $req->tarikhSenat,
+        ]);
+
+        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        return back();
+    }
+
     public function subjekPt3()
     {
         $subjPt3 = DB::table('jk_senarai_matapelajaran_pt3')->get();
@@ -376,6 +466,13 @@ class PenggunaController extends Controller
         $subjSpm = DB::table('jk_senarai_matapelajaran_spm')->get();
 
         return $subjSpm;
+    }
+
+    public function peringkatIpt()
+    {
+        $peringkatIpt = DB::table('jk_peringkat_ipt')->get();
+
+        return $peringkatIpt;
     }
 
     public function subjekstam()
@@ -391,22 +488,23 @@ class PenggunaController extends Controller
 
         return $subjStpm;
     }
-
-    public function sijilSkm()
-    {
-        $skm = DB::table('jk_senarai_sijil_skm')->get();
-
-        return $skm;
-    }
     
     public function sijilSvm()
     {
         $svm = DB::table('jk_kelulusan')
         ->where('diskripsi', 'LIKE', '%SIJ VOKASIONAL MSIA%')
         ->get();
-        // $svm = DB::table('jk_senarai_sijil_svm')->get();
-
+ 
         return $svm;
+    }
+
+    public function sijilSkm()
+    {
+        $skm = DB::table('jk_kelulusan')
+        ->where('diskripsi', 'LIKE', '%SIJ SKM%')
+        ->get();
+ 
+        return $skm;
     }
 
     public function gredPt3()
@@ -435,5 +533,20 @@ class PenggunaController extends Controller
         $gredstpm = DB::table('jk_senarai_gred_stpm')->get();
 
         return $gredstpm;
+    }
+
+    public function pengkhususan()
+    {
+        $pengkhususan = DB::table('jk_pengkhususan')->get();
+
+        return $pengkhususan;
+    
+    }
+
+    public function institusi()
+    {
+        $institusi = DB::table('jk_institusi')->orderBy('kod', 'asc')->get();
+
+        return $institusi;
     }
 }

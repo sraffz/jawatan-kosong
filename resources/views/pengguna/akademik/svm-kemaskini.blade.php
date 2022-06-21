@@ -1,8 +1,9 @@
 @extends('layouts.app', ['page' => 'SVM', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-<form action="{{ url('simpan-svm') }}" method="post">
+<form action="{{ url('kemaskini-svm') }}" method="post">
     {{ csrf_field() }}
+    <input type="hidden" name="id" value="{{ $svm->id }}">
     <div class="row mb-2">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
@@ -14,7 +15,7 @@
                         <div class="col-6">
                             <div class="input-group input-group-static">
                                 <label>Tahun <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" name="tahunSijil" placeholder="2008">
+                                <input type="number" class="form-control" name="tahunSijil" placeholder="2008" value="{{ $svm->tahunSijil }}">
                             </div>
                         </div>
                         <div class="col-6">
@@ -27,10 +28,10 @@
                     <div class="row">
                         <div class="col-12">
                             <label class="form-label mt-4 ms-0">Nama Sijil <span class="text-danger">*</span></label>
-                            <select class="form-control" name="namaSijil" id="choices-svm" required>
+                            <select class="form-control" name="namaSijil" id="choices-svm" required value="{{ $svm->namaSijil }}">
                                 <option value="">Sila Pilih</option>
                                 @foreach ($listSijil as $list)
-                                    <option value="{{ $list->id_kelulusan }}">{{ $list->diskripsi }}</option>
+                                    <option value="{{ $list->id_kelulusan }}" {{ $list->id_kelulusan == $svm->namaSijil ? 'selected' : ''}}>{{ $list->diskripsi }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -66,7 +67,7 @@
                                                      <select class="form-control" name="bm_svm" id="choices-gred" required>
                                                         <option value="">Sila Pilih</option>
                                                         @foreach ($gredbm as $gbm)
-                                                          <option value="{{ $gbm->gred }}">{{ $gbm->gred }}</option>
+                                                          <option value="{{ $gbm->gred }}" {{ $gbm->gred == $svm->bm_svm ? 'selected' : ''}}>{{ $gbm->gred }}</option>
                                                       @endforeach
                                                     </select>
                                                   </div>
@@ -76,11 +77,11 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="table-responsive">
+                        <div class="row mt-4">
+                            <div class="table-responsive ">
                                 <table class="table table-bordered text-dark">
                                     <thead class="text-center">
-                                        <tr>
+                                        <tr style="vertical-align: middle">
                                             <th colspan="2" style="width: 80%">Kompeten Semua Modul</th>
                                             <th>Gred</th>
                                         </tr>
@@ -92,17 +93,17 @@
                                             <td>
                                                 <div class="input-group input-group-outline">
                                                     <label class="form-label"></label>
-                                                    <input type="text" name="pngka" class="form-control" value="{{ old('pngka') }}" required>
+                                                    <input type="text" name="pngka" class="form-control" value="{{ $svm->pngka }}" required>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <tr style="vertical-align: middle">
+                                        <tr>
                                             <td scope="row" colspan="2">PURATA NILAI GRED KUMULATIF VOKASIONAL (PNGKV)
                                             </td>
                                             <td>
                                                 <div class="input-group input-group-outline">
                                                     <label class="form-label"></label>
-                                                    <input type="text" name="pngkv" class="form-control" value="{{ old('pngkv') }}" required>
+                                                    <input type="text" name="pngkv" class="form-control" value="{{ $svm->pngkv }}" required>
                                                 </div>
                                             </td>
                                         </tr>
@@ -123,7 +124,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </form>
 @endsection

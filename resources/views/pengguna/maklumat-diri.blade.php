@@ -248,6 +248,10 @@ Kelantan',
 
 @section('script')
     <script>
+        document.getElementById('get_file').onclick = function() {
+                document.getElementById('avatarFile').click();
+            };
+            
         if (document.getElementById('choices-year-md')) {
 
 

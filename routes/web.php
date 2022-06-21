@@ -130,7 +130,12 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('padam-pengalaman/{id}', 'PenggunaController@padamPengalaman')->name('padam-pengalaman');
     
     // Akademik
+    Route::post('simpan-svm', 'PenggunaController@simpansvm')->name('simpan-svm');
+    Route::post('kemaskini-svm', 'PenggunaController@kemaskinisvm')->name('kemaskini-svm');
+    Route::post('simpan-skm', 'PenggunaController@simpanskm')->name('simpan-skm');
+    Route::get('padam-skm', 'PenggunaController@padamskm')->name('padam-skm');
     Route::post('simpan-pmr', 'PenggunaController@simpanpmr')->name('simpan-pmr');
+    Route::post('simpan-ipt', 'PenggunaController@simpanipt')->name('simpan-ipt');
     Route::post('simpan-matrikulasi', 'PenggunaController@simpanmatrikulasi')->name('simpan-matrikulasi');
     Route::post('kemaskini-matrikulasi', 'PenggunaController@kemaskinimatrikulasi')->name('kemaskini-matrikulasi');
 });

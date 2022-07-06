@@ -1,5 +1,8 @@
-@extends('layouts.app', ['page' => 'PT3 /PMR / SRP', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
-Kelantan'])
+@extends('layouts.app', [
+    'page' => 'PT3 /PMR / SRP',
+    'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
+Kelantan',
+])
 
 @section('content')
     <div class="row mb-4">
@@ -15,13 +18,13 @@ Kelantan'])
                             <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span style="color: red">*</span></label>
-                                    <input type="number" name="tahun" class="form-control" placeholder="Alec" required>
+                                    <select name="tahun" id="tahun-pilih" required></select>
                                 </div>
                             </div>
                             <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Peperiksaan <span style="color: red">*</span></label>
-                                    <select class="form-control" id="" name="jenis" required>
+                                    <select class="form-control" id="jenis" name="jenis" required>
                                         <option value="">Sila Pilih</option>
                                         <option value="PT3">PT3</option>
                                         <option value="PMR">PMR</option>
@@ -34,25 +37,25 @@ Kelantan'])
                             <div class="col-xl-8">
                                 <div class="input-group input-group-static">
                                     <label>Mata Pelajaran <span style="color: red">*</span></label>
-                                          <select class="form-control" id="choices-year-md" name="matapelajaran" required>
-                                            <option>Sila Pilih</option>
-                                            @foreach ($mtpt3 as $pt3)
+                                    <select class="form-control" id="matapelajaran" name="matapelajaran" required>
+                                        <option value="">Sila Pilih</option>
+                                        @foreach ($mtpt3 as $pt3)
                                             <option value="{{ $pt3->subjek }}">{{ $pt3->subjek }}</option>
-                                            @endforeach
-                                        </select>
-                                 </div>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-xl-4">
                                 <div class="input-group input-group-static">
                                     <div class="input-group input-group-static">
                                         <label>Gred <span style="color: red">*</span></label>
-                                              <select class="form-control" id="gred" name="gred" required>
-                                                <option value="">Sila Pilih</option>
-                                                @foreach ($gredpt3 as $gred)
+                                        <select class="form-control" id="gred" name="gred" required>
+                                            <option value="">Sila Pilih</option>
+                                            @foreach ($gredpt3 as $gred)
                                                 <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
-                                                @endforeach
-                                            </select>
-                                     </div>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -118,21 +121,24 @@ Kelantan'])
 
 @section('script')
     <script>
-        if (document.getElementById('choices-year-md')) {
+        if (document.getElementById('tahun-pilih')) {
 
-            var tahun = now()->year;
-            
-            var year = document.getElementById('choices-year-md');
+            const currentYear = new Date().getFullYear();
+            console.log(currentYear);
+
+            var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
-                const example = new Choices(year);
+                const example = new Choices(year,{
+                    shouldSort: true
+                });
             }, 1);
 
-            for (y = 1900; y <= 2020; y++) {
+            for (y = 1950; y <= currentYear; y++) {
                 var optn = document.createElement("OPTION");
                 optn.text = y;
                 optn.value = y;
 
-                if (y == tahun) {
+                if (y == currentYear) {
                     optn.selected = true;
                 }
 
@@ -140,9 +146,23 @@ Kelantan'])
             }
         }
 
+        if (document.getElementById('matapelajaran')) {
+            var mp = document.getElementById('matapelajaran');
+            const example = new Choices(mp, {
+                shouldSort: false
+            });
+        }
+
+        if (document.getElementById('jenis')) {
+            var jenis = document.getElementById('jenis');
+            const example = new Choices(jenis, {
+                shouldSort: false
+            });
+        }
+
         if (document.getElementById('gred')) {
-            var negeri = document.getElementById('gred');
-            const example = new Choices(negeri, {
+            var gred = document.getElementById('gred');
+            const example = new Choices(gred, {
                 shouldSort: false
             });
         }

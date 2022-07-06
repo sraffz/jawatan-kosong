@@ -21,6 +21,7 @@ Route::get('/', function () {
     $bil = Iklan::where('tarikh_mula','<=',$tarikh_kini)
     ->where('tarikh_tamat', '>=', $tarikh_kini)
     ->where('jenis', "TERBUKA")
+    ->where('publish', 1)
     ->count();
 
     // dd($bil);
@@ -41,6 +42,7 @@ Route::get('/suk{url}', function ($url) {
     ->where('tarikh_tamat', '>=', $tarikh_kini)
     ->where('url', $url)
     ->where('jenis', "TERTUTUP")
+    ->where('publish', 1)
     ->count();
 
     // dd($bil);

@@ -113,6 +113,13 @@ Negeri Kelantan'])
                                             minimum.</label>
                                     </div>
                                 </div>
+                                <div class="input-group input-group-static">
+                                    <div class="form-check form-switch d-flex align-items-center mb-3">
+                                        <input class="form-check-input" type="checkbox" id="publish" value="1"
+                                            name="publish" {{ old('publish') || $iklan->publish ? 'checked' : '' }}>
+                                        <label class="form-check-label mb-0 ms-3 mt-1" for="publish">Terbit (Publish)</label>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

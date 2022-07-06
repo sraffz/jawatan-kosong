@@ -456,12 +456,24 @@ Negeri Kelantan Perubatan'])
                                 </div>
                             </div>
                             <div class="row mt-4">
-                                     <div class="input-group input-group-static">
-                                        <div class="form-check form-switch d-flex align-items-center mb-3">
-                                            <input class="form-check-input" type="checkbox" id="gajiMin" value="1" name="gaji_min" {{ old('gaji_min') ? 'checked' : '' }}>
-                                            <label class="form-check-label mb-0 ms-3 mt-1" for="gajiMin">Papar gaji minimum.</label>
-                                        </div>
-                                    </div>
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
+                                       <div class="form-check form-switch d-flex align-items-center mb-3">
+                                           <input class="form-check-input" type="checkbox" id="gajiMin" value="1" name="gaji_min" {{ old('gaji_min') ? 'checked' : '' }}>
+                                           <label class="form-check-label mb-0 ms-3 mt-1" for="gajiMin">Papar gaji minimum.</label>
+                                       </div>
+                                   </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="input-group input-group-static">
+                                       <div class="form-check form-switch d-flex align-items-center mb-3">
+                                           <input class="form-check-input" type="checkbox" id="publish" value="1" name="publish" {{ old('publish') ? 'checked' : '' }}>
+                                           <label class="form-check-label mb-0 ms-3 mt-1" for="publish">Terbit (Publish)</label>
+                                       </div>
+                                   </div>
+                                </div>
+                             </div>
+                            <div class="row mt-4">
                              </div>
                         </div>
                     </div>

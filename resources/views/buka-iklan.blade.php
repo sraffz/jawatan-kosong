@@ -38,7 +38,7 @@
             <div class="content">
                 <!-- Default Table Style -->
                 <!-- Table -->
-                @include('sub.button-login-register')
+                {{-- @include('sub.button-login-register') --}}
 
                 @foreach ($iklan as $ikln)
                 @php

@@ -13,7 +13,8 @@
     <!-- Icons -->
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
     <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
     <link rel="apple-touch-icon" sizes="180x180"
         href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
 
@@ -32,21 +33,26 @@
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('jquery-ui-1.13.1/jquery-ui.css') }}" rel="stylesheet" />
     <link id="stylesheet" href="{{ asset('ijaboCropTool/ijaboCropTool.min.css') }}" rel="stylesheet" />
-
+    <!-- select2 -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css'/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    
+    <!-- datatable -->
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
     @yield('link')
     <style>
         .modal.show {
-        z-index: 100000!important;
+            z-index: 100000 !important;
         }
 
         .sidenav.show {
-        z-index: 100000!important;
+            z-index: 100000 !important;
         }
 
         .datepicker2 {
-        z-index: 100000  !important; /* has to be larger than 1050 */
+            z-index: 100000 !important;
+            /* has to be larger than 1050 */
         }
 
         /* .modal-backdrop.show {
@@ -158,6 +164,25 @@
         <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
         <script src="{{ asset('jquery-ui-1.13.1/jquery-ui.js') }}"></script>
         <script src="{{ asset('ijaboCropTool/ijaboCropTool.min.js') }}"></script>
+
+        <!-- select2 -->
+        {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js'></script> --}}
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js'></script>
+        
+        <script>
+            $(document).ready(function domReady() {
+                $(".js-select2").select2({
+                    placeholder: "Pick states",
+                    theme: "boostrapBs4"
+                });
+
+
+                $(".select2-selection__arrow").
+                addClass("material-icons").
+                html("arrow_drop_down");
+            });
+         </script>
+
 
 
         @include('sweetalert::alert')
@@ -348,12 +373,12 @@
                 $(this).val($(this).val().toUpperCase());
             });
 
-            
+
 
             $('#avatarFile').ijaboCropTool({
                 preview: '.image-previewer',
                 setRatio: 4 / 5,
-                allowedExtensions: ['jpg', 'jpeg','png'],
+                allowedExtensions: ['jpg', 'jpeg', 'png'],
                 buttonsText: ['Simpan', 'Batal'],
                 buttonsColor: ['#30bf7d', '#ee5155', -15],
                 processUrl: '{{ route('cropGambar') }}',

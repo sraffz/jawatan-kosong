@@ -404,9 +404,12 @@ Negeri Kelantan'])
             const example = new Choices(kump);
         }
 
-        $(':input').keyup(function() {
+        $('.input-uc').keyup(function() {
             $(this).val($(this).val().toUpperCase());
         });
+        // $(':input').keyup(function() {
+        //     $(this).val($(this).val().toUpperCase());
+        // });
 
         const monthNames = ["Januari", "Februari", "Mac", "April", "Mei", "Jun",
             "Julai", "Ogos", "September", "October", "November", "Disember"

@@ -42,6 +42,7 @@ class AdminController extends Controller
         
         $bil_iklan = Iklan::where('tarikh_mula','<=',$tarikh_kini)
         ->where('tarikh_tamat', '>=', $tarikh_kini)
+        ->where('publish', 1)
         ->count();
 
         return view('admin', compact('bil_iklan'));
@@ -65,11 +66,13 @@ class AdminController extends Controller
         $bil_terbuka = Iklan::where('tarikh_mula','<=',$tarikh_kini)
         ->where('tarikh_tamat', '>=', $tarikh_kini)
         ->where('jenis', "TERBUKA")
+        ->where('publish', 1)
         ->count();
 
         $bil_tutup = Iklan::where('tarikh_mula','<=',$tarikh_kini)
         ->where('tarikh_tamat', '>=', $tarikh_kini)
         ->where('jenis', "TERTUTUP")
+        ->where('publish', 1)
         ->count();
 
         // dd($bil_terbuka, $bil_tutup);

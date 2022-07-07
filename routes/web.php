@@ -14,6 +14,7 @@ use App\Iklan;
 
 Route::get('/', function () {
 
+    $iklan2 = Iklan::where('jenis', "TERBUKA")->first();
     $iklan = Iklan::where('jenis', "TERBUKA")->get();
 
     $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
@@ -27,6 +28,7 @@ Route::get('/', function () {
     // dd($bil);
     $syarat = DB::table('senarai-syarat-jawatan')->get();
     
+    // dd($tarikh_kini, \Carbon\Carbon::parse($iklan->tarikh_mula)->format('Y-m-d'));
     return view('welcome', compact('iklan', 'syarat', 'bil'));
 });
 

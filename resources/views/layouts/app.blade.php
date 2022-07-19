@@ -33,10 +33,12 @@
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('jquery-ui-1.13.1/jquery-ui.css') }}" rel="stylesheet" />
     <link id="stylesheet" href="{{ asset('ijaboCropTool/ijaboCropTool.min.css') }}" rel="stylesheet" />
+
+    <link id="stylesheet" href="{{ asset('plugin/notyf/notyf.min.css') }}" rel="stylesheet" />
     <!-- select2 -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css'/>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    
+
     <!-- datatable -->
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
@@ -138,6 +140,20 @@
             <!-- Navbar -->
             @auth
                 @include('layouts.navbar')
+                @if (Session::has('message'))
+                    @php
+                        $n = 1;
+                    @endphp
+                    {{-- <div class="alert {{ Session::get('alert-class') }} alert-dismissible fade show" role="alert">
+                        <span class="fas fa-bullhorn me-1"></span>
+                        {{ Session::get('message') }}
+                        <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div> --}}
+                @else
+                    @php
+                        $n = 0;
+                    @endphp
+                @endif
             @endauth
             <!-- End Navbar -->
             <div class="container-fluid py-4">
@@ -164,11 +180,13 @@
         <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
         <script src="{{ asset('jquery-ui-1.13.1/jquery-ui.js') }}"></script>
         <script src="{{ asset('ijaboCropTool/ijaboCropTool.min.js') }}"></script>
+        <!-- Notyf -->
+        <script src="{{ asset('plugin/notyf/notyf.min.js') }}"></script>
 
         <!-- select2 -->
         {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js'></script> --}}
         <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js'></script>
-        
+
         <script>
             $(document).ready(function domReady() {
                 $(".js-select2").select2({
@@ -181,7 +199,7 @@
                 addClass("material-icons").
                 html("arrow_drop_down");
             });
-         </script>
+        </script>
 
 
 
@@ -373,8 +391,6 @@
                 $(this).val($(this).val().toUpperCase());
             });
 
-
-
             $('#avatarFile').ijaboCropTool({
                 preview: '.image-previewer',
                 setRatio: 4 / 5,
@@ -384,12 +400,79 @@
                 processUrl: '{{ route('cropGambar') }}',
                 withCSRF: ['_token', '{{ csrf_token() }}'],
                 onSuccess: function(message, element, status) {
-                    alert(message);
+                    // alert(message);
+                    const notyf = new Notyf({
+                        position: {
+                            x: 'right',
+                            y: 'top',
+                        },
+                        types: [{
+                            type: 'primary',
+                            background: 'green',
+                            icon: {
+                                className: 'fas fa-comment-dots',
+                                tagName: 'span',
+                                color: '#fff'
+                            },
+                            dismissible: false
+                        }]
+                    });
+                    notyf.open({
+                        type: 'success',
+                        message: 'Gambar Berjaya Ditukar'
+                    });
                 },
                 onError: function(message, element, status) {
-                    alert(message);
+                    // alert(message);
+                    const notyf = new Notyf({
+                        position: {
+                            x: 'right',
+                            y: 'top',
+                        },
+                        types: [{
+                            type: 'primary',
+                            background: 'green',
+                            icon: {
+                                className: 'fas fa-comment-dots',
+                                tagName: 'span',
+                                color: '#fff'
+                            },
+                            dismissible: false
+                        }]
+                    });
+                    notyf.open({
+                        type: 'error',
+                        message: 'Gambar Gagal Dimuatnaik'
+                    });
                 }
             });
+        </script>
+
+        <!---- Notification ----->
+        <script>
+            var num = {{ $n }};
+            if (num == 1) {
+                const notyf = new Notyf({
+                    position: {
+                        x: 'right',
+                        y: 'top',
+                    },
+                    types: [{
+                        type: 'primary',
+                        background: 'green',
+                        icon: {
+                            className: 'fas fa-comment-dots',
+                            tagName: 'span',
+                            color: '#fff'
+                        },
+                        dismissible: false
+                    }]
+                });
+                notyf.open({
+                    type: '{{ Session::get('alert-class') }}',
+                    message: '{{ Session::get('message') }}'
+                });
+            }
         </script>
     </body>
 

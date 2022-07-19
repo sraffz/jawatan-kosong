@@ -29,6 +29,7 @@ use App\JK_SKM;
 
 use App\User;
 use Auth;
+use Session;
 use Alert;
 use DB;
 
@@ -256,7 +257,9 @@ class PenggunaController extends Controller
         $data->save();
 
         // Alert::success('Berjaya', 'Maklumat disimpan');
-        Toast('Maklumat disimpan', 'success')->position('top-end');
+        // Toast('Maklumat disimpan', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -291,7 +294,9 @@ class PenggunaController extends Controller
         ]);
 
         // Alert::success('Berjaya', 'Maklumat disimpan');
-        Toast('Maklumat disimpan', 'success')->position('top-end');
+        // Toast('Maklumat disimpan', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -309,7 +314,9 @@ class PenggunaController extends Controller
         $data->save();
 
         // Alert::success('Berjaya', 'Maklumat dikemaskini');
-        Toast('Maklumat Ditambah', 'success')->position('top-end');
+        // Toast('Maklumat Ditambah', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Ditambah'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -325,8 +332,9 @@ class PenggunaController extends Controller
             'tugas' => $req->tugas,
         ]);
 
-        // Alert::success('Berjaya', 'Maklumat dikemaskini');
-        Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        //  Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -334,7 +342,9 @@ class PenggunaController extends Controller
     {
         JK_Pengalaman::where('id', $id)->delete();
 
-        Toast('Maklumat Dipadam', 'success')->position('top-end');
+        // Toast('Maklumat Dipadam', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
         return back();
     }
 
@@ -353,7 +363,9 @@ class PenggunaController extends Controller
         $data->tahun = $req->tahun;
         $data->save();
 
-        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        // Toast('Maklumat Disimpan', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -369,7 +381,10 @@ class PenggunaController extends Controller
         $data->tahun = $req->tahun;
         $data->save();
 
-        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        // Toast('Maklumat Disimpan', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+
         return back();
     }
 
@@ -382,7 +397,10 @@ class PenggunaController extends Controller
             'tahun' => $req->tahun,
         ]);
 
-        Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        // Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
+
         return back();
     }
 
@@ -397,7 +415,9 @@ class PenggunaController extends Controller
         $data->pngkv = $req->pngkv;
         $data->save();
 
-        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        // Toast('Maklumat Disimpan', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -413,7 +433,9 @@ class PenggunaController extends Controller
             'pngkv' => $req->pngkv,
         ]);
 
-        Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        // Toast('Maklumat Dikemaskini', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -425,7 +447,9 @@ class PenggunaController extends Controller
         $data->tahunSijil = $req->tahunSijil;
         $data->save();
 
-        Toast('Maklumat ditambah', 'success')->position('top-end');
+        // Toast('Maklumat ditambah', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat ditambah'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 
@@ -433,7 +457,9 @@ class PenggunaController extends Controller
     {
         JK_SKM::where('id', $req->id)->delete();
 
-        Toast('Maklumat Dipadam', 'success')->position('top-end');
+        // Toast('Maklumat Dipadam', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
         return back();
     }
 
@@ -450,7 +476,9 @@ class PenggunaController extends Controller
             'tarikh_senat' => $req->tarikhSenat,
         ]);
 
-        Toast('Maklumat Disimpan', 'success')->position('top-end');
+        // Toast('Maklumat Disimpan', 'success')->position('top-end');
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 

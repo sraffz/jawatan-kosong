@@ -78,7 +78,7 @@ Negeri Kelantan Perubatan'])
                             <div class="col-lg-6 col-7">
                                 {{-- <iframe src="https://cdn.vuukle.com/widgets/sharebar.html?version=2.15.10" frameborder="0"></iframe> --}}
                                 <h6>Senarai Iklan Jawatan Kosong</h6>
-                               {!! $shareComponent !!}
+                               {{-- {!! $shareComponent !!} --}}
                                 {{-- {{ Share::currentPage()->facebook(); }} --}}
                                 {{-- <p class="text-sm mb-0">
                                         <i class="fa fa-check text-info" aria-hidden="true"></i>
@@ -130,7 +130,7 @@ Negeri Kelantan Perubatan'])
                                         $i = 1;
                                     @endphp
                                     @foreach ($iklan as $ikl)
-                                        <tr>
+                                        <tr class="align-middel">
                                             <td class="text-center text-uppercase">
                                                 <span class="font-weight-bold">
                                                     {{ $i++ }}
@@ -180,7 +180,7 @@ Negeri Kelantan Perubatan'])
                                                             </span>
                                                         </a>
                                                     @endif
-
+                                                    {!! $shareComponent !!}
                                                 </span>
                                             </td>
                                             <td class="text-center">

@@ -49,7 +49,15 @@
                     @if ($tarikh_mula <= $tarikh_kini && $tarikh_tamat >= $tarikh_kini)
                         <div class="block">
                             <div class="block-content">
-                                <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3> {!! $shareComponent !!} {{ $shareComponent }}
+                                <div class="col-xl-12">
+                                    <div class="float-left">
+                                        <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3>  
+                                    </div>
+                                    <div class="float-right">
+                                     <h4>{!! $shareComponent !!}</h4>
+                                    </div>
+                                </div>
+                                <br>
                                 <hr>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-vcenter">

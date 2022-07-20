@@ -27,6 +27,8 @@ use App\JK_STPA;
 use App\JK_SVM;
 use App\JK_SKM;
 
+use App\KeputusanPMR;
+
 use App\User;
 use Auth;
 use Session;
@@ -94,10 +96,23 @@ class PenggunaController extends Controller
 
     public function pt3()
     {
+        $bil = JK_PMR::where('user_id', Auth::user()->id)->count();
+
+        $pmr = JK_PMR::where('user_id', Auth::user()->id)->first();
+
+        $k_pmr = KeputusanPMR::where('id_pmr', $pmr->id)->get();
+
+        // dd($k_pmr);
+
         $mtpt3 = $this->subjekPt3();
         $gredpt3 = $this->gredPt3();
 
-        return view('pengguna.akademik.srp-pmr-pt3', compact('mtpt3','gredpt3'));
+        if ($bil > 0) {
+             return view('pengguna.akademik.kemaskini.srp-pmr-pt3', compact('mtpt3','gredpt3','pmr', 'k_pmr'));
+        } else {
+             return view('pengguna.akademik.srp-pmr-pt3', compact('mtpt3','gredpt3'));
+        }
+        
     }
     public function spm()
     {
@@ -356,15 +371,62 @@ class PenggunaController extends Controller
     }
 
     public function simpanpmr(Request $req)
-    {
-        $data = new JK_PMR();
-        $data->user_id = Auth::user()->id;
-        $data->jenis = $req->jenis;
-        $data->tahun = $req->tahun;
-        $data->save();
+    { 
+        // dd($req->all());
 
-        // Toast('Maklumat Disimpan', 'success')->position('top-end');
+        $id_exam = JK_PMR::insertGetId([
+            'user_id' => Auth::user()->id,
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+            'created_at' => \Carbon\carbon::now(),
+        ]);
+         
+       
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            $data = new KeputusanPMR();
+            $data->id_pmr = $id_exam;
+            $data->matapelajaran = $req->input('addMoreInputFields.' . $i . '.matapelajaran');
+            $data->gred = $req->input('addMoreInputFields.' . $i . '.gred');
+            $data->save();
+        }
+
         Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+
+        return back();
+    }
+
+    public function kemaskinipmr(Request $req)
+    {
+        $id = Auth::user()->id;
+        
+        $id_pmr = JK_PMR::where('id', $id)->first();
+
+        JK_PMR::where('user_id', $id)->update([
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+        ]);
+
+        for ($i = 0; $i < count($req->row); $i++) {
+
+            $id_keputusan = $req->input('row.' . $i . '.id_keputusan');
+
+            if (empty($id_keputusan)) {
+                $data = new KeputusanPMR();
+                $data->id_pmr = $id;
+                $data->matapelajaran = $req->input('row.' . $i . '.matapelajaran');
+                $data->gred = $req->input('row.' . $i . '.gred');
+                $data->save();
+            } else {
+                KeputusanPMR::where('id', $id_keputusan)->update([
+                    'matapelajaran' => $req->input('row.' . $i . '.matapelajaran'),
+                    'gred' => $req->input('row.' . $i . '.gred'),
+                ]);
+            }
+        }
+
+        Session::flash('message', 'Maklumat Dikemaskini'); 
         Session::flash('alert-class', 'success'); 
         return back();
     }

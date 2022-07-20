@@ -5,17 +5,19 @@ Kelantan',
 ])
 
 @section('content')
-<form action="{{ url('simpan-pmr') }}" method="post" class="form-control">
+<form action="{{ url('kemaskini-pmr') }}" method="post" class="form-control">
     {{ csrf_field() }}
     <div class="row mb-4">
-            <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
-                <div class="card mt-4" id="basic-info">
-                    <div class="card-header">
-                        <h5>KEPUTUSAN PEPERIKSAAN TINGKATAN 3</h5>
-                    </div>
+        <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
+            <div class="card mt-4" id="basic-info">
+                <div class="card-header">
+                    <h5>KEPUTUSAN PEPERIKSAAN TINGKATAN 3</h5>
+                </div>
+              
                     <div class="card-body pt-0">
                         <div class="row col-lg-12">
                             <div class="col-xl-5 mb-4">
+
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span style="color: red">*</span></label>
                                     <select name="tahun" id="tahun-pilih" required></select>
@@ -26,9 +28,9 @@ Kelantan',
                                     <label>Peperiksaan <span style="color: red">*</span></label>
                                     <select class="form-control" id="jenis" name="jenis" required>
                                         <option value="">Sila Pilih</option>
-                                        <option value="PT3">PT3</option>
-                                        <option value="PMR">PMR</option>
-                                        <option value="SRP">SRP</option>
+                                        <option value="PT3" {{ 'PT3' == $pmr->jenis ? 'selected' : '' }}>PT3</option>
+                                        <option value="PMR" {{ 'PMR' == $pmr->jenis ? 'selected' : '' }}>PMR</option>
+                                        <option value="SRP" {{ 'SRP' == $pmr->jenis ? 'selected' : '' }}>SRP</option>
                                     </select>
                                 </div>
                             </div>
@@ -41,10 +43,11 @@ Kelantan',
                             </div>
                         </div>
                     </div>
-                </div>
+                
             </div>
+        </div>
     </div>
-    <div class="row">
+    <div class="row ">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
                 <div class="card-header">
@@ -72,51 +75,57 @@ Kelantan',
                         </thead>
                         <tbody>
                             @php
-                                $i = 1;
+                                $i = 0;
                             @endphp
+                            @foreach ($k_pmr as $kmr)
                             <tr class="align-middle">
                                 {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                 <td>
-                                    <select class="form-control" id="matapelajaran" name="addMoreInputFields[0][matapelajaran]" 
-                                        required>
-                                        {{-- <option value="">Sila Pilih</option> --}}
-                                        {{-- @foreach ($mtpt3 as $pt3) --}}
-                                            <option value="1">BAHASA MELAYU</option>
-                                        {{-- @endforeach --}}
+                                    <input type="hidden" name="row[0][id_keputusan]" value="{{ $kmr->id }}">
+                                    <select class="form-control" id="matapelajaran" name="row[{{ $i }}][matapelajaran]" required>
+                                        <option value="">Sila Pilih</option>
+                                        @foreach ($mtpt3 as $pt3)
+                                            <option value="{{ $pt3->id }}" {{ $pt3->id == $kmr->matapelajaran? 'selected' : '' }}>{{ $pt3->subjek }}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <select class="form-control" id="gred" name="addMoreInputFields[0][gred]" required>
+                                    <select class="form-control" id="gred" name="row[{{ $i }}][gred]" required>
                                         <option value="">Sila Pilih</option>
                                         @foreach ($gredpt3 as $gred)
-                                            <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
+                                            <option value="{{ $gred->gred }}" {{  $gred->gred == $kmr->gred? 'selected' : '' }}>{{ $gred->gred }}</option>
                                         @endforeach
                                     </select>
                                 </td>
                                 <td class="text-center ">
-                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
-                                            class="material-icons text-sm">add</i></button>
+                                    @if ($i == 0)
+                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
+                                    @elseif ($i > 0)
+                                        <button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button>
+                                    @endif
                                 </td>
                             </tr>
+                            @php
+                                $i++;
+                            @endphp
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-dark">
-            <i class="material-icons text-sm">save</i>&nbsp;Simpan
-        </button>
     </div>
 </form>
 @endsection
 
 @section('script')
     <script>
-        var i = 0;
+        var i = {{ $i }};
         $("#tambahrow").click(function() {
             ++i;
+            k = i+1;
 
-            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="addMoreInputFields['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtpt3 as $pt3)<option value="{{ $pt3->id }}">{{ $pt3->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="addMoreInputFields['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredpt3 as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
+            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="row['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtpt3 as $pt3)<option value="{{ $pt3->id }}">{{ $pt3->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="row['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredpt3 as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
             
             if (document.getElementById('matapelajaran_'+i)) {
                 var mp = document.getElementById('matapelajaran_'+i);
@@ -134,12 +143,15 @@ Kelantan',
 
         $(document).on('click', '.remove-input-field', function() {
             $(this).parents('tr').remove();
+             i-1;
         });
 
         if (document.getElementById('tahun-pilih')) {
 
             const currentYear = new Date().getFullYear();
             console.log(currentYear);
+
+            var tahun = {{ $pmr->tahun }};
 
             var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
@@ -153,7 +165,7 @@ Kelantan',
                 optn.text = y;
                 optn.value = y;
 
-                if (y == currentYear) {
+                if (y == tahun) {
                     optn.selected = true;
                 }
 

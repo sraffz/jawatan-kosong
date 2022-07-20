@@ -55,6 +55,16 @@ class AdminController extends Controller
 
     public function iklan()
     {
+        
+
+        $shareComponent = \Share::page(
+            'https://jawatankosong.kelantan.gov.my/',
+            'IKLAN JAWATAN KOSONG 
+            1. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
+        )->facebook()
+        ->twitter()
+        ->whatsapp();
+
         $iklan = Iklan::all();
         
         $iklan_last = Iklan::orderBy('created_at', 'desc')->first();
@@ -76,7 +86,7 @@ class AdminController extends Controller
         ->count();
 
         // dd($bil_terbuka, $bil_tutup);
-        return view('admin.iklan', compact('iklan', 'syarat', 'bil_terbuka', 'bil_tutup', 'iklan_last'));
+        return view('admin.iklan', compact('shareComponent','iklan', 'syarat', 'bil_terbuka', 'bil_tutup', 'iklan_last'));
     }
 
     public function tetapan()

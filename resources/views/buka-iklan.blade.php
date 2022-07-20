@@ -49,7 +49,7 @@
                     @if ($tarikh_mula <= $tarikh_kini && $tarikh_tamat >= $tarikh_kini)
                         <div class="block">
                             <div class="block-content">
-                                <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3>
+                                <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3> {!! $shareComponent !!} {{ $shareComponent }}
                                 <hr>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-vcenter">
@@ -166,5 +166,6 @@
         </main>
     </div>
     <script src="{{ asset('assets/js/codebase.core.min.js') }}"></script>
+    <script src="{{ asset('js/share.js') }}"></script>
     <script src="{{ asset('assets/js/codebase.app.min.js') }}"></script>
 </body>

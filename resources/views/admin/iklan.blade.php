@@ -76,7 +76,10 @@ Negeri Kelantan Perubatan'])
                     <div class="card-header pb-0">
                         <div class="row">
                             <div class="col-lg-6 col-7">
+                                {{-- <iframe src="https://cdn.vuukle.com/widgets/sharebar.html?version=2.15.10" frameborder="0"></iframe> --}}
                                 <h6>Senarai Iklan Jawatan Kosong</h6>
+                               {!! $shareComponent !!}
+                                {{-- {{ Share::currentPage()->facebook(); }} --}}
                                 {{-- <p class="text-sm mb-0">
                                         <i class="fa fa-check text-info" aria-hidden="true"></i>
                                         <span class="font-weight-bold ms-1">30 done</span> this month

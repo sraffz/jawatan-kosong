@@ -41,20 +41,34 @@
                 {{-- @include('sub.button-login-register') --}}
 
                 @foreach ($iklan as $ikln)
-                @php
-                    $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
-                    $tarikh_mula =\Carbon\Carbon::parse($ikln->tarikh_mula)->format('Y-m-d');
-                    $tarikh_tamat =\Carbon\Carbon::parse($ikln->tarikh_tamat)->format('Y-m-d');
-                @endphp
+                    @php
+                        $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+                        $tarikh_mula = \Carbon\Carbon::parse($ikln->tarikh_mula)->format('Y-m-d');
+                        $tarikh_tamat = \Carbon\Carbon::parse($ikln->tarikh_tamat)->format('Y-m-d');
+                    @endphp
                     @if ($tarikh_mula <= $tarikh_kini && $tarikh_tamat >= $tarikh_kini)
                         <div class="block">
                             <div class="block-content">
                                 <div class="col-xl-12">
                                     <div class="float-left">
-                                        <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3>  
+                                        <h3 class="block-title">BILANGAN {{ $ikln->bil }}/{{ $ikln->tahun }}</h3>
                                     </div>
                                     <div class="float-right">
-                                     <h4>{!! $shareComponent !!}</h4>
+                                        @php
+                                        $text = 'IKLAN JAWATAN KOSONG';
+                                            // foreach ($syarat as $ss) {
+                                            //     $ss->nama_jawatan.' '.$ss->taraf', '.$ss->gred.'<br>'
+                                            // };
+
+                                            $currentURL = URL::current();
+                                            
+                                            $shareComponent1 = \Share::page(
+                                                $currentURL,
+                                                $text
+                                                // 'IKLAN JAWATAN KOSONG 2. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
+                                            )->facebook()->twitter()->whatsapp();
+                                        @endphp
+                                        <h4>{!! $shareComponent1 !!}</h4>
                                     </div>
                                 </div>
                                 <br>
@@ -66,10 +80,11 @@
                                                 <th class="text-center" style="width: 50px;">Bil</th>
                                                 <th style="width: 20%;">Nama Jawatan</th>
                                                 <th class="text-center">Gred</th>
-                                                <th class="text-center d-none d-sm-table-cell">Kumpulan Perkhidmatan</th>
+                                                <th class="text-center d-none d-sm-table-cell">Kumpulan Perkhidmatan
+                                                </th>
                                                 <th class="text-center">Taraf Jawatan</th>
                                                 @if ($ikln->gaji_min == '1')
-                                                <th class="text-center">Gaji Minimum</th>
+                                                    <th class="text-center">Gaji Minimum</th>
                                                 @endif
                                                 <th class="text-center">Syarat Lantikan</th>
                                             </tr>
@@ -88,7 +103,7 @@
                                                             {{ $ss->kump_perkhidmatan }}</td>
                                                         <td class="text-center"><i>{{ $ss->taraf }}</i></td>
                                                         @if ($ikln->gaji_min == '1')
-                                                        <td class="text-center"><i>RM{{ $ss->gajiMin }}</i></td>
+                                                            <td class="text-center"><i>RM{{ $ss->gajiMin }}</i></td>
                                                         @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
@@ -122,8 +137,8 @@
                                         $bulan = monthNames[Carbon\Carbon::parse($ikln->tarikh_tamat)->month - 1];
                                         $tahun = Carbon\Carbon::parse($ikln->tarikh_tamat)->year;
                                         $hari = Carbon\Carbon::parse($ikln->tarikh_tamat)->day;
-
-                                        $date = $hari.' '.$bulan.' '.$tahun;
+                                        
+                                        $date = $hari . ' ' . $bulan . ' ' . $tahun;
                                     @endphp
                                     <span class="badge badge-danger btn-rounded">{{ $date }}
                                         ({{ $nama_hari }}), jam 11.59 malam</span>

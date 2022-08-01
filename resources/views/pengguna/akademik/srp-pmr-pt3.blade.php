@@ -77,7 +77,7 @@ Kelantan',
                             <tr class="align-middle">
                                 {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                 <td>
-                                    <select class="form-control" id="matapelajaran" name="addMoreInputFields[0][matapelajaran]" 
+                                    <select class="form-control" id="matapelajaran2" name="addMoreInputFields[0][matapelajaran]" 
                                         required>
                                         {{-- <option value="">Sila Pilih</option> --}}
                                         {{-- @foreach ($mtpt3 as $pt3) --}}
@@ -86,7 +86,7 @@ Kelantan',
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <select class="form-control" id="gred" name="addMoreInputFields[0][gred]" required>
+                                    <select class="form-control" id="gred2" name="addMoreInputFields[0][gred]" required>
                                         <option value="">Sila Pilih</option>
                                         @foreach ($gredpt3 as $gred)
                                             <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
@@ -94,8 +94,7 @@ Kelantan',
                                     </select>
                                 </td>
                                 <td class="text-center ">
-                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
-                                            class="material-icons text-sm">add</i></button>
+                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -140,7 +139,7 @@ Kelantan',
 
             const currentYear = new Date().getFullYear();
             console.log(currentYear);
-
+            var tahun_awal = currentYear - 50;
             var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
                 const example = new Choices(year, {
@@ -148,7 +147,7 @@ Kelantan',
                 });
             }, 1);
 
-            for (y = 1950; y <= currentYear; y++) {
+            for (y = tahun_awal; y <= currentYear; y++) {
                 var optn = document.createElement("OPTION");
                 optn.text = y;
                 optn.value = y;
@@ -169,6 +168,14 @@ Kelantan',
 
         }
 
+        if (document.getElementById('matapelajaran2')) {
+            var mp = document.getElementById('matapelajaran2');
+            const example = new Choices(mp, {
+                shouldSort: false
+            });
+
+        }
+
         if (document.getElementById('jenis')) {
             var jenis = document.getElementById('jenis');
             const example = new Choices(jenis, {
@@ -179,6 +186,19 @@ Kelantan',
         if (document.getElementById('gred')) {
             var gred = document.getElementById('gred');
             const example = new Choices(gred, {
+                shouldSort: false
+            });
+        }
+
+        if (document.getElementById('gred2')) {
+            var gred = document.getElementById('gred2');
+            const example = new Choices(gred, {
+                shouldSort: false
+            });
+        }
+        if (document.getElementById('matapelajaran2')) {
+            var mp = document.getElementById('matapelajaran2');
+            const example = new Choices(mp, {
                 shouldSort: false
             });
         }

@@ -305,6 +305,8 @@ class AdminController extends Controller
                 Alert::error('Tidak Berjaya', 'Fail berformat PDF sahaja boleh di muat naik');
                 return back();
             }
+            Alert::error('Tidak Berjaya', 'Tiada Fail');
+            return back();
         }
     }
 

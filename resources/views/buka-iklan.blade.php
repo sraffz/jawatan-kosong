@@ -42,6 +42,14 @@
 
                 @foreach ($iklan as $ikln)
                     @php
+                        $nama_hari = dayNames[Carbon\Carbon::parse($ikln->tarikh_tamat)->dayOfWeek];
+                        $bulan = monthNames[Carbon\Carbon::parse($ikln->tarikh_tamat)->month - 1];
+                        $tahun = Carbon\Carbon::parse($ikln->tarikh_tamat)->year;
+                        $hari = Carbon\Carbon::parse($ikln->tarikh_tamat)->day;
+                        
+                        $date = $hari . ' ' . $bulan . ' ' . $tahun;
+                    @endphp
+                    @php
                         $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
                         $tarikh_mula = \Carbon\Carbon::parse($ikln->tarikh_mula)->format('Y-m-d');
                         $tarikh_tamat = \Carbon\Carbon::parse($ikln->tarikh_tamat)->format('Y-m-d');
@@ -55,18 +63,29 @@
                                     </div>
                                     <div class="float-right">
                                         @php
-                                        $text = 'IKLAN JAWATAN KOSONG';
-                                            // foreach ($syarat as $ss) {
-                                            //     $ss->nama_jawatan.' '.$ss->taraf', '.$ss->gred.'<br>'
-                                            // };
-
+                                            $j = 0;
+                                            
+                                            $text2 = [];
+                                            foreach ($syarat as $ss) {
+                                                if ($ss->id_iklan == $ikln->id) {
+                                                     $j++;
+                                                    $text2[] = __("$j. $ss->nama_jawatan ($ss->singkatan_taraf), GRED $ss->gred");
+                                                }
+                                            }
+                                            
+                                            $text = __("IKLAN JAWATAN KOSONG \n");
+                                            $text3 = __("\nPermohonan hendaklah dihantar sebelum atau pada ".$date." (".$nama_hari.") melalui: \n");
+                                            
                                             $currentURL = URL::current();
                                             
                                             $shareComponent1 = \Share::page(
                                                 $currentURL,
-                                                $text
+                                                $text.implode("\n", $text2).$text3
                                                 // 'IKLAN JAWATAN KOSONG 2. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
-                                            )->facebook()->twitter()->whatsapp();
+                                            )
+                                                ->facebook()
+                                                ->twitter()
+                                                ->whatsapp();
                                         @endphp
                                         <h4>{!! $shareComponent1 !!}</h4>
                                     </div>
@@ -132,14 +151,7 @@
                                 <hr>
                                 <h3 class="block-title">Tarikh Tutup<small> Permohonan</small></h3>
                                 <p>Permohonan hendaklah dihantar sebelum atau pada
-                                    @php
-                                        $nama_hari = dayNames[Carbon\Carbon::parse($ikln->tarikh_tamat)->dayOfWeek];
-                                        $bulan = monthNames[Carbon\Carbon::parse($ikln->tarikh_tamat)->month - 1];
-                                        $tahun = Carbon\Carbon::parse($ikln->tarikh_tamat)->year;
-                                        $hari = Carbon\Carbon::parse($ikln->tarikh_tamat)->day;
-                                        
-                                        $date = $hari . ' ' . $bulan . ' ' . $tahun;
-                                    @endphp
+
                                     <span class="badge badge-danger btn-rounded">{{ $date }}
                                         ({{ $nama_hari }}), jam 11.59 malam</span>
                                 </p>

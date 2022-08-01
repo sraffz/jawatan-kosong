@@ -116,17 +116,37 @@ class PenggunaController extends Controller
     }
     public function spm()
     {
+        $bil = JK_SPM::where('user_id', Auth::user()->id)->count();
+
+        $spmv = JK_SPM::where('user_id', Auth::user()->id)->first();
+         $k_spm = DB::table('jk_keputusan_spm')->where('id_spm', $spmv->id)->get();
+
         $mtspm = $this->subjekspm();
         $gredspm = $this->gredSpm();
         
-        return view('pengguna.akademik.spm-spmv', compact('mtspm','gredspm'));
+        if ($bil > 0) {
+            return view('pengguna.akademik.kemaskini.spm-spmv', compact('mtspm','gredspm','spmv','k_spm'));
+       } else {
+            return view('pengguna.akademik.spm-spmv', compact('mtspm','gredspm'));
+       }
+
     }
     public function spmu()
     {
-        $gredspm = $this->gredSpm();
-        $mtspm = $this->subjekspm();
+        $bil = JK_SPMU::where('user_id', Auth::user()->id)->count();
 
-        return view('pengguna.akademik.spm-ulangan', compact('mtspm', 'gredspm'));
+        $spmu = JK_SPMU::where('user_id', Auth::user()->id)->first();
+
+        $k_spm = DB::table('jk_keputusan_spm_ulangan')->where('id_spmu', $spmu->id)->get();
+
+        $mtspm = $this->subjekspm();
+        $gredspm = $this->gredSpm();
+        
+        if ($bil > 0) {
+            return view('pengguna.akademik.kemaskini.spm-ulangan', compact('mtspm','gredspm','spmu','k_spm'));
+       } else {
+            return view('pengguna.akademik.spm-ulangan', compact('mtspm','gredspm'));
+       }
     }
     public function svm()
     {
@@ -401,27 +421,189 @@ class PenggunaController extends Controller
     {
         $id = Auth::user()->id;
         
-        $id_pmr = JK_PMR::where('id', $id)->first();
+        $id_pmr = JK_PMR::where('user_id', $id)->first();
+
+        // dd($id_pmr->id);
 
         JK_PMR::where('user_id', $id)->update([
             'jenis' => $req->jenis,
             'tahun' => $req->tahun,
         ]);
 
-        for ($i = 0; $i < count($req->row); $i++) {
+        for ($m = 0; $m < count($req->tambahan); $m++) {
+            $data = new KeputusanPMR();
+                $data->id_pmr = $id_pmr->id;
+                $data->matapelajaran = $req->input('tambahan.' . $m . '.matapelajaran');
+                $data->gred = $req->input('tambahan.' . $m . '.gred');
+                $data->save();
+        }
 
-            $id_keputusan = $req->input('row.' . $i . '.id_keputusan');
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
 
             if (empty($id_keputusan)) {
-                $data = new KeputusanPMR();
-                $data->id_pmr = $id;
-                $data->matapelajaran = $req->input('row.' . $i . '.matapelajaran');
-                $data->gred = $req->input('row.' . $i . '.gred');
-                $data->save();
+                // KeputusanPMR::insert([
+                //     'id_pmr' => $id_pmr->id,
+                //     'matapelajaran' => $req->input('tambahan.' . $i . '.matapelajaran'),
+                //     'gred' => $req->input('tambahan.' . $i . '.gred'),
+                //     'created_at' => \Carbon\Carbon::now()
+
+                // ]);
+
+                
             } else {
                 KeputusanPMR::where('id', $id_keputusan)->update([
-                    'matapelajaran' => $req->input('row.' . $i . '.matapelajaran'),
-                    'gred' => $req->input('row.' . $i . '.gred'),
+                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                ]);
+            }
+        }
+
+        Session::flash('message', 'Maklumat Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function simpanspm(Request $req)
+    { 
+        // dd($req->all());
+
+        $id_exam = JK_SPM::insertGetId([
+            'user_id' => Auth::user()->id,
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+            'created_at' => \Carbon\carbon::now(),
+        ]);
+         
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            DB::table('jk_keputusan_spm')->insert([
+                'id_spm' => $id_exam,
+                'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+
+        return back();
+    }
+
+    public function kemaskinispm(Request $req)
+    {
+        $id = Auth::user()->id;
+        
+        $id_spm = JK_SPM::where('user_id', $id)->first();
+
+        // dd($id_spm->id);
+
+        JK_SPM::where('user_id', $id)->update([
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+        ]);
+
+        for ($m = 0; $m < count($req->tambahan); $m++) {
+
+            DB::table('jk_keputusan_spm')->insert([
+                'id_spm' => $id_spm->id,
+                'matapelajaran' => $req->input('tambahan.' . $m . '.matapelajaran'),
+                'gred' => $req->input('tambahan.' . $m . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
+
+            if (empty($id_keputusan)) {
+                // KeputusanSPM::insert([
+                //     'id_pmr' => $id_pmr->id,
+                //     'matapelajaran' => $req->input('tambahan.' . $i . '.matapelajaran'),
+                //     'gred' => $req->input('tambahan.' . $i . '.gred'),
+                //     'created_at' => \Carbon\Carbon::now()
+                // ]);
+            } else {
+                DB::table('jk_keputusan_spm')->where('id', $id_keputusan)->update([
+                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                ]);
+            }
+        }
+
+        Session::flash('message', 'Maklumat Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function simpanspmulangan(Request $req)
+    { 
+        // dd($req->all());
+
+        $id_exam = JK_SPMU::insertGetId([
+            'user_id' => Auth::user()->id,
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+            'created_at' => \Carbon\carbon::now(),
+        ]);
+         
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            DB::table('jk_keputusan_spm_ulangan')->insert([
+                'id_spmu' => $id_exam,
+                'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+
+        return back();
+    }
+
+    public function kemaskinispmulangan(Request $req)
+    {
+        $id = Auth::user()->id;
+        
+        $id_spmu = JK_SPMU::where('user_id', $id)->first();
+
+        // dd($id_spm->id);
+
+        JK_SPMU::where('user_id', $id)->update([
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+        ]);
+
+        for ($m = 0; $m < count($req->tambahan); $m++) {
+
+            DB::table('jk_keputusan_spm_ulangan')->insert([
+                'id_spmu' => $id_spmu->id,
+                'matapelajaran' => $req->input('tambahan.' . $m . '.matapelajaran'),
+                'gred' => $req->input('tambahan.' . $m . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
+
+            if (empty($id_keputusan)) {
+                // KeputusanSPM::insert([
+                //     'id_pmr' => $id_pmr->id,
+                //     'matapelajaran' => $req->input('tambahan.' . $i . '.matapelajaran'),
+                //     'gred' => $req->input('tambahan.' . $i . '.gred'),
+                //     'created_at' => \Carbon\Carbon::now()
+                // ]);
+            } else {
+                DB::table('jk_keputusan_spm_ulangan')->where('id', $id_keputusan)->update([
+                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
                 ]);
             }
         }

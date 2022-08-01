@@ -12,18 +12,15 @@ use App\Iklan;
 |
 */
 
+Route::get('/clear-cache', function() {
+    $exitCode = Artisan::call('cache:clear');
+    return dd('done');
+});
+
+
+
 Route::get('/', function () {
 
-    $currentURL = URL::current();
-
-    $shareComponent = \Share::page(
-        $currentURL,
-        'IKLAN JAWATAN KOSONG 
-        1. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
-    )->facebook()
-    ->twitter()
-    ->whatsapp();
-    
     $iklan2 = Iklan::where('jenis', "TERBUKA")->first();
     $iklan = Iklan::where('jenis', "TERBUKA")->get();
 
@@ -39,20 +36,11 @@ Route::get('/', function () {
     $syarat = DB::table('senarai-syarat-jawatan')->get();
     
     // dd($tarikh_kini, \Carbon\Carbon::parse($iklan->tarikh_mula)->format('Y-m-d'));
-    return view('welcome', compact('iklan', 'syarat', 'bil', 'shareComponent'));
+    return view('welcome', compact('iklan', 'syarat', 'bil'));
 });
 
 Route::get('/suk{url}', function ($url) {
 
-    $currentURL = URL::current();
-
-    $shareComponent = \Share::page(
-        $currentURL,
-        'IKLAN JAWATAN KOSONG 
-        1. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
-    )->facebook()
-    ->twitter()
-    ->whatsapp();
 
     $iklan = Iklan::where('jenis', "TERTUTUP")
     ->where('url', $url)
@@ -70,7 +58,7 @@ Route::get('/suk{url}', function ($url) {
     // dd($bil);
     $syarat = DB::table('senarai-syarat-jawatan')->get();
     
-    return view('welcome', compact('iklan', 'syarat','bil', 'shareComponent'));
+    return view('welcome', compact('iklan', 'syarat','bil'));
 });
 
 Auth::routes();
@@ -155,15 +143,22 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('padam-pengalaman/{id}', 'PenggunaController@padamPengalaman')->name('padam-pengalaman');
     
     // Akademik
-    Route::post('simpan-svm', 'PenggunaController@simpansvm')->name('simpan-svm');
-    Route::post('kemaskini-svm', 'PenggunaController@kemaskinisvm')->name('kemaskini-svm');
-    Route::post('simpan-skm', 'PenggunaController@simpanskm')->name('simpan-skm');
-    Route::get('padam-skm', 'PenggunaController@padamskm')->name('padam-skm');
+    
     Route::post('simpan-pmr', 'PenggunaController@simpanpmr')->name('simpan-pmr');
-    Route::post('simpan-ipt', 'PenggunaController@simpanipt')->name('simpan-ipt');
+    Route::post('simpan-spm', 'PenggunaController@simpanspm')->name('simpan-spm');
+    Route::post('simpan-spm-ulangan', 'PenggunaController@simpanspmulangan')->name('simpan-spm-ulangan');
+    Route::post('simpan-svm', 'PenggunaController@simpansvm')->name('simpan-svm');
+    Route::post('simpan-skm', 'PenggunaController@simpanskm')->name('simpan-skm');
     Route::post('simpan-matrikulasi', 'PenggunaController@simpanmatrikulasi')->name('simpan-matrikulasi');
-    Route::post('kemaskini-matrikulasi', 'PenggunaController@kemaskinimatrikulasi')->name('kemaskini-matrikulasi');
+    Route::post('simpan-ipt', 'PenggunaController@simpanipt')->name('simpan-ipt');
+    
     
     Route::post('kemaskini-pmr', 'PenggunaController@kemaskinipmr')->name('kemaskini-pmr');
+    Route::post('kemaskini-spm', 'PenggunaController@kemaskinispm')->name('kemaskini-spm');
+    Route::post('kemaskini-spm-ulangan', 'PenggunaController@kemaskinispmulangan')->name('kemaskini-spm-ulangan');
+    Route::post('kemaskini-matrikulasi', 'PenggunaController@kemaskinimatrikulasi')->name('kemaskini-matrikulasi');
+    Route::post('kemaskini-svm', 'PenggunaController@kemaskinisvm')->name('kemaskini-svm');
+
+    Route::get('padam-skm', 'PenggunaController@padamskm')->name('padam-skm');
 });
 

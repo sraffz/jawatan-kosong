@@ -1,28 +1,29 @@
-@extends('layouts.app', ['page' => 'SPM / SPMV', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
+@extends('layouts.app', ['page' => 'SPM ULANGAN', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-<form action="{{ url('simpan-spm') }}" method="post">
+<form action="{{ url('kemaskini-spm-ulangan') }}" method="post">
     {{ csrf_field() }}
     <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
                 <div class="card-header">
-                    <h5>KEPUTUSAN PEPERIKSAAN TINGKATAN 5</h5>
+                    <h5>KEPUTUSAN PEPERIKSAAN SPM ULANGAN</h5>
                 </div>
                     <div class="card-body pt-0">
                         <div class="row 12">
                             <div class="col-xl-5">
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span style="color: red">*</span></label>
-                                    <select name="tahun" id="tahun-pilih" required></select>                                </div>
+                                    <select name="tahun" id="tahun-pilih" required></select>                         </div>
                             </div>
+                            
                             <div class="col-xl-5">
                                 <div class="input-group input-group-static">
                                     <label>Peperiksaan <span style="color: red">*</span></label>
                                     <select class="form-control" id="jenis" name="jenis" required>
                                         <option value="">Sila Pilih</option>
-                                        <option value="SPM">SPM</option>
-                                        <option value="SPMV">SPMV</option>
+                                        <option value="SPM" {{ 'SPM' == $spmu->jenis ? 'selected' : '' }}>SPM</option>
+                                        <option value="SPMV" {{ 'SPMV' == $spmu->jenis ? 'selected' : '' }}>SPMV</option>
                                     </select>
                                 </div>
                             </div>
@@ -42,44 +43,8 @@
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
                 <div class="card-header">
-                    {{-- <h5>KEPUTUSAN PEPERIKSAAN TINGKATAN 3</h5> --}}
                 </div>
                 <div class="card-body pt-0">
-                    {{-- <table class="table table-sm table-striped table-bordered">
-                        <thead class=" ">
-                            <tr>
-                                <th class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
-                                    Bil
-                                </th>
-                                <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
-                                    MATA PELAJARAN
-                                </th>
-                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                    GRED
-                                </th>
-                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $i = 1;
-                            @endphp
-                            <tr>
-                                <td class="text-center">{{ $i++ }}</td>
-                                <td></td>
-                                <td class="text-center"></td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-outline-danger btn-sm">
-                                        <span class="material-icons">
-                                            delete
-                                        </span>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table> --}}
                     <table class="table table-sm table-striped table-bordered">
                         <thead class=" ">
                             <tr>
@@ -99,32 +64,40 @@
                         </thead>
                         <tbody>
                             @php
-                                $i = 1;
+                                $i = 0;
                             @endphp
+                            @foreach ($k_spm as $kspm)
                             <tr class="align-middle">
                                 {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                 <td>
-                                    <select class="form-control" id="matapelajaran2" name="addMoreInputFields[0][matapelajaran]" 
-                                        required>
-                                        {{-- <option value="">Sila Pilih</option> --}}
-                                        {{-- @foreach ($mtpt3 as $pt3) --}}
-                                            <option value="1">BAHASA MELAYU</option>
-                                        {{-- @endforeach --}}
+                                    <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kspm->id }}">
+                                    <select class="form-control" id="matapelajaran" name="addMoreInputFields[{{ $i }}][matapelajaran]" required>
+                                        <option value="">Sila Pilih</option>
+                                        @foreach ($mtspm as $spm)
+                                            <option value="{{ $spm->id }}" {{ $spm->id == $kspm->matapelajaran? 'selected' : '' }}>{{ $spm->subjek }}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <select class="form-control" id="gred2" name="addMoreInputFields[0][gred]" required>
+                                    <select class="form-control" id="gred" name="addMoreInputFields[{{ $i }}][gred]" required>
                                         <option value="">Sila Pilih</option>
                                         @foreach ($gredspm as $gred)
-                                            <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
+                                            <option value="{{ $gred->gred }}" {{ $gred->gred == $kspm->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
                                         @endforeach
                                     </select>
                                 </td>
                                 <td class="text-center ">
-                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
-                                            class="material-icons text-sm">add</i></button>
+                                    @if ($i == 0)
+                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
+                                    @elseif ($i > 0)
+                                        <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
+                                    @endif
                                 </td>
                             </tr>
+                            @php
+                                $i++;
+                            @endphp
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -162,12 +135,15 @@
         if (document.getElementById('tahun-pilih')) {
 
             const currentYear = new Date().getFullYear();
-            console.log(currentYear);
+            // console.log(currentYear);
+
+            const selected_year = {{ $spmu->tahun }};
             var tahun_awal = currentYear - 50;
+
             var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
                 const example = new Choices(year, {
-                    shouldSort: false
+                    shouldSort: true
                 });
             }, 1);
 
@@ -176,7 +152,7 @@
                 optn.text = y;
                 optn.value = y;
 
-                if (y == currentYear) {
+                if (y == selected_year) {
                     optn.selected = true;
                 }
 

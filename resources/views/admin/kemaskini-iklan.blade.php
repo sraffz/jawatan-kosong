@@ -166,13 +166,13 @@ Negeri Kelantan'])
                                     <div class="container-fluid">
                                         {{ csrf_field() }}
                                         <input type="hidden" id="id" name="id" value="{{ $iklan->id }}">
-                                        <div class="input-group input-group-dynamic mb-3">
+                                        <div class="input-group input-group-dynamic mb-3 ">
                                             <label class="form-label">Jawatan</label>
-                                            <input type="text" class="form-control" name="jawatan" id="jawatan" required>
+                                            <input type="text" class="form-control input-uc" name="jawatan" id="jawatan" required>
                                         </div>
                                         <div class="input-group input-group-dynamic mb-3">
                                             <label class="form-label">Gred</label>
-                                            <input type="text" class="form-control" name="gred" id="gred" required>
+                                            <input type="text" class="form-control input-uc" name="gred" id="gred" required>
                                         </div>
                                         <div class="input-group input-group-dynamic mb-3">
                                             <label class="form-label">Gaji Minimum</label>

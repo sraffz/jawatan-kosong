@@ -17,7 +17,6 @@ Kelantan',
                     <div class="card-body pt-0">
                         <div class="row col-lg-12">
                             <div class="col-xl-5 mb-4">
-
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span style="color: red">*</span></label>
                                     <select name="tahun" id="tahun-pilih" required></select>
@@ -43,7 +42,6 @@ Kelantan',
                             </div>
                         </div>
                     </div>
-                
             </div>
         </div>
     </div>
@@ -81,8 +79,8 @@ Kelantan',
                             <tr class="align-middle">
                                 {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                 <td>
-                                    <input type="hidden" name="row[0][id_keputusan]" value="{{ $kmr->id }}">
-                                    <select class="form-control" id="matapelajaran" name="row[{{ $i }}][matapelajaran]" required>
+                                    <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kmr->id }}">
+                                    <select class="form-control" id="matapelajaran" name="addMoreInputFields[{{ $i }}][matapelajaran]" required>
                                         <option value="">Sila Pilih</option>
                                         @foreach ($mtpt3 as $pt3)
                                             <option value="{{ $pt3->id }}" {{ $pt3->id == $kmr->matapelajaran? 'selected' : '' }}>{{ $pt3->subjek }}</option>
@@ -90,10 +88,10 @@ Kelantan',
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <select class="form-control" id="gred" name="row[{{ $i }}][gred]" required>
+                                    <select class="form-control" id="gred" name="addMoreInputFields[{{ $i }}][gred]" required>
                                         <option value="">Sila Pilih</option>
                                         @foreach ($gredpt3 as $gred)
-                                            <option value="{{ $gred->gred }}" {{  $gred->gred == $kmr->gred? 'selected' : '' }}>{{ $gred->gred }}</option>
+                                            <option value="{{ $gred->gred }}" {{ $gred->gred == $kmr->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -101,7 +99,7 @@ Kelantan',
                                     @if ($i == 0)
                                     <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
                                     @elseif ($i > 0)
-                                        <button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button>
+                                        <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
                                     @endif
                                 </td>
                             </tr>
@@ -111,6 +109,9 @@ Kelantan',
                             @endforeach
                         </tbody>
                     </table>
+                    <div class="delete_list">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,13 +121,14 @@ Kelantan',
 
 @section('script')
     <script>
-        var i = {{ $i }};
+        var i = 0;
         $("#tambahrow").click(function() {
-            ++i;
+         
             k = i+1;
 
-            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="row['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtpt3 as $pt3)<option value="{{ $pt3->id }}">{{ $pt3->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="row['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredpt3 as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
-            
+            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="tambahan['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtpt3 as $pt3)<option value="{{ $pt3->id }}">{{ $pt3->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="tambahan['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredpt3 as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
+           
+           
             if (document.getElementById('matapelajaran_'+i)) {
                 var mp = document.getElementById('matapelajaran_'+i);
                 const example = new Choices(mp, {
@@ -139,11 +141,27 @@ Kelantan',
                     shouldSort: false
                 });
             }
+            ++i;
+        });
+
+        var d = 0;
+        $(document).on('click', '.remove-input-field-2', function() {
+             //Get Id from tr
+             var id = document.getElementById('id_keputusan').value;
+
+             console.log(id);
+             //senaraikan Id
+            $(".delete_list").append('<div><div class="input-group input-group-outline"><input class="form-control" type="text" id="padam" nama="padam['+d+'][id]" value="'+id+'"><div><div>');
+
+            //Padam table row
+            $(this).parents('tr').remove();
+             ++d; 
         });
 
         $(document).on('click', '.remove-input-field', function() {
+            //Padam table row
             $(this).parents('tr').remove();
-             i-1;
+             ++d; 
         });
 
         if (document.getElementById('tahun-pilih')) {
@@ -151,7 +169,8 @@ Kelantan',
             const currentYear = new Date().getFullYear();
             console.log(currentYear);
 
-            var tahun = {{ $pmr->tahun }};
+            var selected_year = {{ $pmr->tahun }};
+            var tahun_awal = currentYear - 50;
 
             var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
@@ -160,12 +179,12 @@ Kelantan',
                 });
             }, 1);
 
-            for (y = 1950; y <= currentYear; y++) {
+            for (y = tahun_awal; y <= currentYear; y++) {
                 var optn = document.createElement("OPTION");
                 optn.text = y;
                 optn.value = y;
 
-                if (y == tahun) {
+                if (y == selected_year) {
                     optn.selected = true;
                 }
 

@@ -1,13 +1,18 @@
-@extends('layouts.admin.app', ['page' => 'Iklan Jawatan Kosong', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan
-Negeri Kelantan Perubatan'])
+@extends('layouts.admin.app', [
+    'page' => 'Iklan Jawatan Kosong',
+    'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan
+Negeri Kelantan Perubatan',
+])
 
 @section('link')
-
 @endsection
 
 @section('content')
     @php
-    setlocale(LC_TIME, config('app.locale'));
+    // setlocale(LC_TIME, config('app.locale'));
+    // use Carbon\Carbon;
+    const dayNames = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
+    const monthNames = ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'October', 'November', 'Disember'];
     @endphp
     <div class="row">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
@@ -68,7 +73,7 @@ Negeri Kelantan Perubatan'])
             </div>
         </div> --}}
     </div>
-     
+
     <div class="row mt-4">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -78,7 +83,7 @@ Negeri Kelantan Perubatan'])
                             <div class="col-lg-6 col-7">
                                 {{-- <iframe src="https://cdn.vuukle.com/widgets/sharebar.html?version=2.15.10" frameborder="0"></iframe> --}}
                                 <h6>Senarai Iklan Jawatan Kosong</h6>
-                               {{-- {!! $shareComponent !!} --}}
+                                {{-- {!! $shareComponent !!} --}}
                                 {{-- {{ Share::currentPage()->facebook(); }} --}}
                                 {{-- <p class="text-sm mb-0">
                                         <i class="fa fa-check text-info" aria-hidden="true"></i>
@@ -130,6 +135,43 @@ Negeri Kelantan Perubatan'])
                                         $i = 1;
                                     @endphp
                                     @foreach ($iklan as $ikl)
+                                        @php
+                                            $nama_hari = dayNames[Carbon\Carbon::parse($ikl->tarikh_tamat)->dayOfWeek];
+                                            $bulan = monthNames[Carbon\Carbon::parse($ikl->tarikh_tamat)->month - 1];
+                                            $tahun = Carbon\Carbon::parse($ikl->tarikh_tamat)->year;
+                                            $hari = Carbon\Carbon::parse($ikl->tarikh_tamat)->day;
+                                            
+                                            $date = $hari . ' ' . $bulan . ' ' . $tahun;
+                                        @endphp
+                                        {{-- @php
+                                            $j = 0;
+                                            
+                                            $text2 = [];
+                                            foreach ($syarat as $ss) {
+                                                if ($ss->id_iklan == $ikl->id) {
+                                                    $j++;
+                                                    $text2[] = __("$j. $ss->nama_jawatan ($ss->singkatan_taraf), GRED $ss->gred");
+                                                }
+                                            }
+                                            
+                                            $text = __("IKLAN JAWATAN KOSONG \n");
+                                            $text3 = __("\nPermohonan hendaklah dihantar sebelum atau pada " . $date . ' (' . $nama_hari . ") melalui: \n");
+                                            
+                                            if ($ikl->jenis == 'TERTUTUP') {
+                                                $currentURL =  url('suk' . $ikl->url . '') ;
+                                            } else {
+                                                $currentURL =  url('/') ;
+                                            }
+                                                                                       
+                                            $shareComponent1 = \Share::page(
+                                                $currentURL,
+                                                $text . implode("\n", $text2) . $text3
+                                                // 'IKLAN JAWATAN KOSONG 2. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
+                                            )
+                                                ->facebook()
+                                                ->twitter()
+                                                ->whatsapp();
+                                        @endphp --}}
                                         <tr class="align-middel">
                                             <td class="text-center text-uppercase">
                                                 <span class="font-weight-bold">
@@ -165,22 +207,25 @@ Negeri Kelantan Perubatan'])
                                                                 link
                                                             </span>
                                                         </a>
-                                                        <a role="button" href="#" id="{{ $ikl->id }}" value="copy"
+                                                        <a role="button" href="#" id="{{ $ikl->id }}"
+                                                            value="copy"
                                                             onclick="copyToClipboard('copy_{{ $ikl->id }}')">
                                                             <span class="material-icons">
                                                                 content_copy
                                                             </span>
                                                         </a>
-                                                        <input type="text" class="form-control form-control-sm border-radius-md" id="copy_{{ $ikl->id }}" value="{{ url('suk' . $ikl->url . '') }}">
+                                                        <input type="text"
+                                                            class="form-control form-control-sm border-radius-md"
+                                                            id="copy_{{ $ikl->id }}"
+                                                            value="{{ url('suk' . $ikl->url . '') }}">
                                                     @else
-                                                        <a class="" href="{{ url('/') }}"
-                                                            target="_blank">
+                                                        <a class="" href="{{ url('/') }}" target="_blank">
                                                             <span class="material-icons">
                                                                 link
                                                             </span>
                                                         </a>
                                                     @endif
-                                                    {!! $shareComponent !!}
+                                                    {{-- {!! $shareComponent1 !!} --}}
                                                 </span>
                                             </td>
                                             <td class="text-center">
@@ -188,7 +233,7 @@ Negeri Kelantan Perubatan'])
                                                     data-bs-target="#butiraniklan-{{ $ikl->id }}">
                                                     <span class="material-icons">
                                                         info_outline
-                                                        </span>
+                                                    </span>
                                                 </button>
                                                 <div class="btn-group " role="group" aria-label="Basic example">
                                                     <a class="btn btn-primary btn-sm"
@@ -196,9 +241,10 @@ Negeri Kelantan Perubatan'])
                                                         Kemaskini
                                                     </a>
                                                     <button type="button" class="btn btn-danger btn-sm"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#padam-{{ $ikl->id }}"><span class="material-icons">
-                                                        delete_outline
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#padam-{{ $ikl->id }}"><span
+                                                            class="material-icons">
+                                                            delete_outline
                                                         </span></button>
                                                 </div>
                                             </td>
@@ -226,7 +272,8 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-danger text-gradient">room_preferences</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
                                                                             Rujukan</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -241,7 +288,8 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-success text-gradient">date_range</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
                                                                             Tempoh Iklan Dibuka</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -257,7 +305,8 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-info text-gradient">format_quote</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
                                                                             Jenis Iklan</h6>
                                                                         <p
                                                                             class="text-secondary font-weight-bold text-xs mt-1 mb-0">
@@ -270,39 +319,48 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-danger text-gradient">link</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
                                                                             Pautan Iklan
                                                                         </h6>
                                                                         <div class="row">
                                                                             @if ($ikl->jenis == 'TERTUTUP')
-                                                                            <div class="col-12 col-xl-10">
-                                                                                <input type="text" class="form-control form-control-sm border-radius-md" id="copy2_{{ $ikl->id }}" value="{{ url('suk' . $ikl->url . '') }}">
-                                                                            </div>
-                                                                            <div class="col-12 col-xl-2 mt-1 text-left">
-                                                                                <a href="{{ url('suk' . $ikl->url . '') }}" target="_blank">
-                                                                                    <span class="material-icons">
-                                                                                        link
-                                                                                    </span>
-                                                                                </a>
-                                                                                <a role="button" href="#" id="{{ $ikl->id }}" value="copy"
-                                                                                    onclick="copyToClipboard('copy2_{{ $ikl->id }}')">
-                                                                                    <span class="material-icons">
-                                                                                        content_copy
-                                                                                    </span>
-                                                                                </a>
-                                                                            </div>
-                                                                          
+                                                                                <div class="col-12 col-xl-10">
+                                                                                    <input type="text"
+                                                                                        class="form-control form-control-sm border-radius-md"
+                                                                                        id="copy2_{{ $ikl->id }}"
+                                                                                        value="{{ url('suk' . $ikl->url . '') }}">
+                                                                                </div>
+                                                                                <div
+                                                                                    class="col-12 col-xl-2 mt-1 text-left">
+                                                                                    <a href="{{ url('suk' . $ikl->url . '') }}"
+                                                                                        target="_blank">
+                                                                                        <span class="material-icons">
+                                                                                            link
+                                                                                        </span>
+                                                                                    </a>
+                                                                                    <a role="button" href="#"
+                                                                                        id="{{ $ikl->id }}"
+                                                                                        value="copy"
+                                                                                        onclick="copyToClipboard('copy2_{{ $ikl->id }}')">
+                                                                                        <span class="material-icons">
+                                                                                            content_copy
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </div>
                                                                             @else
-                                                                                <a class="" href="{{ url('/') }}"
+                                                                                <a class=""
+                                                                                    href="{{ url('/') }}"
                                                                                     target="_blank">
                                                                                     <span class="material-icons">
                                                                                         link
                                                                                     </span>
                                                                                 </a>
                                                                             @endif
-                                                                            
+
                                                                         </div>
-                                                                        <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                                                                        <p
+                                                                            class="text-secondary font-weight-bold text-xs mt-1 mb-0">
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -312,7 +370,8 @@ Negeri Kelantan Perubatan'])
                                                                             class="material-icons text-dark text-gradient">dns</i>
                                                                     </span>
                                                                     <div class="timeline-content">
-                                                                        <h6 class="text-dark text-sm font-weight-bold mb-0">
+                                                                        <h6
+                                                                            class="text-dark text-sm font-weight-bold mb-0">
                                                                             Senarai Jawatan</h6>
                                                                         @foreach ($syarat as $ss)
                                                                             @if ($ss->id_iklan == $ikl->id)
@@ -355,8 +414,9 @@ Negeri Kelantan Perubatan'])
                                                         {{ csrf_field() }}
                                                         <div class="modal-body">
                                                             <div class="card-body text-center text-bold text-dark p-3">
-                                                                 Adakah anda ingin padam iklan ini?
-                                                                 <input type="hidden" name="id" value="{{ $ikl->id }}">
+                                                                Adakah anda ingin padam iklan ini?
+                                                                <input type="hidden" name="id"
+                                                                    value="{{ $ikl->id }}">
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
@@ -454,34 +514,40 @@ Negeri Kelantan Perubatan'])
                                 <div class="col-12">
                                     <div class="input-group input-group-static">
                                         <label>Pautan</label>
-                                        <input class="form-control" type="text" name="pautan" required placeholder="">
+                                        <input class="form-control" type="text" name="pautan" required
+                                            placeholder="">
                                     </div>
                                 </div>
                             </div>
                             <div class="row mt-4">
                                 <div class="col-6">
                                     <div class="input-group input-group-static">
-                                       <div class="form-check form-switch d-flex align-items-center mb-3">
-                                           <input class="form-check-input" type="checkbox" id="gajiMin" value="1" name="gaji_min" {{ old('gaji_min') ? 'checked' : '' }}>
-                                           <label class="form-check-label mb-0 ms-3 mt-1" for="gajiMin">Papar gaji minimum.</label>
-                                       </div>
-                                   </div>
+                                        <div class="form-check form-switch d-flex align-items-center mb-3">
+                                            <input class="form-check-input" type="checkbox" id="gajiMin"
+                                                value="1" name="gaji_min" {{ old('gaji_min') ? 'checked' : '' }}>
+                                            <label class="form-check-label mb-0 ms-3 mt-1" for="gajiMin">Papar gaji
+                                                minimum.</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="input-group input-group-static">
-                                       <div class="form-check form-switch d-flex align-items-center mb-3">
-                                           <input class="form-check-input" type="checkbox" id="publish" value="1" name="publish" {{ old('publish') ? 'checked' : '' }}>
-                                           <label class="form-check-label mb-0 ms-3 mt-1" for="publish">Terbit (Publish)</label>
-                                       </div>
-                                   </div>
+                                        <div class="form-check form-switch d-flex align-items-center mb-3">
+                                            <input class="form-check-input" type="checkbox" id="publish"
+                                                value="1" name="publish" {{ old('publish') ? 'checked' : '' }}>
+                                            <label class="form-check-label mb-0 ms-3 mt-1" for="publish">Terbit
+                                                (Publish)</label>
+                                        </div>
+                                    </div>
                                 </div>
-                             </div>
+                            </div>
                             <div class="row mt-4">
-                             </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-dark ml-auto" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-outline-dark ml-auto"
+                            data-bs-dismiss="modal">Tutup</button>
                         <button type="submit" class="btn bg-gradient-primary">Simpan</button>
                     </div>
                 </form>

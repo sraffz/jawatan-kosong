@@ -13,7 +13,8 @@
     <!-- Icons -->
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
     <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
     <link rel="apple-touch-icon" sizes="180x180"
         href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
 
@@ -28,7 +29,7 @@
     <link href="{{ asset('material/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    
+
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
@@ -40,11 +41,11 @@
     @yield('link')
     <style>
         .modal.show {
-        z-index: 100000!important;
+            z-index: 100000 !important;
         }
 
         .sidenav.show {
-        z-index: 100000!important;
+            z-index: 100000 !important;
         }
 
         /* .modal-backdrop.show {
@@ -52,74 +53,75 @@
         } */
     </style>
 </head>
-
 <body class="g-sidenav-show bg-gray-200">
     @php
-    $kp = Auth::user()->ic;
-    $pass = Auth::user()->password;
-@endphp
-@if (Hash::check($kp, $pass))
-    <!-- Modal -->
-    <div class="modal fade modal-top" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tukar Kata Laluan</h5>
-                </div>
-                <form action="{{ url('admin/tukar-password') }}" method="post">
-                    <div class="modal-body">
-                        <div class="container-fluid">
-                            {{ csrf_field() }}
-                            <div class="input-group input-group-static">
-                                <label for="password">Kata Laluan Baru</label>
-                                <input type="password"
-                                    class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                    name="password" id="password" aria-describedby="helpId" aria-invalid="true"
-                                    required autofocus>
-                                <small id="helpId" class="error invalid-feedback">
-                                    {{ $errors->first('password') }}
-                                </small>
-                            </div>
+        $kp = Auth::user()->ic;
+        $pass = Auth::user()->password;
+    @endphp
+    @if (Hash::check($kp, $pass))
+        <!-- Modal -->
+        <div class="modal fade modal-top" id="myModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tukar Kata Laluan</h5>
+                    </div>
+                    <form action="{{ url('admin/tukar-password') }}" method="post">
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                {{ csrf_field() }}
+                                <div class="input-group input-group-static">
+                                    <label for="password">Kata Laluan Baru</label>
+                                    <input type="password"
+                                        class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                        name="password" id="password" aria-describedby="helpId" aria-invalid="true"
+                                        required autofocus>
+                                    <small id="helpId" class="error invalid-feedback">
+                                        {{ $errors->first('password') }}
+                                    </small>
+                                </div>
 
-                            <div class="input-group input-group-static mt-2g">
-                                <label for="confirmpassword">Taip Semula Kata Laluan Baru</label>
-                                <input type="password"
-                                    class="form-control {{ $errors->has('confirmpassword') ? ' is-invalid' : '' }}"
-                                    name="confirmpassword" id="confirmpassword" aria-invalid="true"
-                                    aria-describedby="helpId" required>
-                                <small id="helpId" class="error invalid-feedback">
-                                    {{ $errors->first('confirmpassword') }}
-                                </small>
+                                <div class="input-group input-group-static mt-2g">
+                                    <label for="confirmpassword">Taip Semula Kata Laluan Baru</label>
+                                    <input type="password"
+                                        class="form-control {{ $errors->has('confirmpassword') ? ' is-invalid' : '' }}"
+                                        name="confirmpassword" id="confirmpassword" aria-invalid="true"
+                                        aria-describedby="helpId" required>
+                                    <small id="helpId" class="error invalid-feedback">
+                                        {{ $errors->first('confirmpassword') }}
+                                    </small>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                        <div class="modal-footer">
+                            <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
                                 style="display: none;">
                                 {{ csrf_field() }}
                             </form>
-                        <a href="{{ route('logout') }}" class="btn btn-dark" onclick="event.preventDefault();
-                        document.getElementById('logout-form').submit();"> 
-                            <i class="fas fa-sign-out-alt"></i> Log Keluar
-                        </a>
-                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
-                            Simpan
-                        </button>
-                    </div>
-                </form>
+                            <a href="{{ route('logout') }}" class="btn btn-dark"
+                                onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                                <i class="fas fa-sign-out-alt"></i> Log Keluar
+                            </a>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>
+                                Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-@endif
+    @endif
     @php
         setlocale(LC_TIME, config('app.locale'));
+        
     @endphp
     @auth
         @include('layouts.admin.sidebar')
     @endauth
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-       
+
         <!-- Navbar -->
         @auth
             @include('layouts.admin.navbar')
@@ -149,6 +151,9 @@
     <!-- Share -->
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script> --}}
     <script src="{{ asset('js/share.js') }}"></script>
+
+    {{-- <script src="{{ asset('assets/js/codebase.core.min.js') }}"></script>
+     <script src="{{ asset('assets/js/codebase.app.min.js') }}"></script> --}}
 
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>

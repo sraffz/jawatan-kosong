@@ -11,12 +11,10 @@
                     </div>
                     <div class="card-body pt-0">
                         <div class="row">
-                            <div class="col-12 col-xl-3 mb-3">
-                                <div class="input-group input-group-static">
-                                    <label>Tahun <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" name="tahunSijil" placeholder="2008"
-                                        required>
-                                </div>
+                            <div class="col-12 col-xl-3">
+                                <label class="form-label">Tahun <span class="text-danger">*</span></label>
+                                <select class="form-control" name="tahunSijil" id="tahun-pilih" required>
+                                </select>
                             </div>
                             <div class="col-12 col-xl-9">
                                 <label class="form-label">Nama Sijil <span class="text-danger">*</span></label>
@@ -72,28 +70,37 @@
                                                     <td class="text-center">{{ $listskm->tahunSijil }}</td>
                                                     <td class="text-center">
                                                         <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#padamskm-{{ $listskm->id }}">
+                                                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#padamskm-{{ $listskm->id }}">
                                                             <span class="material-icons">delete</span>
                                                         </button>
                                                         <!-- Modal -->
-                                                        <div class="modal fade" id="padamskm-{{ $listskm->id }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                                        <div class="modal fade" id="padamskm-{{ $listskm->id }}"
+                                                            tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                                                            aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <form action="{{ url('padam-skm') }}" method="get">
                                                                     {{ csrf_field() }}
                                                                     <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                    {{-- <h5 class="modal-title">Modal title</h5> --}}
-                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                                </div>
+                                                                        <div class="modal-header">
+                                                                            {{-- <h5 class="modal-title">Modal title</h5> --}}
+                                                                            <button type="button" class="btn-close"
+                                                                                data-bs-dismiss="modal"
+                                                                                aria-label="Close"></button>
+                                                                        </div>
                                                                         <div class="modal-body">
                                                                             <div class="container-fluid">
-                                                                                <input type="hidden" name="id" value="{{ $listskm->id }}">
+                                                                                <input type="hidden" name="id"
+                                                                                    value="{{ $listskm->id }}">
                                                                                 Adakah anda pasti untuk hapus subjek ini?
                                                                             </div>
                                                                         </div>
                                                                         <div class="modal-footer justify-content-center">
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
-                                                                            <button type="submit" class="btn btn-primary">Ya</button>
+                                                                            <button type="button" class="btn btn-secondary"
+                                                                                data-bs-dismiss="modal">Tidak</button>
+                                                                            <button type="submit"
+                                                                                class="btn btn-primary">Ya</button>
                                                                         </div>
                                                                     </div>
                                                                 </form>
@@ -134,6 +141,32 @@
                 position: 'bottom',
                 shouldSort: false,
             });
+        }
+
+        if (document.getElementById('tahun-pilih')) {
+
+            const currentYear = new Date().getFullYear();
+
+            var tahun_awal = currentYear - 50;
+
+            var year = document.getElementById('tahun-pilih');
+            setTimeout(function() {
+                const example = new Choices(year, {
+                    shouldSort: false
+                });
+            }, 1);
+
+            for (y = tahun_awal; y <= currentYear; y++) {
+                var optn = document.createElement("OPTION");
+                optn.text = y;
+                optn.value = y;
+
+                if (y == currentYear) {
+                    optn.selected = true;
+                }
+
+                year.options.add(optn);
+            }
         }
     </script>
 @endsection

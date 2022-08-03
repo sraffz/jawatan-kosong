@@ -147,6 +147,8 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('simpan-pmr', 'PenggunaController@simpanpmr')->name('simpan-pmr');
     Route::post('simpan-spm', 'PenggunaController@simpanspm')->name('simpan-spm');
     Route::post('simpan-spm-ulangan', 'PenggunaController@simpanspmulangan')->name('simpan-spm-ulangan');
+    Route::post('simpan-stpm', 'PenggunaController@simpanstpm')->name('simpan-stpm');
+    Route::post('simpan-stam', 'PenggunaController@simpanstam')->name('simpan-stam');
     Route::post('simpan-svm', 'PenggunaController@simpansvm')->name('simpan-svm');
     Route::post('simpan-skm', 'PenggunaController@simpanskm')->name('simpan-skm');
     Route::post('simpan-matrikulasi', 'PenggunaController@simpanmatrikulasi')->name('simpan-matrikulasi');
@@ -156,6 +158,8 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('kemaskini-pmr', 'PenggunaController@kemaskinipmr')->name('kemaskini-pmr');
     Route::post('kemaskini-spm', 'PenggunaController@kemaskinispm')->name('kemaskini-spm');
     Route::post('kemaskini-spm-ulangan', 'PenggunaController@kemaskinispmulangan')->name('kemaskini-spm-ulangan');
+    Route::post('kemaskini-stpm', 'PenggunaController@kemaskinistpm')->name('kemaskini-stpm');
+    Route::post('kemaskini-stam', 'PenggunaController@kemaskinistam')->name('kemaskini-stam');
     Route::post('kemaskini-matrikulasi', 'PenggunaController@kemaskinimatrikulasi')->name('kemaskini-matrikulasi');
     Route::post('kemaskini-svm', 'PenggunaController@kemaskinisvm')->name('kemaskini-svm');
 

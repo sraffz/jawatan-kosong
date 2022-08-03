@@ -98,17 +98,16 @@ class PenggunaController extends Controller
     {
         $bil = JK_PMR::where('user_id', Auth::user()->id)->count();
 
-        $pmr = JK_PMR::where('user_id', Auth::user()->id)->first();
-
-        $k_pmr = KeputusanPMR::where('id_pmr', $pmr->id)->get();
-
-        // dd($k_pmr);
-
+        
         $mtpt3 = $this->subjekPt3();
         $gredpt3 = $this->gredPt3();
-
+        
         if ($bil > 0) {
-             return view('pengguna.akademik.kemaskini.srp-pmr-pt3', compact('mtpt3','gredpt3','pmr', 'k_pmr'));
+            $pmr = JK_PMR::where('user_id', Auth::user()->id)->first();
+            $k_pmr = KeputusanPMR::where('id_pmr', $pmr->id)->get();
+            $bil_subjek = KeputusanPMR::where('id_pmr', $pmr->id)->count();
+
+             return view('pengguna.akademik.kemaskini.srp-pmr-pt3', compact('mtpt3','gredpt3','pmr', 'k_pmr', 'bil_subjek'));
         } else {
              return view('pengguna.akademik.srp-pmr-pt3', compact('mtpt3','gredpt3'));
         }
@@ -118,14 +117,16 @@ class PenggunaController extends Controller
     {
         $bil = JK_SPM::where('user_id', Auth::user()->id)->count();
 
-        $spmv = JK_SPM::where('user_id', Auth::user()->id)->first();
-         $k_spm = DB::table('jk_keputusan_spm')->where('id_spm', $spmv->id)->get();
-
         $mtspm = $this->subjekspm();
         $gredspm = $this->gredSpm();
         
         if ($bil > 0) {
-            return view('pengguna.akademik.kemaskini.spm-spmv', compact('mtspm','gredspm','spmv','k_spm'));
+            $spmv = JK_SPM::where('user_id', Auth::user()->id)->first();
+
+            $k_spm = DB::table('jk_keputusan_spm')->where('id_spm', $spmv->id)->get();
+            $bil_subjek = DB::table('jk_keputusan_spm')->where('id_spm', $spmv->id)->count();
+
+            return view('pengguna.akademik.kemaskini.spm-spmv', compact('mtspm','gredspm','spmv','k_spm', 'bil_subjek'));
        } else {
             return view('pengguna.akademik.spm-spmv', compact('mtspm','gredspm'));
        }
@@ -135,15 +136,15 @@ class PenggunaController extends Controller
     {
         $bil = JK_SPMU::where('user_id', Auth::user()->id)->count();
 
-        $spmu = JK_SPMU::where('user_id', Auth::user()->id)->first();
-
-        $k_spm = DB::table('jk_keputusan_spm_ulangan')->where('id_spmu', $spmu->id)->get();
-
         $mtspm = $this->subjekspm();
         $gredspm = $this->gredSpm();
         
         if ($bil > 0) {
-            return view('pengguna.akademik.kemaskini.spm-ulangan', compact('mtspm','gredspm','spmu','k_spm'));
+            $spmu = JK_SPMU::where('user_id', Auth::user()->id)->first();
+            $k_spm = DB::table('jk_keputusan_spm_ulangan')->where('id_spmu', $spmu->id)->get();
+            $bil_subjek = DB::table('jk_keputusan_spm_ulangan')->where('id_spmu', $spmu->id)->count();
+
+            return view('pengguna.akademik.kemaskini.spm-ulangan', compact('mtspm','gredspm','spmu', 'bil_subjek','k_spm'));
        } else {
             return view('pengguna.akademik.spm-ulangan', compact('mtspm','gredspm'));
        }
@@ -154,10 +155,9 @@ class PenggunaController extends Controller
         $gredbm = $this->gredSpm();
 
         $bil = JK_SVM::where('user_id', Auth::user()->id)->count();
-
-        $svm = JK_SVM::where('user_id', Auth::user()->id)->first();
-
+        
         if ($bil > 0) {
+            $svm = JK_SVM::where('user_id', Auth::user()->id)->first();
             return view('pengguna.akademik.svm-kemaskini', compact('svm', 'listSijil', 'gredbm'));
         } else {
             return view('pengguna.akademik.svm', compact('listSijil', 'gredbm'));
@@ -179,17 +179,43 @@ class PenggunaController extends Controller
     }
     public function stpm()
     {
+        $bil = JK_STPA::where('user_id', Auth::user()->id)->count();
+
         $mtstpm = $this->subjekstpm();
         $gredstpm = $this->gredStpm();
+        
+        if ($bil > 0) {
+            $stpmm = JK_STPA::where('user_id', Auth::user()->id)->first();
 
-        return view('pengguna.akademik.stpm', compact('mtstpm','gredstpm'));
+            $k_stpm = DB::table('jk_keputusan_stpm')->where('id_stpm', $stpmm->id)->get();
+
+            $bil_subjek = DB::table('jk_keputusan_stpm')->where('id_stpm', $stpmm->id)->count();
+
+            return view('pengguna.akademik.kemaskini.stpm', compact('mtstpm','gredstpm','stpmm','k_stpm', 'bil_subjek'));
+       } else {
+            return view('pengguna.akademik.stpm', compact('mtstpm','gredstpm'));
+       }
     }
+
     public function stam()
     {
+        $bil = JK_STAM::where('user_id', Auth::user()->id)->count();
+
         $mtstam = $this->subjekstam();
         $gredstam = $this->gredStam();
+        
+        if ($bil > 0) {
+            $stam = JK_STAM::where('user_id', Auth::user()->id)->first();
 
-        return view('pengguna.akademik.stam', compact('mtstam', 'gredstam'));
+            $k_stam = DB::table('jk_keputusan_stam')->where('id_stam', $stam->id)->get();
+
+            $bil_subjek = DB::table('jk_keputusan_stam')->where('id_stam', $stam->id)->count();
+
+            return view('pengguna.akademik.kemaskini.stam', compact('mtstam','gredstam','stam','k_stam', 'bil_subjek'));
+       } else {
+            return view('pengguna.akademik.stam', compact('mtstam','gredstam'));
+       }
+
     }
     public function matrikulasi()
     {
@@ -209,7 +235,9 @@ class PenggunaController extends Controller
         $pengkhususan = $this->pengkhususan();
         $institusi = $this->institusi();
 
-        return view('pengguna.akademik.pengajian-tinggi', compact('peringkatIpt', 'pengkhususan', 'institusi'));
+        $list_kelulusan = JK_Pengajian_Tinggi::where('user_id' , Auth::user()->id)->get();
+
+        return view('pengguna.akademik.pengajian-tinggi', compact('peringkatIpt', 'pengkhususan', 'institusi', 'list_kelulusan'));
     }
 
     public function crop(Request $req)
@@ -423,8 +451,6 @@ class PenggunaController extends Controller
         
         $id_pmr = JK_PMR::where('user_id', $id)->first();
 
-        // dd($id_pmr->id);
-
         JK_PMR::where('user_id', $id)->update([
             'jenis' => $req->jenis,
             'tahun' => $req->tahun,
@@ -506,6 +532,14 @@ class PenggunaController extends Controller
         ]);
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
+
+            // for ($m = 0; $m < count($req->tambahan); $m++) {
+            //     $data = new KeputusanPMR();
+            //         $data->id_pmr = $id_pmr->id;
+            //         $data->matapelajaran = $req->input('tambahan.' . $m . '.matapelajaran');
+            //         $data->gred = $req->input('tambahan.' . $m . '.gred');
+            //         $data->save();
+            // }
 
             DB::table('jk_keputusan_spm')->insert([
                 'id_spm' => $id_spm->id,
@@ -602,6 +636,154 @@ class PenggunaController extends Controller
                 // ]);
             } else {
                 DB::table('jk_keputusan_spm_ulangan')->where('id', $id_keputusan)->update([
+                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                ]);
+            }
+        }
+
+        Session::flash('message', 'Maklumat Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function simpanstpm(Request $req)
+    { 
+        // dd($req->all());
+
+        $id_exam = JK_STPA::insertGetId([
+            'user_id' => Auth::user()->id,
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+            'created_at' => \Carbon\carbon::now(),
+        ]);
+         
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            DB::table('jk_keputusan_stpm')->insert([
+                'id_stpm' => $id_exam,
+                'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+
+        return back();
+    }
+
+    public function kemaskinistpm(Request $req)
+    {
+        $id = Auth::user()->id;
+        
+        $id_stpm = JK_STPA::where('user_id', $id)->first();
+
+        // dd($id_spm->id);
+
+        JK_STPA::where('user_id', $id)->update([
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+        ]);
+
+        for ($m = 0; $m < count($req->tambahan); $m++) {
+
+            DB::table('jk_keputusan_stpm')->insert([
+                'id_stpm' => $id_stpm->id,
+                'matapelajaran' => $req->input('tambahan.' . $m . '.matapelajaran'),
+                'gred' => $req->input('tambahan.' . $m . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
+
+            if (empty($id_keputusan)) {
+                // KeputusanSPM::insert([
+                //     'id_pmr' => $id_pmr->id,
+                //     'matapelajaran' => $req->input('tambahan.' . $i . '.matapelajaran'),
+                //     'gred' => $req->input('tambahan.' . $i . '.gred'),
+                //     'created_at' => \Carbon\Carbon::now()
+                // ]);
+            } else {
+                DB::table('jk_keputusan_stpm')->where('id', $id_keputusan)->update([
+                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                ]);
+            }
+        }
+
+        Session::flash('message', 'Maklumat Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function simpanstam(Request $req)
+    { 
+        // dd($req->all());
+
+        $id_exam = JK_STAM::insertGetId([
+            'user_id' => Auth::user()->id,
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+            'created_at' => \Carbon\carbon::now(),
+        ]);
+         
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            DB::table('jk_keputusan_stam')->insert([
+                'id_stam' => $id_exam,
+                'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+
+        return back();
+    }
+
+    public function kemaskinistam(Request $req)
+    {
+        $id = Auth::user()->id;
+        
+        $id_stam = JK_STAM::where('user_id', $id)->first();
+
+        // dd($id_spm->id);
+
+        JK_STAM::where('user_id', $id)->update([
+            'jenis' => $req->jenis,
+            'tahun' => $req->tahun,
+        ]);
+
+        for ($m = 0; $m < count($req->tambahan); $m++) {
+
+            DB::table('jk_keputusan_stam')->insert([
+                'id_stam' => $id_stam->id,
+                'matapelajaran' => $req->input('tambahan.' . $m . '.matapelajaran'),
+                'gred' => $req->input('tambahan.' . $m . '.gred'),
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+
+            $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
+
+            if (empty($id_keputusan)) {
+                // KeputusanSPM::insert([
+                //     'id_pmr' => $id_pmr->id,
+                //     'matapelajaran' => $req->input('tambahan.' . $i . '.matapelajaran'),
+                //     'gred' => $req->input('tambahan.' . $i . '.gred'),
+                //     'created_at' => \Carbon\Carbon::now()
+                // ]);
+            } else {
+                DB::table('jk_keputusan_stam')->where('id', $id_keputusan)->update([
                     'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
                     'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
                 ]);
@@ -718,6 +900,7 @@ class PenggunaController extends Controller
             'nama_skrol' => $req->namaSijil,
             'bidang_pengkhususan' => $req->pengkhususan,
             'tarikh_senat' => $req->tarikhSenat,
+            'created_at' => \Carbon\Carbon::now()
         ]);
 
         // Toast('Maklumat Disimpan', 'success')->position('top-end');

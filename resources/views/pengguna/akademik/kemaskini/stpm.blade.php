@@ -1,13 +1,13 @@
-@extends('layouts.app', ['page' => 'SPM ULANGAN', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
+@extends('layouts.app', ['page' => 'STPM', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-<form action="{{ url('kemaskini-spm-ulangan') }}" method="post">
+<form action="{{ url('kemaskini-stpm') }}" method="post">
     {{ csrf_field() }}
     <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
             <div class="card mt-4" id="basic-info">
                 <div class="card-header">
-                    <h5>KEPUTUSAN PEPERIKSAAN SPM ULANGAN</h5>
+                    <h5>KEPUTUSAN PEPERIKSAAN SIJIL TINGGI PERSEKOLAHAN MALAYSIA</h5>
                 </div>
                     <div class="card-body pt-0">
                         <div class="row 12">
@@ -22,8 +22,7 @@
                                     <label>Peperiksaan <span style="color: red">*</span></label>
                                     <select class="form-control" id="jenis" name="jenis" required>
                                         <option value="">Sila Pilih</option>
-                                        <option value="SPM" {{ 'SPM' == $spmu->jenis ? 'selected' : '' }}>SPM</option>
-                                        <option value="SPMV" {{ 'SPMV' == $spmu->jenis ? 'selected' : '' }}>SPMV</option>
+                                        <option value="STPM" {{ 'STPM' == $stpmm->jenis ? 'selected' : '' }}>STPM</option>
                                     </select>
                                 </div>
                             </div>
@@ -66,24 +65,24 @@
                             @php
                                 $i = 0;
                             @endphp
-                            @if (count($k_spm)>0)
-                                @foreach ($k_spm as $kspm)
+                            @if (count($k_stpm)>0)
+                                @foreach ($k_stpm as $kstpm)
                                     <tr class="align-middle">
                                         {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                         <td>
-                                            <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kspm->id }}">
+                                            <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kstpm->id }}">
                                             <select class="form-control" id="matapelajaran" name="addMoreInputFields[{{ $i }}][matapelajaran]" required>
                                                 <option value="">Sila Pilih</option>
-                                                @foreach ($mtspm as $spm)
-                                                    <option value="{{ $spm->id }}" {{ $spm->id == $kspm->matapelajaran? 'selected' : '' }}>{{ $spm->subjek }}</option>
+                                                @foreach ($mtstpm as $mstpm)
+                                                    <option value="{{ $mstpm->id }}" {{ $mstpm->id == $kstpm->matapelajaran? 'selected' : '' }}>{{ $mstpm->subjek }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
                                         <td class="text-center">
                                             <select class="form-control" id="gred" name="addMoreInputFields[{{ $i }}][gred]" required>
                                                 <option value="">Sila Pilih</option>
-                                                @foreach ($gredspm as $gred)
-                                                    <option value="{{ $gred->gred }}" {{ $gred->gred == $kspm->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
+                                                @foreach ($gredstpm as $gred)
+                                                    <option value="{{ $gred->gred }}" {{ $gred->gred == $kstpm->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
                                                 @endforeach
                                             </select>
                                         </td>
@@ -103,14 +102,14 @@
                             <tr class="align-middle">
                                 {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                 <td>
-                                     <select class="form-control" id="matapelajaran" name="tambahan[0][matapelajaran]" required>
-                                        <option value="1" selected>BAHASA MELAYU</option>
+                                    <select class="form-control" id="matapelajaran" name="tambahan[0][matapelajaran]" required>
+                                        <option value="3" selected>BAHASA MELAYU/BAHASA MALAYSIA</option>
                                     </select>
                                 </td>
                                 <td class="text-center">
                                     <select class="form-control" id="gred" name="tambahan[0][gred]" required>
                                         <option value="">Sila Pilih</option>
-                                        @foreach ($gredspm as $gred)
+                                        @foreach ($gredstpm as $gred)
                                             <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
                                         @endforeach
                                     </select>
@@ -122,7 +121,7 @@
                                         <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
                                     @endif
                                 </td>
-                            </tr>
+                            </tr> 
                             @endif
                         </tbody>
                     </table>
@@ -140,7 +139,7 @@
             if (bil == 0) {
             ++i;
            }
-            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="tambahan['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtspm as $spm) <option value="{{ $spm->id }}">{{ $spm->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="tambahan['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredspm as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
+            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="tambahan['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtstpm as $stpm) <option value="{{ $stpm->id }}">{{ $stpm->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="tambahan['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredstpm as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
             
             if (document.getElementById('matapelajaran_'+i)) {
                 var mp = document.getElementById('matapelajaran_'+i);
@@ -168,7 +167,7 @@
             const currentYear = new Date().getFullYear();
             // console.log(currentYear);
 
-            const selected_year = {{ $spmu->tahun }};
+            const selected_year = {{ $stpmm->tahun }};
             var tahun_awal = currentYear - 50;
 
             var year = document.getElementById('tahun-pilih');

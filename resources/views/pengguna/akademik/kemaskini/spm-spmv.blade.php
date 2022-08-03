@@ -66,23 +66,52 @@
                             @php
                                 $i = 0;
                             @endphp
-                            @foreach ($k_spm as $kspm)
+                            @if (count($k_spm)>0)
+                                @foreach ($k_spm as $kspm)
+                                    <tr class="align-middle">
+                                        {{-- <td class="text-center">{{ $i++ }}</td> --}}
+                                        <td>
+                                            <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kspm->id }}">
+                                            <select class="form-control" id="matapelajaran" name="addMoreInputFields[{{ $i }}][matapelajaran]" required>
+                                                <option value="">Sila Pilih</option>
+                                                @foreach ($mtspm as $spm)
+                                                    <option value="{{ $spm->id }}" {{ $spm->id == $kspm->matapelajaran? 'selected' : '' }}>{{ $spm->subjek }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="text-center">
+                                            <select class="form-control" id="gred" name="addMoreInputFields[{{ $i }}][gred]" required>
+                                                <option value="">Sila Pilih</option>
+                                                @foreach ($gredspm as $gred)
+                                                    <option value="{{ $gred->gred }}" {{ $gred->gred == $kspm->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td class="text-center ">
+                                            @if ($i == 0)
+                                            <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
+                                            @elseif ($i > 0)
+                                                <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $i++;
+                                    @endphp
+                                @endforeach
+                            @else
                             <tr class="align-middle">
                                 {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                 <td>
-                                    <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kspm->id }}">
-                                    <select class="form-control" id="matapelajaran" name="addMoreInputFields[{{ $i }}][matapelajaran]" required>
-                                        <option value="">Sila Pilih</option>
-                                        @foreach ($mtspm as $spm)
-                                            <option value="{{ $spm->id }}" {{ $spm->id == $kspm->matapelajaran? 'selected' : '' }}>{{ $spm->subjek }}</option>
-                                        @endforeach
+                                     <select class="form-control" id="matapelajaran" name="tambahan[0][matapelajaran]" required>
+                                         <option value="1" selected>BAHASA MELAYU</option>
                                     </select>
                                 </td>
                                 <td class="text-center">
-                                    <select class="form-control" id="gred" name="addMoreInputFields[{{ $i }}][gred]" required>
+                                    <select class="form-control" id="gred" name="tambahan[0][gred]" required>
                                         <option value="">Sila Pilih</option>
                                         @foreach ($gredspm as $gred)
-                                            <option value="{{ $gred->gred }}" {{ $gred->gred == $kspm->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
+                                            <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -94,10 +123,7 @@
                                     @endif
                                 </td>
                             </tr>
-                            @php
-                                $i++;
-                            @endphp
-                            @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -109,10 +135,12 @@
 @section('script')
     <script>
         var i = 0;
+        var bil = {{ $bil_subjek }};
         $("#tambahrow").click(function() {
+            if (bil == 0) {
             ++i;
-            
-            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="addMoreInputFields['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtspm as $spm) <option value="{{ $spm->id }}">{{ $spm->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="addMoreInputFields['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredspm as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
+           }
+            $("table").append('<tr class="align-middle"> <td><select class="form-control" id="matapelajaran_'+i+'"  name="tambahan['+ i +'][matapelajaran]" required><option value="">Sila Pilih</option>@foreach ($mtspm as $spm) <option value="{{ $spm->id }}">{{ $spm->subjek }}</option>@endforeach</select></td><td class="text-center"><select class="form-control" id="gred_'+i+'" name="tambahan['+ i +'][gred]" required><option value="">Sila Pilih</option>@foreach ($gredspm as $gred)<option value="{{ $gred->gred }}">{{ $gred->gred }}</option>@endforeach</select></td><td class="text-center"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></td></tr>');
             
             if (document.getElementById('matapelajaran_'+i)) {
                 var mp = document.getElementById('matapelajaran_'+i);
@@ -126,6 +154,9 @@
                     shouldSort: false
                 });
             }
+            if (bil>0) {
+            ++i;
+           }
         });
 
         $(document).on('click', '.remove-input-field', function() {

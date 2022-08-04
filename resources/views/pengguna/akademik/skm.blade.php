@@ -133,6 +133,7 @@
             const example = new Choices(gender, {
                 position: 'bottom',
                 shouldSort: false,
+                allowHTML: true,
             });
         }
         if (document.getElementById('choices-gred')) {
@@ -140,6 +141,7 @@
             const example = new Choices(gender, {
                 position: 'bottom',
                 shouldSort: false,
+                allowHTML: true,
             });
         }
 
@@ -152,7 +154,8 @@
             var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
                 const example = new Choices(year, {
-                    shouldSort: false
+                    shouldSort: false,
+                    allowHTML: true,
                 });
             }, 1);
 

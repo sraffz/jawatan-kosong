@@ -134,6 +134,7 @@
             const example = new Choices(gender, {
                 position: 'bottom',
                 shouldSort: false,
+                allowHTML: true,
             });
         }
         if (document.getElementById('choices-gred')) {
@@ -141,6 +142,7 @@
             const example = new Choices(gender, {
                 position: 'bottom',
                 shouldSort: false,
+                allowHTML: true,
             });
         }
     </script>

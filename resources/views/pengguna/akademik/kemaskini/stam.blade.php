@@ -147,12 +147,14 @@
             if (document.getElementById('matapelajaran_'+i)) {
                 var mp = document.getElementById('matapelajaran_'+i);
                 const example = new Choices(mp, {
+                    allowHTML: true,
                     shouldSort: false
                 });
             }
             if (document.getElementById('gred_'+i)) {
                 var gred = document.getElementById('gred_'+i);
                 const example = new Choices(gred, {
+                    allowHTML: true,
                     shouldSort: false
                 });
             }
@@ -176,6 +178,7 @@
             var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
                 const example = new Choices(year, {
+                   allowHTML: true,
                     shouldSort: true
                 });
             }, 1);
@@ -196,35 +199,40 @@
         if (document.getElementById('matapelajaran')) {
             var mp = document.getElementById('matapelajaran');
             const example = new Choices(mp, {
-                shouldSort: false
+                shouldSort: false,
+                allowHTML: true,
             });
         }
 
         if (document.getElementById('gred')) {
             var gred = document.getElementById('gred');
             const example = new Choices(gred, {
-                shouldSort: false
+                shouldSort: false,
+                allowHTML: true,
             });
         }
 
         if (document.getElementById('jenis')) {
             var jenis = document.getElementById('jenis');
             const example = new Choices(jenis, {
-                shouldSort: false
+                shouldSort: false,
+                allowHTML: true,
             });
         }
 
         if (document.getElementById('matapelajaran2')) {
             var mp = document.getElementById('matapelajaran2');
             const example = new Choices(mp, {
-                shouldSort: false
+                shouldSort: false,
+                allowHTML: true,
             });
         }
 
         if (document.getElementById('gred2')) {
             var gred = document.getElementById('gred2');
             const example = new Choices(gred, {
-                shouldSort: false
+                shouldSort: false,
+                allowHTML: true,
             });
         }
     </script>

@@ -35,9 +35,11 @@
     <link id="stylesheet" href="{{ asset('ijaboCropTool/ijaboCropTool.min.css') }}" rel="stylesheet" />
 
     <link id="stylesheet" href="{{ asset('plugin/notyf/notyf.min.css') }}" rel="stylesheet" />
-    <!-- select2 -->
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css' />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('plugin/select2/css/select2.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugin/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
     <!-- datatable -->
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
@@ -183,21 +185,22 @@
         <!-- Notyf -->
         <script src="{{ asset('plugin/notyf/notyf.min.js') }}"></script>
 
-        <!-- select2 -->
-        {{-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js'></script> --}}
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js'></script>
+        <!-- Select2 -->
+        <script src="{{ asset('plugin/select2/js/select2.full.min.js') }}"></script>
 
         <script>
-            $(document).ready(function domReady() {
-                $(".js-select2").select2({
-                    placeholder: "Pick states",
-                    theme: "boostrapBs4"
+            $(function() {
+                //Initialize Select2 Elements
+                $('.select2').select2();
+
+                //Initialize Select2 Elements
+                $('.select2bs4').select2({
+                    theme: 'bootstrap4',
+                 });
+                $('.select2bs4-modal').select2({
+                    theme: 'bootstrap4',
+                    dropdownParent: $('.modal')
                 });
-
-
-                $(".select2-selection__arrow").
-                addClass("material-icons").
-                html("arrow_drop_down");
             });
         </script>
 

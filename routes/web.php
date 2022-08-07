@@ -162,6 +162,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('kemaskini-stam', 'PenggunaController@kemaskinistam')->name('kemaskini-stam');
     Route::post('kemaskini-matrikulasi', 'PenggunaController@kemaskinimatrikulasi')->name('kemaskini-matrikulasi');
     Route::post('kemaskini-svm', 'PenggunaController@kemaskinisvm')->name('kemaskini-svm');
+    Route::post('kemaskini-ipt', 'PenggunaController@kemaskiniipt')->name('kemaskini-ipt');
 
     Route::get('padam-skm', 'PenggunaController@padamskm')->name('padam-skm');
 });

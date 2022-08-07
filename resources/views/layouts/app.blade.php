@@ -55,7 +55,7 @@
         }
 
         .datepicker2 {
-            z-index: 100000 !important;
+            z-index: 80000 !important;
             /* has to be larger than 1050 */
         }
 

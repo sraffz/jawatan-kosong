@@ -235,7 +235,9 @@ class PenggunaController extends Controller
         $pengkhususan = $this->pengkhususan();
         $institusi = $this->institusi();
 
-        $list_kelulusan = JK_Pengajian_Tinggi::where('user_id' , Auth::user()->id)->get();
+        $list_kelulusan = JK_Pengajian_Tinggi::select('jk_pengajian_tinggi.*','jk_peringkat_ipt.peringkat')
+        ->leftjoin('jk_peringkat_ipt', 'jk_peringkat_ipt.id', '=', 'jk_pengajian_tinggi.kelulusan')
+        ->where('user_id' , Auth::user()->id)->get();
 
         return view('pengguna.akademik.pengajian-tinggi', compact('peringkatIpt', 'pengkhususan', 'institusi', 'list_kelulusan'));
     }
@@ -905,6 +907,27 @@ class PenggunaController extends Controller
 
         // Toast('Maklumat Disimpan', 'success')->position('top-end');
         Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function kemaskiniipt(Request $req)
+    {
+        $id = $req->id_kelulusan;
+
+        JK_Pengajian_Tinggi::where('id', $id)
+        ->update([
+            'kelulusan' => $req->peringkat,
+            'institusi' => $req->institusi,
+            'cgpa' => $req->cgpa,
+            'tahun_graduasi' => $req->tahunGrad,
+            'nama_skrol' => $req->namaSijil,
+            'bidang_pengkhususan' => $req->pengkhususan,
+            'tarikh_senat' => $req->tarikhSenat,
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
+
+        Session::flash('message', 'Maklumat Dikemaskini'); 
         Session::flash('alert-class', 'success'); 
         return back();
     }

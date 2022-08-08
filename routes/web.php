@@ -165,5 +165,6 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('kemaskini-ipt', 'PenggunaController@kemaskiniipt')->name('kemaskini-ipt');
 
     Route::get('padam-skm', 'PenggunaController@padamskm')->name('padam-skm');
+    Route::get('padam-ipt', 'PenggunaController@padamipt')->name('padam-ipt');
 });
 

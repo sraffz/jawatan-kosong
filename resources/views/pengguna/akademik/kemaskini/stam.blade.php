@@ -44,90 +44,92 @@
                 <div class="card-header">
                 </div>
                 <div class="card-body pt-0">
-                    <table class="table table-sm table-striped table-bordered">
-                        <thead class=" ">
-                            <tr>
-                                {{-- <th class="text-uppercase text-center text-secondary text-sm font-weight-bolder w-5">
-                                    Bil
-                                </th> --}}
-                                <th class="text-uppercase text-secondary text-sm font-weight-bolder ps-2">
-                                    MATA PELAJARAN
-                                </th>
-                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder w-15">
-                                    GRED
-                                </th>
-                                <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder w-5">
-                                    tindakan
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $i = 0;
-                            @endphp
-                            @if (count($k_stam)>0)
-                                @foreach ($k_stam as $kstam)
-                                    <tr class="align-middle">
-                                        {{-- <td class="text-center">{{ $i++ }}</td> --}}
-                                        <td>
-                                            <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kstam->id }}">
-                                            <select class="form-control" id="matapelajaran" name="addMoreInputFields[{{ $i }}][matapelajaran]" required>
-                                                <option value="">Sila Pilih</option>
-                                                @foreach ($mtstam as $mstam)
-                                                    <option value="{{ $mstam->id }}" {{ $mstam->id == $kstam->matapelajaran? 'selected' : '' }}>{{ $mstam->subjek }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td class="text-center">
-                                            <select class="form-control" id="gred" name="addMoreInputFields[{{ $i }}][gred]" required>
-                                                <option value="">Sila Pilih</option>
-                                                @foreach ($gredstam as $gred)
-                                                    <option value="{{ $gred->gred }}" {{ $gred->gred == $kstam->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
-                                                @endforeach
-                                            </select>
-                                        </td>
-                                        <td class="text-center ">
-                                            @if ($i == 0)
-                                            <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
-                                            @elseif ($i > 0)
-                                                <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    @php
-                                        $i++;
-                                    @endphp
-                                @endforeach
-                            @else
-                            <tr class="align-middle">
-                                {{-- <td class="text-center">{{ $i++ }}</td> --}}
-                                <td>
-                                    <select class="form-control" id="matapelajaran" name="tambahan[0][matapelajaran]" required>
-                                        <option value="">Sila Pilih</option>
-                                        @foreach ($mtstam as $mstam)
-                                            <option value="{{ $mstam->id }}">{{ $mstam->subjek }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td class="text-center">
-                                    <select class="form-control" id="gred" name="tambahan[0][gred]" required>
-                                        <option value="">Sila Pilih</option>
-                                        @foreach ($gredstam as $gred)
-                                            <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td class="text-center ">
-                                    @if ($i == 0)
-                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
-                                    @elseif ($i > 0)
-                                        <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
-                                    @endif
-                                </td>
-                            </tr> 
-                            @endif
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped table-bordered">
+                            <thead class=" ">
+                                <tr>
+                                    {{-- <th class="text-uppercase text-center text-secondary text-sm font-weight-bolder w-5">
+                                        Bil
+                                    </th> --}}
+                                    <th class="text-uppercase text-secondary text-sm font-weight-bolder ps-2">
+                                        MATA PELAJARAN
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder w-15">
+                                        GRED
+                                    </th>
+                                    <th class="text-center text-uppercase text-secondary text-sm font-weight-bolder w-5">
+                                        tindakan
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $i = 0;
+                                @endphp
+                                @if (count($k_stam)>0)
+                                    @foreach ($k_stam as $kstam)
+                                        <tr class="align-middle">
+                                            {{-- <td class="text-center">{{ $i++ }}</td> --}}
+                                            <td>
+                                                <input type="hidden" name="addMoreInputFields[{{ $i }}][id_keputusan]" id="id_keputusan" value="{{ $kstam->id }}">
+                                                <select class="form-control select2bs4" name="addMoreInputFields[{{ $i }}][matapelajaran]" required>
+                                                    <option value="">Sila Pilih</option>
+                                                    @foreach ($mtstam as $mstam)
+                                                        <option value="{{ $mstam->id }}" {{ $mstam->id == $kstam->matapelajaran? 'selected' : '' }}>{{ $mstam->subjek }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td class="text-center">
+                                                <select class="form-control select2bs4" name="addMoreInputFields[{{ $i }}][gred]" required>
+                                                    <option value="">Sila Pilih</option>
+                                                    @foreach ($gredstam as $gred)
+                                                        <option value="{{ $gred->gred }}" {{ $gred->gred == $kstam->gred ? 'selected' : '' }}>{{ $gred->gred }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td class="text-center ">
+                                                @if ($i == 0)
+                                                <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
+                                                @elseif ($i > 0)
+                                                    <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @php
+                                            $i++;
+                                        @endphp
+                                    @endforeach
+                                @else
+                                <tr class="align-middle">
+                                    {{-- <td class="text-center">{{ $i++ }}</td> --}}
+                                    <td>
+                                        <select class="form-control" id="matapelajaran" name="tambahan[0][matapelajaran]" required>
+                                            <option value="">Sila Pilih</option>
+                                            @foreach ($mtstam as $mstam)
+                                                <option value="{{ $mstam->id }}">{{ $mstam->subjek }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td class="text-center">
+                                        <select class="form-control" id="gred" name="tambahan[0][gred]" required>
+                                            <option value="">Sila Pilih</option>
+                                            @foreach ($gredstam as $gred)
+                                                <option value="{{ $gred->gred }}">{{ $gred->gred }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td class="text-center ">
+                                        @if ($i == 0)
+                                        <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
+                                        @elseif ($i > 0)
+                                            <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
+                                        @endif
+                                    </td>
+                                </tr> 
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,8 @@
-@extends('layouts.app', ['page' => 'Pengalaman', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
-Kelantan'])
+@extends('layouts.app', [
+    'page' => 'Pengalaman',
+    'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri
+Kelantan',
+])
 
 @section('content')
     <div class="row mb-4">
@@ -36,7 +39,8 @@ Kelantan'])
                                                 class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
                                                 Bil
                                             </th>
-                                            <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                                            <th
+                                                class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
                                                 nama jawatan
                                             </th>
                                             <th
@@ -84,18 +88,21 @@ Kelantan'])
                                                     {{ \Carbon\Carbon::parse($pnglm->akhir_kerja)->format('d/m/Y') }}
                                                     <br>
                                                     @php
-                                                        $tempoh = \Carbon\Carbon::parse($pnglm->akhir_kerja)->diff(\Carbon\Carbon::parse($pnglm->mula_kerja))->format('%y Tahun, %m Bulan');
+                                                        $tempoh = \Carbon\Carbon::parse($pnglm->akhir_kerja)
+                                                            ->diff(\Carbon\Carbon::parse($pnglm->mula_kerja))
+                                                            ->format('%y Tahun, %m Bulan');
                                                     @endphp
                                                     ({{ $tempoh }})
                                                 </td>
                                                 <td class="text-start text-uppercase ">
                                                     <span class="font-weight-bold text-sm text-wrap text-break">
-                                                        {{ $pnglm->tugas }}  
-                                                     </span>
+                                                        {{ $pnglm->tugas }}
+                                                    </span>
                                                 </td>
                                                 <td class="text-center">
                                                     <span type="button" class="btn btn-sm btn-outline-info"
-                                                        data-bs-toggle="modal" data-bs-target="#kemaskini_{{ $pnglm->id }}">
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#kemaskini_{{ $pnglm->id }}">
                                                         <span class="material-icons">
                                                             edit
                                                         </span>
@@ -106,7 +113,7 @@ Kelantan'])
                                                             delete
                                                         </span>
                                                     </span>
-    
+
                                                     <!-- Modal Kemaskini-->
                                                     <div class="modal fade" id="kemaskini_{{ $pnglm->id }}"
                                                         tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
@@ -131,7 +138,8 @@ Kelantan'])
                                                                             <div class=" ">
                                                                                 <div class="input-group input-group-static">
                                                                                     <label>Jawatan</label>
-                                                                                    <input type="text" name="nama_jawatan"
+                                                                                    <input type="text"
+                                                                                        name="nama_jawatan"
                                                                                         class="form-control upcase"
                                                                                         placeholder="Jawatan"
                                                                                         value="{{ $pnglm->nama_jawatan }}"
@@ -141,7 +149,8 @@ Kelantan'])
                                                                             <div class="mt-2">
                                                                                 <div class="input-group input-group-static">
                                                                                     <label>Taraf Lantikan</label>
-                                                                                    <input type="text" name="taraf_jawatan"
+                                                                                    <input type="text"
+                                                                                        name="taraf_jawatan"
                                                                                         class="form-control upcase"
                                                                                         placeholder="Tetap/Kontrak/Sambilan"
                                                                                         value="{{ $pnglm->taraf_jawatan }}"
@@ -160,10 +169,23 @@ Kelantan'])
                                                                             <div class="mt-2">
                                                                                 <div class="input-group input-group-static">
                                                                                     <label>Alamat Majikan</label>
-                                                                                    <input type="text" name="alamat_majikan"
+                                                                                    <input type="text"
+                                                                                        name="alamat_majikan"
                                                                                         class="form-control upcase"
                                                                                         value="{{ $pnglm->alamat_majikan }}"
                                                                                         required>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row mt-2">
+                                                                                <div class="col-lg-4">
+                                                                                    <div class="form-check">
+                                                                                        <input class="form-check-input"
+                                                                                            type="checkbox" value="1"
+                                                                                            id="fcustomCheck1">
+                                                                                        <label class="custom-control-label"
+                                                                                            for="customCheck1">Masih
+                                                                                            Berkhidmat</label>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row mt-2">
@@ -173,33 +195,36 @@ Kelantan'])
                                                                                             class="input-group input-group-static">
                                                                                             <label>Tarikh Mula
                                                                                                 Berkhidmat</label>
-                                                                                            <input type="date" name="mula_kerja"
-                                                                                                class="form-control datepicker"
-                                                                                                value="{{ $pnglm->mula_kerja }}"
+                                                                                            <input type="text"
+                                                                                                name="mula_kerja"
+                                                                                                class="form-control datepicker2"
+                                                                                                value="{{ \Carbon\Carbon::parse($pnglm->mula_kerja)->format('d-m-Y') }}"
                                                                                                 required>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
+
                                                                                 <div class="col-lg-6">
                                                                                     <div class="mb-3">
                                                                                         <div
                                                                                             class="input-group input-group-static">
                                                                                             <label>Tarikh Akhir
                                                                                                 Berkhidmat</label>
-                                                                                            <input type="date"
-                                                                                                name="akhir_kerja"
-                                                                                                class="form-control datepicker"
-                                                                                                value="{{ $pnglm->akhir_kerja }}"
+                                                                                            <input type="text"
+                                                                                                name="akhir_kerja"  
+                                                                                                class="form-control datepicker2 akhir_kerja"
+                                                                                                value="{{ \Carbon\Carbon::parse($pnglm->akhir_kerja)->format('d-m-Y') }}"
                                                                                                 required>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="mt-2">
-                                                                                <div class="input-group input-group-static">
-                                                                                    <label>Ringkasan Tugas-tugas Jawatan</label>
-                                                                                    <textarea class="form-control upcase" name="tugas" id="tugas" cols="30" rows="5"
-                                                                                        required>{{ $pnglm->tugas }}</textarea>
+                                                                                <div
+                                                                                    class="input-group input-group-static">
+                                                                                    <label>Ringkasan Tugas-tugas
+                                                                                        Jawatan</label>
+                                                                                    <textarea class="form-control upcase" name="tugas" id="tugas" cols="30" rows="5" required>{{ $pnglm->tugas }}</textarea>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -214,14 +239,16 @@ Kelantan'])
                                                             </div>
                                                         </div>
                                                     </div>
-    
+
                                                     <!-- Modal Padam-->
-                                                    <div class="modal fade" id="padam_{{ $pnglm->id }}" tabindex="-1"
-                                                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                                                    <div class="modal fade" id="padam_{{ $pnglm->id }}"
+                                                        tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+                                                        aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title modal-title font-weight-normal">Padam
+                                                                    <h5 class="modal-title modal-title font-weight-normal">
+                                                                        Padam
                                                                         Pengalaman</h5>
                                                                     <button type="button" class="btn-close text-dark"
                                                                         data-bs-dismiss="modal" aria-label="Close">
@@ -238,7 +265,8 @@ Kelantan'])
                                                                 <form action="{{ url('padam-pengalaman', [$pnglm->id]) }}"
                                                                     method="get">
                                                                     {{ csrf_field() }}
-                                                                    <input type="hidden" name="id" value="{{ $pnglm->id }}">
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $pnglm->id }}">
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-dark"
                                                                             data-bs-dismiss="modal">Batal</button>
@@ -280,8 +308,8 @@ Kelantan'])
                             <div class=" ">
                                 <div class="input-group input-group-static">
                                     <label>Jawatan</label>
-                                    <input type="text" name="nama_jawatan" class="form-control upcase" placeholder="Jawatan"
-                                        required>
+                                    <input type="text" name="nama_jawatan" class="form-control upcase"
+                                        placeholder="Jawatan" required>
                                 </div>
                             </div>
                             <div class="mt-2">
@@ -308,7 +336,8 @@ Kelantan'])
                                     <div class="mb-3">
                                         <div class="input-group input-group-static">
                                             <label>Tarikh Mula Berkhidmat</label>
-                                            <input type="date" name="mula_kerja" class="form-control datepicker" required>
+                                            <input type="text" name="mula_kerja" class="form-control datepicker2"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
@@ -316,7 +345,8 @@ Kelantan'])
                                     <div class="mb-3">
                                         <div class="input-group input-group-static">
                                             <label>Tarikh Akhir Berkhidmat</label>
-                                            <input type="date" name="akhir_kerja" class="form-control datepicker" required>
+                                            <input type="text" name="akhir_kerja" class="form-control datepicker2"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
@@ -347,7 +377,23 @@ Kelantan'])
 
         $(".datepicker").datepicker({
             weekStart: 1,
+            changeMonth: true,
+            changeYear: true,
             dateFormat: 'dd-mm-yy',
+        });
+
+        $(".datepicker2").datepicker({
+            weekStart: 1,
+            dateFormat: 'dd-mm-yy',
+            changeMonth: true,
+            changeYear: true,
+            dropdownParent: $('.modal')
+        });
+
+        $(function() {
+            $('#fcustomCheck1').on('click', function() {
+                $('.akhir_kerja').attr('disabled', $(this).is(':checked'));
+            });
         });
     </script>
 @endsection

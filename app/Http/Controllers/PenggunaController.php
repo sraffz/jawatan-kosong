@@ -237,7 +237,8 @@ class PenggunaController extends Controller
 
         $list_kelulusan = JK_Pengajian_Tinggi::select('jk_pengajian_tinggi.*','jk_peringkat_ipt.peringkat')
         ->leftjoin('jk_peringkat_ipt', 'jk_peringkat_ipt.id', '=', 'jk_pengajian_tinggi.kelulusan')
-        ->where('user_id' , Auth::user()->id)->get();
+        ->where('user_id' , Auth::user()->id)
+        ->orderBy('jk_pengajian_tinggi.kelulusan', 'ASC')->get();
 
         return view('pengguna.akademik.pengajian-tinggi', compact('peringkatIpt', 'pengkhususan', 'institusi', 'list_kelulusan'));
     }
@@ -373,8 +374,8 @@ class PenggunaController extends Controller
         $data->majikan = $req->majikan;
         $data->alamat_majikan = $req->alamat_majikan;
         $data->taraf_jawatan = $req->taraf_jawatan;
-        $data->mula_kerja = $req->mula_kerja;
-        $data->akhir_kerja = $req->akhir_kerja;
+        $data->mula_kerja = \Carbon\Carbon::parse($req->mula_kerja)->format('Y-m-d');
+        $data->akhir_kerja = \Carbon\Carbon::parse($req->akhir_kerja)->format('Y-m-d');
         $data->tugas = $req->tugas;
         $data->save();
 
@@ -392,8 +393,8 @@ class PenggunaController extends Controller
             'majikan' => $req->majikan,
             'alamat_majikan' => $req->alamat_majikan,
             'taraf_jawatan' => $req->taraf_jawatan,
-            'mula_kerja' => $req->mula_kerja,
-            'akhir_kerja' => $req->akhir_kerja,
+            'mula_kerja' => \Carbon\Carbon::parse($req->mula_kerja)->format('Y-m-d'),
+            'akhir_kerja' => \Carbon\Carbon::parse($req->akhir_kerja)->format('Y-m-d'),
             'tugas' => $req->tugas,
         ]);
 
@@ -929,6 +930,19 @@ class PenggunaController extends Controller
 
         Session::flash('message', 'Maklumat Dikemaskini'); 
         Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function padamipt(Request $req)
+    {
+        $id = $req->id_keputusan;
+ 
+        JK_Pengajian_Tinggi::where('id', $id)
+        ->delete();
+
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
+
         return back();
     }
 

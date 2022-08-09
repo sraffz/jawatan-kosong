@@ -121,6 +121,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/tetapan', 'HomeController@tetapan')->name('tetapan');
     
     Route::get('/iklan-jawatan', 'PenggunaController@iklan')->name('iklan');
+    Route::get('/butiran-iklan/{id}', 'PenggunaController@butiraniklan')->name('butiran-iklan');
     Route::get('/maklumat-diri', 'PenggunaController@maklumatdiri')->name('maklumat-diri');
     Route::get('/pengalaman', 'PenggunaController@pengalaman')->name('pengalaman');
     Route::get('/pengesahan', 'PenggunaController@pengesahan')->name('pengesahan');
@@ -166,5 +167,10 @@ Route::middleware(['auth:web'])->group(function () {
 
     Route::get('padam-skm', 'PenggunaController@padamskm')->name('padam-skm');
     Route::get('padam-ipt', 'PenggunaController@padamipt')->name('padam-ipt');
+    Route::get('padam-mp-pt3', 'PenggunaController@padampt3')->name('padam-mp-pt3');
+    Route::get('padam-mp-spm', 'PenggunaController@padamspm')->name('padam-mp-spm');
+    Route::get('padam-mp-spmu', 'PenggunaController@padamspmu')->name('padam-mp-spmu');
+    Route::get('padam-mp-stam', 'PenggunaController@padamstam')->name('padam-mp-stam');
+    Route::get('padam-mp-stpm', 'PenggunaController@padamstpm')->name('padam-mp-stpm');
 });
 

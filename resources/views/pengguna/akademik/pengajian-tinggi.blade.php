@@ -11,7 +11,7 @@
         </div>
         <!-- Modal -->
         <div class="modal fade " id="tambahKelulusan" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Tambah Keputusan</h5>
@@ -261,7 +261,7 @@
       <!-- Modal Padam-->
       <div class="modal fade" id="padamipt" tabindex="-1"
         role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Padam Keputusan Pengajian Tinggi</h5>

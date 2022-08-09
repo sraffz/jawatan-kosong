@@ -91,7 +91,8 @@
                                                 @if ($i == 0)
                                                 <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i class="material-icons text-sm">add</i></button>
                                                 @elseif ($i > 0)
-                                                    <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button>
+                                                <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2" data-bs-id="{{ $kstpm->id }}" data-bs-toggle="modal" data-bs-target="#padammatapelajara"><span class="material-icons">delete</span></button>
+                                                    {{-- <button type="button" class="btn btn-outline-danger id-padam btn-sm remove-input-field-2"><span class="material-icons">delete</span></button> --}}
                                                 @endif
                                             </td>
                                         </tr>
@@ -132,8 +133,46 @@
         </div>
     </div>
 </form>
+<!-- Modal Padam matapelajaran-->
+<div class="modal fade" id="padammatapelajara" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                        <h5 class="modal-title">Pada Matapelajaran</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="{{ url('padam-mp-stpm') }}" method="get">
+                        {{ csrf_field() }}
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <input type="hidden" name="id_keputusan" id="id_keputusan" value="">
+                                Padam matapelajaran ini?
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Padam</button>
+                        </div>
+                </form>
+        </div>
+    </div>
+</div>
 @endsection
 @section('script')
+<script>
+    var padammatapelajara = document.getElementById('padammatapelajara');
+
+    padammatapelajara.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        let button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        let recipient = button.getAttribute('data-bs-whatever');
+        let id = button.getAttribute('data-bs-id');
+
+        // Use above variables to manipulate the DOM
+        $('.modal-body #id_keputusan').val(id);
+    });
+</script>
     <script>
         var i = 0;
         var bil = {{ $bil_subjek }};
@@ -177,12 +216,12 @@
             var year = document.getElementById('tahun-pilih');
             setTimeout(function() {
                 const example = new Choices(year, {
-                    shouldSort: true,
+                    shouldSort: false,
                     allowHTML: true,
                 });
             }, 1);
-
-            for (y = tahun_awal; y <= currentYear; y++) {
+            
+            for (y = currentYear;  y >= tahun_awal ; y--) {
                 var optn = document.createElement("OPTION");
                 optn.text = y;
                 optn.value = y;

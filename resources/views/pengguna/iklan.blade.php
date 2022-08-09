@@ -63,10 +63,14 @@
                                                 </td>
     
                                                 <td class="text-center">
-                                                    <span type="button" class="badge bg-gradient-info" data-bs-toggle="modal"
+                                                    <a name="" id="" class="btn bg-gradient-info btn-sm mt-2" href="{{ url('butiran-iklan', [$ikl->id]) }}" role="button">Butiran</a>
+                                                    {{-- <a type="button" class="badge bg-gradient-info" href="{{ url('butiran-iklan', [$ikl->id]) }}">
+                                                        Butiran
+                                                    </a> --}}
+                                                    {{-- <span type="button" class="badge bg-gradient-info" data-bs-toggle="modal"
                                                         data-bs-target="#modelId_{{ $ikl->bil }}">
                                                         Butiran
-                                                    </span>
+                                                    </span> --}}
     
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="modelId_{{ $ikl->bil }}" tabindex="-1" role="dialog"
@@ -85,10 +89,10 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <div class="table-responsive">
-                                                                        <table class="table table-sm  text-dark text-bold text-xs align-items-center mb-0">
+                                                                        <table class="table table-sm text-dark text-bold align-items-center mb-0">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Bil</th>
+                                                                                    <th class="w-10">Bil</th>
                                                                                     <th>Nama Jawatan</th>
                                                                                     <th>Taraf</th>
                                                                                     <th>Syarat</th>
@@ -103,21 +107,19 @@
                                                                                     @if ($ss->id_iklan == $ikl->id)
                                                                                         <tr class="align-items-center">
                                                                                             <td scope="row">{{ $d++ }}</td>
-                                                                                            <td> {{ $ss->nama_jawatan }}
+                                                                                            <td> 
+                                                                                                {{ $ss->nama_jawatan }}
                                                                                                 ({{ $ss->gred }})
                                                                                             </td>
                                                                                              <td class="text-uppercase">
                                                                                                 {{ $ss->taraf }}</td>
                                                                                             <td>
-                                                                                                <a class="badge badge-info"
-                                                                                                    href="{{ url('dl-syarat', [$ss->id]) }}"
-                                                                                                    role="button">
+                                                                                                <a class="badge badge-info mt-1" href="{{ url('dl-syarat', [$ss->id]) }}" role="button">
                                                                                                     <i class="material-icons">picture_as_pdf</i>
-                                                                                                     
                                                                                                 </a>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <a class="badge badge-primary active text-xs" href="#" role="button">Mohon</a>
+                                                                                                <a class="badge badge-primary active text-xs mt-2" href="#" role="button">Mohon</a>
                                                                                             </td>
                                                                                         </tr>
                                                                                     @endif

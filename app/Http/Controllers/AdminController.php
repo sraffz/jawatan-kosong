@@ -308,6 +308,10 @@ class AdminController extends Controller
             Alert::error('Tidak Berjaya', 'Tiada Fail');
             return back();
         }
+        else{
+            Alert::error('Tidak Berjaya', '');
+            return back();
+        }
     }
 
     public function kemaskinijawatan(Request $req)

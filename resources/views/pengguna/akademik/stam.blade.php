@@ -137,7 +137,7 @@
                 });
             }, 1);
 
-            for (y = tahun_awal; y <= currentYear; y++) {
+            for (y = currentYear;  y >= tahun_awal ; y--) {
                 var optn = document.createElement("OPTION");
                 optn.text = y;
                 optn.value = y;

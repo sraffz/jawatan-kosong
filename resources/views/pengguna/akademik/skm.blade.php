@@ -79,7 +79,7 @@
                                                         <div class="modal fade" id="padamskm-{{ $listskm->id }}"
                                                             tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
                                                             aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
                                                                 <form action="{{ url('padam-skm') }}" method="get">
                                                                     {{ csrf_field() }}
                                                                     <div class="modal-content">
@@ -159,7 +159,7 @@
                 });
             }, 1);
 
-            for (y = tahun_awal; y <= currentYear; y++) {
+            for (y = currentYear;  y >= tahun_awal ; y--) {
                 var optn = document.createElement("OPTION");
                 optn.text = y;
                 optn.value = y;
@@ -170,6 +170,8 @@
 
                 year.options.add(optn);
             }
+
+            
         }
     </script>
 @endsection

@@ -59,6 +59,17 @@ class PenggunaController extends Controller
         return view('pengguna.iklan', compact('iklan', 'syarat'));
     }
 
+    public function butiraniklan($id)
+    {
+        $iklan = Iklan::where('id', $id)->first();
+
+        $syarat = DB::table('senarai-syarat-jawatan')
+        ->where('id_iklan', $id)
+        ->get();
+
+        return view('pengguna.iklan.butiran', compact('syarat', 'iklan'));
+    }
+
     public function maklumatdiri()
     {
         $bil = JK_MaklumatDiri::where('user_id', Auth::user()->id)->count();
@@ -494,6 +505,17 @@ class PenggunaController extends Controller
         return back();
     }
 
+    public function padampt3(Request $req)
+    {
+        $id = $req->id_keputusan;
+        KeputusanPMR::where('id', $id)->delete();
+
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
+
+        return back();
+    }
+
     public function simpanspm(Request $req)
     { 
         // dd($req->all());
@@ -576,6 +598,18 @@ class PenggunaController extends Controller
         return back();
     }
 
+    public function padamspm(Request $req)
+    {
+        $id = $req->id_keputusan;
+
+        DB::table('jk_keputusan_spm')->where('id', $id)->delete();
+
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
+
+        return back();
+    }
+
     public function simpanspmulangan(Request $req)
     { 
         // dd($req->all());
@@ -647,6 +681,18 @@ class PenggunaController extends Controller
 
         Session::flash('message', 'Maklumat Dikemaskini'); 
         Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function padamspmu(Request $req)
+    {
+        $id = $req->id_keputusan;
+
+        DB::table('jk_keputusan_spm_ulangan')->where('id', $id)->delete();
+
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
+
         return back();
     }
 
@@ -724,6 +770,18 @@ class PenggunaController extends Controller
         return back();
     }
 
+    public function padamstpm(Request $req)
+    {
+        $id = $req->id_keputusan;
+
+        DB::table('jk_keputusan_stpm')->where('id', $id)->delete();
+
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
+
+        return back();
+    }
+
     public function simpanstam(Request $req)
     { 
         // dd($req->all());
@@ -795,6 +853,18 @@ class PenggunaController extends Controller
 
         Session::flash('message', 'Maklumat Dikemaskini'); 
         Session::flash('alert-class', 'success'); 
+        return back();
+    }
+
+    public function padamstam(Request $req)
+    {
+        $id = $req->id_keputusan;
+
+        DB::table('jk_keputusan_stam')->where('id', $id)->delete();
+
+        Session::flash('message', 'Maklumat Dipadam'); 
+        Session::flash('alert-class', 'error'); 
+
         return back();
     }
 

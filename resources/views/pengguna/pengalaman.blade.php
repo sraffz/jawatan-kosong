@@ -179,12 +179,8 @@ Kelantan',
                                                                             <div class="row mt-2">
                                                                                 <div class="col-lg-4">
                                                                                     <div class="form-check">
-                                                                                        <input class="form-check-input"
-                                                                                            type="checkbox" value="1"
-                                                                                            id="fcustomCheck1">
-                                                                                        <label class="custom-control-label"
-                                                                                            for="customCheck1">Masih
-                                                                                            Berkhidmat</label>
+                                                                                        <input class="form-check-input" type="checkbox" value="1" id="fcustomCheck1">
+                                                                                        <label class="custom-control-label" for="customCheck1">Masih Berkhidmat</label>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -210,9 +206,7 @@ Kelantan',
                                                                                             class="input-group input-group-static">
                                                                                             <label>Tarikh Akhir
                                                                                                 Berkhidmat</label>
-                                                                                            <input type="text"
-                                                                                                name="akhir_kerja"  
-                                                                                                class="form-control datepicker2 akhir_kerja"
+                                                                                            <input type="text" name="akhir_kerja" class="form-control datepicker2" id="akhir_kerja"
                                                                                                 value="{{ \Carbon\Carbon::parse($pnglm->akhir_kerja)->format('d-m-Y') }}"
                                                                                                 required>
                                                                                         </div>
@@ -392,7 +386,7 @@ Kelantan',
 
         $(function() {
             $('#fcustomCheck1').on('click', function() {
-                $('.akhir_kerja').attr('disabled', $(this).is(':checked'));
+                $('#akhir_kerja').attr('disabled', $(this).is(':checked'));
             });
         });
     </script>

@@ -10,6 +10,7 @@
                         <div class="py-30 text-center">
                             <div class="overflow-hidden rounded mb-20">
                                 <img class="img-fluid" src="images/tiada-iklan.jpg" alt="">
+                                @include('sub.button-login-register-2')
                             </div>
                         </div>
                     </div>

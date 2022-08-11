@@ -16,6 +16,7 @@ use App\JK_Gambar_Passport;
 use App\JK_MaklumatDiri;
 use App\JK_Pengalaman;
 use App\JK_Pengesahan;
+use App\JK_Permohonan;
 
 use App\JK_Pengajian_Tinggi;
 use App\JK_Matrikulasi;
@@ -100,9 +101,9 @@ class PenggunaController extends Controller
         return view('pengguna.pengalaman', compact('pengalaman', 'bil_pengalaman'));
     }
 
-    public function pengesahan()
+    public function maklumatTambahan()
     {
-        return view('pengguna.pengesahan');
+        return view('pengguna.maklumat-tambahan');
     }
 
     public function pt3()
@@ -422,6 +423,41 @@ class PenggunaController extends Controller
         // Toast('Maklumat Dipadam', 'success')->position('top-end');
         Session::flash('message', 'Maklumat Dipadam'); 
         Session::flash('alert-class', 'error'); 
+        return back();
+    }
+
+    public function simpanTambahan(Request $req)
+    {
+        $lesen = $req->lesen;
+        $inggeris = $req->tahap_inggeris;
+        $cina = $req->tahap_cina;
+        $arab = $req->tahap_arab;
+        $asing = $req->tahap_asing;
+
+        Session::flash('message', 'Maklumat Disimpan'); 
+        Session::flash('alert-class', 'success'); 
+
+        dd($lesen, $inggeris,$cina,$arab,$asing );
+        return back();
+    }
+
+    public function hantarPermohonan(Request $req)
+    {
+        $id_iklan = $req->id_iklan;
+        $id_jawatan = $req->id_jwtn;
+
+        $permohonan = new JK_Permohonan;
+        $permohonan->id_pengguna = Auth::user()->id;
+        $permohonan->id_iklan = $id_iklan;
+        $permohonan->id_iklan_jawatan = $id_jawatan;
+        $permohonan->tarikh_permohonan = \Carbon\Carbon::now();
+        $permohonan->perakuan = $req->pengesahan;
+        $permohonan->no_siri = 'SUK';
+        $permohonan->status = 'Baru';
+        $permohonan->save();
+
+        Session::flash('message', 'Permohonan telah berjaya dihantar'); 
+        Session::flash('alert-class', 'success'); 
         return back();
     }
 

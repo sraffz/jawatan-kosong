@@ -21,6 +21,7 @@ class CreateJKPermohonansTable extends Migration
             $table->date('tarikh_permohonan');
             $table->string('perakuan');
             $table->string('no_siri');
+            $table->string('status');
             $table->timestamps();
         });
     }

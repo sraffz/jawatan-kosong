@@ -106,7 +106,7 @@
                             <a class="nav-link text-white{{ $page == 'SPM ULANGAN' ? ' active bg-gradient-success' : '' }}"
                                 href="{{ route('akademik.spmu') }}">
                                 <span class="sidenav-mini-icon"> SU </span>
-                                <span class="sidenav-normal  ms-3  ps-1"> SPM ULANGAN </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> SPM Ulangan </span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -141,14 +141,14 @@
                             <a class="nav-link text-white{{ $page == 'MATRIKULASI' ? ' active bg-gradient-success' : '' }}"
                                 href="{{ route('akademik.matrikulasi') }}">
                                 <span class="sidenav-mini-icon"> M </span>
-                                <span class="sidenav-normal  ms-3  ps-1"> SIJIL MATRIKULASI </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> Sijil Matrikulasi </span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white {{ $page == 'PENGAJIAN TINGGI' ? ' active bg-gradient-success' : '' }}"
                                 href="{{ route('akademik.ipt') }}">
                                 <span class="sidenav-mini-icon"> PT </span>
-                                <span class="sidenav-normal  ms-3  ps-1"> PENGAJIAN TINGGI </span>
+                                <span class="sidenav-normal  ms-3  ps-1"> Pengajian Tinggi </span>
                             </a>
                         </li>
                     </ul>
@@ -162,10 +162,10 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $page == 'Pengesahan' ? ' active bg-gradient-success' : '' }}"
-                    href="{{ url('pengesahan') }}">
-                    <span class="sidenav-mini-icon"> P </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Pengesahan </span>
+                <a class="nav-link text-white {{ $page == 'Maklumat Tambahan' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('maklumat-tambahan') }}">
+                    <span class="sidenav-mini-icon"> MT </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Maklumat Tambahan </span>
                 </a>
             </li>
             {{-- @include('layouts.admin.sidebar22') --}}

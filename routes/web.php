@@ -124,7 +124,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/butiran-iklan/{id}', 'PenggunaController@butiraniklan')->name('butiran-iklan');
     Route::get('/maklumat-diri', 'PenggunaController@maklumatdiri')->name('maklumat-diri');
     Route::get('/pengalaman', 'PenggunaController@pengalaman')->name('pengalaman');
-    Route::get('/pengesahan', 'PenggunaController@pengesahan')->name('pengesahan');
+    Route::get('/maklumat-tambahan', 'PenggunaController@maklumatTambahan')->name('maklumat-tambahan');
 
     Route::get('/akademik/pt3-pmr-srp', 'PenggunaController@pt3')->name('PT3 /PMR / SRP');
     Route::get('/akademik/spm-spmv', 'PenggunaController@spm')->name('akademik.spm');
@@ -141,6 +141,9 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('kemaskini-maklumat-diri/{id}', 'PenggunaController@kemaskinimaklumatdiri')->name('kemaskini-maklumat-diri');
     Route::post('tambah-pengalaman', 'PenggunaController@tambahPengalaman')->name('tambah-pengalaman');
     Route::post('kemaskini-pengalaman/{id}', 'PenggunaController@kemaskiniPengalaman')->name('kemaskini-pengalaman');
+    Route::post('hantar-permohonan', 'PenggunaController@hantarPermohonan')->name('hantar-permohonan');
+    Route::post('simpan-tambahan', 'PenggunaController@simpanTambahan')->name('simpan-tambahan');
+
     Route::get('padam-pengalaman/{id}', 'PenggunaController@padamPengalaman')->name('padam-pengalaman');
     
     // Akademik

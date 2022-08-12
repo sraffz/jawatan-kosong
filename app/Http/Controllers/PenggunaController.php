@@ -474,7 +474,6 @@ class PenggunaController extends Controller
         $asing = $req->tahap_asing;
 
         JK_MaklumatTambahan::where('id', $id)->update([
-            'id_pengguna' => Auth::user()->id,
             'lesen' => implode(',', $lesen),
             'inggeris' => $inggeris,
             'cina' => $cina,

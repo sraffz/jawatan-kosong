@@ -19,7 +19,7 @@
                     <div class="card-body px-0">
                         <div class="container-fluid">
                             <div class="table-responsive">
-                                <table class="table table-sm align-items-center mb-0 display">
+                                <table class="table table-sm text-dark text-center mb-0 display">
                                     <thead>
                                         <tr>
                                             <th class="w-10">Bil</th>
@@ -34,7 +34,7 @@
                                             $d = 1;
                                         @endphp
                                         @foreach ($syarat as $ss)
-                                            <tr class="align-items-center ">
+                                            <tr class="align-items-center text-dark">
                                                 <td class="text-center" scope="row">{{ $d++ }}</td>
                                                 <td>
                                                     {{ $ss->nama_jawatan }}
@@ -49,7 +49,11 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm mt-4" data-bs-id_iklan="{{ $iklan->id }}" data-bs-id_jwtn="{{ $ss->id }}" data-bs-toggle="modal" data-bs-target="#modalMohon">Mohon</button>
+                                                    <button class="btn btn-primary btn-sm mt-2" data-bs-id_iklan="{{ $iklan->id }}" 
+                                                        data-bs-id_jwtn="{{ $ss->id }}" 
+                                                        data-bs-toggle="modal" data-bs-target="#modalMohon" {{ count($permohonan)>0 ? 'disabled' : '' }}>
+                                                        {{ count($permohonan)>0 ? 'Permohonan Dihantar' : 'Mohon' }}
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach

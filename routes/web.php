@@ -143,7 +143,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('kemaskini-pengalaman/{id}', 'PenggunaController@kemaskiniPengalaman')->name('kemaskini-pengalaman');
     Route::post('hantar-permohonan', 'PenggunaController@hantarPermohonan')->name('hantar-permohonan');
     Route::post('simpan-tambahan', 'PenggunaController@simpanTambahan')->name('simpan-tambahan');
-
+    
     Route::get('padam-pengalaman/{id}', 'PenggunaController@padamPengalaman')->name('padam-pengalaman');
     
     // Akademik
@@ -167,6 +167,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('kemaskini-matrikulasi', 'PenggunaController@kemaskinimatrikulasi')->name('kemaskini-matrikulasi');
     Route::post('kemaskini-svm', 'PenggunaController@kemaskinisvm')->name('kemaskini-svm');
     Route::post('kemaskini-ipt', 'PenggunaController@kemaskiniipt')->name('kemaskini-ipt');
+    Route::post('kemaskini-maklumat-tambahan', 'PenggunaController@kemaskiniMaklumatTambahan')->name('kemaskini-maklumat-tambahan');
 
     Route::get('padam-skm', 'PenggunaController@padamskm')->name('padam-skm');
     Route::get('padam-ipt', 'PenggunaController@padamipt')->name('padam-ipt');

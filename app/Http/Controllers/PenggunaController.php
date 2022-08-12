@@ -14,9 +14,11 @@ use App\JK_Taraf;
 use App\JK_Gambar_Passport;
 
 use App\JK_MaklumatDiri;
+use App\JK_MaklumatTambahan;
 use App\JK_Pengalaman;
 use App\JK_Pengesahan;
 use App\JK_Permohonan;
+use App\JK_SenaraiLesen;
 
 use App\JK_Pengajian_Tinggi;
 use App\JK_Matrikulasi;
@@ -68,7 +70,13 @@ class PenggunaController extends Controller
         ->where('id_iklan', $id)
         ->get();
 
-        return view('pengguna.iklan.butiran', compact('syarat', 'iklan'));
+        $permohonan = JK_Permohonan::where('id_iklan', $id)
+        ->where('id_pengguna', Auth::user()->id)
+        ->count();
+
+        // dd($permohonan);
+
+        return view('pengguna.iklan.butiran', compact('syarat', 'iklan', 'permohonan'));
     }
 
     public function maklumatdiri()
@@ -103,7 +111,11 @@ class PenggunaController extends Controller
 
     public function maklumatTambahan()
     {
-        return view('pengguna.maklumat-tambahan');
+        $maklumat_tambahan = JK_MaklumatTambahan::where('id_pengguna', Auth::user()->id)->first();
+
+        $lesen = JK_SenaraiLesen::all();
+
+        return view('pengguna.maklumat-tambahan', compact('maklumat_tambahan', 'lesen'));
     }
 
     public function pt3()
@@ -434,10 +446,47 @@ class PenggunaController extends Controller
         $arab = $req->tahap_arab;
         $asing = $req->tahap_asing;
 
+        JK_MaklumatTambahan::insert([
+            'id_pengguna' => Auth::user()->id,
+            'lesen' => implode(',', $lesen),
+            'inggeris' => $inggeris,
+            'cina' => $cina,
+            'arab' => $arab,
+            'asing' => $asing,
+            'created_at' => \Carbon\Carbon::now()
+             
+        ]);
+
         Session::flash('message', 'Maklumat Disimpan'); 
         Session::flash('alert-class', 'success'); 
 
-        dd($lesen, $inggeris,$cina,$arab,$asing );
+        // dd($lesen, $inggeris,$cina,$arab,$asing );
+        return back();
+    }
+
+    public function kemaskiniMaklumatTambahan(Request $req)
+    {
+        $id = $req->id;
+        $lesen = $req->lesen;
+        $inggeris = $req->tahap_inggeris;
+        $cina = $req->tahap_cina;
+        $arab = $req->tahap_arab;
+        $asing = $req->tahap_asing;
+
+        JK_MaklumatTambahan::where('id', $id)->update([
+            'id_pengguna' => Auth::user()->id,
+            'lesen' => implode(',', $lesen),
+            'inggeris' => $inggeris,
+            'cina' => $cina,
+            'arab' => $arab,
+            'asing' => $asing,
+            'updated_at' => \Carbon\Carbon::now()
+             
+        ]);
+
+        Session::flash('message', 'Maklumat Telah Dikemaskini'); 
+        Session::flash('alert-class', 'success'); 
+
         return back();
     }
 

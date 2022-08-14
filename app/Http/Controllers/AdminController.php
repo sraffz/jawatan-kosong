@@ -416,6 +416,21 @@ class AdminController extends Controller
         return view('admin.pentadbir', compact('pentadbir'));
     }
 
+    public function senaraiPermohonan($url)
+    {
+        // dd($url);
+        $iklan = Iklan::where('url', $url)->first();
+
+        $jawatan = DB::table('jumlah_pemohonan_jawatan_iklan')->where('id_iklan', $iklan->id)
+        ->orderBy('kumpulan', 'ASC')->get();
+        
+        $jumlah = DB::table('jumlah_pemohonan_jawatan_iklan')->where('id_iklan', $iklan->id)->sum('bilangan');
+        $senarai_pemohon = DB::table('senarai_permohonan')->where('id_iklan', $iklan->id)->get();
+        // dd($iklan, $jawatan);
+
+        return view('admin.permohonan.senarai', compact('jawatan', 'iklan', 'jumlah', 'senarai_pemohon'));
+    }
+
     public function tambahkumpulanjawatan(Request $req)
     {
         $data = new JK_kumuplan_perkhidmatan();

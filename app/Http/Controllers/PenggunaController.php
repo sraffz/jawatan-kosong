@@ -72,7 +72,7 @@ class PenggunaController extends Controller
 
         $permohonan = JK_Permohonan::where('id_iklan', $id)
         ->where('id_pengguna', Auth::user()->id)
-        ->count();
+        ->first();
 
         // dd($permohonan);
 

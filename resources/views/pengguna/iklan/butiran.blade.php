@@ -34,7 +34,7 @@
                                             $d = 1;
                                         @endphp
                                         @foreach ($syarat as $ss)
-                                            <tr class="align-items-center text-dark">
+                                            <tr class="align-middle text-dark">
                                                 <td class="text-center" scope="row">{{ $d++ }}</td>
                                                 <td>
                                                     {{ $ss->nama_jawatan }}
@@ -43,16 +43,15 @@
                                                 <td class="text-uppercase">
                                                     {{ $ss->taraf }}</td>
                                                 <td>
-                                                    <a class="badge badge-info mt-1"
+                                                    <a class="badge badge-info"
                                                         href="{{ url('dl-syarat', [$ss->id]) }}" role="button">
                                                         <i class="material-icons">picture_as_pdf</i>
                                                     </a>
                                                 </td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm mt-2" data-bs-id_iklan="{{ $iklan->id }}" 
-                                                        data-bs-id_jwtn="{{ $ss->id }}" 
-                                                        data-bs-toggle="modal" data-bs-target="#modalMohon" {{ count($permohonan)>0 ? 'disabled' : '' }}>
-                                                        {{ count($permohonan)>0 ? 'Permohonan Dihantar' : 'Mohon' }}
+                                                <td >
+                                                    <button class="btn btn-primary btn-sm {{ count($permohonan)>0 ? 'disabled' : '' }}" data-bs-id_iklan="{{ $iklan->id }}" 
+                                                        data-bs-id_jwtn="{{ $ss->id }}" data-bs-toggle="modal" data-bs-target="#modalMohon">
+                                                        {{ $ss->id == $permohonan->id_iklan_jawatan ? 'Permohonan Dihantar' : 'Mohon' }}
                                                     </button>
                                                 </td>
                                             </tr>

@@ -100,8 +100,7 @@ Negeri Kelantan'])
                             <div class="col-12 col-xl-4 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Pautan</label>
-                                    <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}"
-                                        required placeholder="">
+                                    <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}" placeholder="">
                                 </div>
                             </div>
                             <div class="col-12 col-xl-4 mt-4">

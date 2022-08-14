@@ -125,6 +125,10 @@ Negeri Kelantan Perubatan',
                                             Pautan Iklan
                                         </th>
                                         <th
+                                            class="text-center text-uppercase text-wrap  text-secondary text-sm font-weight-bolder opacity-7 w-5">
+                                            Permohonan
+                                        </th>
+                                        <th
                                             class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                                             Butiran & Tindakan
                                         </th>
@@ -228,6 +232,9 @@ Negeri Kelantan Perubatan',
                                                     {{-- {!! $shareComponent1 !!} --}}
                                                 </span>
                                             </td>
+                                            <td class="text-center text-uppercase">
+                                                <a href="{{ url('admin/senarai-permohonan', [$ikl->url]) }}" class="badge bg-info">1</a>
+                                              </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#butiraniklan-{{ $ikl->id }}">

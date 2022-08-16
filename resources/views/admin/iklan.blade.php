@@ -48,32 +48,10 @@ Negeri Kelantan Perubatan',
                 </div>
                 <hr class="dark horizontal my-0">
                 <div class="card-footer p-3">
-                    {{-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+5% </span>than
-                        yesterday</p> --}}
                 </div>
             </div>
         </div>
-        {{-- <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-header p-3 pt-2">
-                    <div
-                        class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">weekend</i>
-                    </div>
-                    <div class="text-end pt-1">
-                        <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-                        <h4 class="mb-0">$53k</h4>
-                    </div>
-                </div>
-                <hr class="dark horizontal my-0">
-                <div class="card-footer p-3">
-                    <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than
-                        lask week</p>
-                </div>
-            </div>
-        </div> --}}
     </div>
-
     <div class="row mt-4">
         <div class="container-fluid">
             <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
@@ -81,14 +59,7 @@ Negeri Kelantan Perubatan',
                     <div class="card-header pb-0">
                         <div class="row">
                             <div class="col-lg-6 col-7">
-                                {{-- <iframe src="https://cdn.vuukle.com/widgets/sharebar.html?version=2.15.10" frameborder="0"></iframe> --}}
-                                <h6>Senarai Iklan Jawatan Kosong</h6>
-                                {{-- {!! $shareComponent !!} --}}
-                                {{-- {{ Share::currentPage()->facebook(); }} --}}
-                                {{-- <p class="text-sm mb-0">
-                                        <i class="fa fa-check text-info" aria-hidden="true"></i>
-                                        <span class="font-weight-bold ms-1">30 done</span> this month
-                                    </p> --}}
+                                 <h6>Senarai Iklan Jawatan Kosong</h6>
                             </div>
                             <div class="col-lg-6 col-5 my-auto text-end">
                                 <div class="float-lg-end pe-2">
@@ -102,34 +73,34 @@ Negeri Kelantan Perubatan',
                     </div>
                     <div class="card-body p-3">
                         <div class="table-responsive">
-                            <table class="table table-striped table-flush datatable">
+                            <table class="table table-striped text-dark table-flush datatable">
                                 <thead>
-                                    <tr>
+                                    <tr class="align-middle ">
                                         <th
-                                            class="text-uppercase text-center text-secondary text-sm font-weight-bolder opacity-7">
+                                            class="text-uppercase text-center text-sm font-weight-bolder opacity-7">
                                             Bil
                                         </th>
-                                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
+                                        <th class="text-uppercase text-sm font-weight-bolder opacity-7 ps-2">
                                             rujukan iklan
                                         </th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
-                                            Tarikh mula dan tamat
+                                            class="text-center text-uppercase text-sm font-weight-bolder opacity-7">
+                                            Tarikh mula<br>dan<br>tamat
                                         </th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-sm font-weight-bolder opacity-7">
                                             Jenis Iklan
                                         </th>
                                         <th
-                                            class="text-center text-uppercase text-wrap  text-secondary text-sm font-weight-bolder opacity-7 w-10">
+                                            class="text-center text-uppercase text-wrap  text-sm font-weight-bolder opacity-7 w-10">
                                             Pautan Iklan
                                         </th>
                                         <th
-                                            class="text-center text-uppercase text-wrap  text-secondary text-sm font-weight-bolder opacity-7 w-5">
-                                            Permohonan
+                                            class="text-center text-uppercase text-wrap  text-sm font-weight-bolder opacity-7 w-5">
+                                            Pemohon
                                         </th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
+                                            class="text-center text-uppercase text-sm font-weight-bolder opacity-7">
                                             Butiran & Tindakan
                                         </th>
                                     </tr>
@@ -147,7 +118,7 @@ Negeri Kelantan Perubatan',
                                             
                                             $date = $hari . ' ' . $bulan . ' ' . $tahun;
                                         @endphp
-                                        {{-- @php
+                                        @php
                                             $j = 0;
                                             
                                             $text2 = [];
@@ -165,18 +136,9 @@ Negeri Kelantan Perubatan',
                                                 $currentURL =  url('suk' . $ikl->url . '') ;
                                             } else {
                                                 $currentURL =  url('/') ;
-                                            }
-                                                                                       
-                                            $shareComponent1 = \Share::page(
-                                                $currentURL,
-                                                $text . implode("\n", $text2) . $text3
-                                                // 'IKLAN JAWATAN KOSONG 2. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
-                                            )
-                                                ->facebook()
-                                                ->twitter()
-                                                ->whatsapp();
-                                        @endphp --}}
-                                        <tr class="align-middel">
+                                            }                                       
+                                        @endphp
+                                        <tr class="align-middle">
                                             <td class="text-center text-uppercase">
                                                 <span class="font-weight-bold">
                                                     {{ $i++ }}
@@ -189,7 +151,7 @@ Negeri Kelantan Perubatan',
                                             </td>
                                             <td class="text-center text-uppercase">
                                                 <span class="font-weight-bold">
-                                                    {{ $ikl->tarikh_mula->formatLocalized('%d/%m/%Y') }} -
+                                                    {{ $ikl->tarikh_mula->formatLocalized('%d/%m/%Y') }} <br>-
                                                     {{ $ikl->tarikh_tamat->formatLocalized('%d/%m/%Y') }}
                                                 </span>
                                             </td>
@@ -211,7 +173,7 @@ Negeri Kelantan Perubatan',
                                                                 link
                                                             </span>
                                                         </a>
-                                                        <a role="button" href="#" id="{{ $ikl->id }}"
+                                                        {{-- <a role="button" href="#" id="{{ $ikl->id }}"
                                                             value="copy"
                                                             onclick="copyToClipboard('copy_{{ $ikl->id }}')">
                                                             <span class="material-icons">
@@ -221,20 +183,33 @@ Negeri Kelantan Perubatan',
                                                         <input type="text"
                                                             class="form-control form-control-sm border-radius-md"
                                                             id="copy_{{ $ikl->id }}"
-                                                            value="{{ url('suk' . $ikl->url . '') }}">
+                                                            value="{{ url('suk' . $ikl->url . '') }}"> --}}
+                                                            <br>
                                                     @else
                                                         <a class="" href="{{ url('/') }}" target="_blank">
                                                             <span class="material-icons">
                                                                 link
                                                             </span>
                                                         </a>
+                                                        <br>
                                                     @endif
-                                                    {{-- {!! $shareComponent1 !!} --}}
+                                                    @php
+                                                        $asdasd = 'https://jawatankosong.kelantan.gov.my/admin/iklan';
+                                                    @endphp
+                                                     <a href="https://www.facebook.com/sharer.php?u={{ $asdasd }}" class="social-button" id=""><span class="fa fa-facebook-official"></span></a>
+                                                     <a href="https://twitter.com/intent/tweet?text={{ $text }}%0A{{ implode('%0A', $text2) }}%0A{{ $text3 }}&url={{ $currentURL }}" class="social-button" id=""><span class="fa fa-twitter"></span></a>
+                                                        <a href="https://api.whatsapp.com/send?text={{ $text }}%0A{{ implode('%0A', $text2) }}%0A{{ $text3 }}%20{{ $currentURL }}" class="social-button" id=""><span class="fa fa-whatsapp"></span></a>
                                                 </span>
                                             </td>
                                             <td class="text-center text-uppercase">
-                                                <a href="{{ url('admin/senarai-permohonan', [$ikl->url]) }}" class="badge bg-info">1</a>
-                                              </td>
+                                                @foreach ($jumlah as $jj)
+                                                @if ($jj->id == $ikl->id)
+                                                    <a href="{{ url('admin/senarai-pemohon', [$ikl->url]) }}"
+                                                        class="badge bg-info">{{ $jj->bilangan }}</a>
+                                                    
+                                                @endif
+                                                @endforeach
+                                            </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#butiraniklan-{{ $ikl->id }}">
@@ -574,7 +549,9 @@ Negeri Kelantan Perubatan',
 
         if (document.getElementById('choices-jenis')) {
             var jenis = document.getElementById('choices-jenis');
-            const example = new Choices(jenis);
+            const example = new Choices(jenis,{
+                allowHTML: true,
+            });
         }
 
         function visible() {

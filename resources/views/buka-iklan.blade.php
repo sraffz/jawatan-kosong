@@ -73,21 +73,17 @@
                                                 }
                                             }
                                             
-                                            $text = __("IKLAN JAWATAN KOSONG \n");
+                                            $text = __("IKLAN JAWATAN KOSONG");
                                             $text3 = __("\nPermohonan hendaklah dihantar sebelum atau pada ".$date." (".$nama_hari.") melalui: \n");
                                             
                                             $currentURL = URL::current();
-                                            
-                                            $shareComponent1 = \Share::page(
-                                                $currentURL,
-                                                $text.implode("\n", $text2).$text3
-                                                // 'IKLAN JAWATAN KOSONG 2. PEMBANTU HAL EHWAL ISLAM (MUALLIM) (CFS), GRED S19 Permohonan hendaklah dihantar sebelum atau pada 20 Julai 2022 (Rabu) melalui'
-                                            )
-                                                ->facebook()
-                                                ->twitter()
-                                                ->whatsapp();
                                         @endphp
-                                        <h4>{!! $shareComponent1 !!}</h4>
+                                            <a class="badge badge-dark text-white btn-rounded">
+                                                <span class="fa fa-facebook-official"></span> 
+                                            </a>
+                                            <a href="https://www.facebook.com/sharer.php?u={{ $currentURL }}" class="social-button" id=""><span class="fa fa-facebook-official"></span></a>
+                                            <a href="https://api.whatsapp.com/send?text={{ $text}}%0A{{implode('%0A', $text2)}}%0A{{$text3 }}%20{{ $currentURL }}" class="social-button" id=""><span class="fa fa-whatsapp"></span></a>
+                                            <a href="https://twitter.com/intent/tweet?text={{ $text}}%0A{{implode('%0A', $text2)}}%0A{{$text3 }}&url={{ $currentURL }}" class="social-button" id=""><span class="fa fa-twitter"></span></a>
                                     </div>
                                 </div>
                                 <br>
@@ -143,15 +139,15 @@
                                 <hr>
                                 <h3 class="block-title">Cara<small> Memohon</small></h3>
                                 <p>Permohonan jawatan ini hendaklah diisi secara online sahaja
-                                    @if ( $ikln->pautan == '')
+                                    {{-- @if ( $ikln->pautan == '')
                                         <a class="btn btn-alt-primary btn-rounded px-30 py-15" href="{{ url('butiran-iklan', [$ikln->id]) }}">
                                             <i class="fa fa-edit mr-5"></i> Borang Permohonan Jawatan
                                         </a>
-                                    @else
+                                    @else --}}
                                         <a class="btn btn-alt-primary btn-rounded px-30 py-15" href="{{ $ikln->pautan }}"  target="_blank">
                                             <i class="fa fa-edit mr-5"></i> Borang Permohonan Jawatan
                                         </a>
-                                    @endif
+                                    {{-- @endif --}}
                                 </p>
                                 <hr>
                                 <h3 class="block-title">Tarikh Tutup<small> Permohonan</small></h3>

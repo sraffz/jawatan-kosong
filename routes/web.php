@@ -84,7 +84,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::get('/pentadbir', 'AdminController@pentadbir')->name('admin.pentadbir');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
     
-    Route::get('/senarai-permohonan/{url}', 'AdminController@senaraiPermohonan')->name('admin.permohonan.senarai');
+    Route::get('/senarai-pemohon/{url}', 'AdminController@senaraiPermohonan')->name('admin.permohonan.senarai');
 
     Route::get('/cetak-iklan/{id}', 'AdminController@cetakiklan')->name('cetak-iklan');
 

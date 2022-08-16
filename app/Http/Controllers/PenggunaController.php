@@ -67,12 +67,12 @@ class PenggunaController extends Controller
         $iklan = Iklan::where('id', $id)->first();
 
         $syarat = DB::table('senarai-syarat-jawatan')
-        ->where('id_iklan', $id)
-        ->get();
+            ->where('id_iklan', $id)
+            ->get();
 
         $permohonan = JK_Permohonan::where('id_iklan', $id)
-        ->where('id_pengguna', Auth::user()->id)
-        ->first();
+            ->where('id_pengguna', Auth::user()->id)
+            ->first();
 
         // dd($permohonan);
 
@@ -122,20 +122,18 @@ class PenggunaController extends Controller
     {
         $bil = JK_PMR::where('user_id', Auth::user()->id)->count();
 
-        
         $mtpt3 = $this->subjekPt3();
         $gredpt3 = $this->gredPt3();
-        
+
         if ($bil > 0) {
             $pmr = JK_PMR::where('user_id', Auth::user()->id)->first();
             $k_pmr = KeputusanPMR::where('id_pmr', $pmr->id)->get();
             $bil_subjek = KeputusanPMR::where('id_pmr', $pmr->id)->count();
 
-             return view('pengguna.akademik.kemaskini.srp-pmr-pt3', compact('mtpt3','gredpt3','pmr', 'k_pmr', 'bil_subjek'));
+            return view('pengguna.akademik.kemaskini.srp-pmr-pt3', compact('mtpt3', 'gredpt3', 'pmr', 'k_pmr', 'bil_subjek'));
         } else {
-             return view('pengguna.akademik.srp-pmr-pt3', compact('mtpt3','gredpt3'));
+            return view('pengguna.akademik.srp-pmr-pt3', compact('mtpt3', 'gredpt3'));
         }
-        
     }
     public function spm()
     {
@@ -143,18 +141,21 @@ class PenggunaController extends Controller
 
         $mtspm = $this->subjekspm();
         $gredspm = $this->gredSpm();
-        
+
         if ($bil > 0) {
             $spmv = JK_SPM::where('user_id', Auth::user()->id)->first();
 
-            $k_spm = DB::table('jk_keputusan_spm')->where('id_spm', $spmv->id)->get();
-            $bil_subjek = DB::table('jk_keputusan_spm')->where('id_spm', $spmv->id)->count();
+            $k_spm = DB::table('jk_keputusan_spm')
+                ->where('id_spm', $spmv->id)
+                ->get();
+            $bil_subjek = DB::table('jk_keputusan_spm')
+                ->where('id_spm', $spmv->id)
+                ->count();
 
-            return view('pengguna.akademik.kemaskini.spm-spmv', compact('mtspm','gredspm','spmv','k_spm', 'bil_subjek'));
-       } else {
-            return view('pengguna.akademik.spm-spmv', compact('mtspm','gredspm'));
-       }
-
+            return view('pengguna.akademik.kemaskini.spm-spmv', compact('mtspm', 'gredspm', 'spmv', 'k_spm', 'bil_subjek'));
+        } else {
+            return view('pengguna.akademik.spm-spmv', compact('mtspm', 'gredspm'));
+        }
     }
     public function spmu()
     {
@@ -162,16 +163,20 @@ class PenggunaController extends Controller
 
         $mtspm = $this->subjekspm();
         $gredspm = $this->gredSpm();
-        
+
         if ($bil > 0) {
             $spmu = JK_SPMU::where('user_id', Auth::user()->id)->first();
-            $k_spm = DB::table('jk_keputusan_spm_ulangan')->where('id_spmu', $spmu->id)->get();
-            $bil_subjek = DB::table('jk_keputusan_spm_ulangan')->where('id_spmu', $spmu->id)->count();
+            $k_spm = DB::table('jk_keputusan_spm_ulangan')
+                ->where('id_spmu', $spmu->id)
+                ->get();
+            $bil_subjek = DB::table('jk_keputusan_spm_ulangan')
+                ->where('id_spmu', $spmu->id)
+                ->count();
 
-            return view('pengguna.akademik.kemaskini.spm-ulangan', compact('mtspm','gredspm','spmu', 'bil_subjek','k_spm'));
-       } else {
-            return view('pengguna.akademik.spm-ulangan', compact('mtspm','gredspm'));
-       }
+            return view('pengguna.akademik.kemaskini.spm-ulangan', compact('mtspm', 'gredspm', 'spmu', 'bil_subjek', 'k_spm'));
+        } else {
+            return view('pengguna.akademik.spm-ulangan', compact('mtspm', 'gredspm'));
+        }
     }
     public function svm()
     {
@@ -179,7 +184,7 @@ class PenggunaController extends Controller
         $gredbm = $this->gredSpm();
 
         $bil = JK_SVM::where('user_id', Auth::user()->id)->count();
-        
+
         if ($bil > 0) {
             $svm = JK_SVM::where('user_id', Auth::user()->id)->first();
             return view('pengguna.akademik.svm-kemaskini', compact('svm', 'listSijil', 'gredbm'));
@@ -194,11 +199,11 @@ class PenggunaController extends Controller
         $listSijil = $this->sijilSkm();
 
         $skm = JK_SKM::select('jk_skm.*', 'jk_kelulusan.diskripsi')
-        ->join('jk_kelulusan', 'jk_kelulusan.id_kelulusan', '=', 'jk_skm.namaSijil')
-        ->where('user_id', Auth::user()->id)
-        ->orderBy('tahunSijil', 'desc')
-        ->get();
-        
+            ->join('jk_kelulusan', 'jk_kelulusan.id_kelulusan', '=', 'jk_skm.namaSijil')
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('tahunSijil', 'desc')
+            ->get();
+
         return view('pengguna.akademik.skm', compact('listSijil', 'skm'));
     }
     public function stpm()
@@ -207,18 +212,22 @@ class PenggunaController extends Controller
 
         $mtstpm = $this->subjekstpm();
         $gredstpm = $this->gredStpm();
-        
+
         if ($bil > 0) {
             $stpmm = JK_STPA::where('user_id', Auth::user()->id)->first();
 
-            $k_stpm = DB::table('jk_keputusan_stpm')->where('id_stpm', $stpmm->id)->get();
+            $k_stpm = DB::table('jk_keputusan_stpm')
+                ->where('id_stpm', $stpmm->id)
+                ->get();
 
-            $bil_subjek = DB::table('jk_keputusan_stpm')->where('id_stpm', $stpmm->id)->count();
+            $bil_subjek = DB::table('jk_keputusan_stpm')
+                ->where('id_stpm', $stpmm->id)
+                ->count();
 
-            return view('pengguna.akademik.kemaskini.stpm', compact('mtstpm','gredstpm','stpmm','k_stpm', 'bil_subjek'));
-       } else {
-            return view('pengguna.akademik.stpm', compact('mtstpm','gredstpm'));
-       }
+            return view('pengguna.akademik.kemaskini.stpm', compact('mtstpm', 'gredstpm', 'stpmm', 'k_stpm', 'bil_subjek'));
+        } else {
+            return view('pengguna.akademik.stpm', compact('mtstpm', 'gredstpm'));
+        }
     }
 
     public function stam()
@@ -227,19 +236,22 @@ class PenggunaController extends Controller
 
         $mtstam = $this->subjekstam();
         $gredstam = $this->gredStam();
-        
+
         if ($bil > 0) {
             $stam = JK_STAM::where('user_id', Auth::user()->id)->first();
 
-            $k_stam = DB::table('jk_keputusan_stam')->where('id_stam', $stam->id)->get();
+            $k_stam = DB::table('jk_keputusan_stam')
+                ->where('id_stam', $stam->id)
+                ->get();
 
-            $bil_subjek = DB::table('jk_keputusan_stam')->where('id_stam', $stam->id)->count();
+            $bil_subjek = DB::table('jk_keputusan_stam')
+                ->where('id_stam', $stam->id)
+                ->count();
 
-            return view('pengguna.akademik.kemaskini.stam', compact('mtstam','gredstam','stam','k_stam', 'bil_subjek'));
-       } else {
-            return view('pengguna.akademik.stam', compact('mtstam','gredstam'));
-       }
-
+            return view('pengguna.akademik.kemaskini.stam', compact('mtstam', 'gredstam', 'stam', 'k_stam', 'bil_subjek'));
+        } else {
+            return view('pengguna.akademik.stam', compact('mtstam', 'gredstam'));
+        }
     }
     public function matrikulasi()
     {
@@ -259,10 +271,11 @@ class PenggunaController extends Controller
         $pengkhususan = $this->pengkhususan();
         $institusi = $this->institusi();
 
-        $list_kelulusan = JK_Pengajian_Tinggi::select('jk_pengajian_tinggi.*','jk_peringkat_ipt.peringkat')
-        ->leftjoin('jk_peringkat_ipt', 'jk_peringkat_ipt.id', '=', 'jk_pengajian_tinggi.kelulusan')
-        ->where('user_id' , Auth::user()->id)
-        ->orderBy('jk_pengajian_tinggi.kelulusan', 'ASC')->get();
+        $list_kelulusan = JK_Pengajian_Tinggi::select('jk_pengajian_tinggi.*', 'jk_peringkat_ipt.peringkat')
+            ->leftjoin('jk_peringkat_ipt', 'jk_peringkat_ipt.id', '=', 'jk_pengajian_tinggi.kelulusan')
+            ->where('user_id', Auth::user()->id)
+            ->orderBy('jk_pengajian_tinggi.kelulusan', 'ASC')
+            ->get();
 
         return view('pengguna.akademik.pengajian-tinggi', compact('peringkatIpt', 'pengkhususan', 'institusi', 'list_kelulusan'));
     }
@@ -270,45 +283,44 @@ class PenggunaController extends Controller
     public function crop(Request $req)
     {
         // if ($req->hasFile('avatarFile')) {
-            $dest = 'public/gambarPemohon/'.Auth::user()->id.'/';
-            // $dest = 'gambarPemohon/'.Auth::user()->id.'/';
-            $file = $req->file('avatarFile');
-            $extension = $file->getClientOriginalExtension();
-            $new_image_name = 'DP'.date('YmdHis').uniqid().'.jpg';
-            // $new_image_name = 'DP'.date('YmdHis').uniqid().'.'.$extension.'';
+        $dest = 'public/gambarPemohon/' . Auth::user()->id . '/';
+        // $dest = 'gambarPemohon/'.Auth::user()->id.'/';
+        $file = $req->file('avatarFile');
+        $extension = $file->getClientOriginalExtension();
+        $new_image_name = 'DP' . date('YmdHis') . uniqid() . '.jpg';
+        // $new_image_name = 'DP'.date('YmdHis').uniqid().'.'.$extension.'';
 
-            $upload_success = $file->storeAs($dest, $new_image_name);
+        $upload_success = $file->storeAs($dest, $new_image_name);
 
-            if (!$upload_success) {
-                return response()->json(['status'=>0, 'msg'=>'Muat naik tidak berjaya']);
-            }else {
+        if (!$upload_success) {
+            return response()->json(['status' => 0, 'msg' => 'Muat naik tidak berjaya']);
+        } else {
+            $checkgambar = JK_Gambar_Passport::where('user_id', Auth::user()->id)->count();
 
-                $checkgambar = JK_Gambar_Passport::where('user_id', Auth::user()->id)->count();
-                
-                if ($checkgambar > 0) {
-                    //padam imej lama
-                    $gambarlama = JK_Gambar_Passport::where('user_id', Auth::user()->id)->first();
-                    $gambarpemohon = $gambarlama->path_gambar;
-                    
-                    if ($gambarpemohon != '') {
-                        Storage::delete($gambarlama->path_gambar);
-                    }
-                    //kemaskini gambar baru dalam DB
-                    JK_Gambar_Passport::where('user_id', Auth::user()->id)->update([
-                        'nama_gambar' => $new_image_name,
-                        'extension_gambar' => $extension,
-                        'path_gambar' => $dest.$new_image_name
-                    ]);
-                } else {
-                    JK_Gambar_Passport::where('user_id', Auth::user()->id)->insert([
-                        'user_id' => Auth::user()->id,
-                        'nama_gambar' => $new_image_name,
-                        'extension_gambar' => $extension,
-                        'path_gambar' => $dest.$new_image_name
-                    ]);
+            if ($checkgambar > 0) {
+                //padam imej lama
+                $gambarlama = JK_Gambar_Passport::where('user_id', Auth::user()->id)->first();
+                $gambarpemohon = $gambarlama->path_gambar;
+
+                if ($gambarpemohon != '') {
+                    Storage::delete($gambarlama->path_gambar);
                 }
-                return response()->json(['status'=>1, 'msg'=>'Gambar telah berjaya dikemaskini', 'name'=>$new_image_name]);
+                //kemaskini gambar baru dalam DB
+                JK_Gambar_Passport::where('user_id', Auth::user()->id)->update([
+                    'nama_gambar' => $new_image_name,
+                    'extension_gambar' => $extension,
+                    'path_gambar' => $dest . $new_image_name,
+                ]);
+            } else {
+                JK_Gambar_Passport::where('user_id', Auth::user()->id)->insert([
+                    'user_id' => Auth::user()->id,
+                    'nama_gambar' => $new_image_name,
+                    'extension_gambar' => $extension,
+                    'path_gambar' => $dest . $new_image_name,
+                ]);
             }
+            return response()->json(['status' => 1, 'msg' => 'Gambar telah berjaya dikemaskini', 'name' => $new_image_name]);
+        }
         // } else {
         //     return 'neh';
         // }
@@ -321,7 +333,6 @@ class PenggunaController extends Controller
             'ic' => $req->ic,
             'email' => $req->email,
         ]);
-
 
         $data = new JK_MaklumatDiri();
         $data->user_id = $id;
@@ -348,8 +359,8 @@ class PenggunaController extends Controller
 
         // Alert::success('Berjaya', 'Maklumat disimpan');
         // Toast('Maklumat disimpan', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -385,8 +396,8 @@ class PenggunaController extends Controller
 
         // Alert::success('Berjaya', 'Maklumat disimpan');
         // Toast('Maklumat disimpan', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -405,8 +416,8 @@ class PenggunaController extends Controller
 
         // Alert::success('Berjaya', 'Maklumat dikemaskini');
         // Toast('Maklumat Ditambah', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Ditambah'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Ditambah');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -423,8 +434,8 @@ class PenggunaController extends Controller
         ]);
 
         //  Toast('Maklumat Dikemaskini', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -433,8 +444,8 @@ class PenggunaController extends Controller
         JK_Pengalaman::where('id', $id)->delete();
 
         // Toast('Maklumat Dipadam', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
         return back();
     }
 
@@ -453,12 +464,11 @@ class PenggunaController extends Controller
             'cina' => $cina,
             'arab' => $arab,
             'asing' => $asing,
-            'created_at' => \Carbon\Carbon::now()
-             
+            'created_at' => \Carbon\Carbon::now(),
         ]);
 
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
 
         // dd($lesen, $inggeris,$cina,$arab,$asing );
         return back();
@@ -479,33 +489,70 @@ class PenggunaController extends Controller
             'cina' => $cina,
             'arab' => $arab,
             'asing' => $asing,
-            'updated_at' => \Carbon\Carbon::now()
-             
+            'updated_at' => \Carbon\Carbon::now(),
         ]);
 
-        Session::flash('message', 'Maklumat Telah Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Telah Dikemaskini');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
 
     public function hantarPermohonan(Request $req)
     {
+        // $total = 99;
+        // $total = 100000;
+        $total = 99999;
+        // $total =JK_Permohonan::count();
+
+        $kod = 'SUK-';
+        $kod2 = 'A';
+        $length = Str::length($total);
+
+        if ($total >= 99999) {
+
+            $number = substr($total, 1, 5);
+            
+            if ($number == 99999) {
+                
+                $number = 1;
+                $kod2 = $kod2++;
+                
+            } else {
+                
+                $l = substr($total, 0, 1);
+
+                for ($i = 0; $i < $l; $i++) {
+                    $next_kod = ++$kod2;
+                }
+                $number = $number + 2;
+                $kod2 = $next_kod;
+            }
+        } else {
+            $total = ++$total;
+            $number = $total;
+        }
+
+        $angka = str_pad($number, 5, '0', STR_PAD_LEFT);
+        $no_siri = $kod . $angka . $kod2;
+
+        dd($no_siri );
+
         $id_iklan = $req->id_iklan;
         $id_jawatan = $req->id_jwtn;
 
-        $permohonan = new JK_Permohonan;
+        $permohonan = new JK_Permohonan();
         $permohonan->id_pengguna = Auth::user()->id;
         $permohonan->id_iklan = $id_iklan;
         $permohonan->id_iklan_jawatan = $id_jawatan;
         $permohonan->tarikh_permohonan = \Carbon\Carbon::now();
         $permohonan->perakuan = $req->pengesahan;
-        $permohonan->no_siri = 'SUK';
+        $permohonan->no_siri = $no_siri;
         $permohonan->status = 'Baru';
         $permohonan->save();
 
-        Session::flash('message', 'Permohonan telah berjaya dihantar'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Permohonan telah berjaya dihantar');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -517,7 +564,7 @@ class PenggunaController extends Controller
     }
 
     public function simpanpmr(Request $req)
-    { 
+    {
         // dd($req->all());
 
         $id_exam = JK_PMR::insertGetId([
@@ -526,10 +573,8 @@ class PenggunaController extends Controller
             'tahun' => $req->tahun,
             'created_at' => \Carbon\carbon::now(),
         ]);
-         
-       
-        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
 
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             $data = new KeputusanPMR();
             $data->id_pmr = $id_exam;
             $data->matapelajaran = $req->input('addMoreInputFields.' . $i . '.matapelajaran');
@@ -537,8 +582,8 @@ class PenggunaController extends Controller
             $data->save();
         }
 
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
@@ -546,7 +591,7 @@ class PenggunaController extends Controller
     public function kemaskinipmr(Request $req)
     {
         $id = Auth::user()->id;
-        
+
         $id_pmr = JK_PMR::where('user_id', $id)->first();
 
         JK_PMR::where('user_id', $id)->update([
@@ -556,14 +601,13 @@ class PenggunaController extends Controller
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
             $data = new KeputusanPMR();
-                $data->id_pmr = $id_pmr->id;
-                $data->matapelajaran = $req->input('tambahan.' . $m . '.matapelajaran');
-                $data->gred = $req->input('tambahan.' . $m . '.gred');
-                $data->save();
+            $data->id_pmr = $id_pmr->id;
+            $data->matapelajaran = $req->input('tambahan.' . $m . '.matapelajaran');
+            $data->gred = $req->input('tambahan.' . $m . '.gred');
+            $data->save();
         }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
-
             $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
 
             if (empty($id_keputusan)) {
@@ -574,8 +618,6 @@ class PenggunaController extends Controller
                 //     'created_at' => \Carbon\Carbon::now()
 
                 // ]);
-
-                
             } else {
                 KeputusanPMR::where('id', $id_keputusan)->update([
                     'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
@@ -584,8 +626,8 @@ class PenggunaController extends Controller
             }
         }
 
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -594,14 +636,14 @@ class PenggunaController extends Controller
         $id = $req->id_keputusan;
         KeputusanPMR::where('id', $id)->delete();
 
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
 
         return back();
     }
 
     public function simpanspm(Request $req)
-    { 
+    {
         // dd($req->all());
 
         $id_exam = JK_SPM::insertGetId([
@@ -610,9 +652,8 @@ class PenggunaController extends Controller
             'tahun' => $req->tahun,
             'created_at' => \Carbon\carbon::now(),
         ]);
-         
-        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
 
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_spm')->insert([
                 'id_spm' => $id_exam,
                 'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
@@ -621,8 +662,8 @@ class PenggunaController extends Controller
             ]);
         }
 
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
@@ -630,7 +671,7 @@ class PenggunaController extends Controller
     public function kemaskinispm(Request $req)
     {
         $id = Auth::user()->id;
-        
+
         $id_spm = JK_SPM::where('user_id', $id)->first();
 
         // dd($id_spm->id);
@@ -641,7 +682,6 @@ class PenggunaController extends Controller
         ]);
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
-
             // for ($m = 0; $m < count($req->tambahan); $m++) {
             //     $data = new KeputusanPMR();
             //         $data->id_pmr = $id_pmr->id;
@@ -659,7 +699,6 @@ class PenggunaController extends Controller
         }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
-
             $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
 
             if (empty($id_keputusan)) {
@@ -670,15 +709,17 @@ class PenggunaController extends Controller
                 //     'created_at' => \Carbon\Carbon::now()
                 // ]);
             } else {
-                DB::table('jk_keputusan_spm')->where('id', $id_keputusan)->update([
-                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
-                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
-                ]);
+                DB::table('jk_keputusan_spm')
+                    ->where('id', $id_keputusan)
+                    ->update([
+                        'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                        'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                    ]);
             }
         }
 
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -686,16 +727,18 @@ class PenggunaController extends Controller
     {
         $id = $req->id_keputusan;
 
-        DB::table('jk_keputusan_spm')->where('id', $id)->delete();
+        DB::table('jk_keputusan_spm')
+            ->where('id', $id)
+            ->delete();
 
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
 
         return back();
     }
 
     public function simpanspmulangan(Request $req)
-    { 
+    {
         // dd($req->all());
 
         $id_exam = JK_SPMU::insertGetId([
@@ -704,9 +747,8 @@ class PenggunaController extends Controller
             'tahun' => $req->tahun,
             'created_at' => \Carbon\carbon::now(),
         ]);
-         
-        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
 
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_spm_ulangan')->insert([
                 'id_spmu' => $id_exam,
                 'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
@@ -715,8 +757,8 @@ class PenggunaController extends Controller
             ]);
         }
 
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
@@ -724,7 +766,7 @@ class PenggunaController extends Controller
     public function kemaskinispmulangan(Request $req)
     {
         $id = Auth::user()->id;
-        
+
         $id_spmu = JK_SPMU::where('user_id', $id)->first();
 
         // dd($id_spm->id);
@@ -735,7 +777,6 @@ class PenggunaController extends Controller
         ]);
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
-
             DB::table('jk_keputusan_spm_ulangan')->insert([
                 'id_spmu' => $id_spmu->id,
                 'matapelajaran' => $req->input('tambahan.' . $m . '.matapelajaran'),
@@ -745,7 +786,6 @@ class PenggunaController extends Controller
         }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
-
             $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
 
             if (empty($id_keputusan)) {
@@ -756,15 +796,17 @@ class PenggunaController extends Controller
                 //     'created_at' => \Carbon\Carbon::now()
                 // ]);
             } else {
-                DB::table('jk_keputusan_spm_ulangan')->where('id', $id_keputusan)->update([
-                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
-                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
-                ]);
+                DB::table('jk_keputusan_spm_ulangan')
+                    ->where('id', $id_keputusan)
+                    ->update([
+                        'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                        'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                    ]);
             }
         }
 
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -772,16 +814,18 @@ class PenggunaController extends Controller
     {
         $id = $req->id_keputusan;
 
-        DB::table('jk_keputusan_spm_ulangan')->where('id', $id)->delete();
+        DB::table('jk_keputusan_spm_ulangan')
+            ->where('id', $id)
+            ->delete();
 
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
 
         return back();
     }
 
     public function simpanstpm(Request $req)
-    { 
+    {
         // dd($req->all());
 
         $id_exam = JK_STPA::insertGetId([
@@ -790,9 +834,8 @@ class PenggunaController extends Controller
             'tahun' => $req->tahun,
             'created_at' => \Carbon\carbon::now(),
         ]);
-         
-        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
 
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_stpm')->insert([
                 'id_stpm' => $id_exam,
                 'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
@@ -801,8 +844,8 @@ class PenggunaController extends Controller
             ]);
         }
 
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
@@ -810,7 +853,7 @@ class PenggunaController extends Controller
     public function kemaskinistpm(Request $req)
     {
         $id = Auth::user()->id;
-        
+
         $id_stpm = JK_STPA::where('user_id', $id)->first();
 
         // dd($id_spm->id);
@@ -821,7 +864,6 @@ class PenggunaController extends Controller
         ]);
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
-
             DB::table('jk_keputusan_stpm')->insert([
                 'id_stpm' => $id_stpm->id,
                 'matapelajaran' => $req->input('tambahan.' . $m . '.matapelajaran'),
@@ -831,7 +873,6 @@ class PenggunaController extends Controller
         }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
-
             $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
 
             if (empty($id_keputusan)) {
@@ -842,15 +883,17 @@ class PenggunaController extends Controller
                 //     'created_at' => \Carbon\Carbon::now()
                 // ]);
             } else {
-                DB::table('jk_keputusan_stpm')->where('id', $id_keputusan)->update([
-                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
-                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
-                ]);
+                DB::table('jk_keputusan_stpm')
+                    ->where('id', $id_keputusan)
+                    ->update([
+                        'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                        'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                    ]);
             }
         }
 
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -858,16 +901,18 @@ class PenggunaController extends Controller
     {
         $id = $req->id_keputusan;
 
-        DB::table('jk_keputusan_stpm')->where('id', $id)->delete();
+        DB::table('jk_keputusan_stpm')
+            ->where('id', $id)
+            ->delete();
 
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
 
         return back();
     }
 
     public function simpanstam(Request $req)
-    { 
+    {
         // dd($req->all());
 
         $id_exam = JK_STAM::insertGetId([
@@ -876,9 +921,8 @@ class PenggunaController extends Controller
             'tahun' => $req->tahun,
             'created_at' => \Carbon\carbon::now(),
         ]);
-         
-        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
 
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_stam')->insert([
                 'id_stam' => $id_exam,
                 'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
@@ -887,8 +931,8 @@ class PenggunaController extends Controller
             ]);
         }
 
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
@@ -896,7 +940,7 @@ class PenggunaController extends Controller
     public function kemaskinistam(Request $req)
     {
         $id = Auth::user()->id;
-        
+
         $id_stam = JK_STAM::where('user_id', $id)->first();
 
         // dd($id_spm->id);
@@ -907,7 +951,6 @@ class PenggunaController extends Controller
         ]);
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
-
             DB::table('jk_keputusan_stam')->insert([
                 'id_stam' => $id_stam->id,
                 'matapelajaran' => $req->input('tambahan.' . $m . '.matapelajaran'),
@@ -917,7 +960,6 @@ class PenggunaController extends Controller
         }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
-
             $id_keputusan = $req->input('addMoreInputFields.' . $i . '.id_keputusan');
 
             if (empty($id_keputusan)) {
@@ -928,15 +970,17 @@ class PenggunaController extends Controller
                 //     'created_at' => \Carbon\Carbon::now()
                 // ]);
             } else {
-                DB::table('jk_keputusan_stam')->where('id', $id_keputusan)->update([
-                    'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
-                    'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
-                ]);
+                DB::table('jk_keputusan_stam')
+                    ->where('id', $id_keputusan)
+                    ->update([
+                        'matapelajaran' => $req->input('addMoreInputFields.' . $i . '.matapelajaran'),
+                        'gred' => $req->input('addMoreInputFields.' . $i . '.gred'),
+                    ]);
             }
         }
 
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -944,10 +988,12 @@ class PenggunaController extends Controller
     {
         $id = $req->id_keputusan;
 
-        DB::table('jk_keputusan_stam')->where('id', $id)->delete();
+        DB::table('jk_keputusan_stam')
+            ->where('id', $id)
+            ->delete();
 
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
 
         return back();
     }
@@ -965,8 +1011,8 @@ class PenggunaController extends Controller
         $data->save();
 
         // Toast('Maklumat Disimpan', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
@@ -981,8 +1027,8 @@ class PenggunaController extends Controller
         ]);
 
         // Toast('Maklumat Dikemaskini', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
 
         return back();
     }
@@ -999,8 +1045,8 @@ class PenggunaController extends Controller
         $data->save();
 
         // Toast('Maklumat Disimpan', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -1017,8 +1063,8 @@ class PenggunaController extends Controller
         ]);
 
         // Toast('Maklumat Dikemaskini', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -1031,8 +1077,8 @@ class PenggunaController extends Controller
         $data->save();
 
         // Toast('Maklumat ditambah', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat ditambah'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat ditambah');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -1041,8 +1087,8 @@ class PenggunaController extends Controller
         JK_SKM::where('id', $req->id)->delete();
 
         // Toast('Maklumat Dipadam', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
         return back();
     }
 
@@ -1057,12 +1103,12 @@ class PenggunaController extends Controller
             'nama_skrol' => $req->namaSijil,
             'bidang_pengkhususan' => $req->pengkhususan,
             'tarikh_senat' => $req->tarikhSenat,
-            'created_at' => \Carbon\Carbon::now()
+            'created_at' => \Carbon\Carbon::now(),
         ]);
 
         // Toast('Maklumat Disimpan', 'success')->position('top-end');
-        Session::flash('message', 'Maklumat Disimpan'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Disimpan');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
@@ -1070,8 +1116,7 @@ class PenggunaController extends Controller
     {
         $id = $req->id_kelulusan;
 
-        JK_Pengajian_Tinggi::where('id', $id)
-        ->update([
+        JK_Pengajian_Tinggi::where('id', $id)->update([
             'kelulusan' => $req->peringkat,
             'institusi' => $req->institusi,
             'cgpa' => $req->cgpa,
@@ -1079,23 +1124,22 @@ class PenggunaController extends Controller
             'nama_skrol' => $req->namaSijil,
             'bidang_pengkhususan' => $req->pengkhususan,
             'tarikh_senat' => $req->tarikhSenat,
-            'updated_at' => \Carbon\Carbon::now()
+            'updated_at' => \Carbon\Carbon::now(),
         ]);
 
-        Session::flash('message', 'Maklumat Dikemaskini'); 
-        Session::flash('alert-class', 'success'); 
+        Session::flash('message', 'Maklumat Dikemaskini');
+        Session::flash('alert-class', 'success');
         return back();
     }
 
     public function padamipt(Request $req)
     {
         $id = $req->id_keputusan;
- 
-        JK_Pengajian_Tinggi::where('id', $id)
-        ->delete();
 
-        Session::flash('message', 'Maklumat Dipadam'); 
-        Session::flash('alert-class', 'error'); 
+        JK_Pengajian_Tinggi::where('id', $id)->delete();
+
+        Session::flash('message', 'Maklumat Dipadam');
+        Session::flash('alert-class', 'error');
 
         return back();
     }
@@ -1134,22 +1178,22 @@ class PenggunaController extends Controller
 
         return $subjStpm;
     }
-    
+
     public function sijilSvm()
     {
         $svm = DB::table('jk_kelulusan')
-        ->where('diskripsi', 'LIKE', '%SIJ VOKASIONAL MSIA%')
-        ->get();
- 
+            ->where('diskripsi', 'LIKE', '%SIJ VOKASIONAL MSIA%')
+            ->get();
+
         return $svm;
     }
 
     public function sijilSkm()
     {
         $skm = DB::table('jk_kelulusan')
-        ->where('diskripsi', 'LIKE', '%SIJ SKM%')
-        ->get();
- 
+            ->where('diskripsi', 'LIKE', '%SIJ SKM%')
+            ->get();
+
         return $skm;
     }
 
@@ -1186,12 +1230,13 @@ class PenggunaController extends Controller
         $pengkhususan = DB::table('jk_pengkhususan')->get();
 
         return $pengkhususan;
-    
     }
 
     public function institusi()
     {
-        $institusi = DB::table('jk_institusi')->orderBy('kod', 'asc')->get();
+        $institusi = DB::table('jk_institusi')
+            ->orderBy('kod', 'asc')
+            ->get();
 
         return $institusi;
     }

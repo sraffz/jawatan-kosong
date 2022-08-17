@@ -29,7 +29,7 @@ Negeri Kelantan'])
                             <h6>Butiran Iklan</h6>
                         </div>
                         <div class="col-6 text-end">
-                            <a href="{{ url('/admin/cetak-iklan', [$iklan->id]) }}" class="btn btn-sm btn-outline-info"> 
+                            <a href="{{ url('/admin/cetak-iklan', [$iklan->id]) }}" class="btn btn-sm btn-outline-info" target="_blank"> 
                                 <span class="material-icons">
                                     print
                                 </span> Cetak

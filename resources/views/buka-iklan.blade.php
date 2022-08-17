@@ -78,9 +78,7 @@
                                             
                                             $currentURL = URL::current();
                                         @endphp
-                                            <a class="badge badge-dark text-white btn-rounded">
-                                                <span class="fa fa-facebook-official"></span> 
-                                            </a>
+             
                                             <a href="https://www.facebook.com/sharer.php?u={{ $currentURL }}" class="social-button" id=""><span class="fa fa-facebook-official"></span></a>
                                             <a href="https://api.whatsapp.com/send?text={{ $text}}%0A{{implode('%0A', $text2)}}%0A{{$text3 }}%20{{ $currentURL }}" class="social-button" id=""><span class="fa fa-whatsapp"></span></a>
                                             <a href="https://twitter.com/intent/tweet?text={{ $text}}%0A{{implode('%0A', $text2)}}%0A{{$text3 }}&url={{ $currentURL }}" class="social-button" id=""><span class="fa fa-twitter"></span></a>
@@ -122,12 +120,11 @@
                                                         @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
-                                                                <a href="{{ url('dl-syarat', [$ss->id]) }}">
-                                                                    <button type="button"
-                                                                        class="btn btn-sm btn-secondary">
+                                                                 {{-- <a href="{{ url('dl-syarat', [$ss->id]) }}" onclick="window.open('/Export/PrintPdf');" target="_blank"> --}}
+                                                                    <button  class="btn btn-sm btn-secondary" onclick="window.open('{{ url('dl-syarat', [$ss->id]) }}')">
                                                                         <i class="fa fa-file-pdf-o"></i>
                                                                     </button>
-                                                                </a>
+                                                                {{-- </a> --}}
                                                             </div>
                                                         </td>
                                                     </tr>

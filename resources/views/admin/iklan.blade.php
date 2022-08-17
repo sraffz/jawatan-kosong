@@ -162,7 +162,7 @@ Negeri Kelantan Perubatan',
                                             </td>
                                             <td class="text-center text-wrap text-break">
                                                 <span class="font-weight-bold">
-                                                    <a href="{{ url('/admin/cetak-iklan', [$ikl->id]) }}">
+                                                    <a href="{{ url('/admin/cetak-iklan', [$ikl->id]) }}" target="_blank">
                                                         <span class="material-icons">
                                                             print
                                                         </span>
@@ -202,13 +202,13 @@ Negeri Kelantan Perubatan',
                                                 </span>
                                             </td>
                                             <td class="text-center text-uppercase">
-                                                @foreach ($jumlah as $jj)
+                                                {{-- @foreach ($jumlah as $jj)
                                                 @if ($jj->id == $ikl->id)
                                                     <a href="{{ url('admin/senarai-pemohon', [$ikl->url]) }}"
                                                         class="badge bg-info">{{ $jj->bilangan }}</a>
                                                     
                                                 @endif
-                                                @endforeach
+                                                @endforeach --}}
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"

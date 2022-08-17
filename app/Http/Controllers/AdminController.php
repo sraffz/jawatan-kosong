@@ -13,6 +13,7 @@ use Auth;
 use Hash;
 use Alert;
 use DB;
+use Dompdf\Dompdf;
 use Carbon\Carbon;
 use App\Rules\MatchOldPassword;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -388,7 +389,9 @@ class AdminController extends Controller
         $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
         // return dd($nama_fail);
         // return dd($f->lokasi_fail);
-        return Storage::download($f->lokasi_fail, $nama_fail);
+        
+        return PDF::loadFile(storage_path($f->lokasi_fail))->stream($nama_fail);
+        // return Storage::download($f->lokasi_fail, $nama_fail);
     }
 
     public function konfigurasi()
@@ -554,7 +557,8 @@ class AdminController extends Controller
         $iklan2 = Iklan::where('id', $id)->first();
 
         // return view('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'));
-        $pdf = PDF::loadview('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'))->setPaper('a4','potrait');
-        return $pdf->download('Iklan Jawatan '.$iklan2->tahun.' '.$iklan2->bil.'.pdf');
+        $pdf = PDF::loadview('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'));
+        return $pdf->setPaper('a4','potrait')->stream();
+        // return $pdf->download('Iklan Jawatan '.$iklan2->tahun.' '.$iklan2->bil.'.pdf');
     }
 }

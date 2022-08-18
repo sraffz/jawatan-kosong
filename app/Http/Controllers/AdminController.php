@@ -387,11 +387,13 @@ class AdminController extends Controller
             ->first();
 
         $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
-        // return dd($nama_fail);
-        // return dd($f->lokasi_fail);
         
-        return PDF::loadFile(storage_path($f->lokasi_fail))->stream($nama_fail);
+        
+        return PDF::loadHtml(asset($f->lokasi_fail))->setPaper('a4','potrait')->stream($nama_fail);
+        
         // return Storage::download($f->lokasi_fail, $nama_fail);
+        // $pdf = PDF::loadview('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'));
+        // return $pdf->setPaper('a4','potrait')->stream();
     }
 
     public function konfigurasi()

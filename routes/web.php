@@ -61,6 +61,11 @@ Route::get('/suk{url}', function ($url) {
     return view('welcome', compact('iklan', 'syarat','bil'));
 });
 
+Route::get('/semakan',  function () {
+    
+    return view('semakan');
+});
+
 Auth::routes();
 
 Route::get('/social-media-share', 'SocialShareButtonsController@ShareWidget');

@@ -120,6 +120,7 @@
                                                         @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
+                                                            <a name="" id="" class="btn btn-primary" href="{{ url('2022/4/DBZWfHYMqGTTQVzshgO2n3YgB6xtPNquvAbJi1XO.pdf') }}" target="_blank" role="button">Download</a>
                                                                  {{-- <a href="{{ url('dl-syarat', [$ss->id]) }}" onclick="window.open('/Export/PrintPdf');" target="_blank"> --}}
                                                                     <button  class="btn btn-sm btn-secondary" onclick="window.open('{{ url('dl-syarat', [$ss->id]) }}')">
                                                                         <i class="fa fa-file-pdf-o"></i>

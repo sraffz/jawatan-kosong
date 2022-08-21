@@ -64,7 +64,6 @@ Route::get('/suk{url}', function ($url) {
 });
 
 Route::get('/semakan',  function () {
-    
     return view('semakan');
 });
 

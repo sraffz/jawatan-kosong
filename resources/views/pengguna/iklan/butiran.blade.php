@@ -49,7 +49,7 @@
                                                     </a>
                                                 </td>
                                                 <td >
-                                                    <button class="btn btn-primary btn-sm {{ count($permohonan)>0 ? 'disabled' : '' }}" data-bs-id_iklan="{{ $iklan->id }}" 
+                                                    <button class="btn btn-primary btn-sm mt-2 {{ count($permohonan)>0 ? 'disabled' : '' }}" data-bs-id_iklan="{{ $iklan->id }}" 
                                                         data-bs-id_jwtn="{{ $ss->id }}" data-bs-toggle="modal" data-bs-target="#modalMohon">
                                                         @if (count($permohonan)>0)
                                                         {{ $ss->id == $permohonan->id_iklan_jawatan ? 'Permohonan Dihantar' : 'Mohon' }}

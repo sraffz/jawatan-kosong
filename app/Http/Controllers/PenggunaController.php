@@ -62,6 +62,17 @@ class PenggunaController extends Controller
         return view('pengguna.iklan', compact('iklan', 'syarat'));
     }
 
+    public function semakkeputusan(Request $req)
+    {
+        $nokp = $req->nokp;
+
+        $keputusan = DB::table('jk_keputusan_semakan')
+        ->where('nokp', $nokp)
+        ->first();
+    
+        return view('semakan', compact('keputusan'));
+    }
+
     public function butiraniklan($id)
     {
         $iklan = Iklan::where('id', $id)->first();
@@ -500,9 +511,7 @@ class PenggunaController extends Controller
 
     public function hantarPermohonan(Request $req)
     {
-        // $total = 99;
-        // $total = 100000;
-        $total = 99999;
+        $total = 99998;
         // $total =JK_Permohonan::count();
 
         $kod = 'SUK-';
@@ -511,22 +520,27 @@ class PenggunaController extends Controller
 
         if ($total >= 99999) {
 
-            $number = substr($total, 1, 5);
-            
+            $number = substr($total, 0, 5);
+             
             if ($number == 99999) {
-                
                 $number = 1;
-                $kod2 = $kod2++;
+                $kod2 = ++$kod2;
                 
             } else {
-                
-                $l = substr($total, 0, 1);
 
+                $number2 = substr($total, 1, 5);
+                $l = substr($total, 0, 1);
+                
                 for ($i = 0; $i < $l; $i++) {
                     $next_kod = ++$kod2;
                 }
-                $number = $number + 2;
+                $number = $number2 + 2;
                 $kod2 = $next_kod;
+
+                if ($number > 99999) {
+                    $number = 1;
+                    $next_kod = ++$kod2;
+                }
             }
         } else {
             $total = ++$total;
@@ -534,9 +548,10 @@ class PenggunaController extends Controller
         }
 
         $angka = str_pad($number, 5, '0', STR_PAD_LEFT);
+        
         $no_siri = $kod . $angka . $kod2;
 
-        dd($no_siri );
+        // dd($no_siri );
 
         $id_iklan = $req->id_iklan;
         $id_jawatan = $req->id_jwtn;

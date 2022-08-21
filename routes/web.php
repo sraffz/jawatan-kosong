@@ -1,6 +1,8 @@
 <?php
 
 use App\Iklan;
+ 
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,6 +67,8 @@ Route::get('/semakan',  function () {
     
     return view('semakan');
 });
+
+Route::post('/keputusan-semakan',  'PenggunaController@semakkeputusan')->name('semak');
 
 Auth::routes();
 

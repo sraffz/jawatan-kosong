@@ -67,6 +67,9 @@ Route::get('/semakan',  function () {
     return view('semakan');
 });
 
+Route::post('/cetak-keputusan', 'PenggunaController@cetakkeputusan');
+Route::get('/cetak-keputusan/{id}', 'PenggunaController@cetakkeputusan2');
+
 Route::post('/keputusan-semakan',  'PenggunaController@semakkeputusan')->name('semak');
 
 Auth::routes();
@@ -93,6 +96,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
     
     Route::get('/senarai-pemohon/{url}', 'AdminController@senaraiPermohonan')->name('admin.permohonan.senarai');
+    Route::get('/butiran-pemohon/{id}', 'AdminController@butiranPermohonan')->name('butiran-pemohon');
 
     Route::get('/cetak-iklan/{id}', 'AdminController@cetakiklan')->name('cetak-iklan');
 

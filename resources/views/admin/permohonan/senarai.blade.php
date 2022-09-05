@@ -3,7 +3,7 @@ Kelantan'])
 
 @section('content')
 <div class="row">
-    <div class="col-lg-12 col-md-1 mb-4">
+    <div class="col-lg-12 col-md-12 mb-4">
         <div class="card h-100">
             <div class="card-body pb-0">
                 <a class="btn btn-warning" href="{{ url('admin/iklan') }}">
@@ -97,7 +97,7 @@ Kelantan'])
                                         <td class="text-dark">{{ $pemohon->nama }}</td>
                                         <td class="text-center text-dark">{{ $pemohon->nama_jawatan.' ('.$pemohon->gred.')' }}</td>
                                         <td class="text-center text-dark">{{ $pemohon->no_siri }}</td>
-                                        <td class="text-center text-dark"><a href="{{ url('butiran-pemohon', [$pemohon->id_pengguna]) }}" class="badge bg-info">Butiran</a></td>
+                                        <td class="text-center text-dark"><a href="{{ route('butiran-pemohon', [$pemohon->id_pengguna]) }}" class="badge bg-info">Butiran</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

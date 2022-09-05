@@ -9,6 +9,7 @@ use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
 use App\Iklan_jawatan;
 use App\Admin_log;
+use App\User;
 use Auth;
 use Hash;
 use Alert;
@@ -19,6 +20,7 @@ use App\Rules\MatchOldPassword;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Response;
 
 class AdminController extends Controller
 {
@@ -388,12 +390,9 @@ class AdminController extends Controller
 
         $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
         
-        
-        return PDF::loadHtml(asset($f->lokasi_fail))->setPaper('a4','potrait')->stream($nama_fail);
-        
+        return response()->file('storage/'.$f->lokasi_fail);
+
         // return Storage::download($f->lokasi_fail, $nama_fail);
-        // $pdf = PDF::loadview('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'));
-        // return $pdf->setPaper('a4','potrait')->stream();
     }
 
     public function konfigurasi()
@@ -428,6 +427,14 @@ class AdminController extends Controller
         // dd($iklan, $jawatan);
 
         return view('admin.permohonan.senarai', compact('jawatan', 'iklan', 'jumlah', 'senarai_pemohon'));
+    }
+
+    public function butiranPermohonan($id)
+    {
+        $user = User::where('id', $id)->first();
+
+        // dd($user->nama, $user->ic);
+        return view('admin.butiran-permohon', compact('user'));
     }
 
     public function tambahkumpulanjawatan(Request $req)

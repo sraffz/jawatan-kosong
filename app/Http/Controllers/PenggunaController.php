@@ -73,6 +73,35 @@ class PenggunaController extends Controller
         return view('semakan', compact('keputusan'));
     }
 
+    public function cetakkeputusan(Request $req)
+    {
+        $id = $req->id;
+
+        $keputusan = DB::table('jk_keputusan_semakan')
+        ->where('id', $id)
+        ->first();
+        
+        // dd($keputusan);
+        // return view('cetak.slip', compact('keputusan'));
+        $pdf = PDF::loadView('cetak.slip',compact('keputusan'))->setPaper('a4','potrait');
+
+        return $pdf->stream('Slip Panggilan.pdf', array('Attachment'=>0));              
+    }
+
+    public function cetakkeputusan2($id)
+    {
+        
+        $keputusan = DB::table('jk_keputusan_semakan')
+        ->where('id', $id)
+        ->first();
+        
+        // dd($keputusan);
+        // return view('cetak.slip', compact('keputusan'));
+        $pdf = PDF::loadView('cetak.slip',compact('keputusan'))->setPaper('a4','potrait');
+
+        return $pdf->stream('slip.pdf');              
+    }
+
     public function butiraniklan($id)
     {
         $iklan = Iklan::where('id', $id)->first();

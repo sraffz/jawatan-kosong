@@ -54,7 +54,7 @@ Negeri Kelantan Perubatan',
     </div>
     <div class="row mt-4">
         <div class="container-fluid">
-            <div class="col-lg-12 col-md-6 mb-md-0 mb-4">
+            <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
                 <div class="card">
                     <div class="card-header pb-0">
                         <div class="row">
@@ -202,13 +202,13 @@ Negeri Kelantan Perubatan',
                                                 </span>
                                             </td>
                                             <td class="text-center text-uppercase">
-                                                {{-- @foreach ($jumlah as $jj)
+                                                @foreach ($jumlah as $jj)
                                                 @if ($jj->id == $ikl->id)
                                                     <a href="{{ url('admin/senarai-pemohon', [$ikl->url]) }}"
                                                         class="badge bg-info">{{ $jj->bilangan }}</a>
                                                     
                                                 @endif
-                                                @endforeach --}}
+                                                @endforeach
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal"

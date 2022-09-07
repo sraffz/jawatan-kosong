@@ -20,12 +20,12 @@ Kelantan',
                                 </p>
                             </div>
                             <div class="col-lg-6 text-end">
-                                @if ($bil_pengalaman < 3)
+                                {{-- @if ($bil_pengalaman < 3) --}}
                                     <span type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#tambah_pengalaman">
                                         <i class="material-icons text-sm">add</i>&nbsp;Pengalaman
                                     </span>
-                                @endif
+                                {{-- @endif --}}
                             </div>
                         </div>
                     </div>

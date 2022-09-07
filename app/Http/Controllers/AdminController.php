@@ -10,6 +10,23 @@ use App\JK_taraf_jawatan;
 use App\Iklan_jawatan;
 use App\Admin_log;
 use App\User;
+
+use App\JK_MaklumatDiri;
+use App\JK_MaklumatTambahan;
+use App\JK_Pengalaman;
+
+use App\JK_Pengajian_Tinggi;
+use App\JK_Matrikulasi;
+use App\JK_PMR;
+use App\JK_SPM;
+use App\JK_SPMU;
+use App\JK_STAM;
+use App\JK_STPA;
+use App\JK_SVM;
+use App\JK_SKM;
+
+use App\KeputusanPMR;
+
 use Auth;
 use Hash;
 use Alert;
@@ -432,9 +449,18 @@ class AdminController extends Controller
     public function butiranPermohonan($id)
     {
         $user = User::where('id', $id)->first();
+        $maklumat_diri = DB::table('maklumat_diri_lengkap')->where('id', $id)->first();
+        $senarai_ipt = DB::table('senarai_kelulusan_ipt')->where('user_id', $id)->get();
+        $maklumat_tambahan = JK_MaklumatTambahan::where('id_pengguna', $id)->first();
+        $pengalaman = JK_Pengalaman::where('user_id', $id)
+            ->orderBy('mula_kerja', 'desc')
+            ->get();
 
-        // dd($user->nama, $user->ic);
-        return view('admin.butiran-permohon', compact('user'));
+        $pmr = JK_PMR::where('user_id', $id)->first();
+        $k_pmr = KeputusanPMR::join('jk_senarai_matapelajaran_pt3', 'jk_senarai_matapelajaran_pt3.id', '=', 'jk_keputusan_pmr.matapelajaran')->where('id_pmr', $pmr->id)->get();
+        $pencapaian_pmr = DB::table('pencapaian_pmr')->where('user_id', $id)->get();
+
+        return view('admin.butiran-permohon', compact('user', 'maklumat_diri', 'senarai_ipt', 'maklumat_tambahan', 'pengalaman', 'pmr', 'pencapaian_pmr','k_pmr'));
     }
 
     public function tambahkumpulanjawatan(Request $req)

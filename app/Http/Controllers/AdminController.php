@@ -450,7 +450,7 @@ class AdminController extends Controller
     {
         $user = User::where('id', $id)->first();
         $maklumat_diri = DB::table('maklumat_diri_lengkap')->where('id', $id)->first();
-        $senarai_ipt = DB::table('senarai_kelulusan_ipt')->where('user_id', $id)->get();
+        // $senarai_ipt = DB::table('senarai_kelulusan_ipt')->where('user_id', $id)->get();
         $maklumat_tambahan = JK_MaklumatTambahan::where('id_pengguna', $id)->first();
         $pengalaman = JK_Pengalaman::where('user_id', $id)
             ->orderBy('mula_kerja', 'desc')
@@ -459,8 +459,39 @@ class AdminController extends Controller
         $pmr = JK_PMR::where('user_id', $id)->first();
         $k_pmr = KeputusanPMR::join('jk_senarai_matapelajaran_pt3', 'jk_senarai_matapelajaran_pt3.id', '=', 'jk_keputusan_pmr.matapelajaran')->where('id_pmr', $pmr->id)->get();
         $pencapaian_pmr = DB::table('pencapaian_pmr')->where('user_id', $id)->get();
+        
+        $spm = JK_SPM::where('user_id', $id)->first();
+        $k_spm = DB::table('jk_keputusan_spm')->join('jk_senarai_matapelajaran_spm', 'jk_senarai_matapelajaran_spm.id', '=', 'jk_keputusan_spm.matapelajaran')->where('id_spm', $spm->id)->get();
+        $pencapaian_spm = DB::table('pencapaian_spm')->where('user_id', $id)->get();
+       
+        $stpm = JK_STPA::where('user_id', $id)->first();
+        
+        if (count($stpm)>0) {
+        $k_stpm = DB::table('jk_keputusan_stpm')->join('jk_senarai_matapelajaran_stpm', 'jk_senarai_matapelajaran_stpm.id', '=', 'jk_keputusan_stpm.matapelajaran')->where('id_stpm', $stpm->id)->get();
+        $pencapaian_stpm = DB::table('pencapaian_stpm')->where('user_id', $id)->get();
+        }
 
-        return view('admin.butiran-permohon', compact('user', 'maklumat_diri', 'senarai_ipt', 'maklumat_tambahan', 'pengalaman', 'pmr', 'pencapaian_pmr','k_pmr'));
+        $stam = JK_STAM::where('user_id', $id)->first();
+        if (count($stam)>0) {
+            $k_stam = DB::table('jk_keputusan_stam')->join('jk_senarai_matapelajaran_stam', 'jk_senarai_matapelajaran_stam.id', '=', 'jk_keputusan_stam.matapelajaran')->where('id_stam', $stam->id)->get();
+            $pencapaian_stam = DB::table('pencapaian_stam')->where('user_id', $id)->get();
+        }
+
+        $skm = JK_SKM::select('jk_skm.*', 'jk_kelulusan.diskripsi')
+            ->join('jk_kelulusan', 'jk_kelulusan.id_kelulusan', '=', 'jk_skm.namaSijil')
+            ->where('user_id', $id)
+            ->orderBy('tahunSijil', 'desc')
+            ->get();
+
+        $svm = JK_SVM::select('jk_svm.*', 'jk_kelulusan.diskripsi')
+        ->join('jk_kelulusan', 'jk_kelulusan.id_kelulusan', '=', 'jk_svm.namaSijil')
+        ->where('user_id', $id)
+        ->first();
+
+        $matrix = JK_Matrikulasi::where('user_id', $id)->first();
+
+
+        return view('admin.butiran-permohon', compact('user', 'maklumat_diri', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
     }
 
     public function tambahkumpulanjawatan(Request $req)

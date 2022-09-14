@@ -540,8 +540,8 @@ class PenggunaController extends Controller
 
     public function hantarPermohonan(Request $req)
     {
-        $total = 99998;
-        // $total =JK_Permohonan::count();
+        // $total = 99998;
+        $total =JK_Permohonan::count();
 
         $kod = 'SUK-';
         $kod2 = 'A';

@@ -148,8 +148,7 @@
             <div class="card-body pt-0">
                 <div class="tab-content" id="nav-tabContent">
                     @foreach ($list_kelulusan as $count => $kelulusan)
-                        <div class="tab-pane fade show {{ $count == 0 ? 'active' : '' }}" id="nav-{{ $kelulusan->id }}"
-                            role="tabpanel" aria-labelledby="nav-{{ $kelulusan->id }}-tab">
+                        <div class="tab-pane fade show {{ $count == 0 ? 'active' : '' }}" id="nav-{{ $kelulusan->id }}" role="tabpanel" aria-labelledby="nav-{{ $kelulusan->id }}-tab">
                             <form action="{{ url('kemaskini-ipt') }}" method="post">
                                 {{ csrf_field() }}
                                 <div class="row">

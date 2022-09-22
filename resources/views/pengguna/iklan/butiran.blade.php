@@ -43,20 +43,67 @@
                                                 <td class="text-uppercase">
                                                     {{ $ss->taraf }}</td>
                                                 <td>
-                                                    <a class="badge badge-info"
-                                                        href="{{ url('dl-syarat', [$ss->id]) }}" role="button">
+                                                    <a class="badge badge-info" href="{{ url('dl-syarat', [$ss->id]) }}"
+                                                        role="button">
                                                         <i class="material-icons">picture_as_pdf</i>
                                                     </a>
                                                 </td>
-                                                <td >
-                                                    <button class="btn btn-primary btn-sm mt-2 {{ count($permohonan)>0 ? 'disabled' : '' }}" data-bs-id_iklan="{{ $iklan->id }}" 
-                                                        data-bs-id_jwtn="{{ $ss->id }}" data-bs-toggle="modal" data-bs-target="#modalMohon">
-                                                        @if (count($permohonan)>0)
-                                                        {{ $ss->id == $permohonan->id_iklan_jawatan ? 'Permohonan Dihantar' : 'Mohon' }}
+                                                <td>
+                                                    <button
+                                                        class="btn btn-primary btn-sm mt-2 {{ count($permohonan) > 0 ? 'disabled' : '' }}"
+                                                        data-bs-id_iklan="{{ $iklan->id }}"
+                                                        data-bs-id_jwtn="{{ $ss->id }}" data-bs-toggle="modal"
+                                                        data-bs-target="#modalMohon">
+                                                        @if (count($permohonan) > 0)
+                                                            {{ $ss->id == $permohonan->id_iklan_jawatan ? 'Permohonan Dihantar' : 'Mohon' }}
                                                         @else
-                                                        Mohon
+                                                            Mohon
                                                         @endif
                                                     </button>
+                                                    @if (count($permohonan) > 0)
+                                                        @if ($permohonan->pembatalan == 1)
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" disabled class="btn btn-danger btn-sm mt-2">
+                                                            Dibatal
+                                                        </button>
+                                                            
+                                                        @else
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-danger btn-sm mt-2"
+                                                            data-bs-toggle="modal" data-bs-target="#batalPermohonan">
+                                                            Batal
+                                                        </button>
+                                                            
+                                                        @endif
+
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="batalPermohonan" tabindex="-1"
+                                                            role="dialog" aria-labelledby="modalTitleId"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalTitleId">Pembatalan
+                                                                            Permohonan</h5>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <form action="{{ url('batal-permohonan') }}" method="get">
+                                                                        <div class="modal-body">
+                                                                            Adakah anda pasti untuk membatalkan permohonan ini?
+                                                                            {{ csrf_field() }}
+                                                                            <input type="hidden" name="id_permohonan" value="{{ $permohonan->id }}">
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                                            <button type="submit" class="btn btn-primary">Batal Permohonan</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -70,63 +117,61 @@
         </div>
     </div>
 
-      <!-- Modal Mohon Jawatan-->
-      <div class="modal fade" id="modalMohon" tabindex="-1" role="dialog"
-      aria-labelledby="modelTitleId" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered"
-          role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title">Perakuan Pemohon</h5>
-                  <button type="button" class="btn-close"
-                      data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <form action="{{ url('hantar-permohonan') }}" method="post">
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="form-check">
-                            {{ csrf_field() }}
+    <!-- Modal Mohon Jawatan-->
+    <div class="modal fade" id="modalMohon" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Perakuan Pemohon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url('hantar-permohonan') }}" method="post">
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="form-check">
+                                {{ csrf_field() }}
                                 <input type="hidden" name="id_jwtn" id="id_jwtn" value="">
                                 <input type="hidden" name="id_iklan" id="id_iklan" value="">
 
-                                <input class="form-check-input" type="checkbox"
-                                    name="pengesahan" value="1"
+                                <input class="form-check-input" type="checkbox" name="pengesahan" value="1"
                                     id="pengesahan" required>
-                                <label class="form-check-label text-dark"
-                                    for="pengesahan">
-                                    Saya mengaku bahawa segala maklumat yang diberikan dalam permohonan ini adalah betul dan benar. <br>
-                                    Saya memahami bahawa sekiranya terdapat maklumat yang dinyatakan didapati palsu, salah <br>
-                                    atau tidak benar, makan permohonan saya ini boleh dibatalkan. Sekiranya saya telah ditawarkan jawatan, <br>
+                                <label class="form-check-label text-dark" for="pengesahan">
+                                    Saya mengaku bahawa segala maklumat yang diberikan dalam permohonan ini adalah betul dan
+                                    benar. <br>
+                                    Saya memahami bahawa sekiranya terdapat maklumat yang dinyatakan didapati palsu, salah
+                                    <br>
+                                    atau tidak benar, makan permohonan saya ini boleh dibatalkan. Sekiranya saya telah
+                                    ditawarkan jawatan, <br>
                                     maka perkhidmatan saya akan ditamatkan serta merta.
                                 </label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Mohon</button>
-                </div>
-            </form>
-          </div>
-      </div>
-  </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Mohon</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
-<script>
-    var modalMohon = document.getElementById('modalMohon');
+    <script>
+        var modalMohon = document.getElementById('modalMohon');
 
-    modalMohon.addEventListener('show.bs.modal', function(event) {
-        // Button that triggered the modal
-        let button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
-        let recipient = button.getAttribute('data-bs-whatever');
-        let id_jwtn = button.getAttribute('data-bs-id_jwtn');
-        let id_iklan = button.getAttribute('data-bs-id_iklan');
+        modalMohon.addEventListener('show.bs.modal', function(event) {
+            // Button that triggered the modal
+            let button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            let recipient = button.getAttribute('data-bs-whatever');
+            let id_jwtn = button.getAttribute('data-bs-id_jwtn');
+            let id_iklan = button.getAttribute('data-bs-id_iklan');
 
-        // Use above variables to manipulate the DOM
-        $('.modal-body #id_jwtn').val(id_jwtn);
-        $('.modal-body #id_iklan').val(id_iklan);
-     
-    });
-</script>
+            // Use above variables to manipulate the DOM
+            $('.modal-body #id_jwtn').val(id_jwtn);
+            $('.modal-body #id_iklan').val(id_iklan);
+
+        });
+    </script>
 @endsection

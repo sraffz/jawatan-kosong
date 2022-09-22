@@ -92,13 +92,15 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::POST('tukar-password', 'AdminController@tukarkatalaluanSama')->name('kemaskinikatalaluan');
     Route::post('/kemaskini', 'AdminController@kemaskiniAdmin')->name('kemaskini-admin');
     Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
+    Route::get('/ujian-temuduga', 'AdminController@ujianTemuduga')->name('admin.ujian-temuduga');
     Route::get('/pentadbir', 'AdminController@pentadbir')->name('admin.pentadbir');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
     
     Route::get('/senarai-pemohon/{url}', 'AdminController@senaraiPermohonan')->name('admin.permohonan.senarai');
-    Route::get('/butiran-pemohon/{id}', 'AdminController@butiranPermohonan')->name('butiran-pemohon');
+    Route::get('/butiran-pemohon/{id2}-{id}', 'AdminController@butiranPermohonan')->name('butiran-pemohon');
 
     Route::get('/cetak-iklan/{id}', 'AdminController@cetakiklan')->name('cetak-iklan');
+    Route::get('/export-senarai-pemohon', 'AdminController@exportSenaraiPemohon')->name('export-senarai-pemohon');
 
     Route::post('/kemaskini-jawatan', 'AdminController@kemaskinijawatan')->name('kemaskini-jawatan');
     Route::get('/padam-jawatan', 'AdminController@padamjawatan')->name('padam-jawatan');
@@ -118,6 +120,9 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/padam-taraf-jawatan', 'AdminController@padamtarafjawatan')->name('padam-taraf-jawatan');
     Route::post('/kemaskini-pentadbir', 'AdminController@kemaskinipentadbir')->name('kemaskini-pentadbir');
     Route::post('/padam-pentadbir', 'AdminController@padampentadbir')->name('padam-pentadbir');
+    Route::post('/tambah-jenis-panggilan', 'AdminController@tambahJenisPanggilan')->name('tambah-jenis-panggilan');
+    Route::post('/kemaskini-jenis-panggilan', 'AdminController@kemaskinijenispanggilan')->name('kemaskini-jenis-panggilan');
+    Route::post('/padam-jenis-panggilan', 'AdminController@padamjenis-panggilan')->name('padam-jenis-panggilan');
 
 });
 
@@ -156,6 +161,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::post('tambah-pengalaman', 'PenggunaController@tambahPengalaman')->name('tambah-pengalaman');
     Route::post('kemaskini-pengalaman/{id}', 'PenggunaController@kemaskiniPengalaman')->name('kemaskini-pengalaman');
     Route::post('hantar-permohonan', 'PenggunaController@hantarPermohonan')->name('hantar-permohonan');
+    Route::get('/batal-permohonan', 'PenggunaController@batalPermohonan')->name('batal-permohonan');
     Route::post('simpan-tambahan', 'PenggunaController@simpanTambahan')->name('simpan-tambahan');
     
     Route::get('padam-pengalaman/{id}', 'PenggunaController@padamPengalaman')->name('padam-pengalaman');

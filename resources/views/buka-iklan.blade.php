@@ -136,15 +136,15 @@
                                 <hr>
                                 <h3 class="block-title">Cara<small> Memohon</small></h3>
                                 <p>Permohonan jawatan ini hendaklah diisi secara online sahaja
-                                    {{-- @if ( $ikln->pautan == '')
+                                    @if ( $ikln->pautan == '')
                                         <a class="btn btn-alt-primary btn-rounded px-30 py-15" href="{{ url('butiran-iklan', [$ikln->id]) }}">
                                             <i class="fa fa-edit mr-5"></i> Borang Permohonan Jawatan
                                         </a>
-                                    @else --}}
+                                    @else
                                         <a class="btn btn-alt-primary btn-rounded px-30 py-15" href="{{ $ikln->pautan }}"  target="_blank">
                                             <i class="fa fa-edit mr-5"></i> Borang Permohonan Jawatan
                                         </a>
-                                    {{-- @endif --}}
+                                    @endif
                                 </p>
                                 <hr>
                                 <h3 class="block-title">Tarikh Tutup<small> Permohonan</small></h3>

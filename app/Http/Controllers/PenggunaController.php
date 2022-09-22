@@ -600,6 +600,19 @@ class PenggunaController extends Controller
         return back();
     }
 
+    public function batalPermohonan(Request $req)
+    {
+         JK_Permohonan::where('id', $req->id_permohonan)
+        ->update([
+            'pembatalan' => 1
+        ]);
+
+        Session::flash('message', 'Maklumat Telah Dikemaskini');
+        Session::flash('alert-class', 'success');
+
+        return back();
+    }
+
     public function gambardp()
     {
         $gambardp = JK_Gambar_Passport::where('user_id', Auth::user()->id)->first();

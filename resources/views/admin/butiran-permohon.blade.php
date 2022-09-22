@@ -9,7 +9,7 @@ Kelantan',
         <div class="col-lg-12 col-md-12 mb-4">
             <div class="card h-100">
                 <div class="card-body pb-0">
-                    <a class="btn btn-warning" href="{{ url('admin/iklan') }}">
+                    <a class="btn btn-warning" href="{{ url('admin/senarai-pemohon',[ $permohonan->url]) }}">
                         <i class="material-icons">arrow_back_ios</i> Kembali
                     </a>
                 </div>
@@ -18,10 +18,16 @@ Kelantan',
     </div>
 
     <div class="container-fluid px-2 px-md-4">
-        <div class="page-header min-height-300 border-radius-xl mt-4"
+        
+            <div class="d-flex bd-highlight">
+                <div class="p-2 bd-highlight"><h6 class="text-bold ">No. Siri : {{ $permohonan->no_siri }}</h6></div>
+                 <div class="ms-auto p-2 bd-highlight"><h6 class="text-bold ">Jawatan dimohon : {{ $permohonan->nama_jawatan }} ({{ $permohonan->singkatan_taraf }})</h6></div>
+              </div>
+        <div class="page-header min-height-300 border-radius-xl mt-3"
             style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
-            <span class="mask  bg-gradient-primary  opacity-6"></span>
+            <span class="mask bg-gradient-primary text-white text-bold "></span>
         </div>
+         
         <div class="card card-body mx-3 mx-md-4 mt-n12">
             <div class="row gx-4 mb-2">
                 <div class="col-auto">
@@ -560,8 +566,7 @@ Kelantan',
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-
-                                                        {{-- @foreach ($senarai_ipt as $ipt)
+                                                        @foreach ($senarai_ipt as $ipt)
                                                             <tr>
                                                                 <td style="padding: 15px;">
                                                                     {{ $ipt->peringkat }}
@@ -579,7 +584,7 @@ Kelantan',
                                                                     {{ $ipt->cgpa }}
                                                                 </td>
                                                             </tr>
-                                                        @endforeach --}}
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>

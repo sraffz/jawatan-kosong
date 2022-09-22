@@ -35,6 +35,7 @@ Kelantan'])
                                     <th class="text-uppercase w-40">Jawatan</th>
                                     <th class="text-uppercase w-5">Gred</th>
                                     <th class="text-uppercase text-left w-5">Jumlah</th>
+                                    <th class="text-uppercase text-left w-5">Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,11 +43,14 @@ Kelantan'])
                                     $t = 1;
                                 @endphp
                                 @foreach ($jawatan as $list)
-                                    <tr class="text-center">
+                                    <tr class="text-center align-middle">
                                         <td>{{ $t++ }}</td>
                                         <td class="text-start">{{ $list->nama_jawatan.' ('.$list->singkatan_taraf.')' }}</td>
                                         <td>{{ $list->gred }}</td>
                                         <td>{{ $list->bilangan }}</td>
+                                        <td> 
+                                            <a href="{{ route('export-senarai-pemohon') }}" class="badge bg-info"><i class="fas fa-list-alt"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -97,7 +101,7 @@ Kelantan'])
                                         <td class="text-dark">{{ $pemohon->nama }}</td>
                                         <td class="text-center text-dark">{{ $pemohon->nama_jawatan.' ('.$pemohon->gred.')' }}</td>
                                         <td class="text-center text-dark">{{ $pemohon->no_siri }}</td>
-                                        <td class="text-center text-dark"><a href="{{ route('butiran-pemohon', [$pemohon->id_pengguna]) }}" class="badge bg-info">Butiran</a></td>
+                                        <td class="text-center text-dark"><a href="{{ route('butiran-pemohon', [$pemohon->id_pengguna, $pemohon->id_permohonan]) }}" class="badge bg-info">Butiran</a></td>
                                     </tr>
                                 @endforeach
                             </tbody>

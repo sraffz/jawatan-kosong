@@ -44,10 +44,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                            <form id="logout-form" action="{{ route('user.logout') }}" method="POST"
                                 style="display: none;">
                                 {{ csrf_field() }}
                             </form>
+                            
                             <a class="nav-link text-white " href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
                                 <span class="sidenav-mini-icon"> L </span>

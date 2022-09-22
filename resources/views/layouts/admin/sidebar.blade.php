@@ -73,6 +73,13 @@
                     <span class="sidenav-normal  ms-2  ps-1"> Konfigurasi </span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $page == 'Ujian dan Temuduga' ? ' active bg-gradient-primary' : '' }}"
+                    href="{{ url('admin/ujian-temuduga') }}">
+                    <span class="sidenav-mini-icon"> U </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Ujian / Temuduga </span>
+                </a>
+            </li>
             @if (Auth::user()->lvl == '1' || Auth::user()->lvl == 'super')
             <li class="nav-item">
                 <a class="nav-link text-white {{ $page == 'Pentadbir' ? ' active bg-gradient-primary' : '' }}"

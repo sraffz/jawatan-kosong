@@ -7,6 +7,7 @@ use App\Iklan;
 use App\Admin;
 use App\JK_kumuplan_perkhidmatan;
 use App\JK_taraf_jawatan;
+use App\JK_JenisPanggilan;
 use App\Iklan_jawatan;
 use App\Admin_log;
 use App\User;
@@ -26,6 +27,9 @@ use App\JK_SVM;
 use App\JK_SKM;
 
 use App\KeputusanPMR;
+
+use App\Exports\ExportPemohon;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Auth;
 use Hash;
@@ -416,8 +420,17 @@ class AdminController extends Controller
     {
         $taraf = JK_taraf_jawatan::all();
         $kumpulan = JK_kumuplan_perkhidmatan::all();
+        $jenisPanggilan = JK_JenisPanggilan::all();
 
-        return view('admin.konfigurasi', compact('taraf', 'kumpulan'));
+        return view('admin.konfigurasi', compact('taraf', 'kumpulan', 'jenisPanggilan'));
+    }
+
+    public function ujianTemuduga()
+    {
+        $taraf = JK_taraf_jawatan::all();
+        $kumpulan = JK_kumuplan_perkhidmatan::all();
+
+        return view('admin.ujian-temuduga', compact('taraf', 'kumpulan'));
     }
     
     public function pentadbir()
@@ -446,11 +459,13 @@ class AdminController extends Controller
         return view('admin.permohonan.senarai', compact('jawatan', 'iklan', 'jumlah', 'senarai_pemohon'));
     }
 
-    public function butiranPermohonan($id)
+    public function butiranPermohonan($id, $id2)
     {
+        $permohonan = DB::table('senarai_permohonan')->where('id_permohonan', $id2)->first();
+
         $user = User::where('id', $id)->first();
         $maklumat_diri = DB::table('maklumat_diri_lengkap')->where('id', $id)->first();
-        // $senarai_ipt = DB::table('senarai_kelulusan_ipt')->where('user_id', $id)->get();
+        $senarai_ipt = DB::table('senarai_kelulusan_ipt')->where('user_id', $id)->get();
         $maklumat_tambahan = JK_MaklumatTambahan::where('id_pengguna', $id)->first();
         $pengalaman = JK_Pengalaman::where('user_id', $id)
             ->orderBy('mula_kerja', 'desc')
@@ -491,7 +506,7 @@ class AdminController extends Controller
         $matrix = JK_Matrikulasi::where('user_id', $id)->first();
 
 
-        return view('admin.butiran-permohon', compact('user', 'maklumat_diri', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
+        return view('admin.butiran-permohon', compact('user', 'permohonan', 'senarai_ipt', 'maklumat_diri', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
     }
 
     public function tambahkumpulanjawatan(Request $req)
@@ -568,6 +583,16 @@ class AdminController extends Controller
         return back();
     }
 
+    public function tambahJenisPanggilan(Request $req)
+    {
+        $data = new JK_JenisPanggilan();
+        $data->panggilan = $req->jenis_panggilan;
+        $data->save();
+
+        Alert::success('Berjaya', 'Maklumat berjaya ditambah');
+        return back();
+    }
+
     public function kemaskinitarafjawatan(Request $req)
     {
         JK_taraf_jawatan::where('id', $req->id)->update([
@@ -626,5 +651,10 @@ class AdminController extends Controller
         $pdf = PDF::loadview('admin.pdf.cetak-iklan', compact('iklan', 'iklan2'));
         return $pdf->setPaper('a4','potrait')->stream();
         // return $pdf->download('Iklan Jawatan '.$iklan2->tahun.' '.$iklan2->bil.'.pdf');
+    }
+
+    public function exportSenaraiPemohon() 
+    {
+        return Excel::download(new ExportPemohon, 'Senarai Pemohon.xlsx');
     }
 }

@@ -540,6 +540,13 @@ class PenggunaController extends Controller
 
     public function hantarPermohonan(Request $req)
     {
+        $gambar = JK_Gambar_Passport::where('user_id', Auth::user()->id)->count();
+        $maklumat_diri = JK_MaklumatDiri::where('user_id', Auth::user()->id)->count();
+        $spm = DB::table('jk_spm')->where('user_id', Auth::user()->id)->count();
+        $pmr = DB::table('jk_pmr')->where('user_id', Auth::user()->id)->count();
+
+        dd($gambar, $maklumat_diri, $spm, $pmr);
+
         // $total = 99998;
         $total =JK_Permohonan::count();
 
@@ -576,27 +583,52 @@ class PenggunaController extends Controller
             $number = $total;
         }
 
-        $angka = str_pad($number, 5, '0', STR_PAD_LEFT);
-        
-        $no_siri = $kod . $angka . $kod2;
+        if ($gambar == 1 && $maklumat_diri == 1) {
 
-        // dd($no_siri );
+            $angka = str_pad($number, 5, '0', STR_PAD_LEFT);
+            $no_siri = $kod . $angka . $kod2;
+    
+            // dd($no_siri );
+    
+            $id_iklan = $req->id_iklan;
+            $id_jawatan = $req->id_jwtn;
+    
+            $permohonan = new JK_Permohonan();
+            $permohonan->id_pengguna = Auth::user()->id;
+            $permohonan->id_iklan = $id_iklan;
+            $permohonan->id_iklan_jawatan = $id_jawatan;
+            $permohonan->tarikh_permohonan = \Carbon\Carbon::now();
+            $permohonan->perakuan = $req->pengesahan;
+            $permohonan->no_siri = $no_siri;
+            $permohonan->status = 'Baru';
+            $permohonan->save();
 
-        $id_iklan = $req->id_iklan;
-        $id_jawatan = $req->id_jwtn;
+            Session::flash('message', 'Permohonan telah berjaya dihantar');
+            Session::flash('alert-class', 'success');
 
-        $permohonan = new JK_Permohonan();
-        $permohonan->id_pengguna = Auth::user()->id;
-        $permohonan->id_iklan = $id_iklan;
-        $permohonan->id_iklan_jawatan = $id_jawatan;
-        $permohonan->tarikh_permohonan = \Carbon\Carbon::now();
-        $permohonan->perakuan = $req->pengesahan;
-        $permohonan->no_siri = $no_siri;
-        $permohonan->status = 'Baru';
-        $permohonan->save();
+        }else {
 
-        Session::flash('message', 'Permohonan telah berjaya dihantar');
-        Session::flash('alert-class', 'success');
+            $text_pic = 'muatnaik gambar passport';
+            $text_md = 'lengkapkan maklumat diri';
+            $text_spm = 'lengkapkan maklumat pendidikan Sijil Pelajaran Malaysia(SPM)';
+
+            if ($gambar == 0 && $maklumat_diri == 0) {
+                Session::flash('message', 'Sila '.$text_md.' dan '.$text_pic);
+                Session::flash('alert-class', 'error');
+            }
+            elseif ($gambar == 0) {
+
+                Session::flash('message', 'Sila '.$text_pic);
+                Session::flash('alert-class', 'error');
+            }
+            elseif ($maklumat_diri == 0) {
+
+                Session::flash('message', 'Sila '.$text_md);
+                Session::flash('alert-class', 'error');
+            }
+
+        }
+
         return back();
     }
 

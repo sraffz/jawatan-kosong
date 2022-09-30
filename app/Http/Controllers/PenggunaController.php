@@ -683,10 +683,54 @@ class PenggunaController extends Controller
 
         $id_pmr = JK_PMR::where('user_id', $id)->first();
 
-        JK_PMR::where('user_id', $id)->update([
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-        ]);
+        if ($req->hasFile('file_pmr')) {
+            // $allowedfileExtension=['pdf','jpg','png','docx'];
+            $file = $req->file('file_pmr');
+                // $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
+                $filename = 'spm_'.$file->hashName().'.'.$extension;
+                // $filename = 'spm_'.$id.'.'.$extension;
+
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // check folder for 'current year', if not exist, create one
+                    $currYear = \Carbon\Carbon::now()->format('Y');
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/spm';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'storage/akademik/spm/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($id_pmr->dokumen, $linkPath);
+                    Storage::Delete('public/'.$id_pmr->dokumen);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        JK_PMR::where('user_id', $id)->update([
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            JK_PMR::where('user_id', $id)->update([
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+            ]);
+        }
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
             $data = new KeputusanPMR();

@@ -5,7 +5,7 @@ Kelantan',
 ])
 
 @section('content')
-<form action="{{ url('kemaskini-pmr') }}" method="post" class="form-control">
+<form action="{{ url('kemaskini-pmr') }}" method="post" class="form-control" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
@@ -40,6 +40,18 @@ Kelantan',
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row col-lg-12">
+                            <div class="form-group col-xl-5">
+                              <label for="file_pmr">Sijil Peperiksaan </label>
+                              <input type="file" class="form-control-file" name="file_pmr" id="file_pmr" placeholder="" aria-describedby="fileHelpId">
+                              <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
+                            </div>
+                            @if ($pmr->dokumen!= 'null')
+                            <div class="col-xl-5">
+                                    <a class="btn btn-info" target="_blank" href="{{ url($pmr->dokumen) }}" role="button">Papar Sijil</a>
+                                </div>
+                                @endif
                         </div>
                     </div>
             </div>

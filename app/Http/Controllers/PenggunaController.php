@@ -688,24 +688,24 @@ class PenggunaController extends Controller
             $file = $req->file('file_pmr');
                 // $filename = $file->getClientOriginalName();
                 $extension = $file->extension();
-                $filename = 'spm_'.$file->hashName().'.'.$extension;
-                // $filename = 'spm_'.$id.'.'.$extension;
+                $filename = 'pmr_'.$file->hashName().'.'.$extension;
+                // $filename = 'pmr_'.$id.'.'.$extension;
 
                 // dd($filename, $filename2,$extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // check folder for 'current year', if not exist, create one
                     $currYear = \Carbon\Carbon::now()->format('Y');
                     // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
-                    $storagePath = 'public/akademik/spm';
+                    $storagePath = 'public/akademik/pmr';
                     $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
-                    $linkPath = 'storage/akademik/spm/'. $filename;
+                    $linkPath = 'akademik/pmr/'. $filename;
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
                     //     mkdir($storagePath, 0777, true);
                     // }
                     // dd($id_pmr->dokumen, $linkPath);
-                    Storage::Delete('public/'.$id_pmr->dokumen);
+                    Storage::delete('public/'.$id_pmr->dokumen);
 
                     $upload_success = $file->storeAs($storagePath, $filename);
 
@@ -807,12 +807,54 @@ class PenggunaController extends Controller
 
         $id_spm = JK_SPM::where('user_id', $id)->first();
 
-        // dd($id_spm->id);
+        if ($req->hasFile('file_spm')) {
+            // $allowedfileExtension=['pdf','jpg','png','docx'];
+            $file = $req->file('file_spm');
+                // $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
+                $filename = 'spm_'.$file->hashName().'.'.$extension;
+                // $filename = 'spm_'.$id.'.'.$extension;
 
-        JK_SPM::where('user_id', $id)->update([
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-        ]);
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // check folder for 'current year', if not exist, create one
+                    $currYear = \Carbon\Carbon::now()->format('Y');
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/spm';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/spm/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($id_spm->dokumen, $linkPath);
+                    Storage::delete('public/'.$id_spm->dokumen);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        JK_SPM::where('user_id', $id)->update([
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            JK_SPM::where('user_id', $id)->update([
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+            ]);
+        }
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
             // for ($m = 0; $m < count($req->tambahan); $m++) {
@@ -902,12 +944,54 @@ class PenggunaController extends Controller
 
         $id_spmu = JK_SPMU::where('user_id', $id)->first();
 
-        // dd($id_spm->id);
+        if ($req->hasFile('file_spmu')) {
+            // $allowedfileExtension=['pdf','jpg','png','docx'];
+            $file = $req->file('file_spmu');
+                // $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
+                $filename = 'spmu_'.$file->hashName().'.'.$extension;
+                // $filename = 'spmu_'.$id.'.'.$extension;
 
-        JK_SPMU::where('user_id', $id)->update([
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-        ]);
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // check folder for 'current year', if not exist, create one
+                    $currYear = \Carbon\Carbon::now()->format('Y');
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/spmu';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/spmu/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($id_spm->dokumen, $linkPath);
+                    Storage::delete('public/'.$id_spmu->dokumen);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        JK_SPMU::where('user_id', $id)->update([
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            JK_SPMU::where('user_id', $id)->update([
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+            ]);
+        }
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
             DB::table('jk_keputusan_spm_ulangan')->insert([
@@ -989,12 +1073,59 @@ class PenggunaController extends Controller
 
         $id_stpm = JK_STPA::where('user_id', $id)->first();
 
-        // dd($id_spm->id);
+        if ($req->hasFile('file_stpm')) {
+            // $allowedfileExtension=['pdf','jpg','png','docx'];
+            $file = $req->file('file_stpm');
+                // $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
+                $filename = 'stpm_'.$file->hashName().'.'.$extension;
+                // $filename = 'stpm_'.$id.'.'.$extension;
 
-        JK_STPA::where('user_id', $id)->update([
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-        ]);
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // check folder for 'current year', if not exist, create one
+                    $currYear = \Carbon\Carbon::now()->format('Y');
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/stpm';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/stpm/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($id_spm->dokumen, $linkPath);
+                    Storage::delete('public/'.$id_stpm->dokumen);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        JK_STPA::where('user_id', $id)->update([
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            JK_STPA::where('user_id', $id)->update([
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+            ]);
+        }
+
+        // JK_STPA::where('user_id', $id)->update([
+        //     'jenis' => $req->jenis,
+        //     'tahun' => $req->tahun,
+        // ]);
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
             DB::table('jk_keputusan_stpm')->insert([
@@ -1076,12 +1207,59 @@ class PenggunaController extends Controller
 
         $id_stam = JK_STAM::where('user_id', $id)->first();
 
-        // dd($id_spm->id);
+        if ($req->hasFile('file_stam')) {
+            // $allowedfileExtension=['pdf','jpg','png','docx'];
+            $file = $req->file('file_stam');
+                // $filename = $file->getClientOriginalName();
+                $extension = $file->extension();
+                $filename = 'stam_'.$file->hashName().'.'.$extension;
+                // $filename = 'stam_'.$id.'.'.$extension;
 
-        JK_STAM::where('user_id', $id)->update([
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-        ]);
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // check folder for 'current year', if not exist, create one
+                    $currYear = \Carbon\Carbon::now()->format('Y');
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/stam';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/stam/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($id_spm->dokumen, $linkPath);
+                    Storage::delete('public/'.$id_stam->dokumen);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        JK_STAM::where('user_id', $id)->update([
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            JK_STAM::where('user_id', $id)->update([
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+            ]);
+        }
+
+        // JK_STAM::where('user_id', $id)->update([
+        //     'jenis' => $req->jenis,
+        //     'tahun' => $req->tahun,
+        // ]);
 
         for ($m = 0; $m < count($req->tambahan); $m++) {
             DB::table('jk_keputusan_stam')->insert([

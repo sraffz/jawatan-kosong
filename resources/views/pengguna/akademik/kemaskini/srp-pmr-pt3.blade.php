@@ -47,11 +47,11 @@ Kelantan',
                               <input type="file" class="form-control-file" name="file_pmr" id="file_pmr" placeholder="" aria-describedby="fileHelpId">
                               <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
                             </div>
-                            @if ($pmr->dokumen!= 'null')
-                            <div class="col-xl-5">
-                                    <a class="btn btn-info" target="_blank" href="{{ url($pmr->dokumen) }}" role="button">Papar Sijil</a>
+                            @if ($pmr->dokumen != '')
+                                <div class="col-xl-5">
+                                    <a class="btn btn-info" target="_blank" href="{{ url('storage/'.$pmr->dokumen) }}" role="button">Papar Sijil</a>
                                 </div>
-                                @endif
+                            @endif
                         </div>
                     </div>
             </div>

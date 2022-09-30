@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page' => 'SPM ULANGAN', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-<form action="{{ url('kemaskini-spm-ulangan') }}" method="post">
+<form action="{{ url('kemaskini-spm-ulangan') }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
@@ -34,6 +34,18 @@
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row col-lg-12">
+                            <div class="form-group col-xl-5">
+                              <label for="file_spmu">Sijil Peperiksaan </label>
+                              <input type="file" class="form-control-file" name="file_spmu" id="file_spmu" placeholder="" aria-describedby="fileHelpId">
+                              <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
+                            </div>
+                            @if ($spmu->dokumen != '')
+                                <div class="col-xl-5">
+                                    <a class="btn btn-info" target="_blank" href="{{ url('storage/'.$spmu->dokumen) }}" role="button">Papar Sijil</a>
+                                </div>
+                            @endif
                         </div>
                     </div>
             </div>

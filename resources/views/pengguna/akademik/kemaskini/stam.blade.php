@@ -11,12 +11,12 @@
                 </div>
                     <div class="card-body pt-0">
                         <div class="row 12">
-                            <div class="col-xl-5">
+                            <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span style="color: red">*</span></label>
                                     <select name="tahun" id="tahun-pilih" required></select>                         </div>
                             </div>
-                            <div class="col-xl-5">
+                            <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Peperiksaan <span style="color: red">*</span></label>
                                     <select class="form-control" id="jenis" name="jenis" required>
@@ -25,25 +25,31 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xl-2">
-                                <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-dark">
-                                        <i class="material-icons text-sm">save</i>&nbsp;Simpan
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                         <div class="row col-lg-12">
-                            <div class="form-group col-xl-5">
-                              <label for="file_stam">Sijil Peperiksaan </label>
-                              <input type="file" class="form-control-file" name="file_stam" id="file_stam" placeholder="" aria-describedby="fileHelpId">
-                              <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
-                            </div>
-                            @if ($stam->dokumen != '')
-                                <div class="col-xl-5">
-                                    <a class="btn btn-info" target="_blank" href="{{ url('storage/'.$stam->dokumen) }}" role="button">Papar Sijil</a>
+                            <div class="col-xl-6 mb-4 mt-4">
+                                <div class="form-group ">
+                                    <label for="file_stam">Sijil Peperiksaan </label>
+                                    <input type="file" class="form-control-file" name="file_stam" id="file_stam"
+                                        placeholder="" aria-describedby="fileHelpId">
+                                    <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
                                 </div>
-                            @endif
+                            </div>
+                            <div class="col-xl-6 mt-4">
+                                @if ($stam->dokumen != '')
+                                    <div class="col-xl-5">
+                                        <a class="btn btn-info" target="_blank" href="{{ url('storage/' . $stam->dokumen) }}"
+                                            role="button">Papar Sijil</a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 text-end">
+                            <div class="col-xl-12">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="material-icons text-sm">save</i>&nbsp;Simpan
+                                </button>
+                            </div>
                         </div>
                     </div>
             </div>

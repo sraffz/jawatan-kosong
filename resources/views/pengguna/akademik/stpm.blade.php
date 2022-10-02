@@ -11,14 +11,14 @@
                 </div>
                     <div class="card-body pt-0">
                         <div class="row col-lg-12">
-                            <div class="col-xl-5">
+                            <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span style="color: red">*</span></label>
                                     <select name="tahun" id="tahun-pilih" required></select>
                                     {{-- <input type="number" name="tahun" class="form-control" placeholder="Alec" required> --}}
                                 </div>
                             </div>
-                            <div class="col-xl-5">
+                            <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Peperiksaan <span style="color: red">*</span></label>
                                     <select class="form-control" id="jenis" name="jenis" required>
@@ -27,9 +27,21 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-xl-2 text-center">
-                                <button type="submit" class="btn btn-dark mt-4 ">
-                                    <i class="material-icons text-sm">save</i>&nbsp; SIMPAN
+                        </div>
+                        <div class="row col-lg-12">
+                            <div class="col-xl-6 mb-4 mt-4">
+                                <div class="form-group ">
+                                    <label for="file_stpm">Sijil Peperiksaan </label>
+                                    <input type="file" class="form-control-file" name="file_stpm" id="file_stpm"
+                                        placeholder="" aria-describedby="fileHelpId">
+                                    <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 text-end">
+                            <div class="col-xl-12">
+                                <button type="submit" class="btn btn-dark">
+                                    <i class="material-icons text-sm">save</i>&nbsp;Simpan
                                 </button>
                             </div>
                         </div>

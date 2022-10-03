@@ -17,7 +17,7 @@
                         <h5 class="modal-title">Tambah Keputusan</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{ url('simpan-ipt') }}" method="post" autocomplete="off">
+                    <form action="{{ url('simpan-ipt') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="modal-body">
                             <div class="container-fluid">
@@ -103,6 +103,22 @@
                                                 required>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-static">
+                                            <label>Sijil Konvo<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control-file" name="sijil_konvo" id="sijil_konvo"
+                                                placeholder="Sijil Konvo" required aria-describedby="fileHelpId">
+                                            <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-static">
+                                            <label>Transkrip<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control-file" name="transkrip" id="transkrip"
+                                                placeholder="Transkrip" required aria-describedby="fileHelpId">
+                                            <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +165,7 @@
                 <div class="tab-content" id="nav-tabContent">
                     @foreach ($list_kelulusan as $count => $kelulusan)
                         <div class="tab-pane fade show {{ $count == 0 ? 'active' : '' }}" id="nav-{{ $kelulusan->id }}" role="tabpanel" aria-labelledby="nav-{{ $kelulusan->id }}-tab">
-                            <form action="{{ url('kemaskini-ipt') }}" method="post">
+                            <form action="{{ url('kemaskini-ipt') }}" method="post" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                 <div class="row">
                                     <div class="col-12 col-xl-6 mb-4">
@@ -235,6 +251,40 @@
                                             <input type="text" class="form-control datepicker" name="tarikhSenat"
                                                 value="{{ $kelulusan->tarikh_senat }}">
                                         </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-static">
+                                            <label>Sijil Konvo <span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control-file" name="sijil_konvo" id="sijil_konvo"
+                                                placeholder="Sijil Konvo" required aria-describedby="fileHelpId">
+                                            <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mt-4">
+                                        @if ($kelulusan->sijil_konvo == '')
+                                                Tiada Dokumen
+                                        @else
+                                            <a class="badge badge-info" href="{{ url('storage/' . $kelulusan->sijil_konvo) }}" target="_blank" role="button"><i class="fas fa-file-pdf"></i> Sijil Konvo</a>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group input-group-static">
+                                            <label>Transkrip<span class="text-danger">*</span></label>
+                                            <input type="file" class="form-control-file" name="transkrip" id="transkrip"
+                                                placeholder="Sijil Konvo" required aria-describedby="fileHelpId">
+                                            <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mt-4">
+                                        @if ($kelulusan->transkrip == '')
+                                                Tiada Dokumen
+                                        @else
+                                            <a class="badge badge-info" href="{{ url('storage/' . $kelulusan->transkrip) }}" target="_blank" role="button"><i class="fas fa-file-pdf"></i> Transkrip</a>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row mt-4">

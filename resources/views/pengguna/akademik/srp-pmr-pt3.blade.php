@@ -5,7 +5,7 @@ Kelantan',
 ])
 
 @section('content')
-<form action="{{ url('simpan-pmr') }}" method="post" class="form-control">
+<form action="{{ url('simpan-pmr') }}" method="post" class="form-control" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">

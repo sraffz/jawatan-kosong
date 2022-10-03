@@ -655,13 +655,54 @@ class PenggunaController extends Controller
     public function simpanpmr(Request $req)
     {
         // dd($req->all());
+        if ($req->hasFile('file_pmr')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('file_pmr');
 
-        $id_exam = JK_PMR::insertGetId([
-            'user_id' => Auth::user()->id,
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-            'created_at' => \Carbon\carbon::now(),
-        ]);
+                $extension = $file->extension();
+                $filename = 'pmr_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/pmr';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/pmr/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($id_spm->dokumen, $linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        $id_exam = JK_PMR::insertGetId([
+                            'user_id' => Auth::user()->id,
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath,
+                            'created_at' => \Carbon\carbon::now(),
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            $id_exam = JK_PMR::insertGetId([
+                'user_id' => Auth::user()->id,
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             $data = new KeputusanPMR();
@@ -721,7 +762,7 @@ class PenggunaController extends Controller
                         return back();
                     }
                 } else {
-                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
                     Session::flash('alert-class', 'error');
                     return back();
                 }
@@ -778,13 +819,54 @@ class PenggunaController extends Controller
     public function simpanspm(Request $req)
     {
         // dd($req->all());
+        if ($req->hasFile('file_spm')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('file_spm');
 
-        $id_exam = JK_SPM::insertGetId([
-            'user_id' => Auth::user()->id,
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-            'created_at' => \Carbon\carbon::now(),
-        ]);
+                $extension = $file->extension();
+                $filename = 'spm_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/spm';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/spm/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($id_spm->dokumen, $linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        $id_exam = JK_SPM::insertGetId([
+                            'user_id' => Auth::user()->id,
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath,
+                            'created_at' => \Carbon\carbon::now(),
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            $id_exam = JK_SPM::insertGetId([
+                'user_id' => Auth::user()->id,
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_spm')->insert([
@@ -845,7 +927,7 @@ class PenggunaController extends Controller
                         return back();
                     }
                 } else {
-                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
                     Session::flash('alert-class', 'error');
                     return back();
                 }
@@ -914,15 +996,55 @@ class PenggunaController extends Controller
 
     public function simpanspmulangan(Request $req)
     {
-        // dd($req->all());
+        if ($req->hasFile('file_spmu')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('file_spmu');
 
-        $id_exam = JK_SPMU::insertGetId([
-            'user_id' => Auth::user()->id,
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-            'created_at' => \Carbon\carbon::now(),
-        ]);
+                $extension = $file->extension();
+                $filename = 'spmu_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/spmu';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/spmu/'. $filename;
 
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        $id_exam = JK_SPMU::insertGetId([
+                            'user_id' => Auth::user()->id,
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath,
+                            'created_at' => \Carbon\carbon::now(),
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            $id_exam = JK_SPMU::insertGetId([
+                'user_id' => Auth::user()->id,
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+        
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_spm_ulangan')->insert([
                 'id_spmu' => $id_exam,
@@ -982,7 +1104,7 @@ class PenggunaController extends Controller
                         return back();
                     }
                 } else {
-                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
                     Session::flash('alert-class', 'error');
                     return back();
                 }
@@ -1043,15 +1165,55 @@ class PenggunaController extends Controller
 
     public function simpanstpm(Request $req)
     {
-        // dd($req->all());
+        if ($req->hasFile('file_stpm')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('file_stpm');
 
-        $id_exam = JK_STPA::insertGetId([
-            'user_id' => Auth::user()->id,
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-            'created_at' => \Carbon\carbon::now(),
-        ]);
+                $extension = $file->extension();
+                $filename = 'stpm_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/stpm';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/stpm/'. $filename;
 
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        $id_exam = JK_STPA::insertGetId([
+                            'user_id' => Auth::user()->id,
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath,
+                            'created_at' => \Carbon\carbon::now(),
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            $id_exam = JK_STPA::insertGetId([
+                'user_id' => Auth::user()->id,
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
+        
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_stpm')->insert([
                 'id_stpm' => $id_exam,
@@ -1111,7 +1273,7 @@ class PenggunaController extends Controller
                         return back();
                     }
                 } else {
-                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
                     Session::flash('alert-class', 'error');
                     return back();
                 }
@@ -1177,14 +1339,54 @@ class PenggunaController extends Controller
 
     public function simpanstam(Request $req)
     {
-        // dd($req->all());
+        if ($req->hasFile('file_stam')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('file_stam');
 
-        $id_exam = JK_STAM::insertGetId([
-            'user_id' => Auth::user()->id,
-            'jenis' => $req->jenis,
-            'tahun' => $req->tahun,
-            'created_at' => \Carbon\carbon::now(),
-        ]);
+                $extension = $file->extension();
+                $filename = 'stam_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $filename2,$extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/stam';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/stam/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+
+                    if ($upload_success) {
+                        $id_exam = JK_STAM::insertGetId([
+                            'user_id' => Auth::user()->id,
+                            'jenis' => $req->jenis,
+                            'tahun' => $req->tahun,
+                            'dokumen' => $linkPath,
+                            'created_at' => \Carbon\carbon::now(),
+                        ]);
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            $id_exam = JK_STAM::insertGetId([
+                'user_id' => Auth::user()->id,
+                'jenis' => $req->jenis,
+                'tahun' => $req->tahun,
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+        }
 
         for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
             DB::table('jk_keputusan_stam')->insert([
@@ -1245,7 +1447,7 @@ class PenggunaController extends Controller
                         return back();
                     }
                 } else {
-                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg, dan png sahaja dibenarkan.');
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
                     Session::flash('alert-class', 'error');
                     return back();
                 }
@@ -1381,11 +1583,59 @@ class PenggunaController extends Controller
 
     public function simpanskm(Request $req)
     {
-        $data = new JK_SKM();
-        $data->user_id = Auth::user()->id;
-        $data->namaSijil = $req->namaSijil;
-        $data->tahunSijil = $req->tahunSijil;
-        $data->save();
+        
+        if ($req->hasFile('sijil_skm')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('sijil_skm');
+
+                $extension = $file->extension();
+                $filename = 'skm_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/skm';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/skm/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($storagePath, $linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+                    if ($upload_success) {
+                        // dd('done');
+                        $data = new JK_SKM();
+                        $data->user_id = Auth::user()->id;
+                        $data->namaSijil = $req->namaSijil;
+                        $data->tahunSijil = $req->tahunSijil;
+                        $data->dokumen_skm = $linkPath;
+                        $data->save();
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }else {
+            $data = new JK_SKM();
+            $data->user_id = Auth::user()->id;
+            $data->namaSijil = $req->namaSijil;
+            $data->tahunSijil = $req->tahunSijil;
+            $data->save();
+        }
+
+        // $data = new JK_SKM();
+        // $data->user_id = Auth::user()->id;
+        // $data->namaSijil = $req->namaSijil;
+        // $data->tahunSijil = $req->tahunSijil;
+        // $data->save();
 
         // Toast('Maklumat ditambah', 'success')->position('top-end');
         Session::flash('message', 'Maklumat ditambah');
@@ -1395,6 +1645,10 @@ class PenggunaController extends Controller
 
     public function padamskm(Request $req)
     {
+        $dskm = JK_SKM::where('id', $req->id)->first();
+
+        Storage::delete('public/'.$dskm->dokumen_skm);
+
         JK_SKM::where('id', $req->id)->delete();
 
         // Toast('Maklumat Dipadam', 'success')->position('top-end');
@@ -1405,7 +1659,7 @@ class PenggunaController extends Controller
 
     public function simpanipt(Request $req)
     {
-        JK_Pengajian_Tinggi::insert([
+        $id_ipt = JK_Pengajian_Tinggi::insertGetId([
             'user_id' => Auth::user()->id,
             'kelulusan' => $req->peringkat,
             'institusi' => $req->institusi,
@@ -1414,8 +1668,90 @@ class PenggunaController extends Controller
             'nama_skrol' => $req->namaSijil,
             'bidang_pengkhususan' => $req->pengkhususan,
             'tarikh_senat' => $req->tarikhSenat,
+            'sijil_konvo' => '',
+            'transkrip' => '',
             'created_at' => \Carbon\Carbon::now(),
         ]);
+
+        if ($req->hasFile('sijil_konvo')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('sijil_konvo');
+
+                $extension = $file->extension();
+                $filename = 'sijil_konvo_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/ipt/sijil-konvo';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/ipt/sijil-konvo/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($storagePath, $linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+                    if ($upload_success) {
+                        // dd('done');
+                        JK_Pengajian_Tinggi::where('id', $id_ipt)
+                        ->update([
+                            'sijil_konvo' => $linkPath,
+                        ]);
+                       
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }
+
+        if ($req->hasFile('transkrip')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('transkrip');
+
+                $extension = $file->extension();
+                $filename = 'transkrip_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/ipt/transkrip';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/ipt/transkrip/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($storagePath, $linkPath);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+                    if ($upload_success) {
+                        // dd('done');
+                        JK_Pengajian_Tinggi::where('id', $id_ipt)
+                        ->update([
+                            'transkrip' => $linkPath,
+                        ]);
+                       
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }
 
         // Toast('Maklumat Disimpan', 'success')->position('top-end');
         Session::flash('message', 'Maklumat Disimpan');
@@ -1426,6 +1762,7 @@ class PenggunaController extends Controller
     public function kemaskiniipt(Request $req)
     {
         $id = $req->id_kelulusan;
+        $data = JK_Pengajian_Tinggi::where('id', $id)->first();
 
         JK_Pengajian_Tinggi::where('id', $id)->update([
             'kelulusan' => $req->peringkat,
@@ -1438,6 +1775,88 @@ class PenggunaController extends Controller
             'updated_at' => \Carbon\Carbon::now(),
         ]);
 
+        if ($req->hasFile('sijil_konvo')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('sijil_konvo');
+
+                $extension = $file->extension();
+                $filename = 'sijil_konvo_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/ipt/sijil-konvo';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/ipt/sijil-konvo/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($storagePath, $linkPath);
+                    Storage::delete('public/'.$data->sijil_konvo);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+                    if ($upload_success) {
+                        // dd('done');
+                        JK_Pengajian_Tinggi::where('id', $id)
+                        ->update([
+                            'sijil_konvo' => $linkPath,
+                        ]);
+                       
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }
+
+        if ($req->hasFile('transkrip')) {
+            // $allowedfileExtension=['pdf','jpg','png'];
+            $file = $req->file('transkrip');
+
+                $extension = $file->extension();
+                $filename = 'transkrip_'.$file->hashName().'.'.$extension;
+ 
+                // dd($filename, $extension);
+                if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                    // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
+                    $storagePath = 'public/akademik/ipt/transkrip';
+                    $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                    $linkPath = 'akademik/ipt/transkrip/'. $filename;
+
+                    // dd ($filePath, $filename);
+                    // if (!file_exists($storagePath)) {
+                    //     mkdir($storagePath, 0777, true);
+                    // }
+                    // dd($storagePath, $linkPath);
+                    Storage::delete('public/'.$data->transkrip);
+
+                    $upload_success = $file->storeAs($storagePath, $filename);
+                    if ($upload_success) {
+                        // dd('done');
+                        JK_Pengajian_Tinggi::where('id', $id)
+                        ->update([
+                            'transkrip' => $linkPath,
+                        ]);
+                       
+                    } else {
+                        Session::flash('message', 'Muat naik tidak berjaya');
+                        Session::flash('alert-class', 'error');
+                        return back();
+                    }
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+        }
+
         Session::flash('message', 'Maklumat Dikemaskini');
         Session::flash('alert-class', 'success');
         return back();
@@ -1446,7 +1865,16 @@ class PenggunaController extends Controller
     public function padamipt(Request $req)
     {
         $id = $req->id_keputusan;
+        $ipt =  JK_Pengajian_Tinggi::where('id', $id)->first();
 
+        if ($ipt->transkrip != '') {
+            Storage::delete('public/'.$ipt->transkrip);
+        }
+
+        if ($ipt->sijil_konvo != '') {
+            Storage::delete('public/'.$ipt->sijil_konvo);
+        }
+ 
         JK_Pengajian_Tinggi::where('id', $id)->delete();
 
         Session::flash('message', 'Maklumat Dipadam');

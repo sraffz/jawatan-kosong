@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page' => 'SVM', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-<form action="{{ url('kemaskini-svm') }}" method="post">
+<form action="{{ url('kemaskini-svm') }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <input type="hidden" name="id" value="{{ $svm->id }}">
     <div class="row mb-2">

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page' => 'STPM', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-<form action="{{ url('simpan-stpm') }}" method="post">
+<form action="{{ url('simpan-stpm') }}" method="post" enctype="multipart/form-data">
     {{ csrf_field() }}
     <div class="row mb-4">
         <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
@@ -80,7 +80,7 @@
                             <tr class="align-middle">
                                 {{-- <td class="text-center">{{ $i++ }}</td> --}}
                                 <td>
-                                    <select class="form-control select2" id="matapelajaran" name="addMoreInputFields[0][matapelajaran]" required>
+                                    <select class="form-control" id="matapelajaran" name="addMoreInputFields[0][matapelajaran]" required>
                                         <option selected>Sila Pilih</option>
                                         @foreach ($mtstpm as $mstpm)
                                         <option value="{{ $mstpm->id }}">{{ $mstpm->subjek }}</option>                                    @endforeach

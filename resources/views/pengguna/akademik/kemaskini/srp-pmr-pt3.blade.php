@@ -16,7 +16,7 @@ Kelantan',
               
                     <div class="card-body pt-0">
                         <div class="row col-lg-12">
-                            <div class="col-xl-6 mb-4">
+                            <div class="col-xl-6">
                                 <div class="input-group input-group-static">
                                     <label>Tahun <span style="color: red">*</span></label>
                                     <select name="tahun" id="tahun-pilih" required></select>

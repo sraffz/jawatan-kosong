@@ -8,7 +8,7 @@
                     <h5>KEPUTUSAN SIJIL MATRIKULASI KPM</h5>
                 </div>
                 <div class="card-body pt-0">
-                    <form action="{{ url('simpan-matrikulasi') }}" method="post" autocomplete="off">
+                    <form action="{{ url('simpan-matrikulasi') }}" method="post" autocomplete="off" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="col-xl-6">

@@ -1,7 +1,7 @@
 @extends('layouts.app', ['page' => 'SKM', 'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan Negeri Kelantan'])
 
 @section('content')
-    <form action="{{ url('simpan-skm') }}" method="post">
+    <form action="{{ url('simpan-skm') }}" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="row mb-2">
             <div class="col-lg-12 col-md-12 mb-md-0 mb-4">
@@ -24,6 +24,14 @@
                                         <option value="{{ $list->id_kelulusan }}">{{ $list->diskripsi }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="mt-3">
+                                <label for="sijil_skm" class="form-label">Sijil SKM</label>
+                                <input type="file" class="form-control-file" name="sijil_skm" id="sijil_skm"
+                                    placeholder="Sijil SKM" required aria-describedby="fileHelpId">
+                                <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>
                             </div>
                         </div>
                     </div>
@@ -53,6 +61,7 @@
                                             <th style="width: 10%">#</th>
                                             <th>NAMA SIJIL SKM</th>
                                             <th style="width: 20%">TAHUN</th>
+                                            <th style="width: 20%">SIJIL</th>
                                             <th style="width: 20%">
                                                 <span class="material-icons">delete</span>
                                             </th>
@@ -68,6 +77,13 @@
                                                     <td scope="row" class="text-center">{{ $i++ }}</td>
                                                     <td>{{ $listskm->diskripsi }}</td>
                                                     <td class="text-center">{{ $listskm->tahunSijil }}</td>
+                                                    <td class="text-center">
+                                                        @if ($listskm->dokumen_skm == '')
+                                                            Tiada Dokumen
+                                                        @else
+                                                            <a class="badge badge-dark" href="{{ url('storage/' . $listskm->dokumen_skm) }}" target="_blank" role="button"><i class="fas fa-file-pdf"></i></a>
+                                                        @endif
+                                                    </td>
                                                     <td class="text-center">
                                                         <!-- Button trigger modal -->
                                                         <button type="button" class="btn btn-outline-danger btn-sm"
@@ -159,7 +175,7 @@
                 });
             }, 1);
 
-            for (y = currentYear;  y >= tahun_awal ; y--) {
+            for (y = currentYear; y >= tahun_awal; y--) {
                 var optn = document.createElement("OPTION");
                 optn.text = y;
                 optn.value = y;
@@ -171,7 +187,7 @@
                 year.options.add(optn);
             }
 
-            
+
         }
     </script>
 @endsection

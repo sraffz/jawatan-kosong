@@ -62,6 +62,17 @@ class PenggunaController extends Controller
         return view('pengguna.iklan', compact('iklan', 'syarat'));
     }
 
+    public function permohonan()
+    {
+        $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+
+        $senarai = DB::table('senarai_permohonan')
+        ->where('id_pengguna', Auth::user()->id)
+        ->get();
+
+        return view('pengguna.permohonan', compact('senarai'));
+    }
+
     public function semakkeputusan(Request $req)
     {
         $nokp = $req->nokp;
@@ -443,8 +454,10 @@ class PenggunaController extends Controller
 
     public function tambahPengalaman(Request $req)
     {
+        // dd($req->semasa);
         $data = new JK_Pengalaman();
         $data->user_id = Auth::user()->id;
+        $data->semasa = $req->semasa;
         $data->nama_jawatan = $req->nama_jawatan;
         $data->majikan = $req->majikan;
         $data->alamat_majikan = $req->alamat_majikan;
@@ -466,6 +479,7 @@ class PenggunaController extends Controller
         JK_Pengalaman::where('id', $id)->update([
             'nama_jawatan' => $req->nama_jawatan,
             'majikan' => $req->majikan,
+            'semasa' => $req->semasa,
             'alamat_majikan' => $req->alamat_majikan,
             'taraf_jawatan' => $req->taraf_jawatan,
             'mula_kerja' => \Carbon\Carbon::parse($req->mula_kerja)->format('Y-m-d'),
@@ -544,8 +558,28 @@ class PenggunaController extends Controller
         $maklumat_diri = JK_MaklumatDiri::where('user_id', Auth::user()->id)->count();
         $spm = DB::table('jk_spm')->where('user_id', Auth::user()->id)->count();
         $pmr = DB::table('jk_pmr')->where('user_id', Auth::user()->id)->count();
+        $ipt_dip = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 2)->count();
+        $ipt_deg = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 3)->count();
 
-        dd($gambar, $maklumat_diri, $spm, $pmr);
+        $id_iklan = $req->id_iklan;
+        $id_jawatan = $req->id_jwtn;
+
+        $gred = DB::table('jk_iklan_jawatan')->where('id_iklan', $id_iklan)->where('id', $id_jawatan)->first();
+        
+        $sub_gred = substr($gred->gred,-2,2);
+
+        // dd(\Carbon\Carbon::now()->addYears(1));
+        // dd($gambar, $maklumat_diri, $spm, $pmr, $sub_gred, $ipt_dip, $ipt_deg);
+
+        if ($sub_gred == '11') {
+            $pendidikan = $pmr;
+        }elseif ($sub_gred == '19') {
+            $pendidikan = $spm;
+        }elseif ($sub_gred == '29') {
+            $pendidikan = $ipt_dip;
+        }elseif ($sub_gred == '41') {
+            $pendidikan = $ipt_deg;
+        }
 
         // $total = 99998;
         $total =JK_Permohonan::count();
@@ -553,6 +587,7 @@ class PenggunaController extends Controller
         $kod = 'SUK-';
         $kod2 = 'A';
         $length = Str::length($total);
+
 
         if ($total >= 99999) {
 
@@ -583,21 +618,19 @@ class PenggunaController extends Controller
             $number = $total;
         }
 
-        if ($gambar == 1 && $maklumat_diri == 1) {
+        if ($gambar == 1 && $maklumat_diri == 1 && $pendidikan == 1) {
 
             $angka = str_pad($number, 5, '0', STR_PAD_LEFT);
             $no_siri = $kod . $angka . $kod2;
     
             // dd($no_siri );
     
-            $id_iklan = $req->id_iklan;
-            $id_jawatan = $req->id_jwtn;
-    
             $permohonan = new JK_Permohonan();
             $permohonan->id_pengguna = Auth::user()->id;
             $permohonan->id_iklan = $id_iklan;
             $permohonan->id_iklan_jawatan = $id_jawatan;
             $permohonan->tarikh_permohonan = \Carbon\Carbon::now();
+            $permohonan->tarikh_luput = \Carbon\Carbon::now()->addYears(1);
             $permohonan->perakuan = $req->pengesahan;
             $permohonan->no_siri = $no_siri;
             $permohonan->status = 'Baru';
@@ -610,25 +643,26 @@ class PenggunaController extends Controller
 
             $text_pic = 'muatnaik gambar passport';
             $text_md = 'lengkapkan maklumat diri';
-            $text_spm = 'lengkapkan maklumat pendidikan Sijil Pelajaran Malaysia(SPM)';
+            $text_pendidikan = 'lengkapkan maklumat pendidikan yang setaraf dengan jawatan';
 
-            if ($gambar == 0 && $maklumat_diri == 0) {
-                Session::flash('message', 'Sila '.$text_md.' dan '.$text_pic);
+            if ($gambar == 0 && $maklumat_diri == 0 && $pendidikan == 0) {
+                Session::flash('message', 'Sila '.$text_md.', '.$text_pic.' dan '.$text_pendidikan);
                 Session::flash('alert-class', 'error');
             }
             elseif ($gambar == 0) {
-
                 Session::flash('message', 'Sila '.$text_pic);
                 Session::flash('alert-class', 'error');
             }
             elseif ($maklumat_diri == 0) {
-
                 Session::flash('message', 'Sila '.$text_md);
+                Session::flash('alert-class', 'error');
+            }
+            elseif ($pendidikan == 0) {
+                Session::flash('message', 'Sila '.$text_pendidikan);
                 Session::flash('alert-class', 'error');
             }
 
         }
-
         return back();
     }
 

@@ -256,7 +256,7 @@
                                         <div class="input-group input-group-static">
                                             <label>Sijil Konvo <span class="text-danger">*</span></label>
                                             <input type="file" class="form-control-file" name="sijil_konvo" id="sijil_konvo"
-                                                placeholder="Sijil Konvo" required aria-describedby="fileHelpId">
+                                                placeholder="Sijil Konvo" aria-describedby="fileHelpId">
                                             <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>
                                         </div>
                                     </div>
@@ -268,14 +268,14 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="row mt-4">
+                                <div class="row mt-2">
                                     <div class="col-md-4">
                                     </div>
                                     <div class="col-md-4">
                                         <div class="input-group input-group-static">
                                             <label>Transkrip<span class="text-danger">*</span></label>
                                             <input type="file" class="form-control-file" name="transkrip" id="transkrip"
-                                                placeholder="Sijil Konvo" required aria-describedby="fileHelpId">
+                                                placeholder="Sijil Konvo" aria-describedby="fileHelpId">
                                             <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>
                                         </div>
                                     </div>

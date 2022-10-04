@@ -67,13 +67,6 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $page == 'Iklan' ? ' active bg-gradient-success' : '' }}"
-                    href="{{ url('iklan-jawatan') }}">
-                    <span class="sidenav-mini-icon"> I </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Iklan Jawatan </span>
-                </a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link text-white {{ $page == 'Maklumat Diri' ? ' active bg-gradient-success' : '' }}"
                     href="{{ url('maklumat-diri') }}">
                     <span class="sidenav-mini-icon"> M </span>
@@ -167,6 +160,20 @@
                     href="{{ url('maklumat-tambahan') }}">
                     <span class="sidenav-mini-icon"> MT </span>
                     <span class="sidenav-normal  ms-2  ps-1"> Maklumat Tambahan </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $page == 'Iklan' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('iklan-jawatan') }}">
+                    <span class="sidenav-mini-icon"> I </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Iklan Jawatan </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white {{ $page == 'Permohonan' ? ' active bg-gradient-success' : '' }}"
+                    href="{{ url('permohonan') }}">
+                    <span class="sidenav-mini-icon"> P </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Permohonan </span>
                 </a>
             </li>
             {{-- @include('layouts.admin.sidebar22') --}}

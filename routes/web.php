@@ -140,6 +140,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/tetapan', 'HomeController@tetapan')->name('tetapan');
     
     Route::get('/iklan-jawatan', 'PenggunaController@iklan')->name('iklan');
+    Route::get('/permohonan', 'PenggunaController@permohonan')->name('permohonan');
     Route::get('/butiran-iklan/{id}', 'PenggunaController@butiraniklan')->name('butiran-iklan');
     Route::get('/maklumat-diri', 'PenggunaController@maklumatdiri')->name('maklumat-diri');
     Route::get('/pengalaman', 'PenggunaController@pengalaman')->name('pengalaman');

@@ -9,7 +9,7 @@ Kelantan',
         <div class="col-lg-12 col-md-12 mb-4">
             <div class="card h-100">
                 <div class="card-body pb-0">
-                    <a class="btn btn-warning" href="{{ url('admin/senarai-pemohon',[ $permohonan->url]) }}">
+                    <a class="btn btn-warning" href="{{ url('admin/senarai-pemohon', [$permohonan->url]) }}">
                         <i class="material-icons">arrow_back_ios</i> Kembali
                     </a>
                 </div>
@@ -18,16 +18,21 @@ Kelantan',
     </div>
 
     <div class="container-fluid px-2 px-md-4">
-        
-            <div class="d-flex bd-highlight">
-                <div class="p-2 bd-highlight"><h6 class="text-bold ">No. Siri : {{ $permohonan->no_siri }}</h6></div>
-                 <div class="ms-auto p-2 bd-highlight"><h6 class="text-bold ">Jawatan dimohon : {{ $permohonan->nama_jawatan }} ({{ $permohonan->singkatan_taraf }})</h6></div>
-              </div>
+
+        <div class="d-flex bd-highlight">
+            <div class="p-2 bd-highlight">
+                <h6 class="text-bold ">No. Siri : {{ $permohonan->no_siri }}</h6>
+            </div>
+            <div class="ms-auto p-2 bd-highlight">
+                <h6 class="text-bold ">Jawatan dimohon : {{ $permohonan->nama_jawatan }}
+                    ({{ $permohonan->singkatan_taraf }})</h6>
+            </div>
+        </div>
         <div class="page-header min-height-300 border-radius-xl mt-3"
             style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
             <span class="mask bg-gradient-primary text-white text-bold "></span>
         </div>
-         
+
         <div class="card card-body mx-3 mx-md-4 mt-n12">
             <div class="row gx-4 mb-2">
                 <div class="col-auto">
@@ -238,13 +243,18 @@ Kelantan',
                                         <h6 class="mb-0">Peringkat Menengah</h6>
                                     </div>
                                     <div class="card-body p-3">
-                                        {{-- <div class="table-responsive"> --}}
                                         <table class="table table-sm table-bordered text-dark">
                                             <tbody class="text-center">
                                                 @if (count($pmr) > 0)
                                                     <tr>
                                                         <td class="w-8">Jenis</td>
-                                                        <td class="text-bold">{{ $pmr->jenis }}</td>
+                                                        <td class="text-bold">
+                                                            {{ $pmr->jenis }}
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a class="badge bg-primary" target="_blank"
+                                                                href="{{ url('storage/' . $pmr->dokumen) }}"><i
+                                                                    class="fas fa-file"></i></a>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Pencapaian</td>
@@ -279,12 +289,85 @@ Kelantan',
                                                 @endif
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div>
+                                <hr class="vertical dark">
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-5 mt-md-0 mt-4 position-relative">
+                                <div class="card card-plain h-100">
+                                    <div class="card-header pb-0 p-3">
+                                        <div class="row">
+                                            <div class="col-md-8 d-flex align-items-center">
+                                                <h6 class="mb-0">&nbsp; </h6>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <table class="table table-sm table-bordered text-dark">
+                                            <tbody class="text-center">
+                                                @if (count($spm) > 0)
+                                                    <tr>
+                                                        <td class="text-bold">{{ $spm->jenis }}
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a class="badge bg-primary" target="_blank"
+                                                                href="{{ url('storage/' . $spm->dokumen) }}"><i
+                                                                    class="fas fa-file"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold">
+                                                            @foreach ($pencapaian_spm as $pspm)
+                                                                {{ $pspm->jumlah }}{{ $pspm->gred }},
+                                                            @endforeach
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-bold">{{ $spm->tahun }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <table class="table text-dark">
+                                                                @foreach ($k_spm as $kspm)
+                                                                    @if ($kspm->id_spm == $spm->id)
+                                                                        <tr class="text-bold">
+                                                                            <td class="w-50">{{ $kspm->subjek }}</td>
+                                                                            <td>{{ $kspm->gred }}</td>
+                                                                        </tr>
+                                                                    @endif
+                                                                @endforeach
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <hr class="vertical dark">
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 col-md-6 col-xl-7 position-relative">
+                                <div class="card card-plain h-100">
+                                    <div class="card-body p-3">
                                         @if (count($stpm) > 0)
                                             <table class="table table-sm table-bordered text-dark">
                                                 <tbody class="text-center">
                                                     <tr>
                                                         <td class="w-8">Jenis</td>
-                                                        <td class="text-bold">{{ $stpm->jenis }}</td>
+                                                        <td class="text-bold">
+                                                            {{ $stpm->jenis }}
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a class="badge bg-primary" target="_blank"
+                                                                href="{{ url('storage/' . $stpm->dokumen) }}"><i
+                                                                    class="fas fa-file"></i></a>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Pencapaian</td>
@@ -319,65 +402,23 @@ Kelantan',
                                                 </tbody>
                                             </table>
                                         @endif
-                                        {{-- </div> --}}
                                     </div>
                                 </div>
                                 <hr class="vertical dark">
                             </div>
-                            <div class="col-12 col-md-6 col-xl-5 mt-md-0 mt-4 position-relative">
+                            <div class="col-12 col-md-6 col-xl-5 position-relative">
                                 <div class="card card-plain h-100">
-                                    <div class="card-header pb-0 p-3">
-                                        <div class="row">
-                                            <div class="col-md-8 d-flex align-items-center">
-                                                <h6 class="mb-0">&nbsp; </h6>
-                                            </div>
-                                            <div class="col-md-4 text-end">
-
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="card-body p-3">
-                                        <table class="table table-sm table-bordered text-dark">
-                                            <tbody class="text-center">
-                                                @if (count($spm) > 0)
-                                                    <tr>
-                                                        <td class="text-bold">{{ $spm->jenis }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-bold">
-                                                            @foreach ($pencapaian_spm as $pspm)
-                                                                {{ $pspm->jumlah }}{{ $pspm->gred }},
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-bold">{{ $spm->tahun }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <table class="table text-dark">
-                                                                @foreach ($k_spm as $kspm)
-                                                                    @if ($kspm->id_spm == $spm->id)
-                                                                        <tr class="text-bold">
-                                                                            <td class="w-50">{{ $kspm->subjek }}</td>
-                                                                            <td>{{ $kspm->gred }}</td>
-                                                                        </tr>
-                                                                    @endif
-                                                                @endforeach
-                                                            </table>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td colspan="2"></td>
-                                                    </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
                                         @if (count($stam) > 0)
                                             <table class="table table-sm table-bordered text-dark">
                                                 <tbody class="text-center">
                                                     <tr>
-                                                        <td class="text-bold">{{ $stam->jenis }}</td>
+                                                        <td class="text-bold">{{ $stam->jenis }}
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <a class="badge bg-primary" target="_blank"
+                                                                href="{{ url('storage/' . $stam->dokumen) }}"><i
+                                                                    class="fas fa-file"></i></a>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="text-bold">
@@ -416,38 +457,38 @@ Kelantan',
                         </div>
                         {{-- Peringkat Sijil Matrik --}}
                         @if (count($matrix) > 0)
-                        <div class="row">
-                            <div class="col-xl-12 col-md-6 mb-xl-0 mb-4">
-                                <div class="card card-plain h-100">
-                                    <div class="card-header pb-0 p-3">
-                                        <h6 class="mb-0">Sijil Matrikulasi</h6>
-                                    </div>
-                                    <div class="card-body p-3">
-                                        <table class="table  text-dark">
-                                            <thead class="text-center">
-                                                <tr>
-                                                    <th style="width: 20%">TAHUN</th>
-                                                    <th>Institusi</th>
-                                                    <th>Pengkhususan</th>
-                                                    <th>CGPA</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="text-center" style="vertical-align: middle">
-                                                    <td scope="row" class="text-center">
-                                                        {{ $matrix->tahun }}
-                                                    </td>
-                                                    <td>{{ $matrix->nama_kolej }}</td>
-                                                    <td>{{ $matrix->bidang }}</td>
-                                                    <td class="text-center">{{ $matrix->cgpa }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                            <div class="row">
+                                <div class="col-xl-12 col-md-6 mb-xl-0 mb-4">
+                                    <div class="card card-plain h-100">
+                                        <div class="card-header pb-0 p-3">
+                                            <h6 class="mb-0">Sijil Matrikulasi</h6>
+                                        </div>
+                                        <div class="card-body p-3">
+                                            <table class="table  text-dark">
+                                                <thead class="text-center">
+                                                    <tr>
+                                                        <th style="width: 20%">TAHUN</th>
+                                                        <th>Institusi</th>
+                                                        <th>Pengkhususan</th>
+                                                        <th>CGPA</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="text-center" style="vertical-align: middle">
+                                                        <td scope="row" class="text-center">
+                                                            {{ $matrix->tahun }}
+                                                        </td>
+                                                        <td>{{ $matrix->nama_kolej }}</td>
+                                                        <td>{{ $matrix->bidang }}</td>
+                                                        <td class="text-center">{{ $matrix->cgpa }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    @endif
+                        @endif
                         {{-- Peringkat Sijil SVM, SKM --}}
                         <div class="row mt-4">
                             <div class="col-12">
@@ -479,7 +520,8 @@ Kelantan',
                                                                 <td class="text-dark">Bahasa Melayu : {{ $svm->bm_svm }}
                                                                     <br>
                                                                     PNGKA : {{ $svm->pngka }} <br>
-                                                                    PNGKV : {{ $svm->pngkv }}</td>
+                                                                    PNGKV : {{ $svm->pngkv }}
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -502,6 +544,7 @@ Kelantan',
                                                                 <th style="width: 10%">#</th>
                                                                 <th>NAMA SIJIL SKM</th>
                                                                 <th style="width: 20%">TAHUN</th>
+                                                                <th style="width: 20%">SIJIL</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -515,6 +558,16 @@ Kelantan',
                                                                             {{ $i++ }}</td>
                                                                         <td>{{ $listskm->diskripsi }}</td>
                                                                         <td class="text-center">{{ $listskm->tahunSijil }}
+                                                                        </td>
+                                                                        <td class="text-center">
+                                                                            @if ($listskm->dokumen_skm != '')
+                                                                                <a class="badge bg-primary"
+                                                                                    target="_blank"
+                                                                                    href="{{ url('storage/' . $listskm->dokumen_skm) }}"><i
+                                                                                        class="fas fa-file"></i></a>
+                                                                            @else
+                                                                                Tiada Dokumen
+                                                                            @endif
                                                                         </td>
 
                                                                     </tr>
@@ -563,6 +616,9 @@ Kelantan',
                                                             <th style="padding: 15px;">
                                                                 Pencapaian
                                                             </th>
+                                                            <th style="padding: 15px;">
+                                                                Dokumen
+                                                            </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -582,6 +638,16 @@ Kelantan',
                                                                 </td>
                                                                 <td style="padding: 15px;">
                                                                     {{ $ipt->cgpa }}
+                                                                </td>
+                                                                <td style="padding: 15px;">
+                                                                    Sijil Konvo : <a class="badge bg-primary"
+                                                                        target="_blank"
+                                                                        href="{{ url('storage/' . $ipt->sijil_konvo) }}"><i
+                                                                            class="fas fa-file"></i></a> <br>
+                                                                    Transkrip : <a class="badge bg-primary"
+                                                                        target="_blank"
+                                                                        href="{{ url('storage/' . $ipt->transkrip) }}"><i
+                                                                            class="fas fa-file"></i></a>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -623,303 +689,38 @@ Kelantan',
                                                 <td>{{ $exp->taraf_jawatan }}</td>
                                                 <td>
                                                     {{ \Carbon\Carbon::parse($exp->mula_kerja)->format('d/m/Y') }} -
-                                                    {{ \Carbon\Carbon::parse($exp->akhir_kerja)->format('d/m/Y') }}
+                                                    @if ($exp->semasa == 1)
+                                                        Sekarang
+                                                    @else
+                                                        {{ \Carbon\Carbon::parse($exp->akhir_kerja)->format('d/m/Y') }}
+                                                    @endif
                                                     <br>
                                                     @php
-                                                        $tempoh = \Carbon\Carbon::parse($exp->akhir_kerja)
-                                                            ->diff(\Carbon\Carbon::parse($exp->mula_kerja))
-                                                            ->format('%y Tahun, %m Bulan');
+                                                        if ($exp->semasa == 1) {
+                                                            $tempoh = \Carbon\Carbon::now()
+                                                                ->diff(\Carbon\Carbon::parse($exp->mula_kerja))
+                                                                ->format('%y Tahun, %m Bulan');
+                                                        } else {
+                                                            $tempoh = \Carbon\Carbon::parse($exp->akhir_kerja)
+                                                                ->diff(\Carbon\Carbon::parse($exp->mula_kerja))
+                                                                ->format('%y Tahun, %m Bulan');
+                                                        }
                                                     @endphp
                                                     ({{ $tempoh }})
                                                 </td>
                                                 <td>{{ $exp->tugas }}</td>
                                             </tr>
-                                            <tr>
-                                                <td colspan="6"></td>
-                                            </tr>
                                         @endforeach
+                                        <tr>
+                                            <td colspan="6"></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    {{-- butiran Akademik Menengah --}}
-    {{-- <div class="row mt-4 mb-4">
-        <div class="col-lg-12 col-md-12">
-            <div class="card h-100">
-                <div class="card-body p-3">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered text-dark">
-                            <thead>
-                                <tr class="text-center">
-                                    <th colspan="5" class="text-uppercase">akademik</th>
-                                </tr>
-                                <tr class="text-center">
-                                    <th colspan="5" class="text-uppercase">Peringkat menengah</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                @if (count($pmr) > 0)
-                                    <tr>
-                                        <td class="w-8">Jenis</td>
-                                        <td class="text-bold">{{ $pmr->jenis }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pencapaian</td>
-                                        <td class="text-bold">
-                                            @foreach ($pencapaian_pmr as $ppmr)
-                                                {{ $ppmr->jumlah }}{{ $ppmr->gred }},
-                                            @endforeach
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>tahun</td>
-                                        <td class="text-bold">{{ $pmr->tahun }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Matapelajaran</td>
-                                        <td>
-                                            <table class="table text-dark">
-                                                @foreach ($k_pmr as $kpmr)
-                                                    @if ($kpmr->id_pmr == $pmr->id)
-                                                        <tr class="text-bold">
-                                                            <td class="w-50">{{ $kpmr->subjek }}</td>
-                                                            <td>{{ $kpmr->gred }}</td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                            </table>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2"></td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    {{-- butiran Akademik Pengajian Tinggi --}}
-    {{-- <div class="row mb-4">
-        <div class="col-lg-12 col-md-12">
-            <div class="card h-100">
-                <div class="card-body p-3">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered text-dark">
-                            <thead>
-                                <tr class="text-center">
-                                    <th colspan="5" style="padding: 15px;" class="text-uppercase">akademik</th>
-                                </tr>
-                                <tr class="text-center">
-                                    <th colspan="5" style="padding: 15px;" class="text-uppercase">Pengajian Tinggi
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="padding: 15px;">
-                                        Peringkat
-                                    </td>
-                                    <td style="padding: 15px;">
-                                        Institusi Pengajian
-                                    </td>
-                                    <td style="padding: 15px;">
-                                        Tahun
-                                    </td>
-                                    <td style="padding: 15px;">
-                                        Kelulusan / Bidang Pengajian
-                                    </td>
-                                    <td style="padding: 15px;">
-                                        Pencapaian
-                                    </td>
-                                </tr>
-                                @foreach ($senarai_ipt as $ipt)
-                                    <tr>
-                                        <td style="padding: 15px;">
-                                            {{ $ipt->peringkat }}
-                                        </td>
-                                        <td style="padding: 15px;">
-                                            {{ $ipt->institusi }}
-                                        </td>
-                                        <td style="padding: 15px;">
-                                            {{ $ipt->tahun_graduasi }}
-                                        </td>
-                                        <td style="padding: 15px;">
-                                            {{ $ipt->bidang_pengkhususan }}
-                                        </td>
-                                        <td style="padding: 15px;">
-                                            {{ $ipt->cgpa }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    {{-- butiran lain jika berkaitan dengan jawatan --}}
-    {{-- <div class="row mb-4">
-        <div class="col-lg-12 col-md-12">
-            <div class="card h-100">
-
-                <div class="card-body p-3">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered text-dark">
-                            <thead>
-                                <tr class="text-center">
-                                    <th colspan="4" style="padding: 14px;" class="text-uppercase">butiran-butiran lain
-                                        jika berkaitan dengan jawatan yang dipohon</th>
-                                </tr>
-                                <tr class="text-center">
-                                    <th colspan="4" style="padding: 15px;" class="text-uppercase">kemahiran mengenai
-                                        kepakaran & lain-lain yang berkenaan</th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr>
-                                    <td colspan="4" style="padding: 8px;">
-                                        <u>Lesen Memandu</u>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" style="padding: 8px;">
-                                        <strong>{{ $maklumat_tambahan->lesen }}</strong>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" style="padding: 8px;">
-                                        <u>Penguasaan Bahasa</u>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bahasa Inggeris</td>
-                                    <td>Bahasa Arab</td>
-                                    <td>Bahasa Cina</td>
-                                    <td>Bahasa Asing</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-uppercase text-bold">{{ $maklumat_tambahan->inggeris }}</td>
-                                    <td class="text-uppercase text-bold">{{ $maklumat_tambahan->arab }}</td>
-                                    <td class="text-uppercase text-bold">{{ $maklumat_tambahan->cina }}</td>
-                                    <td class="text-uppercase text-bold">{{ $maklumat_tambahan->asing }}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    {{-- butiran Keluarga --}}
-    {{-- <div class="row mb-4">
-        <div class="col-lg-12 col-md-12">
-            <div class="card h-100">
-                <div class="card-body p-3">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered text-dark">
-                            <thead>
-                                <tr class="text-center">
-                                    <th colspan="5" style="padding: 15px;" class="text-uppercase">Butir-butir keluarga
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                <tr>
-                                    <td style="width: 20%" style="padding: 15px;">
-                                        Perkara
-                                    </td>
-                                    <td style="width: 40%" style="padding: 15px;">
-                                        Bapa
-                                    </td>
-                                    <td style="width: 40%" style="padding: 15px;">
-                                        Ibu
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 15px;">
-                                        Tempat Lahir
-                                    </td>
-                                    <td class="text-uppercase text-bold" style="padding: 15px;">
-                                        {{ $maklumat_diri->negeri_lahir_bapa }}
-                                    </td>
-                                    <td class="text-uppercase text-bold" style="padding: 15px;">
-                                        {{ $maklumat_diri->negeri_lahir_ibu }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    {{-- Pengalaman --}}
-    {{-- <div class="row mb-4">
-        <div class="col-lg-12 col-md-12">
-            <div class="card h-100">
-                <div class="card-body p-3">
-                    <div class="table-responsive">
-                        <table class="table table-sm table-bordered text-dark">
-                            <thead>
-                                <tr class="text-center">
-                                    <th colspan="6" style="padding: 15px;" class="text-uppercase">Pengalaman Pekerjaan
-                                    </th>
-                                </tr>
-                                <tr class="text-center">
-                                    <td>#</td>
-                                    <td>Jawatan</td>
-                                    <td>Majikan</td>
-                                    <td>Taraf</td>
-                                    <td>Tempoh</td>
-                                    <td>Ringkasan Tugas</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $i = 0;
-                                @endphp
-                                @foreach ($pengalaman as $exp)
-                                    <tr class="text-center text-bold align-items-center" style="vertical-align: middle">
-                                        <td>{{ ++$i }}</td>
-                                        <td>{{ $exp->nama_jawatan }}</td>
-                                        <td>{{ $exp->majikan }} <br> {{ $exp->alamat_majikan }}</td>
-                                        <td>{{ $exp->taraf_jawatan }}</td>
-                                        <td>
-                                            {{ \Carbon\Carbon::parse($exp->mula_kerja)->format('d/m/Y') }} -
-                                            {{ \Carbon\Carbon::parse($exp->akhir_kerja)->format('d/m/Y') }}
-                                            <br>
-                                            @php
-                                                $tempoh = \Carbon\Carbon::parse($exp->akhir_kerja)
-                                                    ->diff(\Carbon\Carbon::parse($exp->mula_kerja))
-                                                    ->format('%y Tahun, %m Bulan');
-                                            @endphp
-                                            ({{ $tempoh }})
-                                        </td>
-                                        <td>{{ $exp->tugas }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
 @endsection

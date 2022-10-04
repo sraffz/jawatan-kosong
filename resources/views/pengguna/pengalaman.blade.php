@@ -85,12 +85,22 @@ Kelantan',
                                                 </td>
                                                 <td class="text-center font-weight-bold text-sm text-uppercase">
                                                     {{ \Carbon\Carbon::parse($pnglm->mula_kerja)->format('d/m/Y') }} -
-                                                    {{ \Carbon\Carbon::parse($pnglm->akhir_kerja)->format('d/m/Y') }}
+                                                    @if ($pnglm->semasa == 1)
+                                                        Sekarang
+                                                    @else
+                                                        {{ \Carbon\Carbon::parse($pnglm->akhir_kerja)->format('d/m/Y') }}
+                                                    @endif
                                                     <br>
                                                     @php
-                                                        $tempoh = \Carbon\Carbon::parse($pnglm->akhir_kerja)
-                                                            ->diff(\Carbon\Carbon::parse($pnglm->mula_kerja))
-                                                            ->format('%y Tahun, %m Bulan');
+                                                        if ($pnglm->semasa == 1) {
+                                                            $tempoh = \Carbon\Carbon::now()
+                                                                ->diff(\Carbon\Carbon::parse($pnglm->mula_kerja))
+                                                                ->format('%y Tahun, %m Bulan');
+                                                        }else {
+                                                            $tempoh = \Carbon\Carbon::parse($pnglm->akhir_kerja)
+                                                                ->diff(\Carbon\Carbon::parse($pnglm->mula_kerja))
+                                                                ->format('%y Tahun, %m Bulan');
+                                                        }
                                                     @endphp
                                                     ({{ $tempoh }})
                                                 </td>
@@ -177,20 +187,21 @@ Kelantan',
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row mt-2">
-                                                                                <div class="col-lg-4">
+                                                                                <div class="offset-xl-5 col-lg-4">
                                                                                     <div class="form-check">
-                                                                                        <input class="form-check-input" type="checkbox" value="1" id="fcustomCheck1">
-                                                                                        <label class="custom-control-label" for="customCheck1">Masih Berkhidmat</label>
+                                                                                        &nbsp;<input class="form-check-input" name="semasa" type="checkbox" value="1" id="fcustomCheck1" {{ $pnglm->semasa == 1? 'checked' : '' }} >
+                                                                                        <label class="custom-control-label" for="customCheck1">Sedang Berkhidmat</label>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="row mt-2">
+                                                                            <div class="row">
                                                                                 <div class="col-lg-6">
                                                                                     <div class="mb-3">
                                                                                         <div
                                                                                             class="input-group input-group-static">
                                                                                             <label>Tarikh Mula
                                                                                                 Berkhidmat</label>
+                                                                                               
                                                                                             <input type="text"
                                                                                                 name="mula_kerja"
                                                                                                 class="form-control datepicker2"
@@ -202,13 +213,17 @@ Kelantan',
 
                                                                                 <div class="col-lg-6">
                                                                                     <div class="mb-3">
-                                                                                        <div
-                                                                                            class="input-group input-group-static">
-                                                                                            <label>Tarikh Akhir
-                                                                                                Berkhidmat</label>
-                                                                                            <input type="text" name="akhir_kerja" class="form-control datepicker2" id="akhir_kerja"
-                                                                                                value="{{ \Carbon\Carbon::parse($pnglm->akhir_kerja)->format('d-m-Y') }}"
-                                                                                                required>
+                                                                                        @php
+                                                                                        if ($pnglm->semasa == 1) {
+                                                                                            $tarikh_akhir = '';
+                                                                                        }else {
+                                                                                            $tarikh_akhir = \Carbon\Carbon::parse($pnglm->akhir_kerja)->format('d-m-Y');
+                                                                                        }
+                                                                                    @endphp
+                                                                                        <div class="input-group input-group-static">
+                                                                                            <label>Tarikh Akhir Berkhidmat</label>
+                                                                                            <input type="text" name="akhir_kerja" class="form-control datepicker2 akhir_kerja" id="akhir_kerja"
+                                                                                                value="{{ $tarikh_akhir }}" required>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -326,12 +341,19 @@ Kelantan',
                                 </div>
                             </div>
                             <div class="row mt-2">
+                                <div class="offset-lg-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="1" name="semasa" id="fcustomCheck2">
+                                        <label class="custom-control-label" for="customCheck2">Sedang Berkhidmat</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-lg-6">
                                     <div class="mb-3">
                                         <div class="input-group input-group-static">
                                             <label>Tarikh Mula Berkhidmat</label>
-                                            <input type="text" name="mula_kerja" class="form-control datepicker2"
-                                                required>
+                                            <input type="text" name="mula_kerja" class="form-control datepicker2" required>
                                         </div>
                                     </div>
                                 </div>
@@ -339,7 +361,7 @@ Kelantan',
                                     <div class="mb-3">
                                         <div class="input-group input-group-static">
                                             <label>Tarikh Akhir Berkhidmat</label>
-                                            <input type="text" name="akhir_kerja" class="form-control datepicker2"
+                                            <input type="text" id="akhir_kerja_1" name="akhir_kerja" class="form-control datepicker2"
                                                 required>
                                         </div>
                                     </div>
@@ -386,7 +408,13 @@ Kelantan',
 
         $(function() {
             $('#fcustomCheck1').on('click', function() {
-                $('#akhir_kerja').attr('disabled', $(this).is(':checked'));
+                $('.akhir_kerja').attr('disabled', $(this).is(':checked'));
+            });
+        });
+
+        $(function() {
+            $('#fcustomCheck2').on('click', function() {
+                $('#akhir_kerja_1').attr('disabled', $(this).is(':checked'));
             });
         });
     </script>

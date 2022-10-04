@@ -28,7 +28,7 @@
                         </div>
                         <div class="row">
                             <div class="mt-3">
-                                <label for="sijil_skm" class="form-label">Sijil SKM</label>
+                                <label for="sijil_skm" class="form-label">Sijil SKM <span class="text-danger">*</span></label>
                                 <input type="file" class="form-control-file" name="sijil_skm" id="sijil_skm"
                                     placeholder="Sijil SKM" required aria-describedby="fileHelpId">
                                 <div id="fileHelpId" class="form-text">PDF, PNG, JPEG, JPG</div>

@@ -102,7 +102,10 @@ Kelantan'])
                                         <td class="text-dark">{{ $pemohon->nama }}</td>
                                         <td class="text-center text-dark">{{ $pemohon->nama_jawatan.' ('.$pemohon->gred.')' }}</td>
                                         <td class="text-center text-dark">{{ $pemohon->no_siri }}</td>
-                                        <td class="text-center text-dark"><a href="{{ route('butiran-pemohon', [$pemohon->id_pengguna, $pemohon->id_permohonan]) }}" class="badge bg-info">Butiran</a></td>
+                                        <td class="text-center text-dark">
+                                            <a href="{{ route('butiran-pemohon', [$pemohon->id_pengguna, $pemohon->id_permohonan]) }}" class="badge bg-info">Butiran</a> 
+                                            <a href="{{ route('cetak-butiran-pemohon', [$pemohon->id_pengguna, $pemohon->id_permohonan]) }}" class="badge bg-info">Resume</a>  
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

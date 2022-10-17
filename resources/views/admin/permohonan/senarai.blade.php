@@ -104,7 +104,7 @@ Kelantan'])
                                         <td class="text-center text-dark">{{ $pemohon->no_siri }}</td>
                                         <td class="text-center text-dark">
                                             <a href="{{ route('butiran-pemohon', [$pemohon->id_pengguna, $pemohon->id_permohonan]) }}" class="badge bg-info">Butiran</a> 
-                                            <a href="{{ route('cetak-butiran-pemohon', [$pemohon->id_pengguna, $pemohon->id_permohonan]) }}" class="badge bg-info">Resume</a>  
+                                            <a href="{{ route('cetak-butiran-pemohon', [$pemohon->id_pengguna, $pemohon->id_permohonan]) }}" target="_blank" class="badge bg-primary"><i class="fas fa-file"></i></a>  
                                         </td>
                                     </tr>
                                 @endforeach

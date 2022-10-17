@@ -14,10 +14,10 @@ Kelantan',
                             <div class="col-lg-6 col-7">
                                 <div class="col-lg-6"></div>
                                 <h6>Senarai Pengalaman</h6>
-                                <p class="text-sm mb-0">
+                                {{-- <p class="text-sm mb-0">
                                     Hanya perlu mengisi <span class="font-weight-bold ms-1">3 pengalaman terakhir</span>
                                     sahaja.
-                                </p>
+                                </p> --}}
                             </div>
                             <div class="col-lg-6 text-end">
                                 {{-- @if ($bil_pengalaman < 3) --}}

@@ -10,13 +10,16 @@
                             $path = Auth::user()->id . '/' . Auth::user()->gambardp->nama_gambar;
                         }
                     @endphp
-                    <img src="{{ asset('storage/gambarPemohon') }}/{{ $path == '' ? 'team-3.png' : $path }}"
+                    <img src="{{  $path == '' ? asset('images/default.png') : asset('storage/gambarPemohon/'.$path) }}"
                         alt="img-blur-shadow" class="img-fluid shadow border-radius-lg image-previewer">
+                    {{-- <img src="{{ asset('storage/gambarPemohon') }}/{{ $path == '' ? 'team-3.png' : $path }}"
+                        alt="img-blur-shadow" class="img-fluid shadow border-radius-lg image-previewer"> --}}
                 </a>
                 <div class="colored-shadow image-previewer"
                     style="background-image: url(&quot;{{ asset('storage/gambarPemohon') }}/{{ $path == '' ? 'team-3.png' : $path }}&quot;);">
                 </div>
             </div>
+             
             <div class="card-body text-center">
                 <div class="d-flex mt-n6 mx-auto">
                     {{-- <button class="btn btn-link text-primary ms-auto border-0" onClick="refreshPage()" title="Refresh">

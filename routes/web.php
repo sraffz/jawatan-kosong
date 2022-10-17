@@ -98,9 +98,10 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     
     Route::get('/senarai-pemohon/{url}', 'AdminController@senaraiPermohonan')->name('admin.permohonan.senarai');
     Route::get('/butiran-pemohon/{id2}-{id}', 'AdminController@butiranPermohonan')->name('butiran-pemohon');
+    Route::get('/cetak-butiran-pemohon/{id2}-{id}', 'AdminController@cetakButiranPermohonan')->name('cetak-butiran-pemohon');
 
     Route::get('/cetak-iklan/{id}', 'AdminController@cetakiklan')->name('cetak-iklan');
-    Route::get('/export-senarai-pemohon', 'AdminController@exportSenaraiPemohon')->name('export-senarai-pemohon');
+    Route::get('/export-senarai-pemohon/{id}-{id2}', 'AdminController@exportSenaraiPemohon')->name('export-senarai-pemohon');
 
     Route::post('/kemaskini-jawatan', 'AdminController@kemaskinijawatan')->name('kemaskini-jawatan');
     Route::get('/padam-jawatan', 'AdminController@padamjawatan')->name('padam-jawatan');

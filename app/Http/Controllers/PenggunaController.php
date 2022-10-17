@@ -556,10 +556,22 @@ class PenggunaController extends Controller
     {
         $gambar = JK_Gambar_Passport::where('user_id', Auth::user()->id)->count();
         $maklumat_diri = JK_MaklumatDiri::where('user_id', Auth::user()->id)->count();
-        $spm = DB::table('jk_spm')->where('user_id', Auth::user()->id)->count();
+
+        // gred 11
         $pmr = DB::table('jk_pmr')->where('user_id', Auth::user()->id)->count();
+        // gred 19
+        $spm = DB::table('jk_spm')->where('user_id', Auth::user()->id)->count();
+        $svm = DB::table('jk_svm')->where('user_id', Auth::user()->id)->count();
+        // gred 29
         $ipt_dip = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 2)->count();
-        $ipt_deg = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 3)->count();
+        $ipt_sijil = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 1)->count();
+        $matrik = DB::table('jk_matrikulasi')->where('user_id', Auth::user()->id)->count();
+        $stpm = DB::table('jk_stpm')->where('user_id', Auth::user()->id)->count();
+        $stam = DB::table('jk_stam')->where('user_id', Auth::user()->id)->count();
+        // gred 41
+        $ipt_deg_muda = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 3)->count();
+        $ipt_deg = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 4)->count();
+        $ipt_phd = DB::table('jk_pengajian_tinggi')->where('user_id', Auth::user()->id)->where('kelulusan', 5)->count();
 
         $id_iklan = $req->id_iklan;
         $id_jawatan = $req->id_jwtn;
@@ -570,15 +582,21 @@ class PenggunaController extends Controller
 
         // dd(\Carbon\Carbon::now()->addYears(1));
         // dd($gambar, $maklumat_diri, $spm, $pmr, $sub_gred, $ipt_dip, $ipt_deg);
-
+        $pendidikan = 0;
         if ($sub_gred == '11') {
             $pendidikan = $pmr;
         }elseif ($sub_gred == '19') {
-            $pendidikan = $spm;
+            if ($spm == 1 || $svm == 1) {
+                $pendidikan = 1;
+            }
         }elseif ($sub_gred == '29') {
-            $pendidikan = $ipt_dip;
+            if ($ipt_dip == 1 || $ipt_sijil == 1 || $matrik == 1 || $stpm == 1 || $stam == 1) {
+                $pendidikan = 1;
+            }
         }elseif ($sub_gred == '41') {
-            $pendidikan = $ipt_deg;
+            if ($ipt_deg_muda == 1 || $ipt_deg == 1 || $ipt_phd == 1) {
+                $pendidikan = 1;
+            }
         }
 
         // $total = 99998;
@@ -694,9 +712,9 @@ class PenggunaController extends Controller
             $file = $req->file('file_pmr');
 
                 $extension = $file->extension();
-                $filename = 'pmr_'.$file->hashName().'.'.$extension;
+                $filename = 'pmr_'.$file->hashName();
  
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
                     $storagePath = 'public/akademik/pmr';
@@ -705,7 +723,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($id_spm->dokumen, $linkPath);
 
@@ -763,10 +781,10 @@ class PenggunaController extends Controller
             $file = $req->file('file_pmr');
                 // $filename = $file->getClientOriginalName();
                 $extension = $file->extension();
-                $filename = 'pmr_'.$file->hashName().'.'.$extension;
+                $filename = 'pmr_'.$file->hashName();
                 // $filename = 'pmr_'.$id.'.'.$extension;
 
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // check folder for 'current year', if not exist, create one
                     $currYear = \Carbon\Carbon::now()->format('Y');
@@ -775,14 +793,14 @@ class PenggunaController extends Controller
                     $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
                     $linkPath = 'akademik/pmr/'. $filename;
 
-                    // dd ($filePath, $filename);
-                    // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
-                    // }
+                    // dd ($filePath, $filename, $storagePath);
                     // dd($id_pmr->dokumen, $linkPath);
                     Storage::delete('public/'.$id_pmr->dokumen);
-
+                    
                     $upload_success = $file->storeAs($storagePath, $filename);
+                    // if (!file_exists($filePath)) {
+                    //     mkdir($filePath, 0775, true);
+                    // }
 
                     if ($upload_success) {
                         JK_PMR::where('user_id', $id)->update([
@@ -858,9 +876,9 @@ class PenggunaController extends Controller
             $file = $req->file('file_spm');
 
                 $extension = $file->extension();
-                $filename = 'spm_'.$file->hashName().'.'.$extension;
+                $filename = 'spm_'.$file->hashName();
  
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
                     $storagePath = 'public/akademik/spm';
@@ -869,7 +887,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($id_spm->dokumen, $linkPath);
 
@@ -928,10 +946,10 @@ class PenggunaController extends Controller
             $file = $req->file('file_spm');
                 // $filename = $file->getClientOriginalName();
                 $extension = $file->extension();
-                $filename = 'spm_'.$file->hashName().'.'.$extension;
+                $filename = 'spm_'.$file->hashName();
                 // $filename = 'spm_'.$id.'.'.$extension;
 
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // check folder for 'current year', if not exist, create one
                     $currYear = \Carbon\Carbon::now()->format('Y');
@@ -942,7 +960,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($id_spm->dokumen, $linkPath);
                     Storage::delete('public/'.$id_spm->dokumen);
@@ -1035,9 +1053,9 @@ class PenggunaController extends Controller
             $file = $req->file('file_spmu');
 
                 $extension = $file->extension();
-                $filename = 'spmu_'.$file->hashName().'.'.$extension;
+                $filename = 'spmu_'.$file->hashName();
  
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
                     $storagePath = 'public/akademik/spmu';
@@ -1046,7 +1064,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($linkPath);
 
@@ -1105,10 +1123,10 @@ class PenggunaController extends Controller
             $file = $req->file('file_spmu');
                 // $filename = $file->getClientOriginalName();
                 $extension = $file->extension();
-                $filename = 'spmu_'.$file->hashName().'.'.$extension;
+                $filename = 'spmu_'.$file->hashName();
                 // $filename = 'spmu_'.$id.'.'.$extension;
 
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // check folder for 'current year', if not exist, create one
                     $currYear = \Carbon\Carbon::now()->format('Y');
@@ -1119,7 +1137,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($id_spm->dokumen, $linkPath);
                     Storage::delete('public/'.$id_spmu->dokumen);
@@ -1204,9 +1222,9 @@ class PenggunaController extends Controller
             $file = $req->file('file_stpm');
 
                 $extension = $file->extension();
-                $filename = 'stpm_'.$file->hashName().'.'.$extension;
+                $filename = 'stpm_'.$file->hashName();
  
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
                     $storagePath = 'public/akademik/stpm';
@@ -1215,7 +1233,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($linkPath);
 
@@ -1274,10 +1292,10 @@ class PenggunaController extends Controller
             $file = $req->file('file_stpm');
                 // $filename = $file->getClientOriginalName();
                 $extension = $file->extension();
-                $filename = 'stpm_'.$file->hashName().'.'.$extension;
+                $filename = 'stpm_'.$file->hashName();
                 // $filename = 'stpm_'.$id.'.'.$extension;
 
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // check folder for 'current year', if not exist, create one
                     $currYear = \Carbon\Carbon::now()->format('Y');
@@ -1288,7 +1306,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($id_spm->dokumen, $linkPath);
                     Storage::delete('public/'.$id_stpm->dokumen);
@@ -1378,9 +1396,9 @@ class PenggunaController extends Controller
             $file = $req->file('file_stam');
 
                 $extension = $file->extension();
-                $filename = 'stam_'.$file->hashName().'.'.$extension;
+                $filename = 'stam_'.$file->hashName();
  
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // $storagePath = public_path() . 'upload/dokumen/' . $currYear;
                     $storagePath = 'public/akademik/stam';
@@ -1389,7 +1407,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($linkPath);
 
@@ -1448,10 +1466,10 @@ class PenggunaController extends Controller
             $file = $req->file('file_stam');
                 // $filename = $file->getClientOriginalName();
                 $extension = $file->extension();
-                $filename = 'stam_'.$file->hashName().'.'.$extension;
+                $filename = 'stam_'.$file->hashName();
                 // $filename = 'stam_'.$id.'.'.$extension;
 
-                // dd($filename, $filename2,$extension);
+                // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
                     // check folder for 'current year', if not exist, create one
                     $currYear = \Carbon\Carbon::now()->format('Y');
@@ -1462,7 +1480,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($id_spm->dokumen, $linkPath);
                     Storage::delete('public/'.$id_stam->dokumen);
@@ -1623,7 +1641,7 @@ class PenggunaController extends Controller
             $file = $req->file('sijil_skm');
 
                 $extension = $file->extension();
-                $filename = 'skm_'.$file->hashName().'.'.$extension;
+                $filename = 'skm_'.$file->hashName();
  
                 // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
@@ -1634,7 +1652,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($storagePath, $linkPath);
 
@@ -1712,7 +1730,7 @@ class PenggunaController extends Controller
             $file = $req->file('sijil_konvo');
 
                 $extension = $file->extension();
-                $filename = 'sijil_konvo_'.$file->hashName().'.'.$extension;
+                $filename = 'sijil_konvo_'.$file->hashName();
  
                 // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
@@ -1723,7 +1741,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($storagePath, $linkPath);
 
@@ -1752,7 +1770,7 @@ class PenggunaController extends Controller
             $file = $req->file('transkrip');
 
                 $extension = $file->extension();
-                $filename = 'transkrip_'.$file->hashName().'.'.$extension;
+                $filename = 'transkrip_'.$file->hashName();
  
                 // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
@@ -1763,7 +1781,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($storagePath, $linkPath);
 
@@ -1814,7 +1832,7 @@ class PenggunaController extends Controller
             $file = $req->file('sijil_konvo');
 
                 $extension = $file->extension();
-                $filename = 'sijil_konvo_'.$file->hashName().'.'.$extension;
+                $filename = 'sijil_konvo_'.$file->hashName();
  
                 // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
@@ -1825,7 +1843,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($storagePath, $linkPath);
                     Storage::delete('public/'.$data->sijil_konvo);
@@ -1855,7 +1873,7 @@ class PenggunaController extends Controller
             $file = $req->file('transkrip');
 
                 $extension = $file->extension();
-                $filename = 'transkrip_'.$file->hashName().'.'.$extension;
+                $filename = 'transkrip_'.$file->hashName();
  
                 // dd($filename, $extension);
                 if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
@@ -1866,7 +1884,7 @@ class PenggunaController extends Controller
 
                     // dd ($filePath, $filename);
                     // if (!file_exists($storagePath)) {
-                    //     mkdir($storagePath, 0777, true);
+                    //     mkdir($storagePath, 0775, true);
                     // }
                     // dd($storagePath, $linkPath);
                     Storage::delete('public/'.$data->transkrip);

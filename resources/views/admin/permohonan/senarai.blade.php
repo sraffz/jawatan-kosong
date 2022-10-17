@@ -49,7 +49,8 @@ Kelantan'])
                                         <td>{{ $list->gred }}</td>
                                         <td>{{ $list->bilangan }}</td>
                                         <td> 
-                                            <a href="{{ route('export-senarai-pemohon') }}" class="badge bg-info"><i class="fas fa-list-alt"></i></a>
+                                            
+                                            <a href="{{ route('export-senarai-pemohon',[$list->id, $list->id_iklan]) }}" class="badge bg-info"><i class="fas fa-list-alt"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach

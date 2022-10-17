@@ -43,9 +43,18 @@ Kelantan',
                                         </div>
                             </div>
                             <div class="col-xl-6 mt-4">
+                                {{-- @php
+                                    use Illuminate\Support\Facades\Storage;
+
+                                    $url = Storage::url('app/public/'.$pmr->dokumen);
+                                @endphp
+                                        {{ $url }}
+                                        <a target="_blank" class="btn btn-primary" href="{{ asset($url) }}" role="button">Buka</a>
+                                        
+                                        {{ $pmr->dokumen }} --}}
                                         @if ($pmr->dokumen != '')
                                             <div class="col-xl-5">
-                                                <a class="btn btn-info" target="_blank" href="{{ url('storage/'.$pmr->dokumen) }}" role="button">Papar Sijil</a>
+                                                <a class="btn btn-info" target="_blank" href="{{ asset('storage/'.$pmr->dokumen) }}" role="button">Papar Sijil</a>
                                             </div>
                                         @endif
                             </div>

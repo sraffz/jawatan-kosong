@@ -52,7 +52,7 @@ Kelantan'])
                             <div
                                 class="input-group input-group-static mb-2 {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label  >Kata Laluan</label>
-                                <input type="password" class="form-control" aria-label="Password" name="password"
+                                <input type="password" class="pr-password form-control" aria-label="Password" name="password"
                                     required>
                                 @if ($errors->has('password'))
                                     <span class="help-block text-danger">
@@ -71,14 +71,14 @@ Kelantan'])
                                     </span>
                                 @endif
                             </div>
-                            <div class="form-check text-start ps-0">
+                            {{-- <div class="form-check text-start ps-0">
                                 <input class="form-check-input bg-dark border-dark" type="checkbox" value=""
                                     id="flexCheckDefault" required>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and
                                         Conditions</a>
                                 </label>
-                            </div>
+                            </div> --}}
                             <div class="text-center">
                                 <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Daftar</button>
                             </div>

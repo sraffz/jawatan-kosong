@@ -9,9 +9,19 @@ Kelantan',
         <div class="col-lg-12 col-md-12 mb-4">
             <div class="card h-100">
                 <div class="card-body pb-0">
-                    <a class="btn btn-warning" href="{{ url('admin/senarai-pemohon', [$permohonan->url]) }}">
-                        <i class="material-icons">arrow_back_ios</i> Kembali
-                    </a>
+                    <div class="row">
+                        <div class="col-lg-6 col-6">
+                            <a class="btn btn-warning" href="{{ url('admin/senarai-pemohon', [$permohonan->url]) }}">
+                                <i class="material-icons">arrow_back_ios</i> Kembali
+                            </a>
+                        </div>
+                        <div class="col-lg-6 col-6">
+                            <div class="float-lg-end">
+                                <a href="{{ route('cetak-butiran-pemohon', [$permohonan->id_pengguna, $permohonan->id_permohonan]) }}"
+                                    target="_blank" class="btn btn-info"><i class="fas fa-file"></i>&nbsp;Borang Permohonan</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,7 +31,7 @@ Kelantan',
 
         <div class="d-flex bd-highlight">
             <div class="p-2 bd-highlight">
-                <h6 class="text-bold ">No. Siri : {{ $permohonan->no_siri }}</h6>
+                <h6 class="text-bold ">No. Siri : {{ $permohonan->no_siri }} </h6>
             </div>
             <div class="ms-auto p-2 bd-highlight">
                 <h6 class="text-bold ">Jawatan dimohon : {{ $permohonan->nama_jawatan }}
@@ -86,8 +96,10 @@ Kelantan',
                     </div>
                 </div>
             </div>
+           
             <div class="row">
                 <div class="tab-content" id="nav-tabContent">
+                     {{-- Tab Peribadi --}}
                     <div class="tab-pane fade show active" id="nav-peribadi" role="tabpanel"
                         aria-labelledby="nav-peribadi-tab">
                         <div class="row mt-3">
@@ -234,6 +246,7 @@ Kelantan',
                             </div>
                         </div>
                     </div>
+                     {{-- Tab Pendidikan --}}
                     <div class="tab-pane fade" id="nav-pendidikan" role="tabpanel" aria-labelledby="nav-pendidikan-tab">
                         {{-- Peringkat menengah --}}
                         <div class="row mt-3">
@@ -661,6 +674,7 @@ Kelantan',
                             </div>
                         </div>
                     </div>
+                     {{-- Tab Pengalaman --}}
                     <div class="tab-pane fade" id="nav-pengalaman" role="tabpanel" aria-labelledby="nav-pengalaman-tab">
                         <div class="row mt-3">
                             <div class="table-responsive">
@@ -679,6 +693,7 @@ Kelantan',
                                     <tbody>
                                         @php
                                             $i = 0;
+                                            $total_exp= 0;
                                         @endphp
                                         @foreach ($pengalaman as $exp)
                                             <tr class="text-center text-bold align-items-center"
@@ -707,10 +722,12 @@ Kelantan',
                                                         }
                                                     @endphp
                                                     ({{ $tempoh }})
+                                                    {{-- ({{ $total_exp = $total_exp + $tempoh}}) --}}
                                                 </td>
                                                 <td>{{ $exp->tugas }}</td>
                                             </tr>
                                         @endforeach
+                                        {{-- {{ $total_exp }} --}}
                                         <tr>
                                             <td colspan="6"></td>
                                         </tr>

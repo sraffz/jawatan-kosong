@@ -51,7 +51,7 @@ class RegisterController extends Controller
             'nama' => 'required|string|max:191',
             'ic' => 'required|unique:users|max:191',
             'email' => 'required|string|email|max:191',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:12|regex:/^.*(?=.{3,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!@$#%]).*$/|confirmed',
         ]);
     }
 

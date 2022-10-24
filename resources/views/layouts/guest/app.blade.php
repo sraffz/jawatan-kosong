@@ -11,7 +11,8 @@
     <!-- Icons -->
     <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
     <link rel="shortcut icon" href="{{ asset('assets/media/favicons/favicon.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="{{ asset('assets/media/favicons/favicon-192x192.png') }}">
     <link rel="apple-touch-icon" sizes="180x180"
         href="{{ asset('assets/media/favicons/apple-touch-icon-180x180.png') }}">
 
@@ -28,7 +29,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.0') }}" rel="stylesheet" />
-</head>
+    <link id="pagestyle" href="{{ asset('plugin/validate-password/passwordRequirements.css') }}" rel="stylesheet" />
 
 <body class="bg-gray-200">
     <div class="container position-sticky z-index-sticky top-0">
@@ -55,6 +56,7 @@
     <script src="{{ asset('material/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ asset('material/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script src="{{ asset('material/js/plugins/chartjs.min.js') }}"></script>
+
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
         if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -69,6 +71,15 @@
     <script async defer src="{{ asset('material/js/buttons.js') }}"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('material/js/material-dashboard.min.js?v=3.0.0') }}"></script>
+    <script src="{{ asset('plugin/validate-password/jquery-1.11.3.min.js') }}"></script>
+    <script src="{{ asset('plugin/validate-password/passwordRequirements.min.js') }}"></script>
+    {{-- <script src="https://www.jqueryscript.net/demo/validate-password-requirements/js/jquery.passwordRequirements.min.js"></script> --}}
+    <script>
+        $(".pr-password").passwordRequirements({
+            numCharacters: 12,
+            infoMessage: "Keperluan Kata Laluan",
+        });
+    </script>
 </body>
 
 </html>

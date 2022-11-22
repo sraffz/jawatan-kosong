@@ -115,13 +115,13 @@ class PenggunaController extends Controller
 
     public function butiraniklan($id)
     {
-        $iklan = Iklan::where('id', $id)->first();
+        $iklan = Iklan::where('url', $id)->first();
 
         $syarat = DB::table('senarai-syarat-jawatan')
-            ->where('id_iklan', $id)
+            ->where('id_iklan', $iklan->id)
             ->get();
 
-        $permohonan = JK_Permohonan::where('id_iklan', $id)
+        $permohonan = JK_Permohonan::where('id_iklan', $iklan->id)
             ->where('id_pengguna', Auth::user()->id)
             ->first();
 

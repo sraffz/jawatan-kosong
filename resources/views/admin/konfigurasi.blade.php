@@ -338,7 +338,7 @@ Kelantan'])
                                 <i class="material-icons text-sm">add</i>&nbsp;&nbsp;Tambah
                             </button>
 
-                            <!-- Modal -->
+                            <!-- Modal tambah panggilan-->
                             <div class="modal fade" id="tambahjenispanggilan" tabindex="-1" role="dialog"
                                 aria-labelledby="modelTitleId" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered " role="document">
@@ -396,7 +396,7 @@ Kelantan'])
                                                 <i class="material-icons text-sm me-2">edit</i>Kemaskini
                                             </button>
 
-                                            <!-- Modal Kemaskin Kumpulan-->
+                                            <!-- Modal Kemaskin panggilan-->
                                             <div class="modal fade" id="kemaskinijp-{{ $jp->id }}" tabindex="-1" role="dialog"
                                                 aria-labelledby="modelTitleId" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered " role="document">
@@ -416,7 +416,7 @@ Kelantan'])
                                                                         <label>Jenis Panggilan</label>
                                                                         <input type="text" class="form-control"
                                                                             name="jenis_panggilan" id="jenis_panggilan"
-                                                                            required value="{{ $jp->kump_perkhidmatan }}">
+                                                                            required value="{{ $jp->panggilan }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -435,7 +435,7 @@ Kelantan'])
                                                 data-bs-toggle="modal" data-bs-target="#padamjp-{{ $jp->id }}">
                                                 <i class="material-icons text-sm me-2">delete</i>Padam</a>
                                             </button>
-                                            <!-- Modal Padam Taraf-->
+                                            <!-- Modal Padam panggilan-->
                                             <div class="modal fade" id="padamjp-{{ $jp->id }}" tabindex="-1"
                                                 role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered modal-xs" role="document">

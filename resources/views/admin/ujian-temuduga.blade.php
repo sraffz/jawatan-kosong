@@ -8,53 +8,75 @@ Kelantan'])
                 <div class="card-header pb-0">
                     <div class="row">
                         <div class="col-6 d-flex align-items-center">
-                            <h6 class="mb-0">Senarai Taraf Jawatan</h6>
+                            <h6 class="mb-0">Senarai Panggilan Temuduga / Ujian</h6>
                         </div>
                         <div class="col-6 text-end">
                             <!-- Button trigger modal -->
                             <button type="button" class="btn bg-gradient-dark mb-0" data-bs-toggle="modal"
                                 data-bs-target="#tambahtaraf">
-                                <i class="material-icons text-sm">add</i>&nbsp;&nbsp;tambah Taraf
+                                <i class="material-icons text-sm">add</i>&nbsp;&nbsp;tambah
                             </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="tambahtaraf" tabindex="-1" role="dialog"
-                                aria-labelledby="modelTitleId" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-xs" role="document">
-                                    <div class="modal-content font-weight-normal" id="modal-title-default">
-                                        <div class="modal-header">
-                                            <h6 class="modal-title">Tambah Taraf Jawatan</h6>
-                                            <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
-                                                aria-label="Close">X</button>
-                                        </div>
-                                        <form action="{{ route('tambah-taraf-jawatan') }}" method="post"
-                                            autocomplete="off">
-                                            <div class="modal-body">
-                                                <div>
-                                                    {{ csrf_field() }}
-                                                    <div class="input-group input-group-static">
-                                                        <label>Taraf Jawatan</label>
-                                                        <input type="text" class="form-control" name="taraf_jawatan"
-                                                            id="taraf_jawatan" required>
-                                                    </div>
-                                                    <div class="input-group input-group-static mt-4">
-                                                        <label>Singkatan</label>
-                                                        <input type="text" class="form-control" name="singkatan"
-                                                            id="singkatan" required>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn bg-gradient-dark"
-                                                    data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn bg-gradient-success">Tambah</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+                           
                         </div>
+                         <!-- Modal -->
+                         <div class="modal fade" id="tambahtaraf" tabindex="-1" role="dialog"
+                         aria-labelledby="modelTitleId" aria-hidden="true">
+                         <div class="modal-dialog modal-dialog-centered modal-xs" role="document">
+                             <div class="modal-content font-weight-normal" id="modal-title-default">
+                                 <div class="modal-header">
+                                     <h6 class="modal-title">Tambah Panggilan</h6>
+                                     <button type="button" class="btn-close text-dark" data-bs-dismiss="modal"
+                                         aria-label="Close">X</button>
+                                 </div>
+                                 <form action="{{ route('tambah-panggilan-iv-exam') }}" method="post"
+                                     autocomplete="off">
+                                     <div class="modal-body">
+                                         <div>
+                                             {{ csrf_field() }}
+                                             <div class="input-group">
+                                                 <label>Panggilan</label>
+                                                 <select class="form-select form-control" name="panggilan" id="choices-jenis">
+                                                     <option value="">Pilih</option>
+                                                     @foreach ($jenisPanggilan as $jpanggilan)
+                                                         <option value="{{ $jpanggilan->id }}">{{ $jpanggilan->panggilan }}</option>
+                                                     @endforeach
+                                                 </select>
+                                             </div>
+                                             <div class="input-group input-group-static mt-4">
+                                                 <label>Tarikh Mula</label>
+                                                 <input type="date" class="form-control" name="tarikh_mula"
+                                                     id="tarikh_mula" required>
+                                             </div>
+                                             <div class="input-group input-group-static mt-4">
+                                                 <label>Tarikh Tamat</label>
+                                                 <input type="date" class="form-control" name="tarikh_tamat"
+                                                     id="tarikh_tamat" required>
+                                             </div>
+                                             @php
+                                                 $year = now()->year;
+                                             @endphp
+                                             <div class="input-group input-group-static mt-4">
+                                                 <label>Tahun</label>
+                                                 <input type="text" class="form-control" name="tahun_panggilan"
+                                                     id="tahun_panggilan" value="{{ $year }}" required>
+                                             </div>
+                                             <div class="input-group input-group-static mt-4">
+                                                 <label>Bilangan</label>
+                                                 <input type="number" class="form-control" name="bil_panggilan"
+                                                     id="bil_panggilan" required>
+                                             </div>
+                                         </div>
+                                     </div>
+                                     <div class="modal-footer">
+                                         <button type="button" class="btn bg-gradient-dark"
+                                             data-bs-dismiss="modal">Batal</button>
+                                         <button type="submit" class="btn bg-gradient-success">Tambah</button>
+                                     </div>
+                                 </form>
+                             </div>
+                         </div>
+                     </div>
                     </div>
                 </div>
                 <div class="card-body p-3">
@@ -63,8 +85,9 @@ Kelantan'])
                             <thead>
                                 <tr class="text-center">
                                     <th class="text-uppercase text-left">Bil</th>
-                                    <th class="text-uppercase">Taraf</th>
-                                    <th class="text-uppercase">Singkatan</th>
+                                    <th class="text-uppercase">Panggilan</th>
+                                    <th class="text-uppercase">Tarikh</th>
+                                    <th class="text-uppercase">Bil. Sesi</th>
                                     <th class="text-uppercase text-left">tindakan</th>
                                 </tr>
                             </thead>
@@ -72,96 +95,24 @@ Kelantan'])
                                 @php
                                     $t = 1;
                                 @endphp
-                                @foreach ($taraf as $trf)
-                                    <tr class="text-center">
-                                        <td scope="row" class="text-dark">{{ $t++ }}</td>
-                                        <td class="text-right text-uppercase text-dark">{{ $trf->taraf }}</td>
-                                        <td class="text-dark text-uppercase">{{ $trf->singkatan_taraf }}</td>
-                                        <td class="text-left text-dark">
-                                            <!-- Button trigger modal -->
-                                            <button type="button" class="btn btn-link text-dark px-3 mb-0"
-                                                data-bs-toggle="modal" data-bs-target="#kemaskinitaraf-{{ $trf->id }}">
-                                                <i class="material-icons text-sm me-2">edit</i>Kemaskini
-                                            </button>
-                                            <!-- Modal Kemaskini Taraf-->
-                                            <div class="modal fade" id="kemaskinitaraf-{{ $trf->id }}"
-                                                tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
-                                                aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-xs" role="document">
-                                                    <div class="modal-content font-weight-normal" id="modal-title-default">
-                                                        <div class="modal-header">
-                                                            <h6 class="modal-title">Kemaskini Taraf Jawatan</h6>
-                                                            <button type="button" class="btn-close text-dark"
-                                                                data-bs-dismiss="modal" aria-label="Close">X</button>
-                                                        </div>
-                                                        <form action="{{ route('kemaskini-taraf-jawatan') }}"
-                                                            method="post" autocomplete="off">
-                                                            <div class="modal-body">
-                                                                <div>
-                                                                    {{ csrf_field() }}
-                                                                    <input type="hidden" class="form-control" name="id"
-                                                                        id="id" value="{{ $trf->id }}" required>
-                                                                    <div class="input-group input-group-static">
-                                                                        <label>Taraf Jawatan</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="taraf_jawatan" id="taraf_jawatan"
-                                                                            value="{{ $trf->taraf }}" required>
-                                                                    </div>
-                                                                    <div class="input-group input-group-static mt-4">
-                                                                        <label>Singkatan</label>
-                                                                        <input type="text" class="form-control"
-                                                                            name="singkatan" id="singkatan"
-                                                                            value="{{ $trf->singkatan_taraf }}" required>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn bg-gradient-dark"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn bg-gradient-primary">Kemaskini</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="btn btn-link text-danger text-gradient px-3 mb-0"
-                                                data-bs-toggle="modal" data-bs-target="#padamtaraf-{{ $trf->id }}">
-                                                <i class="material-icons text-sm me-2">delete</i>Padam</a>
-                                            </button>
-                                            <!-- Modal Padam Taraf-->
-                                            <div class="modal fade" id="padamtaraf-{{ $trf->id }}" tabindex="-1"
-                                                role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-xs" role="document">
-                                                    <div class="modal-content font-weight-normal" id="modal-title-default">
-                                                        <div class="modal-header">
-                                                            <h6 class="modal-title">Padam Taraf Jawatan</h6>
-                                                            <button type="button" class="btn-close text-dark"
-                                                                data-bs-dismiss="modal" aria-label="Close">X</button>
-                                                        </div>
-                                                        <form action="{{ route('padam-taraf-jawatan') }}" method="post"
-                                                            autocomplete="off">
-                                                            <div class="modal-body">
-                                                                <div>
-                                                                    {{ csrf_field() }}
-                                                                    <input type="hidden" class="form-control" name="id"
-                                                                        id="id" value="{{ $trf->id }}">
-                                                                    Adakah anda pasti untuk padam maklumat ini?
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn bg-gradient-dark"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn bg-gradient-danger">Padam</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                @foreach ($listPanggilan as $senarai)
+                                <tr class="text-center">
+                                    <td class="text-uppercase text-left">{{ $t++ }}</td>
+                                    <td class="text-uppercase">{{ $senarai->jenis }}</td>
+                                    <td class="text-uppercase">{{ \Carbon\Carbon::parse($senarai->tarikh_mula)->format('d/m/Y') }}</td>
+                                    <td class="text-uppercase text-left">
+                                        @if (count($bil_sesi)>0)
+                                            @foreach ($bil_sesi as $bs)
+                                                @if ($bs->id_panggilan == $senarai->id)
+                                                   {{ $bs->bil_sesi }}
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            0
+                                        @endif
+                                     </td>
+                                    <td class="text-uppercase text-left"><a href="{{ route('sesi-panggilan', [$senarai->id]) }}" role="button" class="btn btn-dark btn-sm btn-block">SESI</a></td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -170,4 +121,15 @@ Kelantan'])
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        if (document.getElementById('choices-jenis')) {
+            var jenis = document.getElementById('choices-jenis');
+            const example = new Choices(jenis,{
+                allowHTML: true,
+            });
+        }
+    </script>
 @endsection

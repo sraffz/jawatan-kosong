@@ -64,7 +64,7 @@
                                                     </td>
         
                                                     <td class="text-center">
-                                                        <a name="" id="" class="btn bg-gradient-info btn-sm mt-2" href="{{ url('butiran-iklan', [$ikl->id]) }}" role="button">Butiran</a>
+                                                        <a name="" id="" class="btn bg-gradient-info btn-sm mt-2" href="{{ route('butiran-iklan', [$ikl->url]) }}" role="button">Butiran</a>
                                                         {{-- <a type="button" class="badge bg-gradient-info" href="{{ url('butiran-iklan', [$ikl->id]) }}">
                                                             Butiran
                                                         </a> --}}

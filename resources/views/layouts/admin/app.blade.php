@@ -35,6 +35,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ asset('material/css/material-dashboard.css?v=3.0.2') }}" rel="stylesheet" />
     <link id="pagestyle" href="{{ asset('jquery-ui-1.13.1/jquery-ui.css') }}" rel="stylesheet" />
+    <link id="pagestyle" href="{{ asset('plugin/datatables-checkboxes/dataTables.checkboxes.css') }}" rel="stylesheet" />
 
     <link id="pagestyle" href="{{ asset('datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
@@ -53,6 +54,8 @@
         } */
     </style>
 </head>
+ 
+
 <body class="g-sidenav-show bg-gray-200">
     @php
         $kp = Auth::user()->ic;
@@ -147,6 +150,7 @@
     <script src="{{ asset('datatable/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
     <script src="{{ asset('jquery-ui-1.13.1/jquery-ui.js') }}"></script>
+    <script src="{{ asset('plugin/datatables-checkboxes/dataTables.checkboxes.min.js') }}"></script>
 
     <!-- Share -->
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script> --}}

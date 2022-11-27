@@ -115,13 +115,13 @@ class PenggunaController extends Controller
 
     public function butiraniklan($id)
     {
-        $iklan = Iklan::where('id', $id)->first();
+        $iklan = Iklan::where('url', $id)->first();
 
         $syarat = DB::table('senarai-syarat-jawatan')
-            ->where('id_iklan', $id)
+            ->where('id_iklan', $iklan->id)
             ->get();
 
-        $permohonan = JK_Permohonan::where('id_iklan', $id)
+        $permohonan = JK_Permohonan::where('id_iklan', $iklan->id)
             ->where('id_pengguna', Auth::user()->id)
             ->first();
 
@@ -142,8 +142,10 @@ class PenggunaController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
         $detail = JK_MaklumatDiri::where('user_id', Auth::user()->id)->first();
 
+        $pasangan = DB::table('jk_pasangan')->where('id_pengguna', Auth::user()->id)->get();
+
         if ($bil > 0) {
-            return view('pengguna.maklumat-diri-kemaskini', compact('user', 'detail', 'negeri', 'agama', 'keturunan', 'taraf'));
+            return view('pengguna.maklumat-diri-kemaskini', compact('user', 'detail', 'negeri', 'agama', 'keturunan', 'taraf', 'pasangan'));
         } else {
             return view('pengguna.maklumat-diri', compact('user', 'detail', 'negeri', 'agama', 'keturunan', 'taraf'));
         }
@@ -653,6 +655,9 @@ class PenggunaController extends Controller
             $permohonan->no_siri = $no_siri;
             $permohonan->status = 'Baru';
             $permohonan->save();
+
+            #salin maklumat pemohon ke table borang
+
 
             Session::flash('message', 'Permohonan telah berjaya dihantar');
             Session::flash('alert-class', 'success');

@@ -18,7 +18,8 @@ Kelantan',
                         <div class="col-lg-6 col-6">
                             <div class="float-lg-end">
                                 <a href="{{ route('cetak-butiran-pemohon', [$permohonan->id_pengguna, $permohonan->id_permohonan]) }}"
-                                    target="_blank" class="btn btn-info"><i class="fas fa-file"></i>&nbsp;Borang Permohonan</a>
+                                    target="_blank" class="btn btn-info"><i class="fas fa-file"></i>&nbsp;Borang
+                                    Permohonan</a>
                             </div>
                         </div>
                     </div>
@@ -96,10 +97,10 @@ Kelantan',
                     </div>
                 </div>
             </div>
-           
+
             <div class="row">
                 <div class="tab-content" id="nav-tabContent">
-                     {{-- Tab Peribadi --}}
+                    {{-- Tab Peribadi --}}
                     <div class="tab-pane fade show active" id="nav-peribadi" role="tabpanel"
                         aria-labelledby="nav-peribadi-tab">
                         <div class="row mt-3">
@@ -179,23 +180,37 @@ Kelantan',
                                     </div>
                                     <div class="card-body p-3">
                                         <h6 class="text-uppercase text-body text-xs font-weight-bolder">Lesen Memandu</h6>
-                                        <strong>{{ $maklumat_tambahan->lesen }}</strong>
+                                        @if (count($maklumat_tambahan) > 0)
+                                            <strong>{{ $maklumat_tambahan->lesen }}</strong>
+                                        @endif
                                         <hr class="horizontal gray-light my-4">
                                         <h6 class="text-uppercase text-body text-xs font-weight-bolder">Penguasaan Bahasa
                                         </h6>
                                         <ul class="list-group">
                                             <li class="list-group-item border-0 ps-0 text-sm"><strong
                                                     class="text-dark">Bahasa Inggeris:</strong> &nbsp;
-                                                {{ $maklumat_tambahan->inggeris }}</li>
+                                                @if (count($maklumat_tambahan) > 0)
+                                                    {{ $maklumat_tambahan->inggeris }}
+                                                @endif
+                                            </li>
                                             <li class="list-group-item border-0 ps-0 text-sm"><strong
                                                     class="text-dark">Bahasa Arab:</strong> &nbsp;
-                                                {{ $maklumat_tambahan->arab }}</li>
+                                                @if (count($maklumat_tambahan) > 0)
+                                                    {{ $maklumat_tambahan->arab }}
+                                                @endif
+                                            </li>
                                             <li class="list-group-item border-0 ps-0 text-sm"><strong
                                                     class="text-dark">Bahasa Cina:</strong> &nbsp;
-                                                {{ $maklumat_tambahan->cina }}</li>
+                                                @if (count($maklumat_tambahan) > 0)
+                                                    {{ $maklumat_tambahan->cina }}
+                                                @endif
+                                            </li>
                                             <li class="list-group-item border-0 ps-0 text-sm"><strong
                                                     class="text-dark">Bahasa Asing:</strong> &nbsp;
-                                                {{ $maklumat_tambahan->asing }}</li>
+                                                @if (count($maklumat_tambahan) > 0)
+                                                    {{ $maklumat_tambahan->asing }}
+                                                @endif
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -246,7 +261,7 @@ Kelantan',
                             </div>
                         </div>
                     </div>
-                     {{-- Tab Pendidikan --}}
+                    {{-- Tab Pendidikan --}}
                     <div class="tab-pane fade" id="nav-pendidikan" role="tabpanel" aria-labelledby="nav-pendidikan-tab">
                         {{-- Peringkat menengah --}}
                         <div class="row mt-3">
@@ -674,7 +689,7 @@ Kelantan',
                             </div>
                         </div>
                     </div>
-                     {{-- Tab Pengalaman --}}
+                    {{-- Tab Pengalaman --}}
                     <div class="tab-pane fade" id="nav-pengalaman" role="tabpanel" aria-labelledby="nav-pengalaman-tab">
                         <div class="row mt-3">
                             <div class="table-responsive">
@@ -693,7 +708,7 @@ Kelantan',
                                     <tbody>
                                         @php
                                             $i = 0;
-                                            $total_exp= 0;
+                                            $total_exp = 0;
                                         @endphp
                                         @foreach ($pengalaman as $exp)
                                             <tr class="text-center text-bold align-items-center"

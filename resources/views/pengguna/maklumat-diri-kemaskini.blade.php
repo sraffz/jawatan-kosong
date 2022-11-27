@@ -233,6 +233,31 @@ Kelantan',
                                 </div>
                             </div>
                         </div>
+                        <div class="row mt-4">
+                            @foreach ($pasangan as $psngn) 
+                                <div class="col-12 col-xl-6">
+                                    <div class="input-group input-group-static">
+                                        <label>Nama Pasangan</label>
+                                        <input type="text" name="nama_pasangan" class="form-control upcase" placeholder=""
+                                            value="{{ $psngn->nama_pasangan }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3">
+                                    <div class="input-group input-group-static">
+                                        <label>Tempat Lahir Pasangan</label>
+                                        <input type="text" name="tempat_lahir_pasangan" class="form-control" placeholder=""
+                                            value="{{ $psngn->tempat_lahir_pasangan }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3">
+                                    <div class="input-group input-group-static">
+                                        <label>Pekerjaan Pasangan</label>
+                                        <input type="text" name="pekerjaan_pasangan" class="form-control" placeholder=""
+                                            value="{{ $psngn->pekerjaan_pasangan }}" required>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                     <div class="card-footer pt-0">
                         <div class="d-flex justify-content-end">
@@ -249,11 +274,10 @@ Kelantan',
 
 @section('script')
     <script>
-        
         document.getElementById('get_file').onclick = function() {
-                document.getElementById('avatarFile').click();
-            };
-            
+            document.getElementById('avatarFile').click();
+        };
+
         if (document.getElementById('choices-year-md')) {
 
             var tahun = {{ $detail->tahun_lahir }};

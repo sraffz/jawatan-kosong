@@ -93,12 +93,18 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/kemaskini', 'AdminController@kemaskiniAdmin')->name('kemaskini-admin');
     Route::get('/konfigurasi', 'AdminController@konfigurasi')->name('admin.konfigurasi');
     Route::get('/ujian-temuduga', 'AdminController@ujianTemuduga')->name('admin.ujian-temuduga');
+    Route::get('/sesi-panggilan/{id}', 'AdminController@sesiPanggilan')->name('sesi-panggilan');
+    Route::get('/senarai-calon-panggilan/{id}', 'AdminController@calonPanggilan')->name('calon-panggilan');
+    Route::post('/tambah-panggilan-ujian-temuduga', 'AdminController@tambahUjianTemuduga')->name('tambah-panggilan-iv-exam');
+    Route::post('/tambah_sesi_iv_exam', 'AdminController@tambahSesiUjianTemuduga')->name('tambah_sesi_iv_exam');
     Route::get('/pentadbir', 'AdminController@pentadbir')->name('admin.pentadbir');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
     
     Route::get('/senarai-pemohon/{url}', 'AdminController@senaraiPermohonan')->name('admin.permohonan.senarai');
     Route::get('/butiran-pemohon/{id2}-{id}', 'AdminController@butiranPermohonan')->name('butiran-pemohon');
     Route::get('/cetak-butiran-pemohon/{id2}-{id}', 'AdminController@cetakButiranPermohonan')->name('cetak-butiran-pemohon');
+    Route::post('/pilihanPanggilan', 'AdminController@pilihanPanggilan')->name('pilihanPanggilan');
+    Route::post('fetch-sesi', 'AdminController@fetchSesi')->name('fetch-sesi');
 
     Route::get('/cetak-iklan/{id}', 'AdminController@cetakiklan')->name('cetak-iklan');
     Route::get('/export-senarai-pemohon/{id}-{id2}', 'AdminController@exportSenaraiPemohon')->name('export-senarai-pemohon');
@@ -123,7 +129,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::post('/padam-pentadbir', 'AdminController@padampentadbir')->name('padam-pentadbir');
     Route::post('/tambah-jenis-panggilan', 'AdminController@tambahJenisPanggilan')->name('tambah-jenis-panggilan');
     Route::post('/kemaskini-jenis-panggilan', 'AdminController@kemaskinijenispanggilan')->name('kemaskini-jenis-panggilan');
-    Route::post('/padam-jenis-panggilan', 'AdminController@padamjenis-panggilan')->name('padam-jenis-panggilan');
+    Route::post('/padam-jenis-panggilan', 'AdminController@padamjenispanggilan')->name('padam-jenis-panggilan');
 
 });
 
@@ -142,7 +148,7 @@ Route::middleware(['auth:web'])->group(function () {
     
     Route::get('/iklan-jawatan', 'PenggunaController@iklan')->name('iklan');
     Route::get('/permohonan', 'PenggunaController@permohonan')->name('permohonan');
-    Route::get('/butiran-iklan/{id}', 'PenggunaController@butiraniklan')->name('butiran-iklan');
+    Route::get('/{id}_suk', 'PenggunaController@butiraniklan')->name('butiran-iklan');
     Route::get('/maklumat-diri', 'PenggunaController@maklumatdiri')->name('maklumat-diri');
     Route::get('/pengalaman', 'PenggunaController@pengalaman')->name('pengalaman');
     Route::get('/maklumat-tambahan', 'PenggunaController@maklumatTambahan')->name('maklumat-tambahan');

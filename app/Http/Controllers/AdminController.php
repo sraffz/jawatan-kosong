@@ -427,10 +427,76 @@ class AdminController extends Controller
 
     public function ujianTemuduga()
     {
-        $taraf = JK_taraf_jawatan::all();
-        $kumpulan = JK_kumuplan_perkhidmatan::all();
+        $jenisPanggilan = JK_JenisPanggilan::all();
+        $listPanggilan = DB::table('jk_panggilan')->select('jk_panggilan.*', 'jk_jenis_panggilan.panggilan as jenis')
+        ->join('jk_jenis_panggilan', 'jk_jenis_panggilan.id', '=', 'jk_panggilan.panggilan')->get();
 
-        return view('admin.ujian-temuduga', compact('taraf', 'kumpulan'));
+        $bil_sesi = DB::table('jk_sesi_panggilan')
+        ->select('id_panggilan', DB::raw('COUNT(id) as bil_sesi'))
+        ->groupBy('id_panggilan')->get();
+
+        return view('admin.ujian-temuduga', compact('jenisPanggilan', 'listPanggilan', 'bil_sesi'));
+    }
+
+    public function sesiPanggilan($id)
+    {
+        $sesi = DB::table('jk_sesi_panggilan')->where('id_panggilan', $id)->get();
+
+        $bil_calon = DB::table('senarai_permohonan')->select('senarai_calon_sesi.id_panggilan','senarai_calon_sesi.id_sesi', DB::raw('COUNT(id_permohonan) as bil_calon'))
+        ->join('senarai_calon_sesi', 'senarai_calon_sesi.id_permohonan1', '=', 'senarai_permohonan.id_permohonan')
+        ->where('senarai_calon_sesi.id_panggilan', $id)
+        ->groupBy('senarai_calon_sesi.id_sesi')
+        ->get();
+
+       
+       
+        return view('admin.sesi-panggilan', compact('id', 'sesi', 'bil_calon'));
+    }
+
+    public function calonPanggilan($id)
+    {
+        $senarai_pemohon = DB::table('senarai_permohonan')
+        ->join('senarai_calon_sesi', 'senarai_calon_sesi.id_permohonan1', '=', 'senarai_permohonan.id_permohonan')
+        ->where('senarai_calon_sesi.id_sesi', $id)
+        ->get();
+
+        $id = DB::table('jk_sesi_panggilan')->where('id', $id)->first();
+
+        $id_panggilan = $id->id_panggilan;
+        
+        return view('admin.senarai-calon-panggilan', compact('id_panggilan','senarai_pemohon'));
+    }
+
+    public function tambahUjianTemuduga(Request $req)
+    {
+        DB::table('jk_panggilan')->insert([
+            'panggilan' =>  $req->panggilan,
+            'tarikh_mula' =>  $req->tarikh_mula,
+            'tarikh_akhir' =>  $req->tarikh_tamat,
+            'tahun' =>  $req->tahun_panggilan,
+            'bil' =>  $req->bil_panggilan,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+        ]);
+
+        toast('Maklumat ditambah', 'success')->position('top-end');
+        return back();
+    }
+    
+    public function tambahSesiUjianTemuduga(Request $req)
+    {
+        DB::table('jk_sesi_panggilan')->insert([
+            'id_panggilan' =>  $req->id_panggilan,
+            'sesi' =>  $req->sesi,
+            'tarikh' =>  $req->tarikh,
+            'masa' =>  $req->masa,
+            'tempat' =>  $req->tempat,
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now()
+         ]);
+
+        toast('Maklumat ditambah', 'success')->position('top-end');
+        return back();
     }
     
     public function pentadbir()
@@ -447,16 +513,35 @@ class AdminController extends Controller
     public function senaraiPermohonan($url)
     {
         // dd($url);
+        $panggilan = DB::table('jk_panggilan')->select('jk_panggilan.*', 'jk_jenis_panggilan.panggilan AS jenis_panggilan')
+        ->join('jk_jenis_panggilan', 'jk_jenis_panggilan.id', '=', 'jk_panggilan.panggilan')
+        ->get();
+        $sesi = DB::table('jk_sesi_panggilan')->get();
+
         $iklan = Iklan::where('url', $url)->first();
 
         $jawatan = DB::table('jumlah_pemohonan_jawatan_iklan')->where('id_iklan', $iklan->id)
         ->orderBy('kumpulan', 'ASC')->get();
         
         $jumlah = DB::table('jumlah_pemohonan_jawatan_iklan')->where('id_iklan', $iklan->id)->sum('bilangan');
-        $senarai_pemohon = DB::table('senarai_permohonan')->where('id_iklan', $iklan->id)->get();
+        
+        $senarai_pemohon = DB::table('senarai_permohonan')
+        ->leftjoin('senarai_calon_sesi', 'senarai_calon_sesi.id_permohonan1', '=', 'senarai_permohonan.id_permohonan')
+        ->where('id_iklan', $iklan->id)
+        ->get();
         // dd($iklan, $jawatan);
+        // 
 
-        return view('admin.permohonan.senarai', compact('jawatan', 'iklan', 'jumlah', 'senarai_pemohon'));
+        return view('admin.permohonan.senarai', compact('jawatan', 'iklan', 'jumlah', 'senarai_pemohon', 'panggilan', 'sesi'));
+    }
+
+    public function fetchSesi(Request $request)
+    {
+        $data['states'] = DB::table('jk_sesi_panggilan')
+            ->where("id_panggilan", $request->country_id)
+            ->get();
+  
+        return response()->json($data);
     }
 
     public function butiranPermohonan($id, $id2)
@@ -562,6 +647,35 @@ class AdminController extends Controller
         return $pdf->setPaper('a4','potrait')->stream();
     }
 
+    public function pilihanPanggilan(Request $req)
+    {
+        $panggilan = $req->panggilan;
+        $siri = $req->siri;
+        if (count($req->id_permohonan)<1) {
+
+            Alert::error('Amaran', 'Sila Pilih calon');
+        
+            return back();
+        }
+        for ($i = 0; $i < count($req->id_permohonan); $i++) {
+            
+            DB::table('jk_senarai_calon_sesi_panggilan')->insert([
+                'id_panggilan' => $panggilan,
+                'sesi' => $siri,
+                'id_permohonan' => $req->input('id_permohonan.' . $i),
+                'status' => '',
+                'catatan' => '',
+                'created_at' => \Carbon\carbon::now(),
+            ]);
+
+            Alert::success('Berjaya', 'Calon telah disenaraikan');
+        
+            return back();
+        }
+
+       
+    }
+
     public function tambahkumpulanjawatan(Request $req)
     {
         $data = new JK_kumuplan_perkhidmatan();
@@ -643,6 +757,22 @@ class AdminController extends Controller
         $data->save();
 
         Alert::success('Berjaya', 'Maklumat berjaya ditambah');
+        return back();
+    }
+    public function kemaskinijenispanggilan(Request $req)
+    {
+        JK_JenisPanggilan::where('id', $req->id)->update([
+            'panggilan' => $req->jenis_panggilan
+        ]);
+
+        Alert::success('Berjaya', 'Maklumat berjaya dikemaskini');
+        return back();
+    }
+    public function padamjenispanggilan(Request $req)
+    {
+        JK_JenisPanggilan::where('id', $req->id)->delete();
+
+        Alert::success('Berjaya', 'Maklumat berjaya dipadam');
         return back();
     }
 

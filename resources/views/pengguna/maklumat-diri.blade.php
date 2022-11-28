@@ -233,28 +233,32 @@ Kelantan',
                             </div>
                         </div>
                         <div class="row mt-4">
-                                 <div class="col-12 col-xl-6">
-                                    <div class="input-group input-group-static">
-                                        <label>Nama Pasangan</label>
-                                        <input type="text" name="nama_pasangan" class="form-control upcase" placeholder=""
-                                            value="" required>
-                                    </div>
+                            <div class="col-12 col-xl-3">
+                                <div class="input-group input-group-static">
+                                    <label>Nama Pasangan</label>
+                                    <input type="text" name="addMoreInputFields[0]nama_pasangan"
+                                        class="form-control upcase" placeholder="" value="" required>
                                 </div>
-                                <div class="col-12 col-xl-3">
-                                    <div class="input-group input-group-static">
-                                        <label>Tempat Lahir Pasangan</label>
-                                        <input type="text" name="tempat_lahir_pasangan" class="form-control" placeholder=""
-                                            value="" required>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-xl-3">
+                                <div class="input-group input-group-static">
+                                    <label>Tempat Lahir Pasangan</label>
+                                    <input type="text" name="addMoreInputFields[0]tempat_lahir_pasangan"
+                                        class="form-control" placeholder="" value="" required>
                                 </div>
-                                <div class="col-12 col-xl-3">
-                                    <div class="input-group input-group-static">
-                                        <label>Pekerjaan Pasangan</label>
-                                        <input type="text" name="pekerjaan_pasangan" class="form-control" placeholder=""
-                                            value="" required>
-                                    </div>
+                            </div>
+                            <div class="col-12 col-xl-3">
+                                <div class="input-group input-group-static">
+                                    <label>Pekerjaan Pasangan</label>
+                                    <input type="text" name="addMoreInputFields[0]pekerjaan_pasangan"
+                                        class="form-control" placeholder="" value="" required>
                                 </div>
-                         </div>
+                            </div>
+                            <div class="col-12 col-xl-3">
+                                <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
+                                    class="material-icons text-sm">add</i></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer pt-0">
                         <div class="d-flex justify-content-end">
@@ -272,9 +276,9 @@ Kelantan',
 @section('script')
     <script>
         document.getElementById('get_file').onclick = function() {
-                document.getElementById('avatarFile').click();
-            };
-            
+            document.getElementById('avatarFile').click();
+        };
+
         if (document.getElementById('choices-year-md')) {
 
 

@@ -233,27 +233,35 @@ Kelantan',
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            @foreach ($pasangan as $psngn) 
-                                <div class="col-12 col-xl-6">
-                                    <div class="input-group input-group-static">
-                                        <label>Nama Pasangan</label>
-                                        <input type="text" name="nama_pasangan" class="form-control upcase" placeholder=""
-                                            value="{{ $psngn->nama_pasangan }}" required>
+                        <div class="row mt-4" id="pasangan">
+                            @foreach ($pasangan as $psngn)
+                                <div class="row">
+                                    <div class="col-12 col-xl-4">
+                                        <div class="input-group input-group-static">
+                                            <label>Nama Pasangan</label>
+                                            <input type="text" name="nama_pasangan" class="form-control upcase"
+                                                placeholder="" value="{{ $psngn->nama_pasangan }}" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-xl-3">
-                                    <div class="input-group input-group-static">
-                                        <label>Tempat Lahir Pasangan</label>
-                                        <input type="text" name="tempat_lahir_pasangan" class="form-control" placeholder=""
-                                            value="{{ $psngn->tempat_lahir_pasangan }}" required>
+                                    <div class="col-12 col-xl-3">
+                                        <div class="input-group input-group-static">
+                                            <label>Tempat Lahir Pasangan</label>
+                                            <input type="text" name="tempat_lahir_pasangan" class="form-control"
+                                                placeholder="" value="{{ $psngn->tempat_lahir_pasangan }}" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-xl-3">
-                                    <div class="input-group input-group-static">
-                                        <label>Pekerjaan Pasangan</label>
-                                        <input type="text" name="pekerjaan_pasangan" class="form-control" placeholder=""
-                                            value="{{ $psngn->pekerjaan_pasangan }}" required>
+                                    <div class="col-12 col-xl-3">
+                                        <div class="input-group input-group-static">
+                                            <label>Pekerjaan Pasangan</label>
+                                            <input type="text" name="pekerjaan_pasangan" class="form-control"
+                                                placeholder="" value="{{ $psngn->pekerjaan_pasangan }}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-2">
+                                        <div class="input-group input-group-static">
+                                            <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
+                                                    class="material-icons text-sm">add</i></button>
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -274,6 +282,33 @@ Kelantan',
 
 @section('script')
     <script>
+        var i = 0;
+        $("#tambahrow").click(function() {
+            ++i;
+
+            $("#pasangan").append(
+                '<div class="row mt-4" id="tambah_pasangan"><div class="col-12 col-xl-4"><div class="input-group input-group-static"><label>Nama Pasangan</label><input type="text" name="addMoreInputFields[' +
+                i +
+                '][nama_pasangan]" class="form-control upcase" required></div></div><div class="col-12 col-xl-3"><div class="input-group input-group-static"><label>Tempat Lahir Pasangan</label><input type="text" name="addMoreInputFields[' +
+                i +
+                '][tempat_lahir_pasangan]" class="form-control" required> </div></div><div class="col-12 col-xl-3"><div class="input-group input-group-static"><label>Pekerjaan Pasangan</label><input type="text" name="addMoreInputFields[' +
+                i +
+                '][pekerjaan_pasangan]" class="form-control" required></div></div><div class="col-12 col-xl-2"><div class="input-group input-group-static"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></div></div></div>'
+            );
+        });
+
+        $(document).on('click', '.remove-input-field', function() {
+            $(this).parents('#tambah_pasangan').remove();
+        });
+
+        $('#choices-taraf').on('change', function() {
+            if (this.value == '2') {
+                $("#pasangan").show();
+            } else {
+                $("#pasangan").hide();
+            }
+        });
+
         document.getElementById('get_file').onclick = function() {
             document.getElementById('avatarFile').click();
         };
@@ -320,7 +355,6 @@ Kelantan',
 
                 day.options.add(optn);
             }
-
         }
 
         if (document.getElementById('choices-month-md')) {
@@ -332,7 +366,6 @@ Kelantan',
                     shouldSort: false
                 });
             }, 1);
-
 
             var d = new Date();
             var monthArray = new Array();

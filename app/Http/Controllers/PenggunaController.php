@@ -410,6 +410,23 @@ class PenggunaController extends Controller
         $data->taraf_kahwin = $req->taraf_kahwin;
         $data->save();
 
+
+        for ($i = 0; $i < count($req->addMoreInputFields); $i++) {
+            $pasangan = new JK_Pasangan();
+            $pasangan->id_pengguna = $id;
+            $pasangan->nama_pasangan = $req->input('addMoreInputFields.' . $i . '.nama_pasangan');
+            $pasangan->tempat_lahir_pasangan = $req->input('addMoreInputFields.' . $i . '.tempat_lahir_pasangan');
+            $pasangan->pekerjaan_pasangan = $req->input('addMoreInputFields.' . $i . '.pekerjaan_pasangan');
+            $pasangan->save();
+        }
+
+        
+        $pasangan = new JK_Pasangan();
+        $pasangan->nama_pasangan = $req->nama_pasangan;
+        $pasangan->tempat_lahir_pasangan = $req->tempat_lahir_pasangan;
+        $pasangan->pekerjaan_pasangan = $req->pekerjaan_pasangan;
+        $data->save();
+ 
         // Alert::success('Berjaya', 'Maklumat disimpan');
         // Toast('Maklumat disimpan', 'success')->position('top-end');
         Session::flash('message', 'Maklumat Disimpan');
@@ -445,6 +462,12 @@ class PenggunaController extends Controller
             'keturunan' => $req->keturunan,
             'lain_keturunan' => $req->lain_keturunan,
             'taraf_kahwin' => $req->taraf_kahwin,
+        ]);
+
+        JK_Pasangan::where('id_pengguna', $id)->update([
+            'nama_pasangan' => $req->nama_pasangan,
+            'tempat_lahir_pasangan' => $req->tempat_lahir_pasangan,
+            'pekerjaan_pasangan' => $req->pekerjaan_pasangan
         ]);
 
         // Alert::success('Berjaya', 'Maklumat disimpan');

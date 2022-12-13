@@ -1665,14 +1665,49 @@ class PenggunaController extends Controller
     {
         $bil = JK_Matrikulasi::where('user_id', Auth::user()->id)->count();
 
-        $data = new JK_Matrikulasi();
-        $data->user_id = Auth::user()->id;
-        $data->nama_kolej = $req->nama_kolej;
-        $data->bidang = $req->bidang;
-        $data->cgpa = $req->cgpa;
-        $data->tahun = $req->tahun;
-        $data->dokumen_matrikulasi = $req->file_matrix;
-        $data->save();
+        if ($req->hasFile('file_matrix')) {
+            $file = $req->file('file_matrix');
+
+            $extension = $file->extension();
+            $filename = 'matrik_' . $file->hashName();
+
+            // dd($filename, $extension);
+            if ($extension == 'pdf' || $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'JPG') {
+                $storagePath = 'public/akademik/matrikulasi';
+                $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                $linkPath = 'akademik/matrikulasi/' . $filename;
+
+                $upload_success = $file->storeAs($storagePath, $filename);
+                if ($upload_success) {
+                    // dd('done');
+
+                    $data = new JK_Matrikulasi();
+                    $data->user_id = Auth::user()->id;
+                    $data->nama_kolej = $req->nama_kolej;
+                    $data->bidang = $req->bidang;
+                    $data->cgpa = $req->cgpa;
+                    $data->tahun = $req->tahun;
+                    $data->dokumen_matrikulasi = $linkPath;
+                    $data->save();
+                } else {
+                    Session::flash('message', 'Muat naik tidak berjaya');
+                    Session::flash('alert-class', 'error');
+                    return back();
+                }
+            } else {
+                Session::flash('message', 'Muat naik tidak berjaya. Hanya fail berformat pdf,jpg,jpeg dan png sahaja dibenarkan.');
+                Session::flash('alert-class', 'error');
+                return back();
+            }
+        } else {
+            $data = new JK_Matrikulasi();
+            $data->user_id = Auth::user()->id;
+            $data->nama_kolej = $req->nama_kolej;
+            $data->bidang = $req->bidang;
+            $data->cgpa = $req->cgpa;
+            $data->tahun = $req->tahun;
+            $data->save();
+        }
 
         // Toast('Maklumat Disimpan', 'success')->position('top-end');
         Session::flash('message', 'Maklumat Disimpan');
@@ -2315,7 +2350,7 @@ class PenggunaController extends Controller
         $data = JK_Matrikulasi::where('user_id', Auth::user()->id)->first();
 
         if ($bil > 0) {
-            DB::table('jk_borang_matrikulasi')->insert([
+            $id_ipt_copy = DB::table('jk_borang_matrikulasi')->insert([
                 'id_permohonan' => $id_permohonan,
                 'user_id' => $id,
                 'nama_kolej' => $data->nama_kolej,
@@ -2324,6 +2359,21 @@ class PenggunaController extends Controller
                 'cgpa' => $data->cgpa,
                 'created_at' => \Carbon\Carbon::now(),
             ]);
+
+            if ($data->dokumen_matrikulasi != '') {
+                $storagePath = 'public/permohonan/' . $id_permohonan . '/' . $data->dokumen_matrikulasi;
+                $filePath = str_replace(base_path() . '/', '', $storagePath);
+                $linkPath = 'permohonan/' . $id_permohonan . '/' . $data->dokumen_matrikulasi;
+                $file_asal = 'public/' . $data->dokumen_matrikulasi;
+
+                $upload_success = Storage::copy($file_asal, $storagePath);
+
+                DB::table('jk_borang_matrikulasi')
+                    ->where('id', $id_ipt_copy)
+                    ->update([
+                        'dokumen_matrikulasi' => $linkPath,
+                    ]);
+            }
         }
 
         return;
@@ -2610,10 +2660,55 @@ class PenggunaController extends Controller
 
     public function salinMaklumatSKM($id, $id_permohonan)
     {
+        $bil = JK_SKM::where('user_id', Auth::user()->id)->count();
+        $data = JK_SKM::where('user_id', Auth::user()->id)->get();
+
+        if ($bil > 0) {
+            foreach ($data as $dt) {
+                $id_ipt_copy = DB::table('jk_borang_skm')->insert([
+                    'id_permohonan' => $id_permohonan,
+                    'user_id' => $id,
+                    'namaSijil' => $dt->namaSijil,
+                    'tahunSijil' => $dt->tahunSijil,
+                    'created_at' => \Carbon\Carbon::now(),
+                ]);
+
+                if ($dt->dokumen_skm != null) {
+                    $storagePath = 'public/permohonan/' . $id_permohonan . '/' . $dt->dokumen_skm;
+                    $filePath = str_replace(base_path() . '/', '', $storagePath);
+                    $linkPath = 'permohonan/' . $id_permohonan . '/' . $dt->dokumen_skm;
+                    $file_asal = 'public/' . $dt->dokumen_skm;
+
+                    $upload_success = Storage::copy($file_asal, $storagePath);
+
+                    DB::table('jk_borang_skm')
+                        ->where('id', $id_ipt_copy)
+                        ->update([
+                            'dokumen_skm' => $linkPath,
+                        ]);
+                }
+            }
+        }
+
         return;
     }
     public function salinMaklumatSVM($id, $id_permohonan)
     {
+        $bil = JK_SVM::where('user_id', Auth::user()->id)->count();
+        $data = JK_SVM::where('user_id', Auth::user()->id)->first();
+
+        if ($bil > 0) {
+            $id_ipt_copy = DB::table('jk_borang_svm')->insert([
+                'id_permohonan' => $id_permohonan,
+                'user_id' => $id,
+                'namaSijil' => $data->namaSijil,
+                'tahunSijil' => $data->tahunSijil,
+                'bm_svm' => $data->bm_svm,
+                'pngka' => $data->pngka,
+                'pngkv' => $data->pngkv,
+                'created_at' => \Carbon\Carbon::now(),
+            ]);
+        }
         return;
     }
 }

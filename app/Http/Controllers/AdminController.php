@@ -251,10 +251,11 @@ class AdminController extends Controller
         $taraf = JK_taraf_jawatan::all();
         $kump = JK_kumuplan_perkhidmatan::all();
 
-        $syarat = DB::table('senarai-syarat-jawatan')
+        $syarat = DB::table('senarai-syarat-jawatan')->select('*', \DB::raw("SUBSTR(gred, 3, 2) as sort_gred"))
             ->where('id_iklan', $iklan->id)
+            ->orderBy('sort_gred', 'asc')
             ->get();
-
+        
         return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
     }
 

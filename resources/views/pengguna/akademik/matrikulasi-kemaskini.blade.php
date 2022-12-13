@@ -52,9 +52,9 @@
                                     <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
                                 </div>
                             </div>
-                            @if ($matrix->dokumen != '')
-                                <div class="col-xl-5">
-                                    <a class="btn btn-info" target="_blank" href="{{ asset('storage/' . $matrix->dokumen) }}"
+                            @if ($matrix->dokumen_matrikulasi != '')
+                                <div class="col-xl-5 mt-4">
+                                    <a class="btn btn-info" target="_blank" href="{{ asset('storage/' . $matrix->dokumen_matrikulasi) }}"
                                         role="button">Papar Sijil</a>
                                 </div>
                             @endif

@@ -1,5 +1,8 @@
-@extends('layouts.admin.app', ['page' => 'Iklan Jawatan Kosong', 'title' =>'Jawatan Kosong | Pejabat Setiausaha Kerajaan
-Negeri Kelantan'])
+@extends('layouts.admin.app', [
+    'page' => 'Iklan Jawatan Kosong',
+    'title' => 'Jawatan Kosong | Pejabat Setiausaha Kerajaan
+Negeri Kelantan',
+])
 
 @section('link')
     <style>
@@ -29,19 +32,21 @@ Negeri Kelantan'])
                             <h6>Butiran Iklan</h6>
                         </div>
                         <div class="col-6 text-end">
-                            <a href="{{ url('/admin/cetak-iklan', [$iklan->id]) }}" class="btn btn-sm btn-outline-info" target="_blank"> 
+                            <a href="{{ url('/admin/cetak-iklan', [$iklan->id]) }}" class="btn btn-sm btn-outline-info"
+                                target="_blank">
                                 <span class="material-icons">
                                     print
                                 </span> Cetak
                             </a>
                             @if ($iklan->jenis == 'TERTUTUP')
-                                <a href="{{ url('suk' . $iklan->url . '') }}" target="_blank" class="btn btn-sm btn-outline-danger">
+                                <a href="{{ url('suk' . $iklan->url . '') }}" target="_blank"
+                                    class="btn btn-sm btn-outline-danger">
                                     <span class="material-icons">
                                         link
                                     </span> pautan
                                 </a>
                             @else
-                                <a href="{{ url('/') }}" target="_blank"  class="btn btn-sm btn-outline-danger">
+                                <a href="{{ url('/') }}" target="_blank" class="btn btn-sm btn-outline-danger">
                                     <span class="material-icons">
                                         link
                                     </span> pautan
@@ -100,7 +105,8 @@ Negeri Kelantan'])
                             <div class="col-12 col-xl-4 mt-2">
                                 <div class="input-group input-group-static">
                                     <label>Pautan</label>
-                                    <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}" placeholder="">
+                                    <input class="form-control" type="text" name="pautan" value="{{ $iklan->pautan }}"
+                                        placeholder="">
                                 </div>
                             </div>
                             <div class="col-12 col-xl-4 mt-4">
@@ -116,7 +122,8 @@ Negeri Kelantan'])
                                     <div class="form-check form-switch d-flex align-items-center mb-3">
                                         <input class="form-check-input" type="checkbox" id="publish" value="1"
                                             name="publish" {{ old('publish') || $iklan->publish ? 'checked' : '' }}>
-                                        <label class="form-check-label mb-0 ms-3 mt-1" for="publish">Terbit (Publish)</label>
+                                        <label class="form-check-label mb-0 ms-3 mt-1" for="publish">Terbit
+                                            (Publish)</label>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +159,7 @@ Negeri Kelantan'])
                 <!-- Modal Tambah-->
                 <div class="modal fade" id="tambahsyarat-{{ $iklan->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="modelTitleId" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                         <div class="modal-content font-weight-normal" id="modal-title-default">
                             <div class="modal-header">
                                 <h6 class="modal-title">Tambah Jawatan</h6>
@@ -164,14 +171,17 @@ Negeri Kelantan'])
                                 <div class="modal-body">
                                     <div class="container-fluid">
                                         {{ csrf_field() }}
-                                        <input type="hidden" id="id" name="id" value="{{ $iklan->id }}">
+                                        <input type="hidden" id="id" name="id"
+                                            value="{{ $iklan->id }}">
                                         <div class="input-group input-group-dynamic mb-3 ">
                                             <label class="form-label">Jawatan</label>
-                                            <input type="text" class="form-control input-uc" name="jawatan" id="jawatan" required>
+                                            <input type="text" class="form-control input-uc" name="jawatan"
+                                                id="jawatan" required>
                                         </div>
                                         <div class="input-group input-group-dynamic mb-3">
                                             <label class="form-label">Gred</label>
-                                            <input type="text" class="form-control input-uc" name="gred" id="gred" required>
+                                            <input type="text" class="form-control input-uc" name="gred"
+                                                id="gred" required>
                                         </div>
                                         <div class="input-group input-group-dynamic mb-3">
                                             <label class="form-label">Gaji Minimum</label>
@@ -191,21 +201,29 @@ Negeri Kelantan'])
                                         <div class="input-group input-group-dynamic mt-3">
                                             <label class="form-label">Taraf Jawatan</label>
                                             <div class="form-check mt-5">
+                                                @php
+                                                    $j = 0;
+                                                @endphp
                                                 @foreach ($taraf as $trf)
                                                     <div class="form-check form-check-inline">
                                                         <input type="checkbox" class="form-check-input" name="taraf"
-                                                            id="taraf" value="{{ $trf->id }}">
-                                                        <label class="form-check-label text-uppercase" for="taraf">
+                                                            id="taraf{{ $j }}" value="{{ $trf->id }}">
+                                                        <label class="form-check-label text-uppercase"
+                                                            for="taraf{{ $j }}">
                                                             {{ $trf->taraf }}
                                                             ({{ $trf->singkatan_taraf }})
                                                         </label>
-                                                    </div>
+                                                    </div> <br>
+                                                    @php
+                                                        $j++;
+                                                    @endphp
                                                 @endforeach
                                             </div>
                                         </div>
                                         <div class="input-group input-group-static mt-3">
                                             <label>Syarat Lantikan</label>
-                                            <input type="file" class="form-control" name="syarat" id="syarat" required>
+                                            <input type="file" class="form-control" name="syarat" id="syarat"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
@@ -242,11 +260,11 @@ Negeri Kelantan'])
                                         <td class="text-right">{{ $ss->nama_jawatan }}</td>
                                         <td>{{ $ss->gred }}</td>
                                         {{-- <td>{{ $ss->kump_perkhidmatan }}</td> --}}
-                                        <td class="text-uppercase">{{ $ss->taraf }}</td>
+                                        <td class="text-uppercase">{{ $ss->singkatan_taraf }}</td>
                                         <td>
                                             {{-- <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" href="{{ url($ss->lokasi_fail) }}" role="button"> --}}
-                                            <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4"
-                                                href="{{ url('dl-syarat', [$ss->id]) }}" role="button">
+                                            <a class="btn btn-link text-dark text-sm mb-0 px-0 ms-4" target="_blank"
+                                                href="{{ route('dl-syarat', [$ss->id]) }}" role="button">
                                                 <i class="material-icons text-lg position-relative me-1">picture_as_pdf</i>
                                                 PDF
                                             </a>
@@ -263,7 +281,7 @@ Negeri Kelantan'])
                                     <!-- Modal Kemaskini-->
                                     <div class="modal fade" id="kemaskini-{{ $ss->id }}" tabindex="-1"
                                         role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title">Kemaskini Jawatan</h5>
@@ -311,18 +329,20 @@ Negeri Kelantan'])
                                                             <div class="input-group input-group-dynamic mt-3">
                                                                 <label class="form-label">Taraf Jawatan</label>
                                                                 <div class="form-check mt-5">
+                                                                    @php
+                                                                        $k = 0;
+                                                                    @endphp
                                                                     @foreach ($taraf as $trf)
                                                                         <div class="form-check form-check-inline">
-                                                                            <input type="checkbox" class="form-check-input"
-                                                                                name="taraf" id="taraf"
-                                                                                value="{{ $trf->id }}"
-                                                                                {{ $trf->taraf == $ss->taraf ? 'checked' : '' }}>
+                                                                            <input type="checkbox" class="form-check-input" name="taraf"
+                                                                                id="taraf-{{ $k }}" value="{{ $trf->id }}" {{ $trf->taraf == $ss->taraf ? 'checked' : '' }}>
                                                                             <label class="form-check-label text-uppercase"
-                                                                                for="taraf">
-                                                                                {{ $trf->taraf }}
-                                                                                ({{ $trf->singkatan_taraf }})
+                                                                                for="taraf-{{ $k }}"> {{ $trf->taraf }} ({{ $trf->singkatan_taraf }})
                                                                             </label>
-                                                                        </div>
+                                                                        </div> <br>
+                                                                        @php
+                                                                            $k++;
+                                                                        @endphp
                                                                     @endforeach
                                                                 </div>
                                                             </div>
@@ -333,7 +353,7 @@ Negeri Kelantan'])
                                                                         name="failbaru">
                                                                 </div>
                                                                 <div class="col-md-2 mt-3">
-                                                                    <a href="{{ url('dl-syarat', [$ss->id]) }}"
+                                                                    <a href="{{ route('dl-syarat', [$ss->id]) }}"
                                                                         class="btn btn-dark"><i
                                                                             class="fa fa-file-pdf-o"></i></a>
                                                                 </div>
@@ -351,8 +371,8 @@ Negeri Kelantan'])
                                         </div>
                                     </div>
                                     <!-- Modal padam-->
-                                    <div class="modal fade" id="padam-{{ $ss->id }}" tabindex="-1" role="dialog"
-                                        aria-labelledby="modelTitleId" aria-hidden="true">
+                                    <div class="modal fade" id="padam-{{ $ss->id }}" tabindex="-1"
+                                        role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -376,7 +396,8 @@ Negeri Kelantan'])
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn bg-gradient-dark"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn bg-gradient-danger">Padam</button>
+                                                        <button type="submit"
+                                                            class="btn bg-gradient-danger">Padam</button>
                                                     </div>
                                                 </form>
                                             </div>

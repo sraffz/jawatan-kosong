@@ -100,8 +100,21 @@
         <div class="container">
             <div class="row">
                 <table width='100%'>
+                    @php
+                        if ($permohonan->singkatan_taraf == 'TETAP') {
+                            $taraf = 'SPN';
+                            $taraf_1 = $permohonan->taraf;
+                        } elseif ($permohonan->singkatan_taraf == 'COS' || $permohonan->singkatan_taraf == 'CFS') {
+                            $taraf = $permohonan->singkatan_taraf;
+                            $taraf_1 = 'KONTRAK (' . $permohonan->taraf . ')';
+                        } else {
+                            $taraf = $permohonan->singkatan_taraf;
+                            $taraf_1 = $permohonan->taraf . ' (' . $permohonan->singkatan_taraf . ')';
+                        }
+                    @endphp
                     <tr>
-                        <td width='20%'> <span style="font-size: 9px">BORANG SUK.KN.CFS/2020</span></td>
+                        <td width='20%'> <span style="font-size: 9px">BORANG SUK.KN.{{ $taraf }}/2020</span>
+                        </td>
                         <td width='60%' align="center"><strong>KERAJAAN NEGERI KELANTAN</strong></td>
                         <td></td>
                     </tr>
@@ -110,8 +123,8 @@
                             <h2>{{ $permohonan->no_siri }}</h2>
                         </td>
                         <td width='60%' align="center"><img src="{{ asset('images/kelantan.png') }}" width="60px"
-                                height="60px"><br><strong>PERMOHONAN UNTUK JAWATAN KONTRAK (CONTRACT FOR
-                                SERVICE)</strong></td>
+                                height="60px"><br><strong>PERMOHONAN UNTUK JAWATAN {{ $taraf_1 }}</strong></td>
+                        {{-- height="60px"><br><strong>PERMOHONAN UNTUK JAWATAN KONTRAK (CONTRACT FOR SERVICE)</strong></td> --}}
                         <td></td>
                     </tr>
                 </table>
@@ -130,7 +143,7 @@
                         <td width='80%'><u>Nama Jawatan Yang Dipohon (HURUF BESAR)</u> <br>
                             <h2>{{ $permohonan->nama_jawatan }}, GRED {{ $permohonan->gred }}</h2>
                         </td>
-                        <td width='20%'><u>No.Fail CFS.KN</u></td>
+                        <td width='20%'><u>No.Fail {{ $taraf }}.KN</u></td>
                     </tr>
                 </table>
             </div>
@@ -188,8 +201,34 @@
                         <td colspan="3" width='60%'><u>No Telefon</u><br>
                             <h2>{{ $maklumat_diri->nofon }}</h2>
                         </td>
-                        <td style="text-transform: lowercase" colspan="2" width='40%'><u>Email</u><br>
-                            <h2>{{ $maklumat_diri->email }}</h2>
+                        <td colspan="2" rowspan="2" width='40%'>
+                            @if ($maklumat_diri->taraf_kahwin == 'Berkahwin')
+                                @foreach ($pasangan as $psngn)
+                                    <u>Nama Pasangan</u><br>
+                                    <h2>{{ $psngn->nama_pasangan }}</h2>
+                                    <br>
+                                    <br>
+                                    <u>Tempat Lahir Pasangan</u><br>
+                                    <h2>{{ $psngn->tempat_lahir_pasangan }}</h2>
+                                    <br>
+                                    <u>Pekerjaan Pasangan</u><br>
+                                    <h2>{{ $psngn->pekerjaan_pasangan }}</h2>
+                                @endforeach
+                            @else
+                                <u>Nama Pasangan</u><br>
+                                <br>
+                                <br><br>
+                                <u>Tempat Lahir Pasangan</u><br><br>
+                                <br>
+                                <u>Pekerjaan Pasangan</u><br><br>
+                            @endif
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" width='40%'>
+                            <u>Email</u><br>
+                            <h2 style="text-transform: lowercase">{{ $maklumat_diri->email }}</h2>
                         </td>
                     </tr>
                 </table>
@@ -274,7 +313,7 @@
                         <td width='20%'>
                             <h2>
                                 @foreach ($pencapaian_stam as $pstam)
-                                    {{ $pstam->jumlah }} {{ $pstam->gred }},
+                                    {{ $pstam->jumlah }} {{ $pstam->gred }}, <br>
                                 @endforeach
                             </h2>
                         </td>
@@ -369,6 +408,35 @@
                     </tr>
                 </table>
             </div>
+            <br>
+            {{-- Akademik peringkat SPM Ulangan --}}
+            @if (count($spmu) > 0)
+                <div class="row">
+                    <table width='100%' border="1">
+                        <tr>
+                            <td align="center" colspan="3" width='100%'><strong>SIJIL PEPERIKSAAN MALAYSIA (ULANGAN)</strong></td>
+                        </tr>
+                        <tr align="center">
+                            <td width='15%'>Tahun</td>
+                            <td width='70%'>Nama Sijil</td>
+                            <td width='15%'>Keputusan</td>
+                        </tr>
+                        <tr align="center">
+                            <td width='15%'>
+                                <h2> {{ $svm->tahunSijil }}</h2>
+                            </td>
+                            <td width='70%'>
+                                <h2>{{ $svm->diskripsi }}</h2>
+                            </td>
+                            <td width='15%'>
+                                Bahasa Melayu : <span class="isi"><strong>{{ $svm->bm_svm }}</strong></span><br>
+                                PNGKA : <span class="isi"><strong>{{ $svm->pngka }}</strong></span> <br>
+                                PNGKV : <span class="isi"><strong>{{ $svm->pngkv }}</strong></span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            @endif
             <br>
             {{-- Akademik peringkat Sijil Vokasional Malaysia (SVM) --}}
             @if (count($svm) > 0)
@@ -570,6 +638,7 @@
                             <td style="vertical-align: middle;" rowspan="2">Majikan</td>
                             <td style="vertical-align: middle;" rowspan="2">Alamat</td>
                             <td style="vertical-align: middle;" rowspan="2">Taraf Jawatan</td>
+                            <td style="vertical-align: middle;" rowspan="2">Gaji</td>
                             <td style="vertical-align: middle;" colspan="2">Tempoh Bekerja</td>
                         </tr>
                         <tr align="center">
@@ -582,6 +651,7 @@
                                 <td style="vertical-align: middle">{{ $exp->majikan }}</td>
                                 <td style="vertical-align: middle">{{ $exp->alamat_majikan }}</td>
                                 <td style="vertical-align: middle">{{ $exp->taraf_jawatan }}</td>
+                                <td style="vertical-align: middle">RM {{ $exp->gaji_akhir }}</td>
                                 <td style="vertical-align: middle">
                                     {{ \Carbon\Carbon::parse($exp->mula_kerja)->format('d/m/Y') }}</td>
                                 <td style="vertical-align: middle">

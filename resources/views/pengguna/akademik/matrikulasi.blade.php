@@ -63,6 +63,16 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row col-lg-12">
+                            <div class="col-xl-6 mt-4">
+                                <div class="form-group ">
+                                    <label for="file_matrix">Sijil Matrikulasi </label>
+                                    <input type="file" class="form-control-file" name="file_matrix" id="file_matrix"
+                                        placeholder="" aria-describedby="fileHelpId">
+                                    <small id="fileHelpId" class="form-text text-muted">pdf, png, jpeg</small>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row mt-4">
                             <div class="text-end">
                                 <button type="submit" class="btn btn-dark">

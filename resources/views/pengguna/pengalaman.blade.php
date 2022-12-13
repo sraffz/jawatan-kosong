@@ -51,10 +51,10 @@ Kelantan',
                                                 class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                                                 tempoh
                                             </th>
-                                            <th
+                                            {{-- <th
                                                 class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                                                 Tugas-Tugas
-                                            </th>
+                                            </th> --}}
                                             <th
                                                 class="text-center text-uppercase text-secondary text-sm font-weight-bolder opacity-7">
                                                 Tindakan
@@ -104,11 +104,11 @@ Kelantan',
                                                     @endphp
                                                     ({{ $tempoh }})
                                                 </td>
-                                                <td class="text-start text-uppercase ">
+                                                {{-- <td class="text-start text-uppercase ">
                                                     <span class="font-weight-bold text-sm text-wrap text-break">
                                                         {{ $pnglm->tugas }}
                                                     </span>
-                                                </td>
+                                                </td> --}}
                                                 <td class="text-center">
                                                     <span type="button" class="btn btn-sm btn-outline-info"
                                                         data-bs-toggle="modal"
@@ -224,6 +224,16 @@ Kelantan',
                                                                                             <label>Tarikh Akhir Berkhidmat</label>
                                                                                             <input type="text" name="akhir_kerja" class="form-control datepicker2 akhir_kerja" id="akhir_kerja"
                                                                                                 value="{{ $tarikh_akhir }}" required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-lg-6">
+                                                                                    <div class="mb-3">
+                                                                                        <div class="input-group input-group-static">
+                                                                                            <label>Gaji Akhir (RM)</label>
+                                                                                            <input type="number" name="gaji_akhir" step=".01" class="form-control" value="{{ $pnglm->gaji_akhir }}" required>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -363,6 +373,16 @@ Kelantan',
                                             <label>Tarikh Akhir Berkhidmat</label>
                                             <input type="text" id="akhir_kerja_1" name="akhir_kerja" class="form-control datepicker2"
                                                 required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-3">
+                                        <div class="input-group input-group-static">
+                                            <label>Gaji Akhir (RM)</label>
+                                            <input type="number" name="gaji_akhir" step=".01" class="form-control" required>
                                         </div>
                                     </div>
                                 </div>

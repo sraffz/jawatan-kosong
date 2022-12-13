@@ -33,6 +33,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use Auth;
 use Hash;
+use Vinkla\Hashids\Facades\Hashids;
 use Alert;
 use DB;
 use Dompdf\Dompdf;
@@ -295,9 +296,10 @@ class AdminController extends Controller
             if ($extension == 'pdf') {
                 // check folder for 'current year', if not exist, create one
                 $storagePath = $iklan->tahun . '/' . $iklan->bil;
+                $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
                 $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
                 // return dd($filePath);
-                $upload_success = $file->storeAs($storagePath, $filename);
+                $upload_success = $file->storeAs($storagePathSave, $filename);
 
                 if ($upload_success) {
                     $data = new Iklan_jawatan();
@@ -332,6 +334,20 @@ class AdminController extends Controller
         }
     }
 
+    public function dlsyarat($id)
+    {   
+        $idd = Hashids::decode($id);
+        $f = Iklan_jawatan::where('jk_iklan_jawatan.id', $id)
+            ->join('jk_iklan', 'jk_iklan.id', '=', 'jk_iklan_jawatan.id_iklan')
+            ->first();
+
+        $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
+        
+        return response()->download('storage/'.$f->lokasi_fail, $nama_fail, ['title' => 'asdasd'], 'inline');
+
+        // return Storage::download($f->lokasi_fail, $nama_fail);
+    }
+
     public function kemaskinijawatan(Request $req)
     {
         $id = $req->id;
@@ -350,9 +366,10 @@ class AdminController extends Controller
             if ($extension == 'pdf') {
                 // check folder for 'current year', if not exist, create one
                 $storagePath = $iklan->tahun . '/' . $iklan->bil;
+                $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
                 $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
                 // return dd($filePath);
-                $upload_success = $file->storeAs($storagePath, $filename);
+                $upload_success = $file->storeAs($storagePathSave, $filename);
 
                 if ($upload_success) {
                     $old = Iklan_jawatan::where('id', $req->id)->first();
@@ -401,19 +418,6 @@ class AdminController extends Controller
 
         Alert::error('Berjaya', 'Jawatan telah dibuang dari senarai iklan.');
         return back();
-    }
-
-    public function dlsyarat($id)
-    {
-        $f = Iklan_jawatan::where('jk_iklan_jawatan.id', $id)
-            ->join('jk_iklan', 'jk_iklan.id', '=', 'jk_iklan_jawatan.id_iklan')
-            ->first();
-
-        $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
-        
-        return response()->file('storage/'.$f->lokasi_fail);
-
-        // return Storage::download($f->lokasi_fail, $nama_fail);
     }
 
     public function konfigurasi()
@@ -552,6 +556,7 @@ class AdminController extends Controller
         $maklumat_diri = DB::table('maklumat_diri_lengkap')->where('id', $id)->first();
         $senarai_ipt = DB::table('senarai_kelulusan_ipt')->where('user_id', $id)->get();
         $maklumat_tambahan = JK_MaklumatTambahan::where('id_pengguna', $id)->first();
+        $pasangan = DB::table('jk_pasangan')->where('id_pengguna', $id)->get();
         $pengalaman = JK_Pengalaman::where('user_id', $id)
             ->orderBy('mula_kerja', 'desc')
             ->get();
@@ -591,7 +596,7 @@ class AdminController extends Controller
         $matrix = JK_Matrikulasi::where('user_id', $id)->first();
 
 
-        return view('admin.butiran-permohon', compact('user', 'permohonan', 'senarai_ipt', 'maklumat_diri', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
+        return view('admin.butiran-permohon', compact('user', 'permohonan', 'senarai_ipt', 'maklumat_diri', 'pasangan', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
     }
 
     public function cetakButiranPermohonan($id, $id2)
@@ -602,27 +607,43 @@ class AdminController extends Controller
         $maklumat_diri = DB::table('maklumat_diri_lengkap')->where('id', $id)->first();
         $senarai_ipt = DB::table('senarai_kelulusan_ipt')->where('user_id', $id)->get();
         $maklumat_tambahan = JK_MaklumatTambahan::where('id_pengguna', $id)->first();
+        $pasangan = DB::table('jk_pasangan')->where('id_pengguna', $id)->get();
         $pengalaman = JK_Pengalaman::where('user_id', $id)
             ->orderBy('mula_kerja', 'desc')
             ->get();
 
         $pmr = JK_PMR::where('user_id', $id)->first();
+        $bpmr = JK_PMR::where('user_id', $id)->count();
+        if ($bpmr>0) {
         $k_pmr = KeputusanPMR::join('jk_senarai_matapelajaran_pt3', 'jk_senarai_matapelajaran_pt3.id', '=', 'jk_keputusan_pmr.matapelajaran')->where('id_pmr', $pmr->id)->get();
         $pencapaian_pmr = DB::table('pencapaian_pmr')->where('user_id', $id)->get();
+        }
         
         $spm = JK_SPM::where('user_id', $id)->first();
+        $bspm = JK_SPM::where('user_id', $id)->count();
+        if ($bspm>0) {
         $k_spm = DB::table('jk_keputusan_spm')->join('jk_senarai_matapelajaran_spm', 'jk_senarai_matapelajaran_spm.id', '=', 'jk_keputusan_spm.matapelajaran')->where('id_spm', $spm->id)->get();
         $pencapaian_spm = DB::table('pencapaian_spm')->where('user_id', $id)->get();
+        }
+
+        $spmu = JK_SPMU::where('user_id', $id)->first();
+        $bspmu = JK_SPMU::where('user_id', $id)->count();
+        if ($bspmu>0) {
+        $k_spmu = DB::table('jk_keputusan_spm_ulangan')->join('jk_senarai_matapelajaran_spm', 'jk_senarai_matapelajaran_spm.id', '=', 'jk_keputusan_spm_ulangan.matapelajaran')->where('id_spmu', $spmu->id)->get();
+        $pencapaian_spmu = DB::table('pencapaian_spm_ulangan')->where('user_id', $id)->get();
+        }
        
         $stpm = JK_STPA::where('user_id', $id)->first();
+        $bstpm = JK_STPA::where('user_id', $id)->count();
         
-        if (count($stpm)>0) {
+        if ($bstpm>0) {
         $k_stpm = DB::table('jk_keputusan_stpm')->join('jk_senarai_matapelajaran_stpm', 'jk_senarai_matapelajaran_stpm.id', '=', 'jk_keputusan_stpm.matapelajaran')->where('id_stpm', $stpm->id)->get();
         $pencapaian_stpm = DB::table('pencapaian_stpm')->where('user_id', $id)->get();
         }
 
         $stam = JK_STAM::where('user_id', $id)->first();
-        if (count($stam)>0) {
+        $bstam = JK_STAM::where('user_id', $id)->count();
+        if ($bstam>0) {
             $k_stam = DB::table('jk_keputusan_stam')->join('jk_senarai_matapelajaran_stam', 'jk_senarai_matapelajaran_stam.id', '=', 'jk_keputusan_stam.matapelajaran')->where('id_stam', $stam->id)->get();
             $pencapaian_stam = DB::table('pencapaian_stam')->where('user_id', $id)->get();
         }
@@ -641,10 +662,10 @@ class AdminController extends Controller
         $matrix = JK_Matrikulasi::where('user_id', $id)->first();
 
 
-        // return view('cetak.borang-permohonan', compact('user', 'permohonan', 'senarai_ipt', 'maklumat_diri', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
+        return view('cetak.borang-permohonan', compact('user', 'pasangan','permohonan', 'senarai_ipt', 'maklumat_diri', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'spmu', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
 
-        $pdf = PDF::loadview('cetak.borang-permohonan', compact('user', 'permohonan', 'senarai_ipt', 'maklumat_diri', 'maklumat_tambahan', 'pengalaman', 'matrix', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
-        return $pdf->setPaper('a4','potrait')->stream();
+        // $pdf = PDF::loadview('cetak.borang-permohonan', compact('user', 'permohonan', 'senarai_ipt', 'maklumat_diri', 'pasangan', 'maklumat_tambahan', 'pengalaman', 'matrix', 'spmu', 'skm', 'svm','pmr', 'pencapaian_pmr','k_pmr', 'spm', 'pencapaian_spm','k_spm', 'stpm', 'pencapaian_stpm','k_stpm', 'stam', 'pencapaian_stam','k_stam'));
+        // return $pdf->setPaper('a4','potrait')->stream();
     }
 
     public function pilihanPanggilan(Request $req)

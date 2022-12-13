@@ -233,30 +233,30 @@ Kelantan',
                             </div>
                         </div>
                         <div class="row mt-4">
-                            <div class="col-12 col-xl-3">
+                            <div class="col-12 col-xl-4">
                                 <div class="input-group input-group-static">
                                     <label>Nama Pasangan</label>
-                                    <input type="text" name="addMoreInputFields[0]nama_pasangan"
+                                    <input type="text" name="addMoreInputFields[0][nama_pasangan]"
                                         class="form-control upcase" placeholder="" value="" required>
                                 </div>
                             </div>
                             <div class="col-12 col-xl-3">
                                 <div class="input-group input-group-static">
                                     <label>Tempat Lahir Pasangan</label>
-                                    <input type="text" name="addMoreInputFields[0]tempat_lahir_pasangan"
+                                    <input type="text" name="addMoreInputFields[0][tempat_lahir_pasangan]"
                                         class="form-control" placeholder="" value="" required>
                                 </div>
                             </div>
-                            <div class="col-12 col-xl-3">
+                            <div class="col-12 col-xl-4">
                                 <div class="input-group input-group-static">
                                     <label>Pekerjaan Pasangan</label>
-                                    <input type="text" name="addMoreInputFields[0]pekerjaan_pasangan"
+                                    <input type="text" name="addMoreInputFields[0][pekerjaan_pasangan]"
                                         class="form-control" placeholder="" value="" required>
                                 </div>
                             </div>
-                            <div class="col-12 col-xl-3">
+                            <div class="col-12 col-xl-1">
                                 <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
-                                    class="material-icons text-sm">add</i></button>
+                                        class="material-icons text-sm">add</i></button>
                             </div>
                         </div>
                     </div>
@@ -275,6 +275,37 @@ Kelantan',
 
 @section('script')
     <script>
+        var i = 0;
+        $("#tambahrow").click(function() {
+            ++i;
+            i = i - 1;
+            if (i > 3) {
+                alert("Maximum 4");
+            } else {
+                $("#pasangan").append(
+                    '<div class="row mt-4" id="tambah_pasangan"><div class="col-12 col-xl-4"><div class="input-group input-group-static"><label>Nama Pasangan</label><input type="text" name="addMoreInputFields[' +
+                    i +
+                    '][nama_pasangan]" class="form-control upcase" required></div></div><div class="col-12 col-xl-3"><div class="input-group input-group-static"><label>Tempat Lahir Pasangan</label><input type="text" name="addMoreInputFields[' +
+                    i +
+                    '][tempat_lahir_pasangan]" class="form-control" required> </div></div><div class="col-12 col-xl-4"><div class="input-group input-group-static"><label>Pekerjaan Pasangan</label><input type="text" name="addMoreInputFields[' +
+                    i +
+                    '][pekerjaan_pasangan]" class="form-control" required></div></div><div class="col-12 col-xl-1"><div class="input-group input-group-static"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></div></div></div>'
+                );
+            }
+        });
+
+        $(document).on('click', '.remove-input-field', function() {
+            $(this).parents('#tambah_pasangan').remove();
+        });
+
+        $('#choices-taraf').on('change', function() {
+            if (this.value == '2') {
+                $("#pasangan").show();
+            } else {
+                $("#pasangan").hide();
+            }
+        });
+
         document.getElementById('get_file').onclick = function() {
             document.getElementById('avatarFile').click();
         };

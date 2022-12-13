@@ -43,7 +43,7 @@
                                                 <td class="text-uppercase">
                                                     {{ $ss->taraf }}</td>
                                                 <td>
-                                                    <a class="badge badge-info" href="{{ url('dl-syarat', [$ss->id]) }}"
+                                                    <a class="badge badge-info" target="_blank" href="{{ route('dl-syarat', [$ss->id]) }}"
                                                         role="button">
                                                         <i class="material-icons">picture_as_pdf</i>
                                                     </a>

@@ -120,7 +120,7 @@
                                                         @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
-                                                                  <a href="{{ url('dl-syarat', [$ss->id]) }}" target="_blank">
+                                                                  <a href="{{ route('dl-syarat', [$ss->id]) }}" target="_blank">
                                                                     <button  class="btn btn-sm btn-secondary" >
                                                                         <i class="fa fa-file-pdf-o"></i>
                                                                     </button>

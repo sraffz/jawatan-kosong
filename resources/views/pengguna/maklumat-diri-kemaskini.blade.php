@@ -233,37 +233,58 @@ Kelantan',
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4" id="pasangan">
+                        <div class="row mt-4 " id="pasangan">
+                            @php
+                                $j = 0;
+                            @endphp
                             @foreach ($pasangan as $psngn)
                                 <div class="row">
                                     <div class="col-12 col-xl-4">
                                         <div class="input-group input-group-static">
                                             <label>Nama Pasangan</label>
-                                            <input type="text" name="nama_pasangan" class="form-control upcase"
-                                                placeholder="" value="{{ $psngn->nama_pasangan }}" required>
+                                            <input type="hidden" name="kemaskini[{{ $j }}][id_pasangan]"
+                                                value="{{ $psngn->id }}" required>
+                                            <input type="text" name="kemaskini[{{ $j }}][nama_pasangan]"
+                                                class="form-control upcase" placeholder=""
+                                                value="{{ $psngn->nama_pasangan }}" required>
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-3">
                                         <div class="input-group input-group-static">
                                             <label>Tempat Lahir Pasangan</label>
-                                            <input type="text" name="tempat_lahir_pasangan" class="form-control"
-                                                placeholder="" value="{{ $psngn->tempat_lahir_pasangan }}" required>
+                                            <input type="text"
+                                                name="kemaskini[{{ $j }}][tempat_lahir_pasangan]"
+                                                class="form-control" placeholder=""
+                                                value="{{ $psngn->tempat_lahir_pasangan }}" required>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-xl-3">
+                                    <div class="col-12 col-xl-4">
                                         <div class="input-group input-group-static">
                                             <label>Pekerjaan Pasangan</label>
-                                            <input type="text" name="pekerjaan_pasangan" class="form-control"
-                                                placeholder="" value="{{ $psngn->pekerjaan_pasangan }}" required>
+                                            <input type="text"
+                                                name="kemaskini[{{ $j }}][pekerjaan_pasangan]"
+                                                class="form-control" placeholder=""
+                                                value="{{ $psngn->pekerjaan_pasangan }}" required>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-xl-2">
+                                    <div class="col-12 col-xl-1">
                                         <div class="input-group input-group-static">
-                                            <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
-                                                    class="material-icons text-sm">add</i></button>
+                                            @if ($j == 0)
+                                                <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
+                                                        class="material-icons text-sm">add</i></button>
+                                            @elseif ($j > 0)
+                                                <button type="button"
+                                                    class="btn btn-outline-danger btn-sm remove-input-field-2"
+                                                    data-bs-id="{{ $psngn->id }}" data-bs-toggle="modal"
+                                                    data-bs-target="#padampasangan"><span
+                                                        class="material-icons">delete</span></button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
+                                @php
+                                    $j++;
+                                @endphp
                             @endforeach
                         </div>
                     </div>
@@ -278,35 +299,82 @@ Kelantan',
             </div>
         </div>
     </div>
+
+    <!-- Modal Padam matapelajaran-->
+    <div class="modal fade" id="padampasangan" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pada Maklumat Pasangan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ url('padam-pasangan') }}" method="get">
+                    {{ csrf_field() }}
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <input type="hidden" name="id_pasangan" id="id_pasangan" value="">
+                            Padam maklumat ini?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Padam</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('script')
     <script>
+        var padampasangan = document.getElementById('padampasangan');
+
+        padampasangan.addEventListener('show.bs.modal', function(event) {
+            // Button that triggered the modal
+            let button = event.relatedTarget;
+            // Extract info from data-bs-* attributes
+            let recipient = button.getAttribute('data-bs-whatever');
+            let id = button.getAttribute('data-bs-id');
+
+            // Use above variables to manipulate the DOM
+            $('.modal-body #id_pasangan').val(id);
+        });
+    </script>
+    <script>
         var i = 0;
         $("#tambahrow").click(function() {
+            if (i > 3) {
+                alert("Maximum 4");
+            } else {
+                $("#pasangan").append(
+                    '<div class="row mt-4" id="tambah_pasangan"><div class="col-12 col-xl-4"><div class="input-group input-group-static"><label>Nama Pasangan</label><input type="text" name="addMoreInputFields[' +
+                    i +
+                    '][nama_pasangan]" class="form-control upcase" required></div></div><div class="col-12 col-xl-3"><div class="input-group input-group-static"><label>Tempat Lahir Pasangan</label><input type="text" name="addMoreInputFields[' +
+                    i +
+                    '][tempat_lahir_pasangan]" class="form-control" required> </div></div><div class="col-12 col-xl-4"><div class="input-group input-group-static"><label>Pekerjaan Pasangan</label><input type="text" name="addMoreInputFields[' +
+                    i +
+                    '][pekerjaan_pasangan]" class="form-control" required></div></div><div class="col-12 col-xl-1"><div class="input-group input-group-static"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></div></div></div>'
+                );
+            }
             ++i;
-
-            $("#pasangan").append(
-                '<div class="row mt-4" id="tambah_pasangan"><div class="col-12 col-xl-4"><div class="input-group input-group-static"><label>Nama Pasangan</label><input type="text" name="addMoreInputFields[' +
-                i +
-                '][nama_pasangan]" class="form-control upcase" required></div></div><div class="col-12 col-xl-3"><div class="input-group input-group-static"><label>Tempat Lahir Pasangan</label><input type="text" name="addMoreInputFields[' +
-                i +
-                '][tempat_lahir_pasangan]" class="form-control" required> </div></div><div class="col-12 col-xl-3"><div class="input-group input-group-static"><label>Pekerjaan Pasangan</label><input type="text" name="addMoreInputFields[' +
-                i +
-                '][pekerjaan_pasangan]" class="form-control" required></div></div><div class="col-12 col-xl-2"><div class="input-group input-group-static"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></div></div></div>'
-            );
         });
 
         $(document).on('click', '.remove-input-field', function() {
+            i = i - 1;
             $(this).parents('#tambah_pasangan').remove();
         });
 
-        $('#choices-taraf').on('change', function() {
-            if (this.value == '2') {
-                $("#pasangan").show();
-            } else {
-                $("#pasangan").hide();
-            }
+
+        $(document).ready(function() {
+            $('#choices-taraf').on('change', function() {
+                if (this.value == '2') {
+                    $(".pasangan").show();
+                } else {
+                    $(".pasangan").hide();
+                }
+            });
         });
 
         document.getElementById('get_file').onclick = function() {

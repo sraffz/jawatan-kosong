@@ -219,7 +219,52 @@ Kelantan',
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="mb-3 ps-3">
-                                    <h6 class="mb-1">Butir-Butir Keluarga</h6>
+                                    <h6 class="mb-1">Butiran Pasangan</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12 col-md-6 mb-xl-0 mb-2">
+                                        <div class="card card-blog card-plain">
+                                            <table class="table table-sm table-bordered text-dark">
+                                                <tbody class="text-center">
+                                                    <tr>
+                                                        <td style="width: 50%" style="padding: 15px;">
+                                                            Nama
+                                                        </td>
+                                                        <td style="width: 25%" style="padding: 15px;">
+                                                            Tempat Lahir
+                                                        </td>
+                                                        <td style="width: 25%" style="padding: 15px;">
+                                                            Pekerjaan 
+                                                        </td>
+                                                    </tr>
+                                                    @foreach ($pasangan as $pasangan)
+                                                        <tr>
+                                                            <td class="text-uppercase text-bold" style="padding: 12px;">
+                                                                {{ $pasangan->nama_pasangan }}
+                                                            </td>
+                                                            <td class="text-uppercase text-bold" style="padding: 12px;">
+                                                                {{ $pasangan->tempat_lahir_pasangan }}
+                                                            </td>
+                                                            <td class="text-uppercase text-bold" style="padding: 12px;">
+                                                                {{ $pasangan->pekerjaan_pasangan }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    <tr>
+                                                        <td colspan="3"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-12">
+                                <div class="mb-3 ps-3">
+                                    <h6 class="mb-1">Butiran Keluarga</h6>
                                 </div>
                                 <div class="row">
                                     <div class="col-xl-12 col-md-6 mb-xl-0 mb-4">
@@ -701,6 +746,7 @@ Kelantan',
                                             <td>Jawatan</td>
                                             <td>Majikan</td>
                                             <td>Taraf</td>
+                                            <td>Gaji</td>
                                             <td>Tempoh</td>
                                             <td>Ringkasan Tugas</td>
                                         </tr>
@@ -717,6 +763,7 @@ Kelantan',
                                                 <td>{{ $exp->nama_jawatan }}</td>
                                                 <td>{{ $exp->majikan }} <br> {{ $exp->alamat_majikan }}</td>
                                                 <td>{{ $exp->taraf_jawatan }}</td>
+                                                <td>RM {{ $exp->gaji_akhir }}</td>
                                                 <td>
                                                     {{ \Carbon\Carbon::parse($exp->mula_kerja)->format('d/m/Y') }} -
                                                     @if ($exp->semasa == 1)

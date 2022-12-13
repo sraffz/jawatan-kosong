@@ -137,7 +137,7 @@ Route::get('/linkstorage', function () {
     Artisan::call('storage:link');
 });
 
-Route::get('dl-syarat/{id}', 'AdminController@dlsyarat')->name('dl-syarat');
+Route::get('dl-syarat/{id}/Iklan Jawatan', 'AdminController@dlsyarat')->name('dl-syarat');
 
 Route::middleware(['auth:web'])->group(function () {
     route::post('/user/logout', 'Auth\LoginController@logoutUser')->name('user.logout');
@@ -204,5 +204,6 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('padam-mp-spmu', 'PenggunaController@padamspmu')->name('padam-mp-spmu');
     Route::get('padam-mp-stam', 'PenggunaController@padamstam')->name('padam-mp-stam');
     Route::get('padam-mp-stpm', 'PenggunaController@padamstpm')->name('padam-mp-stpm');
+    Route::get('padam-pasangan', 'PenggunaController@padamPasangan')->name('padam-pasangan');
 });
 

@@ -33,7 +33,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use Auth;
 use Hash;
-use Vinkla\Hashids\Facades\Hashids;
 use Alert;
 use DB;
 use Dompdf\Dompdf;
@@ -297,10 +296,10 @@ class AdminController extends Controller
             if ($extension == 'pdf') {
                 // check folder for 'current year', if not exist, create one
                 $storagePath = $iklan->tahun . '/' . $iklan->bil;
-                $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
-                $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                $storagePathSave = 'app/public/' . $iklan->tahun . '/' . $iklan->bil;
+                $filePath = str_replace(storage_path() . '/', '', $storagePath) . '/' . $filename;
                 // return dd($filePath);
-                $upload_success = $file->storeAs($storagePathSave, $filename);
+                $upload_success = $file->storeAs($storagePath, $filename);
 
                 if ($upload_success) {
                     $data = new Iklan_jawatan();
@@ -337,7 +336,6 @@ class AdminController extends Controller
 
     public function dlsyarat($id)
     {   
-        $idd = Hashids::decode($id);
         $f = Iklan_jawatan::where('jk_iklan_jawatan.id', $id)
             ->join('jk_iklan', 'jk_iklan.id', '=', 'jk_iklan_jawatan.id_iklan')
             ->first();
@@ -346,7 +344,7 @@ class AdminController extends Controller
         
         return response()->download('storage/'.$f->lokasi_fail, $nama_fail, ['title' => 'asdasd'], 'inline');
 
-        // return Storage::download($f->lokasi_fail, $nama_fail);
+        return Storage::download($f->lokasi_fail, $nama_fail);
     }
 
     public function kemaskinijawatan(Request $req)
@@ -367,10 +365,16 @@ class AdminController extends Controller
             if ($extension == 'pdf') {
                 // check folder for 'current year', if not exist, create one
                 $storagePath = $iklan->tahun . '/' . $iklan->bil;
-                $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
+                // $storagePath = 'public/' . $iklan->tahun . '/' . $iklan->bil;
                 $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                $linkPath = $iklan->tahun . '/' . $iklan->bil .'/'. $filename;
                 // return dd($filePath);
-                $upload_success = $file->storeAs($storagePathSave, $filename);
+
+                // $storagePath = 'public/akademik/spm';
+                // $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                // $linkPath = 'akademik/spm/' . $filename;
+
+                $upload_success = $file->storeAs($storagePath, $filename);
 
                 if ($upload_success) {
                     $old = Iklan_jawatan::where('id', $req->id)->first();
@@ -386,7 +390,7 @@ class AdminController extends Controller
                         'taraf_jawatan' => $req->taraf,
                         'nama_fail' => $filename,
                         'format' => $extension,
-                        'lokasi_fail' => $filePath,
+                        'lokasi_fail' => $linkPath,
                     ]);
 
                     Alert::info('Berjaya', 'Maklumat telah dikemaskini.');

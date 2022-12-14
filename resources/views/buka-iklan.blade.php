@@ -68,20 +68,25 @@
                                             $text2 = [];
                                             foreach ($syarat as $ss) {
                                                 if ($ss->id_iklan == $ikln->id) {
-                                                     $j++;
+                                                    $j++;
                                                     $text2[] = __("$j. $ss->nama_jawatan ($ss->singkatan_taraf), GRED $ss->gred");
                                                 }
                                             }
                                             
-                                            $text = __("IKLAN JAWATAN KOSONG");
-                                            $text3 = __("\nPermohonan hendaklah dihantar sebelum atau pada ".$date." (".$nama_hari.") melalui: \n");
+                                            $text = __('IKLAN JAWATAN KOSONG');
+                                            $text3 = __("\nPermohonan hendaklah dihantar sebelum atau pada " . $date . ' (' . $nama_hari . ") melalui: \n");
                                             
                                             $currentURL = URL::current();
                                         @endphp
-             
-                                            <a href="https://www.facebook.com/sharer.php?u={{ $currentURL }}" class="social-button" id=""><span class="fa fa-facebook-official"></span></a>
-                                            <a href="https://api.whatsapp.com/send?text={{ $text}}%0A{{implode('%0A', $text2)}}%0A{{$text3 }}%20{{ $currentURL }}" class="social-button" id=""><span class="fa fa-whatsapp"></span></a>
-                                            <a href="https://twitter.com/intent/tweet?text={{ $text}}%0A{{implode('%0A', $text2)}}%0A{{$text3 }}&url={{ $currentURL }}" class="social-button" id=""><span class="fa fa-twitter"></span></a>
+
+                                        <a href="https://www.facebook.com/sharer.php?u={{ $currentURL }}"
+                                            class="social-button" id=""><span
+                                                class="fa fa-facebook-official"></span></a>
+                                        <a href="https://api.whatsapp.com/send?text={{ $text }}%0A{{ implode('%0A', $text2) }}%0A{{ $text3 }}%20{{ $currentURL }}"
+                                            class="social-button" id=""><span
+                                                class="fa fa-whatsapp"></span></a>
+                                        <a href="https://twitter.com/intent/tweet?text={{ $text }}%0A{{ implode('%0A', $text2) }}%0A{{ $text3 }}&url={{ $currentURL }}"
+                                            class="social-button" id=""><span class="fa fa-twitter"></span></a>
                                     </div>
                                 </div>
                                 <br>
@@ -97,7 +102,7 @@
                                                 </th>
                                                 <th class="text-center">Taraf Jawatan</th>
                                                 @if ($ikln->gaji_min == '1')
-                                                    <th class="text-center">Gaji Minimum</th>
+                                                    <th class="text-center">Gaji / Upah</th>
                                                 @endif
                                                 <th class="text-center">Syarat Lantikan</th>
                                             </tr>
@@ -114,14 +119,22 @@
                                                         <td class="text-center">{{ $ss->gred }}</td>
                                                         <td class="text-center d-none d-sm-table-cell">
                                                             {{ $ss->kump_perkhidmatan }}</td>
-                                                        <td class="text-center"><i>{{ $ss->taraf }}</i></td>
+                                                        <td class="text-center">
+                                                            <i>
+                                                                {{ $ss->taraf }}
+                                                                @if ($ss->taraf != 'TETAP')
+                                                                    ({{ $ss->singkatan_taraf }})
+                                                                @endif
+                                                            </i>
+                                                        </td>
                                                         @if ($ikln->gaji_min == '1')
                                                             <td class="text-center"><i>RM{{ $ss->gajiMin }}</i></td>
                                                         @endif
                                                         <td class="text-center">
                                                             <div class="btn-group">
-                                                                  <a href="{{ route('dl-syarat', [$ss->id]) }}" target="_blank">
-                                                                    <button  class="btn btn-sm btn-secondary" >
+                                                                <a href="{{ route('dl-syarat', [$ss->id]) }}"
+                                                                    target="_blank">
+                                                                    <button class="btn btn-sm btn-secondary">
                                                                         <i class="fa fa-file-pdf-o"></i>
                                                                     </button>
                                                                 </a>
@@ -136,12 +149,14 @@
                                 <hr>
                                 <h3 class="block-title">Cara<small> Memohon</small></h3>
                                 <p>Permohonan jawatan ini hendaklah diisi secara online sahaja
-                                    @if ( $ikln->pautan == '')
-                                        <a class="btn btn-alt-primary btn-rounded px-30 py-15" href="{{ route('butiran-iklan', [$ikln->url]) }}">
+                                    @if ($ikln->pautan == '')
+                                        <a class="btn btn-alt-primary btn-rounded px-30 py-15"
+                                            href="{{ route('butiran-iklan', [$ikln->url]) }}">
                                             <i class="fa fa-edit mr-5"></i> Borang Permohonan Jawatan
                                         </a>
                                     @else
-                                        <a class="btn btn-alt-primary btn-rounded px-30 py-15" href="{{ $ikln->pautan }}" target="_blank">
+                                        <a class="btn btn-alt-primary btn-rounded px-30 py-15"
+                                            href="{{ $ikln->pautan }}" target="_blank">
                                             <i class="fa fa-edit mr-5"></i> Borang Permohonan Jawatan
                                         </a>
                                     @endif

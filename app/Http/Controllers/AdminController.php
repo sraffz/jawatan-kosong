@@ -258,6 +258,16 @@ class AdminController extends Controller
         return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
     }
 
+    public function paparanIklan($url)
+    {
+        $ikln = Iklan::where('url', $url)
+        ->first();
+
+        $syarat = DB::table('senarai-syarat-jawatan')->get();
+
+        return view('admin.preview-iklan', compact('ikln', 'syarat'));
+    }
+
     public function kemaskiniiklann(Request $req, $id)
     {
         $id = Iklan::where('id', $id)->update([
@@ -342,7 +352,7 @@ class AdminController extends Controller
 
         $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
         
-        return response()->download('storage/'.$f->lokasi_fail, $nama_fail, ['title' => 'asdasd'], 'inline');
+        // return response()->download('storage/'.$f->lokasi_fail, $nama_fail, ['title' => 'asdasd'], 'inline');
 
         return Storage::download($f->lokasi_fail, $nama_fail);
     }
@@ -369,12 +379,7 @@ class AdminController extends Controller
                 $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
                 $linkPath = $iklan->tahun . '/' . $iklan->bil .'/'. $filename;
                 // return dd($filePath);
-
-                // $storagePath = 'public/akademik/spm';
-                // $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
-                // $linkPath = 'akademik/spm/' . $filename;
-
-                $upload_success = $file->storeAs($storagePath, $filename);
+                $upload_success = $file->storeAs($storagePathSave, $filename);
 
                 if ($upload_success) {
                     $old = Iklan_jawatan::where('id', $req->id)->first();

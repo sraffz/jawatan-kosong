@@ -120,6 +120,7 @@ Route::prefix('admin')->middleware(['auth:admin'])->group(function () {
     Route::get('/pentadbir', 'AdminController@pentadbir')->name('admin.pentadbir');
     Route::get('/kemaskini-iklan/{id}', 'AdminController@kemaskiniiklan')->name('admin.kemaskini-iklan');
     
+    Route::get('/paparan-iklan/{url}', 'AdminController@paparanIklan')->name('admin.paparan-iklan');
     Route::get('/senarai-pemohon/{url}', 'AdminController@senaraiPermohonan')->name('admin.permohonan.senarai');
     Route::get('/butiran-pemohon/{id2}-{id}', 'AdminController@butiranPermohonan')->name('butiran-pemohon');
     Route::get('/cetak-butiran-pemohon/{id2}-{id}', 'AdminController@cetakButiranPermohonan')->name('cetak-butiran-pemohon');

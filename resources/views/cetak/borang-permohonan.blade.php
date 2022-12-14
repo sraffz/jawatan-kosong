@@ -410,7 +410,7 @@
             </div>
             <br>
             {{-- Akademik peringkat SPM Ulangan --}}
-            @if (count($spmu) > 0)
+            {{-- @if (count($spmu) > 0)
                 <div class="row">
                     <table width='100%' border="1">
                         <tr>
@@ -437,7 +437,7 @@
                     </table>
                 </div>
             @endif
-            <br>
+            <br> --}}
             {{-- Akademik peringkat Sijil Vokasional Malaysia (SVM) --}}
             @if (count($svm) > 0)
                 <div class="row">

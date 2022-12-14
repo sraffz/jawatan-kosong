@@ -41,6 +41,26 @@ Route::get('/', function () {
     return view('welcome', compact('iklan', 'syarat', 'bil'));
 });
 
+Route::get('/mystep', function () {
+
+    $iklan2 = Iklan::where('jenis', "TERBUKA")->first();
+    $iklan = Iklan::where('jenis', "TERBUKA")->get();
+
+    $tarikh_kini = \Carbon\Carbon::now()->format('Y-m-d');
+
+    $bil = Iklan::where('tarikh_mula','<=',$tarikh_kini)
+    ->where('tarikh_tamat', '>=', $tarikh_kini)
+    ->where('jenis', "TERBUKA")
+    ->where('publish', 1)
+    ->count();
+
+    // dd($bil);
+    $syarat = DB::table('senarai-syarat-jawatan')->get();
+    
+    // dd($tarikh_kini, \Carbon\Carbon::parse($iklan->tarikh_mula)->format('Y-m-d'));
+    return view('mystep', compact('iklan', 'syarat', 'bil'));
+});
+
 Route::get('/suk{url}', function ($url) {
 
 

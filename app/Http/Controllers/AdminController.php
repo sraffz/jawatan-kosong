@@ -33,7 +33,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 use Auth;
 use Hash;
-use Vinkla\Hashids\Facades\Hashids;
 use Alert;
 use DB;
 use Dompdf\Dompdf;
@@ -251,11 +250,22 @@ class AdminController extends Controller
         $taraf = JK_taraf_jawatan::all();
         $kump = JK_kumuplan_perkhidmatan::all();
 
-        $syarat = DB::table('senarai-syarat-jawatan')
+        $syarat = DB::table('senarai-syarat-jawatan')->select('*', \DB::raw("SUBSTR(gred, 3, 2) as sort_gred"))
             ->where('id_iklan', $iklan->id)
+            ->orderBy('sort_gred', 'asc')
             ->get();
-
+        
         return view('admin.kemaskini-iklan', compact('iklan', 'syarat', 'taraf', 'kump'));
+    }
+
+    public function paparanIklan($url)
+    {
+        $ikln = Iklan::where('url', $url)
+        ->first();
+
+        $syarat = DB::table('senarai-syarat-jawatan')->get();
+
+        return view('admin.preview-iklan', compact('ikln', 'syarat'));
     }
 
     public function kemaskiniiklann(Request $req, $id)
@@ -299,7 +309,7 @@ class AdminController extends Controller
                 $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
                 $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
                 // return dd($filePath);
-                $upload_success = $file->storeAs($storagePathSave, $filename);
+                $upload_success = $file->storeAs($storagePath, $filename);
 
                 if ($upload_success) {
                     $data = new Iklan_jawatan();
@@ -336,16 +346,15 @@ class AdminController extends Controller
 
     public function dlsyarat($id)
     {   
-        $idd = Hashids::decode($id);
         $f = Iklan_jawatan::where('jk_iklan_jawatan.id', $id)
             ->join('jk_iklan', 'jk_iklan.id', '=', 'jk_iklan_jawatan.id_iklan')
             ->first();
 
         $nama_fail = 'SUK-JK_' . $f->tahun . '_' . $f->bil . '_' . $f->nama_jawatan . '(' . $f->gred . ').pdf';
         
-        return response()->download('storage/'.$f->lokasi_fail, $nama_fail, ['title' => 'asdasd'], 'inline');
+        // return response()->download('storage/'.$f->lokasi_fail, $nama_fail, ['title' => 'asdasd'], 'inline');
 
-        // return Storage::download($f->lokasi_fail, $nama_fail);
+        return Storage::download($f->lokasi_fail, $nama_fail);
     }
 
     public function kemaskinijawatan(Request $req)
@@ -369,7 +378,7 @@ class AdminController extends Controller
                 $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
                 $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
                 // return dd($filePath);
-                $upload_success = $file->storeAs($storagePathSave, $filename);
+                $upload_success = $file->storeAs($storagePath, $filename);
 
                 if ($upload_success) {
                     $old = Iklan_jawatan::where('id', $req->id)->first();

@@ -51,6 +51,11 @@ Negeri Kelantan',
                                         link
                                     </span> pautan
                                 </a>
+                                <a href="{{ url('/admin/paparan-iklan',[$iklan->url]) }}" target="_blank" class="btn btn-sm btn-outline-dark">
+                                    <span class="material-icons">
+                                        link
+                                    </span> Paparan Iklan
+                                </a>
                             @endif
                         </div>
                     </div>
@@ -115,7 +120,7 @@ Negeri Kelantan',
                                         <input class="form-check-input" type="checkbox" id="gajiMin" value="1"
                                             name="gaji_min" {{ old('gaji_min') || $iklan->gaji_min ? 'checked' : '' }}>
                                         <label class="form-check-label mb-0 ms-3 mt-1" for="gajiMin">Papar gaji
-                                            minimum.</label>
+                                            / upah.</label>
                                     </div>
                                 </div>
                                 <div class="input-group input-group-static">
@@ -330,18 +335,18 @@ Negeri Kelantan',
                                                                 <label class="form-label">Taraf Jawatan</label>
                                                                 <div class="form-check mt-5">
                                                                     @php
-                                                                        $k = 0;
+                                                                        $kl = 0;
                                                                     @endphp
                                                                     @foreach ($taraf as $trf)
                                                                         <div class="form-check form-check-inline">
                                                                             <input type="checkbox" class="form-check-input" name="taraf"
-                                                                                id="taraf-{{ $k }}" value="{{ $trf->id }}" {{ $trf->taraf == $ss->taraf ? 'checked' : '' }}>
+                                                                                id="taraf-{{ $kl }}" value="{{ $trf->id }}" {{ $trf->taraf == $ss->taraf ? 'checked' : '' }}>
                                                                             <label class="form-check-label text-uppercase"
-                                                                                for="taraf-{{ $k }}"> {{ $trf->taraf }} ({{ $trf->singkatan_taraf }})
+                                                                                for="taraf-{{ $kl }}"> {{ $trf->taraf }} ({{ $trf->singkatan_taraf }})
                                                                             </label>
                                                                         </div> <br>
                                                                         @php
-                                                                            $k++;
+                                                                            $kl++;
                                                                         @endphp
                                                                     @endforeach
                                                                 </div>

@@ -306,8 +306,8 @@ class AdminController extends Controller
             if ($extension == 'pdf') {
                 // check folder for 'current year', if not exist, create one
                 $storagePath = $iklan->tahun . '/' . $iklan->bil;
-                $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
-                $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                $storagePathSave = 'app/public/' . $iklan->tahun . '/' . $iklan->bil;
+                $filePath = str_replace(storage_path() . '/', '', $storagePath) . '/' . $filename;
                 // return dd($filePath);
                 $upload_success = $file->storeAs($storagePath, $filename);
 
@@ -375,10 +375,11 @@ class AdminController extends Controller
             if ($extension == 'pdf') {
                 // check folder for 'current year', if not exist, create one
                 $storagePath = $iklan->tahun . '/' . $iklan->bil;
-                $storagePathSave = 'public/' . $iklan->tahun . '/' . $iklan->bil;
+                // $storagePath = 'public/' . $iklan->tahun . '/' . $iklan->bil;
                 $filePath = str_replace(base_path() . '/', '', $storagePath) . '/' . $filename;
+                $linkPath = $iklan->tahun . '/' . $iklan->bil .'/'. $filename;
                 // return dd($filePath);
-                $upload_success = $file->storeAs($storagePath, $filename);
+                $upload_success = $file->storeAs($storagePathSave, $filename);
 
                 if ($upload_success) {
                     $old = Iklan_jawatan::where('id', $req->id)->first();
@@ -394,7 +395,7 @@ class AdminController extends Controller
                         'taraf_jawatan' => $req->taraf,
                         'nama_fail' => $filename,
                         'format' => $extension,
-                        'lokasi_fail' => $filePath,
+                        'lokasi_fail' => $linkPath,
                     ]);
 
                     Alert::info('Berjaya', 'Maklumat telah dikemaskini.');

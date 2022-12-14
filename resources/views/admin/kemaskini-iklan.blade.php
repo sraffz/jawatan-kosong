@@ -359,7 +359,7 @@ Negeri Kelantan',
                                                                 </div>
                                                                 <div class="col-md-2 mt-3">
                                                                     <a href="{{ route('dl-syarat', [$ss->id]) }}"
-                                                                        class="btn btn-dark"><i
+                                                                       target="_blank" class="btn btn-dark"><i
                                                                             class="fa fa-file-pdf-o"></i></a>
                                                                 </div>
                                                             </div>

@@ -232,32 +232,42 @@ Kelantan',
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-4">
-                            <div class="col-12 col-xl-4">
-                                <div class="input-group input-group-static">
-                                    <label>Nama Pasangan</label>
-                                    <input type="text" name="addMoreInputFields[0][nama_pasangan]"
-                                        class="form-control upcase" placeholder="" value="" required>
+                        <div class="row mt-4 " id="pasangan">
+                            @php
+                                $j = 0;
+                            @endphp
+                           
+                            <div class="row mt-4">
+                                <div class="col-12 col-xl-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Nama Pasangan</label>
+                                        <input type="text" name="addMoreInputFields[0][nama_pasangan]"
+                                            class="form-control upcase" placeholder="" value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-3">
+                                    <div class="input-group input-group-static">
+                                        <label>Tempat Lahir Pasangan</label>
+                                        <input type="text" name="addMoreInputFields[0][tempat_lahir_pasangan]"
+                                            class="form-control" placeholder="" value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4">
+                                    <div class="input-group input-group-static">
+                                        <label>Pekerjaan Pasangan</label>
+                                        <input type="text" name="addMoreInputFields[0][pekerjaan_pasangan]"
+                                            class="form-control" placeholder="" value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-1">
+                                    <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
+                                            class="material-icons text-sm">add</i></button>
                                 </div>
                             </div>
-                            <div class="col-12 col-xl-3">
-                                <div class="input-group input-group-static">
-                                    <label>Tempat Lahir Pasangan</label>
-                                    <input type="text" name="addMoreInputFields[0][tempat_lahir_pasangan]"
-                                        class="form-control" placeholder="" value="" required>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-4">
-                                <div class="input-group input-group-static">
-                                    <label>Pekerjaan Pasangan</label>
-                                    <input type="text" name="addMoreInputFields[0][pekerjaan_pasangan]"
-                                        class="form-control" placeholder="" value="" required>
-                                </div>
-                            </div>
-                            <div class="col-12 col-xl-1">
-                                <button type="button" id="tambahrow" class="btn btn-dark btn-sm mt-3"><i
-                                        class="material-icons text-sm">add</i></button>
-                            </div>
+                                @php
+                                    $j++;
+                                @endphp
+                             
                         </div>
                     </div>
                     <div class="card-footer pt-0">
@@ -275,11 +285,9 @@ Kelantan',
 
 @section('script')
     <script>
-        var i = 0;
+         var i = 0;
         $("#tambahrow").click(function() {
-            ++i;
-            i = i - 1;
-            if (i > 3) {
+            if (i > 2) {
                 alert("Maximum 4");
             } else {
                 $("#pasangan").append(
@@ -292,6 +300,7 @@ Kelantan',
                     '][pekerjaan_pasangan]" class="form-control" required></div></div><div class="col-12 col-xl-1"><div class="input-group input-group-static"><button type="button" class="btn btn-outline-danger btn-sm remove-input-field"><span class="material-icons">delete</span></button></div></div></div>'
                 );
             }
+            ++i;
         });
 
         $(document).on('click', '.remove-input-field', function() {
